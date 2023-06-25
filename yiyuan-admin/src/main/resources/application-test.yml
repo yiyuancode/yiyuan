@@ -1,0 +1,3 @@
+spring:
+  config:
+    import: classpath:test/application-db.yml,classpath:test/application-mp.yml,classpath:test/application-redis.yml,classpath:test/application-satoken.yml

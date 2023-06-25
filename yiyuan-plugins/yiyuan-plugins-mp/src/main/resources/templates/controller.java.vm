@@ -1,0 +1,175 @@
+package ${package.Controller};
+import ${package.Entity}.*;
+import net.yiyuan.common.model.vo.*;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import ${package.Service}.${table.serviceName};
+import ${package.Entity}.${table.entityName};
+import org.springframework.validation.annotation.Validated;
+
+import javax.validation.constraints.NotEmpty;
+
+import cn.dev33.satoken.annotation.SaCheckLogin;
+import cn.dev33.satoken.annotation.SaCheckPermission;
+import cn.dev33.satoken.annotation.SaMode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+
+/**
+ * $!{table.comment.replaceAll("表", "管理")}
+ *
+ * @author  ${author}
+ * @date ${date}
+ *
+ * @module $!{cfg.apiMoudel}
+ * @folder $!{cfg.apiMoudel}/$!{table.comment.replaceAll("表", "管理")}
+ */
+@SaCheckLogin
+@Slf4j
+@RestController
+##@RequestMapping("/${table.entityName.substring(1).toLowerCase()}")
+##@Api(tags = "$!{table.comment.replaceAll("表", "管理")}" ) //配合swagger使用
+##@RequestMapping(value = "/admin")
+#if(${kotlin})
+class ${table.controllerName}#if(${superControllerClass}):${superControllerClass}()#end
+#else
+    #if(${superControllerClass})
+    public class ${table.controllerName} extends ${superControllerClass}{
+    #else
+    public class ${table.controllerName} {
+    #end
+    #set($serviceImplName=$table.serviceName.substring(0,1).toLowerCase()+$table.serviceName.substring(1))
+    #set($entityName=$table.entityName.substring(0,1).toLowerCase()+$table.entityName.substring(1))
+    ##private static final Logger LOGGER=LoggerFactory.getLogger(${table.controllerName}.class);
+@Autowired
+private ${table.serviceName} ${serviceImplName};
+
+
+/**
+ * ${table.comment.replaceAll("表", "")}列表(全部)
+ *
+ * @param request $!{table.comment.replaceAll("表", "")}实体
+ * @return {@link CommonResult}
+ * @author  ${author}
+ * @date ${date}
+ */
+@SaCheckPermission(value = {"${package.ModuleName}:${table.name.toLowerCase()}:list"}, orRole = "admin" )
+    ##@ApiOperation(value = "$!{table.comment.replaceAll("表", "")}列表(全部)" )
+@RequestMapping(value = "/${package.ModuleName}/${table.name.toLowerCase()}/list", method = RequestMethod.GET)
+public CommonResult list(${table.entityName} request)throws Exception{
+        return CommonResult.success(${serviceImplName}.list(request));
+        }
+
+
+/**
+ * ${table.comment.replaceAll("表", "")}列表(分页)
+ *
+ * @param request $!{table.comment.replaceAll("表", "")}实体
+ * @return {@link CommonResult}
+ * @author  ${author}
+ * @date ${date}
+ */
+
+@SaCheckPermission(value = {"${package.ModuleName}:${table.name.toLowerCase()}:pages"}, orRole = "admin" )
+@RequestMapping(value = "/${package.ModuleName}/${table.name.toLowerCase()}/pages", method = RequestMethod.GET)
+public CommonResult pages(
+    ${table.entityName} request,
+@RequestParam(defaultValue = "10" ) Integer pageSize,
+@RequestParam(defaultValue = "1" ) Integer pageNum
+        )throws Exception{
+        return CommonResult.success(${serviceImplName}.pages(request,pageSize,pageNum));
+        }
+
+/**
+ * ${table.comment.replaceAll("表", "")}详情
+ *
+ * @param request $!{table.comment.replaceAll("表", "")}实体
+ * @return {@link CommonResult}
+ * @author  ${author}
+ * @date ${date}
+ */
+
+@SaCheckPermission(value = {"${package.ModuleName}:${table.name.toLowerCase()}:details"}, orRole = "admin" )
+@RequestMapping(value = "/${package.ModuleName}/${table.name.toLowerCase()}/details", method = RequestMethod.GET)
+public CommonResult details( ${table.entityName} request)throws Exception{
+        return CommonResult.success(${serviceImplName}.details(request));
+        }
+
+/**
+ * 删除$!{table.comment.replaceAll("表", "")}
+ *
+ * @param request $!{table.comment.replaceAll("表", "")}实体
+ * @return {@link CommonResult}
+ * @author  ${author}
+ * @date ${date}
+ */
+@SaCheckPermission(value = {"${package.ModuleName}:${table.name.toLowerCase()}:del"}, orRole = "admin" )
+@RequestMapping(value = "/${package.ModuleName}/${table.name.toLowerCase()}/del", method = RequestMethod.POST)
+public CommonResult del(@RequestBody @Validated   ${table.entityName} request)throws Exception{
+        if(${serviceImplName}.del(request)){
+        return CommonResult.success("删除$!{table.comment.replaceAll("表", "")}成功" );
+        }else{
+        return CommonResult.failed("删除$!{table.comment.replaceAll("表", "")}失败" );
+        }
+        }
+
+
+/**
+ * 批量删除${table.comment.replaceAll("表", "")}
+ *
+ * @param ids 逗号分割id
+ * @return {@link CommonResult}
+ * @author  ${author}
+ * @date ${date}
+ */
+@SaCheckPermission(value = {"${package.ModuleName}:${table.name.toLowerCase()}:dels"}, orRole = "admin" )
+@RequestMapping(value = "/${package.ModuleName}/${table.name.toLowerCase()}/dels", method = RequestMethod.POST)
+public CommonResult dels(@RequestParam @Validated({NotEmpty.class}) String ids)throws Exception{
+        if(${serviceImplName}.dels(ids)){
+        return CommonResult.success("批量删除$!{table.comment.replaceAll("表", "")}成功" );
+        }else{
+        return CommonResult.failed("批量删除$!{table.comment.replaceAll("表", "")}失败" );
+        }
+        }
+/**
+ * 编辑$!{table.comment.replaceAll("表", "")}
+ *
+ * @param request $!{table.comment.replaceAll("表", "")}实体
+ * @return {@link CommonResult}
+ * @author  ${author}
+ * @date ${date}
+ */
+@SaCheckPermission(value = {"${package.ModuleName}:${table.name.toLowerCase()}:edit"}, orRole = "admin" )
+@RequestMapping(value = "/${package.ModuleName}/${table.name.toLowerCase()}/edit", method = RequestMethod.POST)
+public CommonResult
+<String> edit(@RequestBody @Validated   ${table.entityName} request)throws Exception{
+        if(${serviceImplName}.edit(request)){
+        return CommonResult.success("修改$!{table.comment.replaceAll("表", "")}成功" );
+        }else{
+        return CommonResult.failed("修改$!{table.comment.replaceAll("表", "")}失败" );
+        }
+        }
+
+
+/**
+ * 新增$!{table.comment.replaceAll("表", "")}
+ *
+ * @param request $!{table.comment.replaceAll("表", "")}实体
+ * @return {@link CommonResult}
+ * @author  ${author}
+ * @date ${date}
+ */
+@SaCheckPermission(value = {"${package.ModuleName}:${table.name.toLowerCase()}:add"}, orRole = "admin" )
+@RequestMapping(value = "/${package.ModuleName}/${table.name.toLowerCase()}/add", method = RequestMethod.POST)
+public CommonResult
+<String> add(@RequestBody @Validated  ${table.entityName} request)throws Exception{
+        if(${serviceImplName}.add(request)){
+        return CommonResult.success("新增$!{table.comment.replaceAll("表", "")}成功" );
+        }else{
+        return CommonResult.failed("新增$!{table.comment.replaceAll("表", "")}失败" );
+        }
+        }
+        }
+#end

@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <!--1：使用maven3.5以后提供的内置revision,changelist占位统一管理多模块的版本号,父子工程全局统一使用-->
+    <!--2：顶级父工程增加springboot的顶级工程-->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <!--顶层父version不能使用changelist占位符，其他子模块可以使用，凄然模块可以用changelist代替-->
+        <version>2.7.5</version>
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>net.yiyuan</groupId>
+    <artifactId>yiyuan</artifactId>
+    <version>${revision}</version>
+    <!--3：顶级父工程增加packaging并设置为pom，不能jar或者war-->
+    <packaging>pom</packaging>
+    <modules>
+
+        <module>yiyuan-common</module>
+        <module>yiyuan-plugins</module>
+        <module>yiyuan-core</module>
+        <module>yiyuan-admin</module>
+        <module>yiyuan-app</module>
+
+    </modules>
+    <!--5:新增项目所有插件依赖版本号-->
+    <properties>
+        <!--使用revision作为自己项目的版本号占位符-->
+        <revision>1.0-SNAPSHOT</revision>
+        <!--使用changelist内置占位符来表示org.springframework.boot相关的版本号-->
+        <changelist>2.7.5</changelist>
+        <yicode.version>0.0.1</yicode.version>
+        <!-- 统一依赖管理 -->
+        <spring.boot.version>2.7.11</spring.boot.version>
+        <spring-test.version>5.3.9</spring-test.version>
+        <!-- sa-token权限框架相关依赖版本 -->
+        <sa-token.version>1.32.0</sa-token.version>
+        <!-- swagger在线文档相关依赖版本 -->
+        <swagger.version>1.5.21</swagger.version>
+        <springfox-boot-starter.version>3.0.0</springfox-boot-starter.version>
+        <knife4j-spring-boot-starter.version>2.0.4</knife4j-spring-boot-starter.version>
+
+        <!-- 数据库相关-->
+        <!-- mybatis-plus相关(内置了mybatis无需单独引入) -->
+        <mybatis-plus.version>3.5.3</mybatis-plus.version>
+        <!-- mybatis-plus-join(参考:https://www.mhb.icu/)是一个三方插件,可以帮助我们一些简单的连表查询不用写sql-->
+        <mybatis-plus-join.version>1.3.5</mybatis-plus-join.version>
+        <!-- mybatis-plus官方代码生成器 -->
+        <mybatis-plus-generator.version>3.3.1</mybatis-plus-generator.version>
+        <!--防止从jdk1.8升级到11版本mybatis-plus代码生成器报错java.lang.NoClassDefFoundError: javax/xml/bind/DatatypeConverter 所以手动加以下配置-->
+        <jaxb-api.version>2.3.0</jaxb-api.version>
+        <jaxb-impl.version>2.3.0</jaxb-impl.version>
+        <jaxb-core.version>2.3.0</jaxb-core.version>
+        <activation.version>1.1.1</activation.version>
+        <!-- mybatis-plus官方代码生成器模板插件 -->
+        <velocity.version>1.7</velocity.version>
+        <velocity-engine-core.version>2.3</velocity-engine-core.version>
+        <freemarker.version>2.3.28</freemarker.version>
+        <!--连接池-->
+        <druid.version>1.2.16</druid.version>
+        <!--mysql数据库驱动-->
+        <mysql-connector.version>8.0.29</mysql-connector.version>
+        <!--http请求相关-->
+        <fastjson.version>1.2.54</fastjson.version>
+        <!--数据加解密-->
+        <bcprov-jdk15on.version>1.64</bcprov-jdk15on.version>
+        <!--二维码相关-->
+        <zxing.version>3.4.0</zxing.version>
+        <!--微信,支付宝支付优秀插件 参考 https://felord.gitee.io/payment-spring-boot/-->
+        <payment-spring-boot-starter.version>1.0.12.RELEASE
+        </payment-spring-boot-starter.version>
+        <!--minio对象存储-->
+        <minio.version>8.0.3</minio.version>
+        <!--优秀poi导入导出插件-->
+        <easypoi-spring-boot-starter.version>4.2.0</easypoi-spring-boot-starter.version>
+        <lombok.version>1.18.24</lombok.version>
+        <hutool.version>5.8.16</hutool.version>
+    </properties>
+
+    <!--6：新增dependencyManagement只是生命这些项目所有依赖声明，方便阅读，实际使用需要再子模块中再次声明出来-->
+    <dependencyManagement>
+        <dependencies>
+
+            <!-- 统一依赖管理 -->
+            <dependency>
+                <groupId>org.springframework.boot
+                </groupId>
+                <artifactId>spring-boot-dependencies
+                </artifactId>
+                <version>${spring.boot.version}
+                </version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!--web-->
+            <dependency>
+                <groupId>org.springframework.boot
+                </groupId>
+                <artifactId>spring-boot-starter-web
+                </artifactId>
+                <version>${changelist}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-validation</artifactId>
+                <version>${changelist}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot
+                </groupId>
+                <artifactId>spring-boot-starter-test
+                </artifactId>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <optional>true</optional>
+                <version>${lombok.version}</version>
+            </dependency>
+            <!-- Sa-Token 权限认证，在线文档：https://sa-token.cc -->
+            <dependency>
+                <groupId>cn.dev33</groupId>
+                <artifactId>
+                    sa-token-spring-boot-starter
+                </artifactId>
+                <version>${sa-token.version}</version>
+            </dependency>
+            <!-- Sa-Token 整合 Redis （使用 jdk 默认序列化方式） -->
+            <dependency>
+                <groupId>cn.dev33</groupId>
+                <artifactId>sa-token-dao-redis
+                </artifactId>
+                <version>${sa-token.version}</version>
+            </dependency>
+            <!-- Sa-Token 整合 jwt -->
+            <dependency>
+                <groupId>cn.dev33</groupId>
+                <artifactId>sa-token-jwt</artifactId>
+                <version>${sa-token.version}</version>
+            </dependency>
+            <!--redis依赖配置-->
+            <dependency>
+                <groupId>org.springframework.boot
+                </groupId>
+                <artifactId>
+                    spring-boot-starter-data-redis
+                </artifactId>
+            </dependency>
+            <!--Swagger-UI API文档生产工具-->
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>
+                    knife4j-spring-boot-starter
+                </artifactId>
+                <version>
+                    ${knife4j-spring-boot-starter.version}
+                </version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-boot-starter
+                </artifactId>
+                <version>
+                    ${springfox-boot-starter.version}
+                </version>
+            </dependency>
+            <dependency>
+                <groupId>io.swagger</groupId>
+                <artifactId>swagger-annotations
+                </artifactId>
+                <version>${swagger.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.swagger</groupId>
+                <artifactId>swagger-models</artifactId>
+                <version>${swagger.version}</version>
+            </dependency>
+            <!--MyBatis Plus 依赖-->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter
+                </artifactId>
+                <version>${mybatis-plus.version}
+                </version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-extension
+                </artifactId>
+                <version>${mybatis-plus.version}
+                </version>
+            </dependency>
+            <!--MyBatis Plus 连表查询插件-->
+            <dependency>
+                <groupId>icu.mhb</groupId>
+                <artifactId>mybatis-plus-join
+                </artifactId>
+                <version>${mybatis-plus-join.version}
+                </version>
+            </dependency>
+
+            <!--mybitsplus代码生成器-->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-generator
+                </artifactId>
+                <version>
+                    ${mybatis-plus-generator.version}
+                </version>
+            </dependency>
+            <dependency>
+                <groupId>org.freemarker</groupId>
+                <artifactId>freemarker</artifactId>
+                <version>${freemarker.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.velocity</groupId>
+                <artifactId>velocity</artifactId>
+                <version>${velocity.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.velocity</groupId>
+                <artifactId>velocity-engine-core
+                </artifactId>
+                <version>
+                    ${velocity-engine-core.version}
+                </version>
+            </dependency>
+
+            <!--druid连接池-->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter
+                </artifactId>
+                <version>${druid.version}</version>
+            </dependency>
+            <!--Mysql数据库驱动-->
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql-connector.version}
+                </version>
+            </dependency>
+            <!--mybitsplus的springboot代码生成器的依赖-->
+            <!--防止从1.8升级到11版本报错java.lang.NoClassDefFoundError: javax/xml/bind/DatatypeConverter 所以手动加以下配置-->
+            <dependency>
+                <groupId>javax.xml.bind</groupId>
+                <artifactId>jaxb-api</artifactId>
+                <version>${jaxb-api.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.sun.xml.bind</groupId>
+                <artifactId>jaxb-impl</artifactId>
+                <version>${jaxb-impl.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.sun.xml.bind</groupId>
+                <artifactId>jaxb-core</artifactId>
+                <version>${jaxb-core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.activation</groupId>
+                <artifactId>activation</artifactId>
+                <version>${activation.version}</version>
+            </dependency>
+
+            <!--http请求相关(第三方请求api)-->
+            <dependency>
+                <groupId>org.apache.httpcomponents
+                </groupId>
+                <artifactId>httpclient</artifactId>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.bouncycastle</groupId>
+                <artifactId>bcprov-jdk15on</artifactId>
+                <version>${bcprov-jdk15on.version}
+                </version>
+            </dependency>
+            <!--生成二维码-->
+            <dependency>
+                <groupId>com.google.zxing</groupId>
+                <artifactId>core</artifactId>
+                <version>${zxing.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.zxing</groupId>
+                <artifactId>javase</artifactId>
+                <version>${zxing.version}</version>
+            </dependency>
+            <!--微信,支付宝支付优秀插件-->
+            <dependency>
+                <groupId>cn.felord</groupId>
+                <artifactId>
+                    payment-spring-boot-starter
+                </artifactId>
+                <version>
+                    ${payment-spring-boot-starter.version}
+                </version>
+                <!--排除掉该依赖 否则springboot整个工程的响应会从json变成默认的xml形式-->
+                <exclusions>
+                    <exclusion>
+                        <groupId>
+                            com.fasterxml.jackson.dataformat
+                        </groupId>
+                        <artifactId>
+                            jackson-dataformat-xml
+                        </artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <!--minio对象存储-->
+            <dependency>
+                <groupId>io.minio</groupId>
+                <artifactId>minio</artifactId>
+                <version>${minio.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-test</artifactId>
+                <version>${spring-test.version}
+                </version>
+            </dependency>
+            <!--poi导出-->
+            <dependency>
+                <groupId>cn.afterturn</groupId>
+                <artifactId>
+                    easypoi-spring-boot-starter
+                </artifactId>
+                <version>
+                    ${easypoi-spring-boot-starter.version}
+                </version>
+            </dependency>
+            <!--hutool-->
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-bom</artifactId>
+                <version>${hutool.version}</version>
+                <type>pom</type>
+                <!-- 注意这里是import -->
+                <scope>import</scope>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+
+                <configuration>
+                    <skipTests>true</skipTests>    <!--默认关掉单元测试 -->
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

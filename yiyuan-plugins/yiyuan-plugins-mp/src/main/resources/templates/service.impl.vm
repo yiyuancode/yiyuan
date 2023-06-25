@@ -1,0 +1,152 @@
+package ${package.Service}.impl;
+import java.util.Date;
+import ${package.Entity}.${table.entityName};
+import ${package.Entity}.${table.entityName};
+import ${package.Mapper}.${table.entityName}Mapper;
+import ${package.Service}.${table.entityName}Service;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Service;
+import javax.annotation.Resource;
+import java.util.List;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.springframework.transaction.annotation.Transactional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import icu.mhb.mybatisplus.plugln.base.service.impl.JoinServiceImpl;
+import icu.mhb.mybatisplus.plugln.core.JoinLambdaWrapper;
+import java.util.Arrays;
+import net.yiyuan.common.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
+/**
+* $!{table.comment.replaceAll("表", "管理")}Service层接口实现
+*
+* @author  ${author}
+* @date ${date}
+*
+*/
+@Slf4j
+@Service
+public class ${table.entityName}ServiceImpl extends JoinServiceImpl<${table.mapperName}, ${table.entityName}> implements ${table.entityName}Service {
+@Resource
+private ${table.mapperName} ${table.mapperName.substring(0,1).toLowerCase()}${table.mapperName.substring(1)};
+
+/**
+* ${table.comment.replaceAll("表", "")}列表(全部)
+*
+* @param request $!{table.comment.replaceAll("表", "")}实体
+* @return {@link List}
+* @author  ${author}
+* @date ${date}
+*/
+@Override
+public List< ${table.entityName} > list(${table.entityName} request)throws Exception{
+${table.entityName} query=new ${table.entityName}();
+JoinLambdaWrapper<${table.entityName}> wrapper = new JoinLambdaWrapper<>(request);
+return joinList(wrapper,${table.entityName}.class);
+}
+
+
+/**
+* ${table.comment.replaceAll("表", "")}列表(分页)
+*
+* @param request $!{table.comment.replaceAll("表", "")}实体
+* @return {@link Page}
+* @author  ${author}
+* @date ${date}
+*/
+@Override
+public Page< ${table.entityName} > pages(${table.entityName} request, Integer pageSize, Integer pageNum)throws Exception{
+${table.entityName} query=new ${table.entityName}();
+JoinLambdaWrapper<${table.entityName}> wrapper = new JoinLambdaWrapper<>(request);
+wrapper.orderByDesc(${table.entityName}::getCreatedTime);
+##${table.entityName}.setMarkPrizeInfosLeft(wrapper);
+##${table.entityName}.setUmsUserLeft(wrapper);
+
+Page< ${table.entityName} > page = joinPage(new Page<>(pageNum, pageSize), wrapper, ${table.entityName}.class);
+return page;
+}
+
+
+/**
+* ${table.comment.replaceAll("表", "")}详情
+*
+* @param request $!{table.comment.replaceAll("表", "")}实体
+* @return {@link ${table.entityName}}
+* @author  ${author}
+* @date ${date}
+*/
+@Override
+public ${table.entityName} details(${table.entityName} request)throws Exception{
+${table.entityName} query=new ${table.entityName}();
+JoinLambdaWrapper<${table.entityName}> wrapper = new JoinLambdaWrapper<>(request);
+return joinGetOne(wrapper,${table.entityName}.class);
+}
+
+
+/**
+* 删除${table.comment}
+*
+* @param request $!{table.comment.replaceAll("表", "")}实体
+* @return {@link boolean}
+* @author  ${author}
+* @date ${date}
+*/
+@Transactional
+@Override
+public boolean del(${table.entityName} request) throws Exception{
+return removeById(request);
+}
+
+
+/**
+* 批量删除${table.comment}
+*
+* @param ids 逗号分割id
+* @return {@link boolean}
+* @author  ${author}
+* @date ${date}
+*/
+@Transactional
+@Override
+public boolean dels(String ids) throws Exception{
+return removeByIds(Arrays.asList(ids.split(",")));
+}
+
+
+/**
+* 编辑${table.comment}
+*
+* @param request $!{table.comment.replaceAll("表", "")}实体
+* @return {@link boolean}
+* @author  ${author}
+* @date ${date}
+*/
+@Transactional
+@Override
+public boolean edit(${table.entityName} request)throws Exception{
+request.setUpdatedTime(new Date());
+return updateById(request);
+}
+
+
+/**
+* 新增${table.comment}
+*
+* @param request $!{table.comment.replaceAll("表", "")}实体
+* @return {@link boolean}
+* @author  ${author}
+* @date ${date}
+*/
+@Transactional
+@Override
+public boolean add(${table.entityName} request)throws Exception{
+request.setCreatedTime(new Date());
+request.setUpdatedTime(new Date());
+return save(request);
+}
+}
+

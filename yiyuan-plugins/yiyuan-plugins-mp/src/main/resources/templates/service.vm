@@ -1,0 +1,97 @@
+package ${package.Service};
+import icu.mhb.mybatisplus.plugln.core.JoinLambdaWrapper;
+import java.util.Date;
+import ${package.Entity}.${table.entityName};
+import ${package.Entity}.${table.entityName};
+import com.baomidou.mybatisplus.extension.service.IService;
+import java.util.List;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.springframework.transaction.annotation.Transactional;
+import icu.mhb.mybatisplus.plugln.base.service.JoinIService;
+import net.yiyuan.common.*;
+
+/**
+* $!{table.comment.replaceAll("表", "管理")}Service层接口
+*
+* @author  ${author}
+* @date ${date}
+*
+*/
+public interface ${table.entityName}Service extends JoinIService<${table.entityName}> {
+
+/**
+* ${table.comment.replaceAll("表", "")}列表(全部)
+*
+* @param request $!{table.comment.replaceAll("表", "")}实体
+* @return {@link List}
+* @author  ${author}
+* @date ${date}
+*/
+List< ${table.entityName} > list(${table.entityName} request)throws Exception;
+
+
+/**
+* ${table.comment.replaceAll("表", "")}列表(分页)
+*
+* @param request $!{table.comment.replaceAll("表", "")}实体
+* @return {@link Page}
+* @author  ${author}
+* @date ${date}
+*/
+Page< ${table.entityName} > pages( ${table.entityName} request, Integer pageSize, Integer pageNum)throws Exception;
+
+
+/**
+* ${table.comment.replaceAll("表", "")}详情
+*
+* @param request $!{table.comment.replaceAll("表", "")}实体
+* @return {@link ${table.entityName}}
+* @author  ${author}
+* @date ${date}
+*/
+${table.entityName} details(${table.entityName} request)throws Exception;
+
+
+/**
+* 删除${table.comment}
+*
+* @param request $!{table.comment.replaceAll("表", "")}实体
+* @return {@link boolean}
+* @author  ${author}
+* @date ${date}
+*/
+boolean del(${table.entityName} request)throws Exception;
+
+
+/**
+* 批量删除${table.comment}
+*
+* @param ids 逗号分割id
+* @return {@link boolean}
+* @author  ${author}
+* @date ${date}
+*/
+boolean dels(String ids)throws Exception;
+
+/**
+* 编辑${table.comment}
+*
+* @param request $!{table.comment.replaceAll("表", "")}实体
+* @return {@link boolean}
+* @author  ${author}
+* @date ${date}
+*/
+boolean edit(${table.entityName} request)throws Exception;
+
+
+/**
+* 新增${table.comment}
+*
+* @param request $!{table.comment.replaceAll("表", "")}实体
+* @return {@link boolean}
+* @author  ${author}
+* @date ${date}
+*/
+boolean add(${table.entityName} request)throws Exception;
+
+}

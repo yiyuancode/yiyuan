@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>net.yiyuan</groupId>
+        <artifactId>yiyuan</artifactId>
+        <version>${revision}</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <version>${revision}</version>
+    <artifactId>yiyuan-common</artifactId>
+
+    <!--    <packaging>pom</packaging>-->
+
+    <!--当使用 Maven 引入一个父模块时，可以通过在父模块的 pom.xml 文件中添加 `<dependencyManagement>` 元素来管理子模块的依赖关系，从而使得子模块的依赖可以被自动继承和管理。
+    在 `<dependencyManagement>` 元素中，可以定义所有子模块都需要使用的依赖项及其版本号。这样一来，当子模块需要引入这些依赖项时，它们只需要声明依赖项的 groupId 和 artifactId，
+    而无需指定版本号，因为 Maven 会自动将父模块中定义的版本号应用到子模块中。
+    当 Maven 构建子模块时，它会自动将父模块中定义的版本号 `1.0.0` 应用到子模块的依赖项中，从而实现统一依赖管理。-->
+    <!--4:相当于就是统一暴露给-->
+
+<!--    <packaging>pom</packaging>-->
+    <dependencies>
+        <!--hutool-->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+        <!-- web -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <!-- web校验 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+
+    </dependencies>
+
+</project>

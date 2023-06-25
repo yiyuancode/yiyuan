@@ -1,0 +1,16 @@
+package ${package.Mapper};
+import ${package.Entity}.${table.entityName};
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import icu.mhb.mybatisplus.plugln.base.mapper.JoinBaseMapper;
+import net.yiyuan.common.*;
+
+
+/**
+ * $!{table.comment.replaceAll("表", "管理")} Mapper接口
+ *
+ * @author  ${author}
+ * @date ${date}
+ *
+ */
+public interface ${table.entityName}Mapper extends JoinBaseMapper<${table.entityName}> {
+}

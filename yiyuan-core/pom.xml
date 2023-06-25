@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <!--1：工程创建成功会自动新增父级的parent依赖-->
+    <parent>
+        <groupId>net.yiyuan</groupId>
+        <artifactId>yiyuan</artifactId>
+        <!--2：手动使用父工程定义的revision代替版本号,后面升级方便-->
+        <version>${revision}</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <!--3：子模块自己的版本号也使用父工程定义的revision代替版本号,后面升级方便-->
+    <version>${revision}</version>
+    <modules>
+        <module>yiyuan-core-auth</module>
+        <module>yiyuan-core-sys</module>
+    </modules>
+    <!-- core 模块中。例如，配置管理、日志管理、缓存管理、权限管理,等多个业务模块所共享和复用-->
+    <artifactId>yiyuan-core</artifactId>
+    <packaging>pom</packaging>
+
+
+    <!--4:使用dependencyManagement管理,引入该模块必须使用dependencyManagement引入-->
+
+
+    <dependencies>
+        <!--公共模块 下面的每个模块都需要常量，字典，异常，实体，工具类，以及数据库插件以及spring-web插件-->
+        <!--        <dependency>-->
+        <!--            <groupId>net.yiyuan</groupId>-->
+        <!--            <artifactId>yiyuan-common</artifactId>-->
+        <!--            <version>${revision}</version>-->
+        <!--        </dependency>-->
+        <dependency>
+            <groupId>net.yiyuan</groupId>
+            <artifactId>yiyuan-plugins-mp</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.yiyuan</groupId>
+            <artifactId>yiyuan-plugins-satoken</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+    </dependencies>
+
+</project>

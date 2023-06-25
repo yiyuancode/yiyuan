@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>yiyuan</artifactId>
+        <groupId>net.yiyuan</groupId>
+        <version>${revision}</version>
+    </parent>
+    <version>${revision}</version>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>yiyuan-admin</artifactId>
+    <packaging>jar</packaging>
+    <dependencies>
+        <!--系统管理模块,引入依赖接口才会被加载-->
+        <dependency>
+            <groupId>net.yiyuan</groupId>
+            <artifactId>yiyuan-core-sys</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <!--权限管理模块，引入依赖接口才会被加载-->
+        <dependency>
+            <groupId>net.yiyuan</groupId>
+            <artifactId>yiyuan-core-auth</artifactId>
+            <version>${revision}</version>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>2.7.5</version>
+                <configuration>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
+                <!--                <executions>-->
+                <!--                    <execution>-->
+                <!--                        <goals>-->
+                <!--                            &lt;!&ndash;可以把依赖的包都打包到生成的Jar包中&ndash;&gt;-->
+                <!--                            <goal>repackage</goal>-->
+                <!--                        </goals>-->
+                <!--                    </execution>-->
+                <!--                </executions>-->
+            </plugin>
+            <!-- 编译插件 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <!-- 跳过测试代码的编译 -->
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <!--                <version>3.6.1</version>-->
+                <configuration>
+                    <!--                    <source>11</source>-->
+                    <!--                    <target>11</target>-->
+                    <!--                    <release>11</release>-->
+                    <testFailureIgnore>true</testFailureIgnore>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+        </plugins>
+        <resources>
+            <!-- 扫描resources下所有资源 -->
+            <resource>
+                <directory>src/main/resources/</directory>
+            </resource>
+        </resources>
+    </build>
+</project>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>yiyuan</artifactId>
+        <groupId>net.yiyuan</groupId>
+        <version>${revision}</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <version>${revision}</version>
+    <artifactId>yiyuan-plugins</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>yiyuan-plugins-mp</module>
+        <module>yiyuan-plugins-satoken</module>
+    </modules>
+    <!--4:使用dependencyManagement管理,引入该模块必须使用dependencyManagement引入-->
+    <!--    <dependencyManagement>-->
+    <!--        <dependencies>-->
+    <!--            <dependency>-->
+    <!--                <groupId>net.yiyuan</groupId>-->
+    <!--                <artifactId>yiyuan-dependencies</artifactId>-->
+    <!--                <version>${revision}</version>-->
+    <!--                <type>pom</type>-->
+    <!--                <scope>import</scope>-->
+    <!--            </dependency>-->
+    <!--        </dependencies>-->
+    <!--    </dependencyManagement>-->
+    <!--    <dependencies>-->
+    <!--        &lt;!&ndash; web &ndash;&gt;-->
+    <!--        &lt;!&ndash;        <dependency>&ndash;&gt;-->
+    <!--        &lt;!&ndash;            <groupId>org.springframework.boot</groupId>&ndash;&gt;-->
+    <!--        &lt;!&ndash;            <artifactId>spring-boot-starter-web</artifactId>&ndash;&gt;-->
+    <!--        &lt;!&ndash;        </dependency>&ndash;&gt;-->
+    <!--        &lt;!&ndash;公共模块 下面的每个模块都需要常量，字典，异常，实体，工具类，以及数据库插件以及spring-web插件&ndash;&gt;-->
+    <!--        <dependency>-->
+    <!--            <groupId>net.yiyuan</groupId>-->
+    <!--            <artifactId>yiyuan-common</artifactId>-->
+    <!--            <version>${revision}</version>-->
+    <!--        </dependency>-->
+    <!--    </dependencies>-->
+    <dependencies>
+        <dependency>
+            <groupId>net.yiyuan</groupId>
+            <artifactId>yiyuan-common</artifactId>
+            <version>${revision}</version>
+        </dependency>
+    </dependencies>
+
+
+</project>

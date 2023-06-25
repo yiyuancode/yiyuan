@@ -1,0 +1,206 @@
+sys_tenant,sys_user,sys_user_role,sys_role,sys_role_menu,sys_menu,sys_dept,sys_job
+net.yiyuan.admin
+sys
+net.yiyuan.modules.commonapi
+
+net.yiyuan.modules.commonapi
+yiyuan-modules-commonapi
+
+yiyuan-modules-mp-admins
+net.yiyuan.modules.mp.admin
+
+模板生成的增删改查不用改,因为都是单边增删改查 ，不需要用到复杂参数格式
+复杂业务手写的接口可以采用body+valeud的json形式
+
+模板生成的可以把其他非get请求请求都换成post
+
+
+
+使用mybits-plus以后应该把db包拆分多租户和平台端的
+因为加了多租户插件 所有sql都会先去获取租户id，没法改  
+
+myibits-plus的所有增删改查都会增加租户id，所有只有租户表 平台管理员可以看 不需要租户id
+租户id统一和toekn放在请求头部，会自动获取（放弃）
+租户id还是放在参数里面 直接和表对应上 只要 好获取
+
+菜单
+
+
+如果只有平台管理员会操作的表 一定要在mp多租户插件里面排除那张表
+在设计的时候一定划分清楚表 只有平台操作的 比如中间件监控，租户管理， 
+平台和租户都要管理的菜单管理
+
+菜单管理增删改查 只有平台管理员维护(所有菜单管理只有角色才有)
+租户只有分配给相应角色的权力
+做不了像钉钉那样大的归应用管理
+
+
+
+数据库中间表的的注释统一用_关联一下
+
+
+登录的时候从前端账号类型   satoken做三个接口区分是哪一端  然后再用户表里面同类型的账号里面去找这个账号是否存在，为了兼容多端最好都采用手机号或者账号昵称登录，然后再授权绑定个平台的ID
+
+
+
+要写个 工具类 自动根据 接口名的路径生成 contoller 和service 以及req和resp的实体类
+
+
+可以把一个大模块的所有的mapper 和service 写成一个base版的 其他继承就行
+
+为了兼容myplus的租户id为0的数据就是平台的
+
+registerTenant
+loginTenant
+registerAdmin
+
+菜单管理不是真正权限管理  而是菜单的crud，菜单管理应该归属于系统管理里面 系统管理包含了所有sys开头的表的基础信息维护
+权限管理 包含了 维护用户 ，角色 ，用户和角色关联  ，角色菜单关联，部门，岗位，部门和岗位的关联
+
+
+没有租户id的表 那是肯定直接 再mp租户插件排除的
+
+
+
+
+https://segmentfault.com/a/1190000021640417  很好一篇讲解模块拆分
+
+
+按照core下面在控制层 服务层 dao层  这样可以让数据库那些依赖 不会乱依赖
+
+可以在admin下面再分两个子模块 分别是租户和平台模块 这样就可以全部继承admin了 各层了
+
+db不应该放在comon或者放在顶层夫模块  ，因为不是所有的模块都有db的  所以可以弄成
+
+如果在 Spring Boot 的项目中，同一个模块下面的子模块是以 Maven 的 module 形式进行管理的，那么在 pom.xml 中添加依赖是不必要的。在 Maven 的 module 项目中，子模块之间的依赖已经在父级 pom.xml 中声明，因此在子模块的 pom.xml 中不需要再添加依赖。
+
+例如，一个 Spring Boot 的项目结构可能如下所示：
+
+Copy
+myproject
+├── pom.xml
+├── app
+│   ├── pom.xml
+│   ├── src
+│   │   └── main
+│   │       └── java
+│   ├── resources
+│   └── ...
+├── db
+│   ├── pom.xml
+│   ├── src
+│   │   └── main
+│   │       └── java
+│   ├── resources
+│   └── ...
+└── ...
+在这个项目中，app 模块和 db 模块都是 myproject 父级 pom.xml 中的子模块。因此，在 app 模块的 pom.xml 文件和 db 模块的 pom.xml 文件中并不需要分别声明依赖关系，而是可以直接使用父级 pom.xml 中声明的依赖。
+
+需要注意的是，如果子模块之间存在非 Maven 的依赖关系，例如使用了本地文件或其他方式进行依赖，那么在子模块的 pom.xml 文件中可能需要进行相应的配置。
+
+注意了
+所以应该在顶级模块下面在抽象一个应用模块
+
+并且 maven的模块可以继承  但是上级不能关联同级别下面的子模块  需要单独引入同级别下面的子模块
+
+
+两个pom下面的模块之间  不会相互引用  只有为下级的时候才会继承  只有继承与依赖  但是如果依赖他的父亲会不会自动依赖他的所有子模快
+
+
+
+如果同级别的模块 A 依赖了模块 B，B 下面的子模块不会自动被 A 依赖。这是因为 Maven 中的依赖是单向的，只有被依赖的模块会被自动引入到依赖它的模块中，而被依赖的模块的子模块不会自动被引入。
+
+举个例子，假设我们有一个 Maven 项目，其中有两个同级别的模块 A 和 B，B 中包含一个子模块 B1，A 依赖于 B，但并没有直接依赖 B1。在这种情况下，如果我们想让 B1 被 A 依赖，需要在 A 的 pom.xml 文件中显式地声明对 B1 的依赖，例如：
+
+```
+<dependencies>
+    ...
+    <dependency>
+        <groupId>com.example</groupId>
+        <artifactId>B1</artifactId>
+        <version>1.0.0</version>
+    </dependency>
+    ...
+</dependencies>
+```
+
+需要注意的是，在 Maven 3.0.4 及以上版本中，可以使用“依赖传递性”（dependency mediation）的特性来自动解决子模块的依赖关系。如果 B 的 pom.xml 文件中已经声明了对 B1 的依赖，那么在 A 中声明对 B 的依赖时，B1 也会自动被引入到 A 中。但是，为了保证项目的稳定性和可维护性，建议在使用依赖传递性时，仍然要显式地声明对子模块的依赖，以免出现意外的依赖问题。
+
+
+但是core里面会引用所有上层的公共 所以 admin引入core就不需要引用公共，所以我们写 先实现 core里面的模块  然后单独写admin的时候在弄
+公共模块里面的 最好不要有什么插件上面的引用 最好都是自己原创的 包围请求库那些都不要有
+
+
+
+
+
+
+
+
+
+
+
+当使用 Maven 引入一个父模块时，Maven 默认不会自动导入父模块下的子依赖模块。如果需要自动导入子依赖模块，可以使用 Maven 的 `dependencyManagement` 元素中的 `dependencies` 元素来指定子模块的依赖关系。
+
+具体来说，可以在父模块的 `dependencyManagement` 元素中，使用 `dependencies` 元素来列出所有子依赖模块和它们的依赖项，如下所示：
+
+```
+<dependencyManagement>
+  <dependencies>
+    <dependency>
+      <groupId>com.example</groupId>
+      <artifactId>my-child-module-1</artifactId>
+      <version>1.0.0</version>
+      <dependencies>
+        <dependency>
+          <groupId>com.example</groupId>
+          <artifactId>my-common-lib</artifactId>
+          <version>1.0.0</version>
+        </dependency>
+      </dependencies>
+    </dependency>
+    <dependency>
+      <groupId>com.example</groupId>
+      <artifactId>my-child-module-2</artifactId>
+      <version>1.0.0</version>
+      <dependencies>
+        <dependency>
+          <groupId>com.example</groupId>
+          <artifactId>my-common-lib</artifactId>
+          <version>1.0.0</version>
+        </dependency>
+      </dependencies>
+    </dependency>
+  </dependencies>
+</dependencyManagement>
+```
+
+在这个示例中，父模块定义了两个子依赖模块 `my-child-module-1` 和 `my-child-module-2`，并通过 `dependencies` 元素列出了它们的依赖项。注意，这里需要将子模块的依赖关系也放在 `dependencies` 元素中，而不是直接放在 `dependency` 元素中，否则子模块的依赖关系将不会被自动继承。
+
+当子模块需要引入这些依赖项时，只需要在子模块的 `dependencies` 元素中声明它们的 `groupId` 和 `artifactId`，而无需指定版本号，因为 Maven 会自动将父模块中定义的版本号应用到子模块中。例如：
+
+```
+<dependencies>
+  <dependency>
+    <groupId>com.example</groupId>
+    <artifactId>my-common-lib</artifactId>
+  </dependency>
+</dependencies>
+```
+
+当 Maven 构建子模块时，它会自动将父模块中定义的版本号应用到子模块的依赖项中，从而实现统一依赖管理。
+
+
+和spring 所有有依赖相关的工具类 都放再core模块下面的，因为core依赖了所有模块 以及和satoken还有mp有关的通用工具类都放再core下面
+
+
+和hutool相关的都放再那边comon里面
+
+所有细分的时候根据依赖细分也行
+
+并且相关依赖 都可以放在父级别 不用太细分 放在子模块依赖了 这样快准狠  就是多依赖也依赖不了 因为dependencyManagement做了版本号是统一的
+
+
+其实工程师一个大工程   所有包的前缀都是 net.yiyuan  所以 实际相当于再一个工程里面按照模块细分包一样 最后打成jar都会合在一起的
+
+我觉得 按照依赖细分模块也行
