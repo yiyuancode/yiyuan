@@ -18,7 +18,7 @@ import java.util.List;
  * 用户_角色管理Service层接口实现
  *
  * @author 一源团队--花和尚
- * @date 2023-06-24
+ * @date 2023-07-02
  */
 @Slf4j
 @Service
@@ -32,7 +32,7 @@ public class AuthAdminRoleServiceImpl extends JoinServiceImpl<AuthAdminRoleMappe
    * @param request 用户_角色实体
    * @return {@link List}
    * @author 一源团队--花和尚
-   * @date 2023-06-24
+   * @date 2023-07-02
    */
   @Override
   public List<AuthAdminRole> list(AuthAdminRole request) throws Exception {
@@ -47,7 +47,7 @@ public class AuthAdminRoleServiceImpl extends JoinServiceImpl<AuthAdminRoleMappe
    * @param request 用户_角色实体
    * @return {@link Page}
    * @author 一源团队--花和尚
-   * @date 2023-06-24
+   * @date 2023-07-02
    */
   @Override
   public Page<AuthAdminRole> pages(AuthAdminRole request, Integer pageSize, Integer pageNum)
@@ -67,7 +67,7 @@ public class AuthAdminRoleServiceImpl extends JoinServiceImpl<AuthAdminRoleMappe
    * @param request 用户_角色实体
    * @return {@link AuthAdminRole}
    * @author 一源团队--花和尚
-   * @date 2023-06-24
+   * @date 2023-07-02
    */
   @Override
   public AuthAdminRole details(AuthAdminRole request) throws Exception {
@@ -82,7 +82,7 @@ public class AuthAdminRoleServiceImpl extends JoinServiceImpl<AuthAdminRoleMappe
    * @param request 用户_角色实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-06-24
+   * @date 2023-07-02
    */
   @Transactional
   @Override
@@ -96,7 +96,7 @@ public class AuthAdminRoleServiceImpl extends JoinServiceImpl<AuthAdminRoleMappe
    * @param ids 逗号分割id
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-06-24
+   * @date 2023-07-02
    */
   @Transactional
   @Override
@@ -110,12 +110,11 @@ public class AuthAdminRoleServiceImpl extends JoinServiceImpl<AuthAdminRoleMappe
    * @param request 用户_角色实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-06-24
+   * @date 2023-07-02
    */
   @Transactional
   @Override
   public boolean edit(AuthAdminRole request) throws Exception {
-    AuthAdminRole query = new AuthAdminRole();
     request.setUpdatedTime(new Date());
     return updateById(request);
   }
@@ -126,7 +125,7 @@ public class AuthAdminRoleServiceImpl extends JoinServiceImpl<AuthAdminRoleMappe
    * @param request 用户_角色实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-06-24
+   * @date 2023-07-02
    */
   @Transactional
   @Override

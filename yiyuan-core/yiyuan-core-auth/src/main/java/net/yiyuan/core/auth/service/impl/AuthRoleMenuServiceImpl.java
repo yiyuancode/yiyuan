@@ -18,7 +18,7 @@ import java.util.List;
  * 角色_菜单管理Service层接口实现
  *
  * @author 一源团队--花和尚
- * @date 2023-06-24
+ * @date 2023-07-02
  */
 @Slf4j
 @Service
@@ -32,7 +32,7 @@ public class AuthRoleMenuServiceImpl extends JoinServiceImpl<AuthRoleMenuMapper,
    * @param request 角色_菜单实体
    * @return {@link List}
    * @author 一源团队--花和尚
-   * @date 2023-06-24
+   * @date 2023-07-02
    */
   @Override
   public List<AuthRoleMenu> list(AuthRoleMenu request) throws Exception {
@@ -47,7 +47,7 @@ public class AuthRoleMenuServiceImpl extends JoinServiceImpl<AuthRoleMenuMapper,
    * @param request 角色_菜单实体
    * @return {@link Page}
    * @author 一源团队--花和尚
-   * @date 2023-06-24
+   * @date 2023-07-02
    */
   @Override
   public Page<AuthRoleMenu> pages(AuthRoleMenu request, Integer pageSize, Integer pageNum)
@@ -66,7 +66,7 @@ public class AuthRoleMenuServiceImpl extends JoinServiceImpl<AuthRoleMenuMapper,
    * @param request 角色_菜单实体
    * @return {@link AuthRoleMenu}
    * @author 一源团队--花和尚
-   * @date 2023-06-24
+   * @date 2023-07-02
    */
   @Override
   public AuthRoleMenu details(AuthRoleMenu request) throws Exception {
@@ -81,7 +81,7 @@ public class AuthRoleMenuServiceImpl extends JoinServiceImpl<AuthRoleMenuMapper,
    * @param request 角色_菜单实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-06-24
+   * @date 2023-07-02
    */
   @Transactional
   @Override
@@ -95,7 +95,7 @@ public class AuthRoleMenuServiceImpl extends JoinServiceImpl<AuthRoleMenuMapper,
    * @param ids 逗号分割id
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-06-24
+   * @date 2023-07-02
    */
   @Transactional
   @Override
@@ -109,12 +109,11 @@ public class AuthRoleMenuServiceImpl extends JoinServiceImpl<AuthRoleMenuMapper,
    * @param request 角色_菜单实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-06-24
+   * @date 2023-07-02
    */
   @Transactional
   @Override
   public boolean edit(AuthRoleMenu request) throws Exception {
-    AuthRoleMenu query = new AuthRoleMenu();
     request.setUpdatedTime(new Date());
     return updateById(request);
   }
@@ -125,7 +124,7 @@ public class AuthRoleMenuServiceImpl extends JoinServiceImpl<AuthRoleMenuMapper,
    * @param request 角色_菜单实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-06-24
+   * @date 2023-07-02
    */
   @Transactional
   @Override

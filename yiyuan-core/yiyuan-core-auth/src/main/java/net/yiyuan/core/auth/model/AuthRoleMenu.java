@@ -10,7 +10,7 @@ import java.util.Date;
  * 角色_菜单管理实体
  *
  * @author 一源团队--花和尚
- * @date 2023-06-24
+ * @date 2023-07-02
  */
 @Data
 public class AuthRoleMenu implements Serializable {
@@ -21,7 +21,7 @@ public class AuthRoleMenu implements Serializable {
    *
    * @see String
    * @author 一源团队--花和尚
-   * @date 2023-06-24
+   * @date 2023-07-02
    */
   private String roleId;
 
@@ -30,7 +30,7 @@ public class AuthRoleMenu implements Serializable {
    *
    * @see String
    * @author 一源团队--花和尚
-   * @date 2023-06-24
+   * @date 2023-07-02
    */
   private String menuId;
 
@@ -39,7 +39,7 @@ public class AuthRoleMenu implements Serializable {
    *
    * @see Date
    * @author 一源团队--花和尚
-   * @date 2023-06-24
+   * @date 2023-07-02
    */
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
@@ -50,18 +50,18 @@ public class AuthRoleMenu implements Serializable {
    *
    * @see Date
    * @author 一源团队--花和尚
-   * @date 2023-06-24
+   * @date 2023-07-02
    */
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
   private Date createdTime;
 
   /**
-   * 所属租户
+   * 租户id
    *
    * @see String
    * @author 一源团队--花和尚
-   * @date 2023-06-24
+   * @date 2023-07-02
    */
   private String tenantId;
 }

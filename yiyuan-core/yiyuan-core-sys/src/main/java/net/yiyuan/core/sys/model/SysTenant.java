@@ -12,7 +12,7 @@ import java.util.Date;
  * 租户管理实体
  *
  * @author 一源团队--花和尚
- * @date 2023-06-24
+ * @date 2023-07-02
  */
 @Data
 public class SysTenant implements Serializable {
@@ -21,7 +21,7 @@ public class SysTenant implements Serializable {
   /**
    * 租户id
    *
-   * @date 2023-06-24
+   * @date 2023-07-02
    */
   @TableId(value = "id", type = IdType.ASSIGN_UUID)
   private String id;
@@ -31,7 +31,7 @@ public class SysTenant implements Serializable {
    *
    * @see String
    * @author 一源团队--花和尚
-   * @date 2023-06-24
+   * @date 2023-07-02
    */
   private String name;
 
@@ -40,7 +40,7 @@ public class SysTenant implements Serializable {
    *
    * @see String
    * @author 一源团队--花和尚
-   * @date 2023-06-24
+   * @date 2023-07-02
    */
   private String code;
 
@@ -49,7 +49,7 @@ public class SysTenant implements Serializable {
    *
    * @see Date
    * @author 一源团队--花和尚
-   * @date 2023-06-24
+   * @date 2023-07-02
    */
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
@@ -60,7 +60,7 @@ public class SysTenant implements Serializable {
    *
    * @see Date
    * @author 一源团队--花和尚
-   * @date 2023-06-24
+   * @date 2023-07-02
    */
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
@@ -71,7 +71,7 @@ public class SysTenant implements Serializable {
    *
    * @see Date
    * @author 一源团队--花和尚
-   * @date 2023-06-24
+   * @date 2023-07-02
    */
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
@@ -82,7 +82,7 @@ public class SysTenant implements Serializable {
    *
    * @see Date
    * @author 一源团队--花和尚
-   * @date 2023-06-24
+   * @date 2023-07-02
    */
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
@@ -93,16 +93,16 @@ public class SysTenant implements Serializable {
    *
    * @see String
    * @author 一源团队--花和尚
-   * @date 2023-06-24
+   * @date 2023-07-02
    */
   private String status;
 
   /**
-   * 所属租户
+   * 租户id
    *
    * @see String
    * @author 一源团队--花和尚
-   * @date 2023-06-24
+   * @date 2023-07-02
    */
   private String tenantId;
 }

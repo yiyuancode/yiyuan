@@ -11,7 +11,7 @@ import java.util.List;
  * 角色管理Service层接口
  *
  * @author 一源团队--花和尚
- * @date 2023-06-24
+ * @date 2023-07-02
  */
 public interface AuthRoleService extends JoinIService<AuthRole> {
 
@@ -21,7 +21,7 @@ public interface AuthRoleService extends JoinIService<AuthRole> {
    * @param request 角色实体
    * @return {@link List}
    * @author 一源团队--花和尚
-   * @date 2023-06-24
+   * @date 2023-07-02
    */
   List<AuthRole> list(AuthRole request) throws Exception;
 
@@ -31,7 +31,7 @@ public interface AuthRoleService extends JoinIService<AuthRole> {
    * @param request 角色实体
    * @return {@link Page}
    * @author 一源团队--花和尚
-   * @date 2023-06-24
+   * @date 2023-07-02
    */
   Page<AuthRole> pages(AuthRole request, Integer pageSize, Integer pageNum) throws Exception;
 
@@ -41,7 +41,7 @@ public interface AuthRoleService extends JoinIService<AuthRole> {
    * @param request 角色实体
    * @return {@link AuthRole}
    * @author 一源团队--花和尚
-   * @date 2023-06-24
+   * @date 2023-07-02
    */
   AuthRole details(AuthRole request) throws Exception;
 
@@ -51,7 +51,7 @@ public interface AuthRoleService extends JoinIService<AuthRole> {
    * @param request 角色实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-06-24
+   * @date 2023-07-02
    */
   boolean del(AuthRole request) throws Exception;
 
@@ -61,7 +61,7 @@ public interface AuthRoleService extends JoinIService<AuthRole> {
    * @param ids 逗号分割id
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-06-24
+   * @date 2023-07-02
    */
   boolean dels(String ids) throws Exception;
 
@@ -71,7 +71,7 @@ public interface AuthRoleService extends JoinIService<AuthRole> {
    * @param request 角色实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-06-24
+   * @date 2023-07-02
    */
   boolean edit(AuthRole request) throws Exception;
 
@@ -81,7 +81,7 @@ public interface AuthRoleService extends JoinIService<AuthRole> {
    * @param request 角色实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-06-24
+   * @date 2023-07-02
    */
   boolean add(AuthRole request) throws Exception;
 

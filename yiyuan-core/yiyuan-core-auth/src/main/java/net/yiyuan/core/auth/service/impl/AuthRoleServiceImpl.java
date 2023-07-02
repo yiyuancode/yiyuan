@@ -25,7 +25,7 @@ import java.util.List;
  * 角色管理Service层接口实现
  *
  * @author 一源团队--花和尚
- * @date 2023-06-24
+ * @date 2023-07-02
  */
 @Slf4j
 @Service
@@ -39,7 +39,7 @@ public class AuthRoleServiceImpl extends JoinServiceImpl<AuthRoleMapper, AuthRol
    * @param request 角色实体
    * @return {@link List}
    * @author 一源团队--花和尚
-   * @date 2023-06-24
+   * @date 2023-07-02
    */
   @Override
   public List<AuthRole> list(AuthRole request) throws Exception {
@@ -54,7 +54,7 @@ public class AuthRoleServiceImpl extends JoinServiceImpl<AuthRoleMapper, AuthRol
    * @param request 角色实体
    * @return {@link Page}
    * @author 一源团队--花和尚
-   * @date 2023-06-24
+   * @date 2023-07-02
    */
   @Override
   public Page<AuthRole> pages(AuthRole request, Integer pageSize, Integer pageNum)
@@ -73,7 +73,7 @@ public class AuthRoleServiceImpl extends JoinServiceImpl<AuthRoleMapper, AuthRol
    * @param request 角色实体
    * @return {@link AuthRole}
    * @author 一源团队--花和尚
-   * @date 2023-06-24
+   * @date 2023-07-02
    */
   @Override
   public AuthRole details(AuthRole request) throws Exception {
@@ -88,7 +88,7 @@ public class AuthRoleServiceImpl extends JoinServiceImpl<AuthRoleMapper, AuthRol
    * @param request 角色实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-06-24
+   * @date 2023-07-02
    */
   @Transactional
   @Override
@@ -102,7 +102,7 @@ public class AuthRoleServiceImpl extends JoinServiceImpl<AuthRoleMapper, AuthRol
    * @param ids 逗号分割id
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-06-24
+   * @date 2023-07-02
    */
   @Transactional
   @Override
@@ -116,12 +116,11 @@ public class AuthRoleServiceImpl extends JoinServiceImpl<AuthRoleMapper, AuthRol
    * @param request 角色实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-06-24
+   * @date 2023-07-02
    */
   @Transactional
   @Override
   public boolean edit(AuthRole request) throws Exception {
-    AuthRole query = new AuthRole();
     request.setUpdatedTime(new Date());
     return updateById(request);
   }
@@ -132,7 +131,7 @@ public class AuthRoleServiceImpl extends JoinServiceImpl<AuthRoleMapper, AuthRol
    * @param request 角色实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-06-24
+   * @date 2023-07-02
    */
   @Transactional
   @Override
@@ -141,7 +140,14 @@ public class AuthRoleServiceImpl extends JoinServiceImpl<AuthRoleMapper, AuthRol
     request.setUpdatedTime(new Date());
     return save(request);
   }
-
+  /**
+   * 分配菜单
+   *
+   * @param request 分配菜单请求实体
+   * @return {@link boolean}
+   * @author 一源团队--花和尚
+   * @date 2023-06-24
+   */
   @Override
   public boolean assignMenu(AssignMenuReq request) throws Exception {
     List<AuthRoleMenu> addList = new ArrayList<>();

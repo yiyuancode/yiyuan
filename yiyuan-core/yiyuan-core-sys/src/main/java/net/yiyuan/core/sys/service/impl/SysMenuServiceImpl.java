@@ -7,8 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import net.yiyuan.core.sys.mapper.SysMenuMapper;
 import net.yiyuan.core.sys.model.SysMenu;
 import net.yiyuan.core.sys.service.SysMenuService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,18 +14,16 @@ import javax.annotation.Resource;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-
 /**
  * 菜单管理Service层接口实现
  *
  * @author 一源团队--花和尚
- * @date 2023-06-24
+ * @date 2023-07-02
  */
 @Slf4j
 @Service
 public class SysMenuServiceImpl extends JoinServiceImpl<SysMenuMapper, SysMenu>
     implements SysMenuService {
-  private static final Logger LOGGER = LoggerFactory.getLogger(SysMenuServiceImpl.class);
   @Resource private SysMenuMapper sysMenuMapper;
 
   /**
@@ -36,7 +32,7 @@ public class SysMenuServiceImpl extends JoinServiceImpl<SysMenuMapper, SysMenu>
    * @param request 菜单实体
    * @return {@link List}
    * @author 一源团队--花和尚
-   * @date 2023-06-24
+   * @date 2023-07-02
    */
   @Override
   public List<SysMenu> list(SysMenu request) throws Exception {
@@ -51,7 +47,7 @@ public class SysMenuServiceImpl extends JoinServiceImpl<SysMenuMapper, SysMenu>
    * @param request 菜单实体
    * @return {@link Page}
    * @author 一源团队--花和尚
-   * @date 2023-06-24
+   * @date 2023-07-02
    */
   @Override
   public Page<SysMenu> pages(SysMenu request, Integer pageSize, Integer pageNum) throws Exception {
@@ -69,7 +65,7 @@ public class SysMenuServiceImpl extends JoinServiceImpl<SysMenuMapper, SysMenu>
    * @param request 菜单实体
    * @return {@link SysMenu}
    * @author 一源团队--花和尚
-   * @date 2023-06-24
+   * @date 2023-07-02
    */
   @Override
   public SysMenu details(SysMenu request) throws Exception {
@@ -84,7 +80,7 @@ public class SysMenuServiceImpl extends JoinServiceImpl<SysMenuMapper, SysMenu>
    * @param request 菜单实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-06-24
+   * @date 2023-07-02
    */
   @Transactional
   @Override
@@ -98,14 +94,12 @@ public class SysMenuServiceImpl extends JoinServiceImpl<SysMenuMapper, SysMenu>
    * @param ids 逗号分割id
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-06-24
+   * @date 2023-07-02
    */
   @Transactional
   @Override
   public boolean dels(String ids) throws Exception {
-    log.info("dels:list{}", Arrays.asList(ids.split(",")));
-    removeByIds(Arrays.asList(ids.split(",")));
-    return true;
+    return removeByIds(Arrays.asList(ids.split(",")));
   }
 
   /**
@@ -114,7 +108,7 @@ public class SysMenuServiceImpl extends JoinServiceImpl<SysMenuMapper, SysMenu>
    * @param request 菜单实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-06-24
+   * @date 2023-07-02
    */
   @Transactional
   @Override
@@ -129,7 +123,7 @@ public class SysMenuServiceImpl extends JoinServiceImpl<SysMenuMapper, SysMenu>
    * @param request 菜单实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-06-24
+   * @date 2023-07-02
    */
   @Transactional
   @Override

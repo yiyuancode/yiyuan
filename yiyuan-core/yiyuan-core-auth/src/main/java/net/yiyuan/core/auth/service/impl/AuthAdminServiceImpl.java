@@ -22,7 +22,7 @@ import java.util.List;
  * 用户管理Service层接口实现
  *
  * @author 一源团队--花和尚
- * @date 2023-06-24
+ * @date 2023-07-02
  */
 @Slf4j
 @Service
@@ -30,14 +30,13 @@ public class AuthAdminServiceImpl extends JoinServiceImpl<AuthAdminMapper, AuthA
     implements AuthAdminService {
   @Resource private AuthAdminMapper authAdminMapper;
   @Resource private AuthAdminRoleService authAdminRoleService;
-
   /**
    * 用户列表(全部)
    *
    * @param request 用户实体
    * @return {@link List}
    * @author 一源团队--花和尚
-   * @date 2023-06-24
+   * @date 2023-07-02
    */
   @Override
   public List<AuthAdmin> list(AuthAdmin request) throws Exception {
@@ -52,7 +51,7 @@ public class AuthAdminServiceImpl extends JoinServiceImpl<AuthAdminMapper, AuthA
    * @param request 用户实体
    * @return {@link Page}
    * @author 一源团队--花和尚
-   * @date 2023-06-24
+   * @date 2023-07-02
    */
   @Override
   public Page<AuthAdmin> pages(AuthAdmin request, Integer pageSize, Integer pageNum)
@@ -71,7 +70,7 @@ public class AuthAdminServiceImpl extends JoinServiceImpl<AuthAdminMapper, AuthA
    * @param request 用户实体
    * @return {@link AuthAdmin}
    * @author 一源团队--花和尚
-   * @date 2023-06-24
+   * @date 2023-07-02
    */
   @Override
   public AuthAdmin details(AuthAdmin request) throws Exception {
@@ -86,7 +85,7 @@ public class AuthAdminServiceImpl extends JoinServiceImpl<AuthAdminMapper, AuthA
    * @param request 用户实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-06-24
+   * @date 2023-07-02
    */
   @Transactional
   @Override
@@ -100,7 +99,7 @@ public class AuthAdminServiceImpl extends JoinServiceImpl<AuthAdminMapper, AuthA
    * @param ids 逗号分割id
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-06-24
+   * @date 2023-07-02
    */
   @Transactional
   @Override
@@ -114,12 +113,11 @@ public class AuthAdminServiceImpl extends JoinServiceImpl<AuthAdminMapper, AuthA
    * @param request 用户实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-06-24
+   * @date 2023-07-02
    */
   @Transactional
   @Override
   public boolean edit(AuthAdmin request) throws Exception {
-    AuthAdmin query = new AuthAdmin();
     request.setUpdatedTime(new Date());
     return updateById(request);
   }
@@ -130,7 +128,7 @@ public class AuthAdminServiceImpl extends JoinServiceImpl<AuthAdminMapper, AuthA
    * @param request 用户实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-06-24
+   * @date 2023-07-02
    */
   @Transactional
   @Override

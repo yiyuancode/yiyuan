@@ -11,7 +11,7 @@ import java.util.List;
  * 用户管理Service层接口
  *
  * @author 一源团队--花和尚
- * @date 2023-06-24
+ * @date 2023-07-02
  */
 public interface AuthAdminService extends JoinIService<AuthAdmin> {
 
@@ -21,7 +21,7 @@ public interface AuthAdminService extends JoinIService<AuthAdmin> {
    * @param request 用户实体
    * @return {@link List}
    * @author 一源团队--花和尚
-   * @date 2023-06-24
+   * @date 2023-07-02
    */
   List<AuthAdmin> list(AuthAdmin request) throws Exception;
 
@@ -31,7 +31,7 @@ public interface AuthAdminService extends JoinIService<AuthAdmin> {
    * @param request 用户实体
    * @return {@link Page}
    * @author 一源团队--花和尚
-   * @date 2023-06-24
+   * @date 2023-07-02
    */
   Page<AuthAdmin> pages(AuthAdmin request, Integer pageSize, Integer pageNum) throws Exception;
 
@@ -41,7 +41,7 @@ public interface AuthAdminService extends JoinIService<AuthAdmin> {
    * @param request 用户实体
    * @return {@link AuthAdmin}
    * @author 一源团队--花和尚
-   * @date 2023-06-24
+   * @date 2023-07-02
    */
   AuthAdmin details(AuthAdmin request) throws Exception;
 
@@ -51,7 +51,7 @@ public interface AuthAdminService extends JoinIService<AuthAdmin> {
    * @param request 用户实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-06-24
+   * @date 2023-07-02
    */
   boolean del(AuthAdmin request) throws Exception;
 
@@ -61,7 +61,7 @@ public interface AuthAdminService extends JoinIService<AuthAdmin> {
    * @param ids 逗号分割id
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-06-24
+   * @date 2023-07-02
    */
   boolean dels(String ids) throws Exception;
 
@@ -71,7 +71,7 @@ public interface AuthAdminService extends JoinIService<AuthAdmin> {
    * @param request 用户实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-06-24
+   * @date 2023-07-02
    */
   boolean edit(AuthAdmin request) throws Exception;
 
@@ -81,10 +81,9 @@ public interface AuthAdminService extends JoinIService<AuthAdmin> {
    * @param request 用户实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-06-24
+   * @date 2023-07-02
    */
   boolean add(AuthAdmin request) throws Exception;
-
   /**
    * 分配角色
    *

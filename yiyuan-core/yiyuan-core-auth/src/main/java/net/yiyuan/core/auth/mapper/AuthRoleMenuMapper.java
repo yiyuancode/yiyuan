@@ -7,6 +7,6 @@ import net.yiyuan.core.auth.model.AuthRoleMenu;
  * 角色_菜单管理 Mapper接口
  *
  * @author 一源团队--花和尚
- * @date 2023-06-24
+ * @date 2023-07-02
  */
 public interface AuthRoleMenuMapper extends JoinBaseMapper<AuthRoleMenu> {}

@@ -10,7 +10,7 @@ import java.util.List;
  * 用户_角色管理Service层接口
  *
  * @author 一源团队--花和尚
- * @date 2023-06-24
+ * @date 2023-07-02
  */
 public interface AuthAdminRoleService extends JoinIService<AuthAdminRole> {
 
@@ -20,7 +20,7 @@ public interface AuthAdminRoleService extends JoinIService<AuthAdminRole> {
    * @param request 用户_角色实体
    * @return {@link List}
    * @author 一源团队--花和尚
-   * @date 2023-06-24
+   * @date 2023-07-02
    */
   List<AuthAdminRole> list(AuthAdminRole request) throws Exception;
 
@@ -30,7 +30,7 @@ public interface AuthAdminRoleService extends JoinIService<AuthAdminRole> {
    * @param request 用户_角色实体
    * @return {@link Page}
    * @author 一源团队--花和尚
-   * @date 2023-06-24
+   * @date 2023-07-02
    */
   Page<AuthAdminRole> pages(AuthAdminRole request, Integer pageSize, Integer pageNum)
       throws Exception;
@@ -41,7 +41,7 @@ public interface AuthAdminRoleService extends JoinIService<AuthAdminRole> {
    * @param request 用户_角色实体
    * @return {@link AuthAdminRole}
    * @author 一源团队--花和尚
-   * @date 2023-06-24
+   * @date 2023-07-02
    */
   AuthAdminRole details(AuthAdminRole request) throws Exception;
 
@@ -51,7 +51,7 @@ public interface AuthAdminRoleService extends JoinIService<AuthAdminRole> {
    * @param request 用户_角色实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-06-24
+   * @date 2023-07-02
    */
   boolean del(AuthAdminRole request) throws Exception;
 
@@ -61,7 +61,7 @@ public interface AuthAdminRoleService extends JoinIService<AuthAdminRole> {
    * @param ids 逗号分割id
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-06-24
+   * @date 2023-07-02
    */
   boolean dels(String ids) throws Exception;
 
@@ -71,7 +71,7 @@ public interface AuthAdminRoleService extends JoinIService<AuthAdminRole> {
    * @param request 用户_角色实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-06-24
+   * @date 2023-07-02
    */
   boolean edit(AuthAdminRole request) throws Exception;
 
@@ -81,7 +81,7 @@ public interface AuthAdminRoleService extends JoinIService<AuthAdminRole> {
    * @param request 用户_角色实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-06-24
+   * @date 2023-07-02
    */
   boolean add(AuthAdminRole request) throws Exception;
 }
