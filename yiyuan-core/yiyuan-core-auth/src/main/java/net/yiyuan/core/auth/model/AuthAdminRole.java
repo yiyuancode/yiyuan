@@ -1,7 +1,5 @@
 package net.yiyuan.core.auth.model;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -17,13 +15,6 @@ import java.util.Date;
 @Data
 public class AuthAdminRole implements Serializable {
   private static final long serialVersionUID = 1L;
-
-  /**
-   * 用户ID
-   *
-   * @date 2023-07-02
-   */
-  @TableId(value = "userId", type = IdType.ASSIGN_UUID)
 
   /**
    * 用户ID
