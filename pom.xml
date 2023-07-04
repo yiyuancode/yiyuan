@@ -25,6 +25,7 @@
         <module>yiyuan-admin</module>
         <module>yiyuan-app</module>
 
+
     </modules>
     <!--5:新增项目所有插件依赖版本号-->
     <properties>

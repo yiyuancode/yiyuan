@@ -1,0 +1,60 @@
+#spring:
+#  datasource:
+#    quartz:
+#      driver-class-name: com.mysql.cj.jdbc.Driver
+#      url: jdbc:mysql://43.154.183.115:40020/admin_dev?serverTimezone=Asia/Shanghai
+#      username: root
+#      password: 123456
+#  quartz:
+#    job-store-type: jdbc # 使用数据库存储
+#    scheduler-name: hyhScheduler # 相同 Scheduler 名字的节点，形成一个 Quartz 集群
+#    wait-for-jobs-to-complete-on-shutdown: true # 应用关闭时，是否等待定时任务执行完成。默认为 false ，建议设置为 true
+#    jdbc:
+#      initialize-schema: never # 是否自动使用 SQL 初始化 Quartz 表结构。这里设置成 never ，我们手动创建表结构。
+#    properties:
+#      org:
+#        quartz:
+#          # JobStore 相关配置
+#          jobStore:
+#            dataSource: quartzDataSource # 使用的数据源
+#            class: org.quartz.impl.jdbcjobstore.JobStoreTX # JobStore 实现类
+#            driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+#            tablePrefix: QRTZ_ # Quartz 表前缀
+#            isClustered: true # 是集群模式
+#            clusterCheckinInterval: 1000
+#            useProperties: false
+#          # 线程池相关配置
+#          threadPool:
+#            threadCount: 25 # 线程池大小。默认为 10 。
+#            threadPriority: 5 # 线程优先级
+#            class: org.quartz.simpl.SimpleThreadPool # 线程池类型
+
+spring:
+  quartz:
+  job-store-type: jdbc
+  # 是否等待任务执行完毕后，容器才会关闭
+  wait-for-jobs-to-complete-on-shutdown: true
+  scheduler-name: SpringBootDemoScheduler
+  properties:
+    org:
+      quartz:
+        threadPool:
+          # 线程数量
+          threadCount: 5
+          # 线程优先级
+          threadPriority: 5
+          # 线程池中线程名称的前缀
+          threadNamePrefix: test-thread
+          # 加载任务代码的ClassLoader是否从外部继承
+          threadsInheritContextClassLoaderOfInitializingThread: true
+        jobStore:
+          # 最大能忍受的触发超时时间，如果超时则认为“失误”
+          misfireThreshold: 5000
+          # 选择JDBC的存储方式
+          class: org.quartz.impl.jdbcjobstore.JobStoreTX
+          # 类似于Hibernate的dialect，用于处理DB之间的差异，StdJDBCDelegate能满足大部分的DB（授权）
+          driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+          # 在调度流程的第一步，也就是拉取待即将触发的triggers时，是上锁的状态，即不会同时存在多个线程拉取到相同的trigger的情况，也就避免的重复调度的危险。参考：https://segmentfault.com/a/1190000015492260
+          acquireTriggersWithinLock: true
+
+

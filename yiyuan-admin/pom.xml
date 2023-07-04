@@ -26,6 +26,13 @@
             <version>${revision}</version>
         </dependency>
 
+        <!--定时任务模块-->
+        <dependency>
+            <groupId>net.yiyuan</groupId>
+            <artifactId>yiyuan-core-task</artifactId>
+            <version>${revision}</version>
+        </dependency>
+
     </dependencies>
 
     <build>
