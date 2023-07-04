@@ -22,6 +22,7 @@ import javax.annotation.Resource;
 @RestController
 public class TaskController {
   @Resource TaskService taskService;
+
   /**
    * 添加定时任务
    *
@@ -33,7 +34,72 @@ public class TaskController {
   @SaIgnore
   @RequestMapping(value = "/task/addTask", method = RequestMethod.POST)
   @ResponseBody
-  public CommonResult<Boolean> login(@RequestBody @Validated AddTaskReq request) throws Exception {
+  public CommonResult<Boolean> addTask(@RequestBody @Validated AddTaskReq request)
+      throws Exception {
     return CommonResult.success(taskService.addTask(request));
+  }
+
+  /**
+   * 删除定时任务
+   *
+   * @param request 定时任务请求实体
+   * @return {@link CommonResult <Boolean>}
+   * @author 一源团队--花和尚
+   * @date 2023-06-23
+   */
+  @SaIgnore
+  @RequestMapping(value = "/task/delTask", method = RequestMethod.POST)
+  @ResponseBody
+  public CommonResult<Boolean> delTask(@RequestBody @Validated AddTaskReq request)
+      throws Exception {
+    return CommonResult.success(taskService.delTask(request));
+  }
+
+  /**
+   * 暂停定时任务
+   *
+   * @param request 定时任务请求实体
+   * @return {@link CommonResult <Boolean>}
+   * @author 一源团队--花和尚
+   * @date 2023-06-23
+   */
+  @SaIgnore
+  @RequestMapping(value = "/task/stopTask", method = RequestMethod.POST)
+  @ResponseBody
+  public CommonResult<Boolean> stopTask(@RequestBody @Validated AddTaskReq request)
+      throws Exception {
+    return CommonResult.success(taskService.stopTask(request));
+  }
+
+  /**
+   * 恢复定时任务
+   *
+   * @param request 定时任务请求实体
+   * @return {@link CommonResult <Boolean>}
+   * @author 一源团队--花和尚
+   * @date 2023-06-23
+   */
+  @SaIgnore
+  @RequestMapping(value = "/task/restartTask", method = RequestMethod.POST)
+  @ResponseBody
+  public CommonResult<Boolean> restartTask(@RequestBody @Validated AddTaskReq request)
+      throws Exception {
+    return CommonResult.success(taskService.restartTask(request));
+  }
+
+  /**
+   * 修改定时任务执行实践
+   *
+   * @param request 定时任务请求实体
+   * @return {@link CommonResult <Boolean>}
+   * @author 一源团队--花和尚
+   * @date 2023-06-23
+   */
+  @SaIgnore
+  @RequestMapping(value = "/task/editTaskCron", method = RequestMethod.POST)
+  @ResponseBody
+  public CommonResult<Boolean> editTaskCron(@RequestBody @Validated AddTaskReq request)
+      throws Exception {
+    return CommonResult.success(taskService.editTaskCron(request));
   }
 }
