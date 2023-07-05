@@ -35,9 +35,11 @@ spring:
             class: org.springframework.scheduling.quartz.LocalDataSourceJobStore
             driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate #跟数据库初始化脚本中配置保持一致
             tablePrefix: QRTZ_
+            #true开启集群模式  false 关闭安集群模式
             isClustered: true
-            clusterCheckinInterval: 10000
-            useProperties: false
+            clusterCheckinInterval: 5000
+            #建议在Quartz集群中将org.quartz.jobStore.useProperties属性设置为true，将调度程序的配置信息以字符串的方式存储到数据库中，以提高兼容性和可读性。即使在设置为false的情况下，Quartz集群仍然可以正常工作，只是可能会带来一些潜在的问题。
+            useProperties: true
           threadPool:
             class: org.quartz.simpl.SimpleThreadPool
             threadCount: 20
@@ -45,6 +47,7 @@ spring:
             threadsInheritContextClassLoaderOfInitializingThread: true
     job-store-type: jdbc
     overwrite-existing-jobs: true
+    #和scheduler.start()同样
     auto-startup: true
 
 

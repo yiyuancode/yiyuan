@@ -25,7 +25,7 @@ public class TaskService {
    */
   public Boolean addTask(AddTaskReq request) throws Exception {
     // 启动调度器
-    scheduler.start();
+    //    scheduler.start();
 
     // 构建Job信息
     JobDetail jobDetail =
