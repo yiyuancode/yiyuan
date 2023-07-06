@@ -1,4 +1,4 @@
-package net.yiyuan.core.task.model.add_task;
+package net.yiyuan.core.task.model;
 
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;

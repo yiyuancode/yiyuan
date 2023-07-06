@@ -1,7 +1,7 @@
 package net.yiyuan.admin.task;
 
 import lombok.extern.slf4j.Slf4j;
-import net.yiyuan.core.task.model.add_task.BaseJob;
+import net.yiyuan.core.task.model.BaseJob;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 

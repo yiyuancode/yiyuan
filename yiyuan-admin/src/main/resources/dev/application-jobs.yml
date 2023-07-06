@@ -34,7 +34,8 @@ spring:
           jobStore:
             class: org.springframework.scheduling.quartz.LocalDataSourceJobStore
             driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate #跟数据库初始化脚本中配置保持一致
-            tablePrefix: QRTZ_
+            #qrtz_  小写 可以让数据库小写  1：先将qrtz相关表在数据库按照小写来创建  2：设置数据库配置文件带小写lower_case_table_names=1不敏感
+            tablePrefix: qrtz_
             #true开启集群模式  false 关闭安集群模式
             isClustered: true
             clusterCheckinInterval: 5000

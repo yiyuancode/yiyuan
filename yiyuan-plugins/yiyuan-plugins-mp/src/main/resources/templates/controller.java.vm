@@ -57,9 +57,9 @@ private ${table.serviceName} ${serviceImplName};
  * @author  ${author}
  * @date ${date}
  */
-@SaCheckPermission(value = {"${package.ModuleName}:${table.name.toLowerCase()}:list"}, orRole = "admin" )
+@SaCheckPermission(value = {"${package.ModuleName}:${table.name.toLowerCase()}:list" }, orRole = "admin")
     ##@ApiOperation(value = "$!{table.comment.replaceAll("表", "")}列表(全部)" )
-@RequestMapping(value = "/${package.ModuleName}/${table.name.toLowerCase()}/list" , method = RequestMethod.GET)
+@RequestMapping(value = "/${package.ModuleName}/${table.name.toLowerCase()}/list", method = RequestMethod.GET)
 @ResponseBody
 public CommonResult<List<${table.entityName}>>list(${table.entityName} request)throws Exception{
         return CommonResult.success(${serviceImplName}.list(request));
@@ -75,13 +75,13 @@ public CommonResult<List<${table.entityName}>>list(${table.entityName} request)t
  * @date ${date}
  */
 
-@SaCheckPermission(value = {"${package.ModuleName}:${table.name.toLowerCase()}:pages"}, orRole = "admin" )
-@RequestMapping(value = "/${package.ModuleName}/${table.name.toLowerCase()}/pages" , method = RequestMethod.GET)
+@SaCheckPermission(value = {"${package.ModuleName}:${table.name.toLowerCase()}:pages" }, orRole = "admin")
+@RequestMapping(value = "/${package.ModuleName}/${table.name.toLowerCase()}/pages", method = RequestMethod.GET)
 @ResponseBody
 public CommonResult<Page<${table.entityName}>>pages(
     ${table.entityName} request,
-@RequestParam(defaultValue = "10" ) Integer pageSize,
-@RequestParam(defaultValue = "1" ) Integer pageNum
+@RequestParam(defaultValue = "10") Integer pageSize,
+@RequestParam(defaultValue = "1") Integer pageNum
         )throws Exception{
         return CommonResult.success(${serviceImplName}.pages(request,pageSize,pageNum));
         }
@@ -95,8 +95,8 @@ public CommonResult<Page<${table.entityName}>>pages(
  * @date ${date}
  */
 
-@SaCheckPermission(value = {"${package.ModuleName}:${table.name.toLowerCase()}:details"}, orRole = "admin" )
-@RequestMapping(value = "/${package.ModuleName}/${table.name.toLowerCase()}/details" , method = RequestMethod.GET)
+@SaCheckPermission(value = {"${package.ModuleName}:${table.name.toLowerCase()}:details" }, orRole = "admin")
+@RequestMapping(value = "/${package.ModuleName}/${table.name.toLowerCase()}/details", method = RequestMethod.GET)
 @ResponseBody
 public CommonResult<${table.entityName}> details( ${table.entityName} request)throws Exception{
         return CommonResult.success(${serviceImplName}.details(request));
@@ -110,14 +110,14 @@ public CommonResult<${table.entityName}> details( ${table.entityName} request)th
  * @author  ${author}
  * @date ${date}
  */
-@SaCheckPermission(value = {"${package.ModuleName}:${table.name.toLowerCase()}:del"}, orRole = "admin" )
-@RequestMapping(value = "/${package.ModuleName}/${table.name.toLowerCase()}/del" , method = RequestMethod.POST)
+@SaCheckPermission(value = {"${package.ModuleName}:${table.name.toLowerCase()}:del" }, orRole = "admin")
+@RequestMapping(value = "/${package.ModuleName}/${table.name.toLowerCase()}/del", method = RequestMethod.POST)
 @ResponseBody
 public CommonResult<String> del(@RequestBody @Validated   ${table.entityName} request)throws Exception{
         if(${serviceImplName}.del(request)){
-        return CommonResult.success("删除$!{table.comment.replaceAll("表", "")}成功" );
+        return CommonResult.success("删除$!{table.comment.replaceAll("表", "")}成功");
         }else{
-        return CommonResult.failed("删除$!{table.comment.replaceAll("表", "")}失败" );
+        return CommonResult.failed("删除$!{table.comment.replaceAll("表", "")}失败");
         }
         }
 
@@ -130,14 +130,14 @@ public CommonResult<String> del(@RequestBody @Validated   ${table.entityName} re
  * @author  ${author}
  * @date ${date}
  */
-@SaCheckPermission(value = {"${package.ModuleName}:${table.name.toLowerCase()}:dels"}, orRole = "admin" )
-@RequestMapping(value = "/${package.ModuleName}/${table.name.toLowerCase()}/dels" , method = RequestMethod.POST)
+@SaCheckPermission(value = {"${package.ModuleName}:${table.name.toLowerCase()}:dels" }, orRole = "admin")
+@RequestMapping(value = "/${package.ModuleName}/${table.name.toLowerCase()}/dels", method = RequestMethod.POST)
 @ResponseBody
 public CommonResult<String> dels(@RequestParam @Validated({NotEmpty.class}) String ids)throws Exception{
         if(${serviceImplName}.dels(ids)){
-        return CommonResult.success("批量删除$!{table.comment.replaceAll("表", "")}成功" );
+        return CommonResult.success("批量删除$!{table.comment.replaceAll("表", "")}成功");
         }else{
-        return CommonResult.failed("批量删除$!{table.comment.replaceAll("表", "")}失败" );
+        return CommonResult.failed("批量删除$!{table.comment.replaceAll("表", "")}失败");
         }
         }
 /**
@@ -148,14 +148,14 @@ public CommonResult<String> dels(@RequestParam @Validated({NotEmpty.class}) Stri
  * @author  ${author}
  * @date ${date}
  */
-@SaCheckPermission(value = {"${package.ModuleName}:${table.name.toLowerCase()}:edit"}, orRole = "admin" )
-@RequestMapping(value = "/${package.ModuleName}/${table.name.toLowerCase()}/edit" , method = RequestMethod.POST)
+@SaCheckPermission(value = {"${package.ModuleName}:${table.name.toLowerCase()}:edit" }, orRole = "admin")
+@RequestMapping(value = "/${package.ModuleName}/${table.name.toLowerCase()}/edit", method = RequestMethod.POST)
 @ResponseBody
 public CommonResult<String> edit(@RequestBody @Validated   ${table.entityName} request)throws Exception{
         if(${serviceImplName}.edit(request)){
-        return CommonResult.success("修改$!{table.comment.replaceAll("表", "")}成功" );
+        return CommonResult.success("修改$!{table.comment.replaceAll("表", "")}成功");
         }else{
-        return CommonResult.failed("修改$!{table.comment.replaceAll("表", "")}失败" );
+        return CommonResult.failed("修改$!{table.comment.replaceAll("表", "")}失败");
         }
         }
 
@@ -168,14 +168,14 @@ public CommonResult<String> edit(@RequestBody @Validated   ${table.entityName} r
  * @author  ${author}
  * @date ${date}
  */
-@SaCheckPermission(value = {"${package.ModuleName}:${table.name.toLowerCase()}:add"}, orRole = "admin" )
-@RequestMapping(value = "/${package.ModuleName}/${table.name.toLowerCase()}/add" , method = RequestMethod.POST)
+@SaCheckPermission(value = {"${package.ModuleName}:${table.name.toLowerCase()}:add" }, orRole = "admin")
+@RequestMapping(value = "/${package.ModuleName}/${table.name.toLowerCase()}/add", method = RequestMethod.POST)
 @ResponseBody
 public CommonResult<String> add(@RequestBody @Validated  ${table.entityName} request)throws Exception{
         if(${serviceImplName}.add(request)){
-        return CommonResult.success("新增$!{table.comment.replaceAll("表", "")}成功" );
+        return CommonResult.success("新增$!{table.comment.replaceAll("表", "")}成功");
         }else{
-        return CommonResult.failed("新增$!{table.comment.replaceAll("表", "")}失败" );
+        return CommonResult.failed("新增$!{table.comment.replaceAll("表", "")}失败");
         }
         }
         }

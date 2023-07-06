@@ -1,6 +1,6 @@
 package net.yiyuan.core.task.utils;
 
-import net.yiyuan.core.task.model.add_task.BaseJob;
+import net.yiyuan.core.task.model.BaseJob;
 
 public class JobUtil {
   /**
