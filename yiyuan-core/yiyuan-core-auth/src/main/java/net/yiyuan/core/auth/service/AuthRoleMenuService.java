@@ -66,6 +66,16 @@ public interface AuthRoleMenuService extends JoinIService<AuthRoleMenu> {
   boolean dels(String ids) throws Exception;
 
   /**
+   * 批量删除角色_菜单表(根据同一属性)
+   *
+   * @param request 角色_菜单实体
+   * @return {@link boolean}
+   * @author 一源团队--花和尚
+   * @date 2023-07-02
+   */
+  boolean dels(AuthRoleMenu request) throws Exception;
+
+  /**
    * 编辑角色_菜单表
    *
    * @param request 角色_菜单实体

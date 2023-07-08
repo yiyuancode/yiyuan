@@ -66,6 +66,16 @@ public interface AuthAdminRoleService extends JoinIService<AuthAdminRole> {
   boolean dels(String ids) throws Exception;
 
   /**
+   * 批量删除用户_角色表(根据同一关联字段)
+   *
+   * @param ids 逗号分割id
+   * @return {@link boolean}
+   * @author 一源团队--花和尚
+   * @date 2023-07-02
+   */
+  boolean dels(AuthAdminRole request) throws Exception;
+
+  /**
    * 编辑用户_角色表
    *
    * @param request 用户_角色实体

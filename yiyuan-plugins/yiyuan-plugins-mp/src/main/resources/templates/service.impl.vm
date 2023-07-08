@@ -95,7 +95,7 @@ return joinGetOne(wrapper,${table.entityName}.class);
 * @author  ${author}
 * @date ${date}
 */
-@Transactional
+
 @Override
 public boolean del(${table.entityName} request) throws Exception{
 return removeById(request);
@@ -110,7 +110,7 @@ return removeById(request);
 * @author  ${author}
 * @date ${date}
 */
-@Transactional
+
 @Override
 public boolean dels(String ids) throws Exception{
 return removeByIds(Arrays.asList(ids.split(",")));
@@ -125,7 +125,7 @@ return removeByIds(Arrays.asList(ids.split(",")));
 * @author  ${author}
 * @date ${date}
 */
-@Transactional
+
 @Override
 public boolean edit(${table.entityName} request)throws Exception{
 request.setUpdatedTime(new Date());
@@ -141,7 +141,7 @@ return updateById(request);
 * @author  ${author}
 * @date ${date}
 */
-@Transactional
+
 @Override
 public boolean add(${table.entityName} request)throws Exception{
 request.setCreatedTime(new Date());

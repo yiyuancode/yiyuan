@@ -8,7 +8,6 @@ import net.yiyuan.core.sys.mapper.SysMenuMapper;
 import net.yiyuan.core.sys.model.SysMenu;
 import net.yiyuan.core.sys.service.SysMenuService;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.Arrays;
@@ -82,7 +81,6 @@ public class SysMenuServiceImpl extends JoinServiceImpl<SysMenuMapper, SysMenu>
    * @author 一源团队--花和尚
    * @date 2023-07-02
    */
-  @Transactional
   @Override
   public boolean del(SysMenu request) throws Exception {
     return removeById(request);
@@ -96,7 +94,6 @@ public class SysMenuServiceImpl extends JoinServiceImpl<SysMenuMapper, SysMenu>
    * @author 一源团队--花和尚
    * @date 2023-07-02
    */
-  @Transactional
   @Override
   public boolean dels(String ids) throws Exception {
     return removeByIds(Arrays.asList(ids.split(",")));
@@ -110,7 +107,6 @@ public class SysMenuServiceImpl extends JoinServiceImpl<SysMenuMapper, SysMenu>
    * @author 一源团队--花和尚
    * @date 2023-07-02
    */
-  @Transactional
   @Override
   public boolean edit(SysMenu request) throws Exception {
     request.setUpdatedTime(new Date());
@@ -125,7 +121,6 @@ public class SysMenuServiceImpl extends JoinServiceImpl<SysMenuMapper, SysMenu>
    * @author 一源团队--花和尚
    * @date 2023-07-02
    */
-  @Transactional
   @Override
   public boolean add(SysMenu request) throws Exception {
     request.setCreatedTime(new Date());

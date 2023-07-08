@@ -8,7 +8,6 @@ import net.yiyuan.core.auth.mapper.AuthRoleMenuMapper;
 import net.yiyuan.core.auth.model.AuthRoleMenu;
 import net.yiyuan.core.auth.service.AuthRoleMenuService;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.Arrays;
@@ -83,7 +82,6 @@ public class AuthRoleMenuServiceImpl extends JoinServiceImpl<AuthRoleMenuMapper,
    * @author 一源团队--花和尚
    * @date 2023-07-02
    */
-  @Transactional
   @Override
   public boolean del(AuthRoleMenu request) throws Exception {
     return removeById(request);
@@ -97,10 +95,23 @@ public class AuthRoleMenuServiceImpl extends JoinServiceImpl<AuthRoleMenuMapper,
    * @author 一源团队--花和尚
    * @date 2023-07-02
    */
-  @Transactional
   @Override
   public boolean dels(String ids) throws Exception {
     return removeByIds(Arrays.asList(ids.split(",")));
+  }
+
+  /**
+   * 批量删除角色_菜单表(根据同一属性)
+   *
+   * @param request 角色_菜单实体
+   * @return {@link boolean}
+   * @author 一源团队--花和尚
+   * @date 2023-07-02
+   */
+  @Override
+  public boolean dels(AuthRoleMenu request) throws Exception {
+    JoinLambdaWrapper<AuthRoleMenu> wrapper = new JoinLambdaWrapper<>(request);
+    return remove(wrapper);
   }
 
   /**
@@ -111,7 +122,6 @@ public class AuthRoleMenuServiceImpl extends JoinServiceImpl<AuthRoleMenuMapper,
    * @author 一源团队--花和尚
    * @date 2023-07-02
    */
-  @Transactional
   @Override
   public boolean edit(AuthRoleMenu request) throws Exception {
     request.setUpdatedTime(new Date());
@@ -126,7 +136,6 @@ public class AuthRoleMenuServiceImpl extends JoinServiceImpl<AuthRoleMenuMapper,
    * @author 一源团队--花和尚
    * @date 2023-07-02
    */
-  @Transactional
   @Override
   public boolean add(AuthRoleMenu request) throws Exception {
     request.setCreatedTime(new Date());

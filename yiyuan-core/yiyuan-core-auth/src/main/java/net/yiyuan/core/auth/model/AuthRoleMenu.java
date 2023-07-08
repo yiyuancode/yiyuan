@@ -55,13 +55,4 @@ public class AuthRoleMenu implements Serializable {
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
   private Date createdTime;
-
-  /**
-   * 租户id
-   *
-   * @see String
-   * @author 一源团队--花和尚
-   * @date 2023-07-02
-   */
-  private String tenantId;
 }

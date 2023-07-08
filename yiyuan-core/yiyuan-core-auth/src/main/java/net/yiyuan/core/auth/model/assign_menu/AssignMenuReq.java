@@ -33,13 +33,4 @@ public class AssignMenuReq {
    */
   @NotEmpty(message = "菜单id数组不能为空")
   private List<String> menuIdList;
-
-  /**
-   * 租户 id
-   *
-   * @see List
-   * @author 一源团队--花和尚
-   * @date 2023-06-23
-   */
-  private String tenantId;
 }

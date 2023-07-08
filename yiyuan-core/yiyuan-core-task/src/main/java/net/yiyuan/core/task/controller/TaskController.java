@@ -43,7 +43,7 @@ public class TaskController {
    * 添加定时任务
    *
    * @param request 用户实体
-   * @return {@link CommonResult <Boolean>}
+   * @return {@link CommonResult}
    * @author 一源团队--花和尚
    * @date 2023-06-23
    */
@@ -59,7 +59,7 @@ public class TaskController {
    * 删除定时任务
    *
    * @param request 定时任务请求实体
-   * @return {@link CommonResult <Boolean>}
+   * @return {@link CommonResult}
    * @author 一源团队--花和尚
    * @date 2023-06-23
    */
@@ -75,7 +75,7 @@ public class TaskController {
    * 暂停定时任务
    *
    * @param request 定时任务请求实体
-   * @return {@link CommonResult <Boolean>}
+   * @return {@link CommonResult}
    * @author 一源团队--花和尚
    * @date 2023-06-23
    */
@@ -91,7 +91,7 @@ public class TaskController {
    * 恢复定时任务
    *
    * @param request 定时任务请求实体
-   * @return {@link CommonResult <Boolean>}
+   * @return {@link CommonResult}
    * @author 一源团队--花和尚
    * @date 2023-06-23
    */
@@ -107,7 +107,7 @@ public class TaskController {
    * 修改定时任务执行实践
    *
    * @param request 定时任务请求实体
-   * @return {@link CommonResult <Boolean>}
+   * @return {@link CommonResult}
    * @author 一源团队--花和尚
    * @date 2023-06-23
    */

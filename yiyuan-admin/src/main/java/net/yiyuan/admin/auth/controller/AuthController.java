@@ -1,5 +1,6 @@
 package net.yiyuan.admin.auth.controller;
 
+import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.dev33.satoken.annotation.SaIgnore;
 import lombok.extern.slf4j.Slf4j;
@@ -9,6 +10,7 @@ import net.yiyuan.admin.auth.model.login.LoginReq;
 import net.yiyuan.admin.auth.model.login.LoginVo;
 import net.yiyuan.admin.auth.model.register.RegisterReq;
 import net.yiyuan.admin.auth.model.register.RegisterVo;
+import net.yiyuan.admin.auth.model.vo.GetUserInfoForAntdVo;
 import net.yiyuan.admin.auth.service.AuthService;
 import net.yiyuan.common.model.vo.CommonResult;
 import org.springframework.validation.annotation.Validated;
@@ -74,17 +76,19 @@ public class AuthController {
   }
 
   /**
-   * 获取当前登录用户信息,包括角色以及权限菜单
+   * 获取当前登录用户信息,包括角色以及权限菜单(ForAntd)
    *
    * @return {@link CommonResult<GetUserInfoVo>}
    * @author 一源团队--花和尚
    * @date 2023-06-23
    */
+  @SaCheckLogin
   @RequestMapping(value = "/auth/getUserInfo", method = RequestMethod.POST)
   @ResponseBody
-  public CommonResult<GetUserInfoVo> getUserInfo() throws Exception {
-    return CommonResult.success(authService.getUserInfo());
+  public CommonResult<GetUserInfoForAntdVo> getUserInfo() throws Exception {
+    return CommonResult.success(authService.getUserInfoForAntd());
   }
+
   /**
    * 平台超管查询所有菜单(树结构)2
    *

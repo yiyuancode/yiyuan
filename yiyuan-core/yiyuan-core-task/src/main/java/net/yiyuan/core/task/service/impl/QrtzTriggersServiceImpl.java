@@ -8,7 +8,6 @@ import net.yiyuan.core.task.mapper.QrtzTriggersMapper;
 import net.yiyuan.core.task.model.QrtzTriggers;
 import net.yiyuan.core.task.service.QrtzTriggersService;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.Arrays;
@@ -92,7 +91,6 @@ public class QrtzTriggersServiceImpl extends JoinServiceImpl<QrtzTriggersMapper,
    * @author 一源团队--花和尚
    * @date 2023-07-06
    */
-  @Transactional
   @Override
   public boolean del(QrtzTriggers request) throws Exception {
     return removeById(request);
@@ -106,7 +104,6 @@ public class QrtzTriggersServiceImpl extends JoinServiceImpl<QrtzTriggersMapper,
    * @author 一源团队--花和尚
    * @date 2023-07-06
    */
-  @Transactional
   @Override
   public boolean dels(String ids) throws Exception {
     return removeByIds(Arrays.asList(ids.split(",")));
@@ -120,7 +117,6 @@ public class QrtzTriggersServiceImpl extends JoinServiceImpl<QrtzTriggersMapper,
    * @author 一源团队--花和尚
    * @date 2023-07-06
    */
-  @Transactional
   @Override
   public boolean edit(QrtzTriggers request) throws Exception {
     return updateById(request);
@@ -134,7 +130,6 @@ public class QrtzTriggersServiceImpl extends JoinServiceImpl<QrtzTriggersMapper,
    * @author 一源团队--花和尚
    * @date 2023-07-06
    */
-  @Transactional
   @Override
   public boolean add(QrtzTriggers request) throws Exception {
     return save(request);

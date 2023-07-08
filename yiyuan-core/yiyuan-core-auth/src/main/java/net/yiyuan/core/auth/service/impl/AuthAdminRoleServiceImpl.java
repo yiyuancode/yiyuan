@@ -8,7 +8,6 @@ import net.yiyuan.core.auth.mapper.AuthAdminRoleMapper;
 import net.yiyuan.core.auth.model.AuthAdminRole;
 import net.yiyuan.core.auth.service.AuthAdminRoleService;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.Arrays;
@@ -84,7 +83,6 @@ public class AuthAdminRoleServiceImpl extends JoinServiceImpl<AuthAdminRoleMappe
    * @author 一源团队--花和尚
    * @date 2023-07-02
    */
-  @Transactional
   @Override
   public boolean del(AuthAdminRole request) throws Exception {
     return removeById(request);
@@ -98,10 +96,15 @@ public class AuthAdminRoleServiceImpl extends JoinServiceImpl<AuthAdminRoleMappe
    * @author 一源团队--花和尚
    * @date 2023-07-02
    */
-  @Transactional
   @Override
   public boolean dels(String ids) throws Exception {
     return removeByIds(Arrays.asList(ids.split(",")));
+  }
+
+  @Override
+  public boolean dels(AuthAdminRole request) throws Exception {
+    JoinLambdaWrapper<AuthAdminRole> wrapper = new JoinLambdaWrapper<>(request);
+    return remove(wrapper);
   }
 
   /**
@@ -112,7 +115,6 @@ public class AuthAdminRoleServiceImpl extends JoinServiceImpl<AuthAdminRoleMappe
    * @author 一源团队--花和尚
    * @date 2023-07-02
    */
-  @Transactional
   @Override
   public boolean edit(AuthAdminRole request) throws Exception {
     request.setUpdatedTime(new Date());
@@ -127,7 +129,6 @@ public class AuthAdminRoleServiceImpl extends JoinServiceImpl<AuthAdminRoleMappe
    * @author 一源团队--花和尚
    * @date 2023-07-02
    */
-  @Transactional
   @Override
   public boolean add(AuthAdminRole request) throws Exception {
     request.setCreatedTime(new Date());

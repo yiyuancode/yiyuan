@@ -57,7 +57,7 @@ private ${table.serviceName} ${serviceImplName};
  * @author  ${author}
  * @date ${date}
  */
-@SaCheckPermission(value = {"${package.ModuleName}:${table.name.toLowerCase()}:list" }, orRole = "admin")
+@SaCheckPermission(value = {"${package.ModuleName}:${table.name.toLowerCase()}:list"}, orRole = "admin")
     ##@ApiOperation(value = "$!{table.comment.replaceAll("表", "")}列表(全部)" )
 @RequestMapping(value = "/${package.ModuleName}/${table.name.toLowerCase()}/list", method = RequestMethod.GET)
 @ResponseBody
@@ -75,7 +75,7 @@ public CommonResult<List<${table.entityName}>>list(${table.entityName} request)t
  * @date ${date}
  */
 
-@SaCheckPermission(value = {"${package.ModuleName}:${table.name.toLowerCase()}:pages" }, orRole = "admin")
+@SaCheckPermission(value = {"${package.ModuleName}:${table.name.toLowerCase()}:pages"}, orRole = "admin")
 @RequestMapping(value = "/${package.ModuleName}/${table.name.toLowerCase()}/pages", method = RequestMethod.GET)
 @ResponseBody
 public CommonResult<Page<${table.entityName}>>pages(
@@ -95,7 +95,7 @@ public CommonResult<Page<${table.entityName}>>pages(
  * @date ${date}
  */
 
-@SaCheckPermission(value = {"${package.ModuleName}:${table.name.toLowerCase()}:details" }, orRole = "admin")
+@SaCheckPermission(value = {"${package.ModuleName}:${table.name.toLowerCase()}:details"}, orRole = "admin")
 @RequestMapping(value = "/${package.ModuleName}/${table.name.toLowerCase()}/details", method = RequestMethod.GET)
 @ResponseBody
 public CommonResult<${table.entityName}> details( ${table.entityName} request)throws Exception{
@@ -110,7 +110,7 @@ public CommonResult<${table.entityName}> details( ${table.entityName} request)th
  * @author  ${author}
  * @date ${date}
  */
-@SaCheckPermission(value = {"${package.ModuleName}:${table.name.toLowerCase()}:del" }, orRole = "admin")
+@SaCheckPermission(value = {"${package.ModuleName}:${table.name.toLowerCase()}:del"}, orRole = "admin")
 @RequestMapping(value = "/${package.ModuleName}/${table.name.toLowerCase()}/del", method = RequestMethod.POST)
 @ResponseBody
 public CommonResult<String> del(@RequestBody @Validated   ${table.entityName} request)throws Exception{
@@ -130,7 +130,7 @@ public CommonResult<String> del(@RequestBody @Validated   ${table.entityName} re
  * @author  ${author}
  * @date ${date}
  */
-@SaCheckPermission(value = {"${package.ModuleName}:${table.name.toLowerCase()}:dels" }, orRole = "admin")
+@SaCheckPermission(value = {"${package.ModuleName}:${table.name.toLowerCase()}:dels"}, orRole = "admin")
 @RequestMapping(value = "/${package.ModuleName}/${table.name.toLowerCase()}/dels", method = RequestMethod.POST)
 @ResponseBody
 public CommonResult<String> dels(@RequestParam @Validated({NotEmpty.class}) String ids)throws Exception{
@@ -148,7 +148,7 @@ public CommonResult<String> dels(@RequestParam @Validated({NotEmpty.class}) Stri
  * @author  ${author}
  * @date ${date}
  */
-@SaCheckPermission(value = {"${package.ModuleName}:${table.name.toLowerCase()}:edit" }, orRole = "admin")
+@SaCheckPermission(value = {"${package.ModuleName}:${table.name.toLowerCase()}:edit"}, orRole = "admin")
 @RequestMapping(value = "/${package.ModuleName}/${table.name.toLowerCase()}/edit", method = RequestMethod.POST)
 @ResponseBody
 public CommonResult<String> edit(@RequestBody @Validated   ${table.entityName} request)throws Exception{
@@ -168,7 +168,7 @@ public CommonResult<String> edit(@RequestBody @Validated   ${table.entityName} r
  * @author  ${author}
  * @date ${date}
  */
-@SaCheckPermission(value = {"${package.ModuleName}:${table.name.toLowerCase()}:add" }, orRole = "admin")
+@SaCheckPermission(value = {"${package.ModuleName}:${table.name.toLowerCase()}:add"}, orRole = "admin")
 @RequestMapping(value = "/${package.ModuleName}/${table.name.toLowerCase()}/add", method = RequestMethod.POST)
 @ResponseBody
 public CommonResult<String> add(@RequestBody @Validated  ${table.entityName} request)throws Exception{

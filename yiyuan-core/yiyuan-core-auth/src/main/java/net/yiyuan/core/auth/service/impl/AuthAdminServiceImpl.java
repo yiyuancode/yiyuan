@@ -11,13 +11,14 @@ import net.yiyuan.core.auth.model.assign_role.AssignRoleReq;
 import net.yiyuan.core.auth.service.AuthAdminRoleService;
 import net.yiyuan.core.auth.service.AuthAdminService;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+
 /**
  * 用户管理Service层接口实现
  *
@@ -30,6 +31,8 @@ public class AuthAdminServiceImpl extends JoinServiceImpl<AuthAdminMapper, AuthA
     implements AuthAdminService {
   @Resource private AuthAdminMapper authAdminMapper;
   @Resource private AuthAdminRoleService authAdminRoleService;
+  @Resource private TransactionTemplate transactionTemplate;
+
   /**
    * 用户列表(全部)
    *
@@ -87,7 +90,6 @@ public class AuthAdminServiceImpl extends JoinServiceImpl<AuthAdminMapper, AuthA
    * @author 一源团队--花和尚
    * @date 2023-07-02
    */
-  @Transactional
   @Override
   public boolean del(AuthAdmin request) throws Exception {
     return removeById(request);
@@ -101,7 +103,6 @@ public class AuthAdminServiceImpl extends JoinServiceImpl<AuthAdminMapper, AuthA
    * @author 一源团队--花和尚
    * @date 2023-07-02
    */
-  @Transactional
   @Override
   public boolean dels(String ids) throws Exception {
     return removeByIds(Arrays.asList(ids.split(",")));
@@ -115,7 +116,6 @@ public class AuthAdminServiceImpl extends JoinServiceImpl<AuthAdminMapper, AuthA
    * @author 一源团队--花和尚
    * @date 2023-07-02
    */
-  @Transactional
   @Override
   public boolean edit(AuthAdmin request) throws Exception {
     request.setUpdatedTime(new Date());
@@ -130,7 +130,6 @@ public class AuthAdminServiceImpl extends JoinServiceImpl<AuthAdminMapper, AuthA
    * @author 一源团队--花和尚
    * @date 2023-07-02
    */
-  @Transactional
   @Override
   public boolean add(AuthAdmin request) throws Exception {
     request.setCreatedTime(new Date());
@@ -157,6 +156,24 @@ public class AuthAdminServiceImpl extends JoinServiceImpl<AuthAdminMapper, AuthA
           item.setRoleId(e);
           addList.add(item);
         });
-    return authAdminRoleService.saveBatch(addList);
+
+    boolean result =
+        transactionTemplate.execute(
+            status -> {
+              try {
+                // 先删除原来绑定的菜单id
+                AuthAdminRole query = new AuthAdminRole();
+                query.setRoleId(request.getUserId());
+                authAdminRoleService.dels(query);
+                // 在全量增加现在的
+                authAdminRoleService.saveBatch(addList);
+              } catch (Exception e) {
+                status.setRollbackOnly();
+                throw new Error("分配角色异常");
+              }
+              return true;
+            });
+
+    return result;
   }
 }

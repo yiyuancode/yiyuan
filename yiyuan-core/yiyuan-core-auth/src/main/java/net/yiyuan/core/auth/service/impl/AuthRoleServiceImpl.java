@@ -2,7 +2,6 @@ package net.yiyuan.core.auth.service.impl;
 
 import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.context.model.SaRequest;
-import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import icu.mhb.mybatisplus.plugln.base.service.impl.JoinServiceImpl;
 import icu.mhb.mybatisplus.plugln.core.JoinLambdaWrapper;
@@ -14,13 +13,14 @@ import net.yiyuan.core.auth.model.assign_menu.AssignMenuReq;
 import net.yiyuan.core.auth.service.AuthRoleMenuService;
 import net.yiyuan.core.auth.service.AuthRoleService;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+
 /**
  * 角色管理Service层接口实现
  *
@@ -33,6 +33,8 @@ public class AuthRoleServiceImpl extends JoinServiceImpl<AuthRoleMapper, AuthRol
     implements AuthRoleService {
   @Resource private AuthRoleMapper authRoleMapper;
   @Resource private AuthRoleMenuService authRoleMenuService;
+  @Resource private TransactionTemplate transactionTemplate;
+
   /**
    * 角色列表(全部)
    *
@@ -90,7 +92,6 @@ public class AuthRoleServiceImpl extends JoinServiceImpl<AuthRoleMapper, AuthRol
    * @author 一源团队--花和尚
    * @date 2023-07-02
    */
-  @Transactional
   @Override
   public boolean del(AuthRole request) throws Exception {
     return removeById(request);
@@ -104,7 +105,6 @@ public class AuthRoleServiceImpl extends JoinServiceImpl<AuthRoleMapper, AuthRol
    * @author 一源团队--花和尚
    * @date 2023-07-02
    */
-  @Transactional
   @Override
   public boolean dels(String ids) throws Exception {
     return removeByIds(Arrays.asList(ids.split(",")));
@@ -118,7 +118,6 @@ public class AuthRoleServiceImpl extends JoinServiceImpl<AuthRoleMapper, AuthRol
    * @author 一源团队--花和尚
    * @date 2023-07-02
    */
-  @Transactional
   @Override
   public boolean edit(AuthRole request) throws Exception {
     request.setUpdatedTime(new Date());
@@ -133,13 +132,13 @@ public class AuthRoleServiceImpl extends JoinServiceImpl<AuthRoleMapper, AuthRol
    * @author 一源团队--花和尚
    * @date 2023-07-02
    */
-  @Transactional
   @Override
   public boolean add(AuthRole request) throws Exception {
     request.setCreatedTime(new Date());
     request.setUpdatedTime(new Date());
     return save(request);
   }
+
   /**
    * 分配菜单
    *
@@ -154,20 +153,34 @@ public class AuthRoleServiceImpl extends JoinServiceImpl<AuthRoleMapper, AuthRol
     List<String> menuIdList = request.getMenuIdList();
 
     SaRequest httpRequest = SaHolder.getRequest();
-    // platform 平台区分 0 平台  1 租户 2 c端
-    String platform = httpRequest.getHeader("platform");
-    String tenantId = httpRequest.getHeader("tenantId");
+    //        // platform 平台区分 0 平台  1 租户 2 c端
+    //        String platform = httpRequest.getHeader("platform");
+    //        String tenantId = httpRequest.getHeader("tenantId");
 
     menuIdList.forEach(
         (e) -> {
           AuthRoleMenu item = new AuthRoleMenu();
           item.setRoleId(request.getRoleId());
           item.setMenuId(e);
-          if (StrUtil.equals("0", platform)) {
-            item.setTenantId(request.getTenantId());
-          }
           addList.add(item);
         });
-    return authRoleMenuService.saveBatch(addList);
+
+    boolean result =
+        transactionTemplate.execute(
+            status -> {
+              try {
+                // 先删除原来绑定的菜单id
+                AuthRoleMenu query = new AuthRoleMenu();
+                query.setRoleId(request.getRoleId());
+                authRoleMenuService.dels(query);
+                // 在全量增加现在的
+                authRoleMenuService.saveBatch(addList);
+              } catch (Exception e) {
+                status.setRollbackOnly();
+                throw new Error("分配菜单异常");
+              }
+              return true;
+            });
+    return result;
   }
 }
