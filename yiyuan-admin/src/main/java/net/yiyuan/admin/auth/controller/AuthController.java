@@ -115,4 +115,23 @@ public class AuthController {
   public CommonResult<List<SysMenuTreeVo>> tenantGetMenuTree() throws Exception {
     return CommonResult.success(authService.tenantGetMenuTree());
   }
+
+  /**
+   * 自动生成菜单数据
+   *
+   * @return {@link CommonResult}
+   * @author 一源团队--花和尚
+   * @date 2023-06-23
+   */
+  @SaIgnore
+  @RequestMapping(value = "/auth/autoScanMenu", method = RequestMethod.POST)
+  public CommonResult autoScanMenu() throws Exception {
+    // 获取连接池的统计数据列表  该方法可以获取所有数据源的监控数据  https://blog.csdn.net/qq_34491508/article/details/103559872
+    // 扫描指定包下的类，并获取带有 @SaCheckPermission 注解的方法
+    // 定义权限标识的包名
+    // 定义需要扫描的包名和注解类型
+    // 定义需要扫描的包名和注解类型
+    // 返回菜单列表
+    return CommonResult.success(authService.autoScanMenu());
+  }
 }

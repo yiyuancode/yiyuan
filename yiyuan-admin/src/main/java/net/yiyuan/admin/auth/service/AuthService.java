@@ -1,9 +1,11 @@
 package net.yiyuan.admin.auth.service;
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.lang.ClassScanner;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import icu.mhb.mybatisplus.plugln.core.JoinLambdaWrapper;
@@ -18,6 +20,7 @@ import net.yiyuan.admin.auth.model.vo.SysMenuTreeForAntdVo;
 import net.yiyuan.common.constatnt.ResultCode;
 import net.yiyuan.common.exception.BusinessException;
 import net.yiyuan.common.model.vo.CommonResult;
+import net.yiyuan.common.utils.BeanUtilsPlus;
 import net.yiyuan.core.auth.model.AuthAdmin;
 import net.yiyuan.core.auth.model.AuthAdminRole;
 import net.yiyuan.core.auth.model.AuthRole;
@@ -27,13 +30,14 @@ import net.yiyuan.core.auth.service.AuthAdminService;
 import net.yiyuan.core.auth.service.AuthRoleMenuService;
 import net.yiyuan.core.sys.model.SysMenu;
 import net.yiyuan.core.sys.service.SysMenuService;
+import org.springframework.context.annotation.Description;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.support.TransactionTemplate;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.lang.reflect.Method;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -43,6 +47,23 @@ public class AuthService {
   @Resource AuthAdminRoleService authAdminRoleService;
   @Resource AuthRoleMenuService authRoleMenuService;
   @Resource SysMenuService sysMenuService;
+  @Resource private TransactionTemplate transactionTemplate;
+
+  private static void printMenu(List<Map<String, Object>> menuList, String prefix) {
+    for (Map<String, Object> menu : menuList) {
+      System.out.println(prefix + menu.get("id"));
+      List<Map<String, Object>> subMenuList = (List<Map<String, Object>>) menu.get("subMenuList");
+      if (subMenuList != null && !subMenuList.isEmpty()) {
+        printMenu(subMenuList, prefix + "--");
+      }
+      List<String> operationList = (List<String>) menu.get("operation");
+      if (operationList != null && !operationList.isEmpty()) {
+        for (String operation : operationList) {
+          System.out.println(prefix + "----" + operation);
+        }
+      }
+    }
+  }
 
   /**
    * 用户_角色列表(全部)
@@ -221,9 +242,15 @@ public class AuthService {
     // 转成antd前端所需要的动态路由结构
     List<SysMenuTreeForAntdVo> voList = selectOrganizationTreeForAntd(sysMenus);
 
+    SysMenuTreeForAntdVo root = new SysMenuTreeForAntdVo();
+    root.setRouter("root");
+    root.setChildren(voList);
+    List<SysMenuTreeForAntdVo> asyncRoutesList = new ArrayList<>();
+    asyncRoutesList.add(root);
+
     GetUserInfoForAntdVo result = new GetUserInfoForAntdVo();
     result.setUsername(details.getUsername());
-    result.setAsyncRoutes(voList);
+    result.setAsyncRoutes(asyncRoutesList);
     result.setPermissions(permissionsForAntdVoList);
     result.setRoleList(authRoles);
     result.setRoleAntdList(authForAntdRoles);
@@ -255,6 +282,140 @@ public class AuthService {
     GetUserInfoVo userInfo = getUserInfo();
     return userInfo.getMenuTreeVoList();
     //    return CommonResult.success(authAdminService.list(request));
+  }
+
+  /**
+   * 自动生成菜单数据
+   *
+   * @return boolean
+   * @author 一源团队--花和尚
+   * @date 2023-06-23
+   */
+  public boolean autoScanMenu() throws Exception {
+    transactionTemplate.execute(
+        status -> {
+          String[] packageNames = {
+            "net.yiyuan.core.auth.controller", "net.yiyuan.core.sys.controller"
+          };
+          Class<RestController> annotationClass = RestController.class;
+
+          // 扫描指定包下标注了指定注解的类和方法
+          Set<Class<?>> classes = new HashSet<>();
+          for (String packageName : packageNames) {
+            classes.addAll(ClassScanner.scanPackageByAnnotation(packageName, annotationClass));
+          }
+          //    Set<Class<?>> classes = ClassScanner.scanAllPackage();
+          log.info("ClassUtil.classes", classes.size());
+          // 定义存储菜单的列表
+
+          // 遍历所有标注了 @SaCheckPermission 注解的类和方法
+          for (Class<?> clazz : classes) {
+            List<SysMenu> menuList = new ArrayList<>();
+
+            log.info("classes", clazz);
+            Method[] methods = clazz.getDeclaredMethods();
+            for (Method method : methods) {
+              SaCheckPermission permission = method.getAnnotation(SaCheckPermission.class);
+              if (permission != null) {
+                // 获取权限表达式
+                String[] permissions = permission.value();
+
+                // 从注解中获取中文注释作为菜单名称
+                String menuName2 = "";
+                Description annotation = method.getAnnotation(Description.class);
+                if (!ObjectUtil.isEmpty(annotation)) {
+                  String menuName = annotation.value();
+                  // menuName = (String) declaredMethod.invoke(permission);
+                  //          menuName2 = description;
+
+                  try {
+                    String btnPerm = permissions[0];
+                    String[] btnPermAarry = permissions[0].split(":");
+                    String[] menuNameAarry = menuName.split("/");
+                    SysMenu moudelDetails = new SysMenu();
+                    SysMenu childMoudelDetails = new SysMenu();
+                    // 如果是0 表示这个类第一次插入
+                    if (menuList.size() == 0) {
+                      // 查询大模块目录是否存在
+                      SysMenu sysMenuQuery = new SysMenu();
+                      sysMenuQuery.setPermission(btnPermAarry[0]);
+                      moudelDetails = sysMenuService.details(sysMenuQuery);
+                      if (ObjectUtil.isEmpty(moudelDetails)) {
+                        sysMenuQuery.setName(menuNameAarry[0]);
+                        sysMenuQuery.setType(0);
+                        sysMenuQuery.setParentId("0");
+                        sysMenuQuery.setIsFrame(0);
+                        sysMenuQuery.setIsAffix(0);
+                        sysMenuQuery.setStatus(0);
+                        sysMenuQuery.setIsAlwaysShow(0);
+                        sysMenuQuery.setIsCache(0);
+                        sysMenuQuery.setOpenType(0);
+                        sysMenuQuery.setSort(0);
+                        sysMenuQuery.setRouteComponent("/layouts/BlankView.vue");
+                        sysMenuQuery.setRouteName(btnPermAarry[0]);
+                        sysMenuService.save(sysMenuQuery);
+                        moudelDetails = new SysMenu();
+                        BeanUtilsPlus.copy(sysMenuQuery, moudelDetails);
+                      }
+                      // 查询大模块目录是否存在
+                      sysMenuQuery = new SysMenu();
+                      sysMenuQuery.setPermission(btnPermAarry[1]);
+                      childMoudelDetails = sysMenuService.details(sysMenuQuery);
+                      if (ObjectUtil.isEmpty(childMoudelDetails)) {
+                        sysMenuQuery.setName(menuNameAarry[1]);
+                        sysMenuQuery.setType(1);
+                        sysMenuQuery.setParentId(moudelDetails.getId());
+                        sysMenuQuery.setIsFrame(0);
+                        sysMenuQuery.setIsAffix(0);
+                        sysMenuQuery.setStatus(0);
+                        sysMenuQuery.setIsAlwaysShow(0);
+                        sysMenuQuery.setIsCache(0);
+                        sysMenuQuery.setOpenType(0);
+                        sysMenuQuery.setSort(0);
+                        sysMenuQuery.setRouteComponent(
+                            "/pages/" + btnPermAarry[0] + "/" + btnPermAarry[1]);
+                        sysMenuQuery.setRouteName(btnPermAarry[1]);
+                        sysMenuService.save(sysMenuQuery);
+                        childMoudelDetails = new SysMenu();
+                        BeanUtilsPlus.copy(sysMenuQuery, childMoudelDetails);
+                      }
+                    }
+                    // 查询按钮表达式是否存在
+                    SysMenu sysMenuQuery = new SysMenu();
+                    sysMenuQuery.setPermission(btnPerm);
+                    SysMenu btnDetails = sysMenuService.details(sysMenuQuery);
+                    if (ObjectUtil.isEmpty(btnDetails)) {
+                      sysMenuQuery.setName(menuNameAarry[2]);
+                      sysMenuQuery.setType(2);
+                      sysMenuQuery.setParentId(childMoudelDetails.getId());
+                      sysMenuQuery.setIsFrame(0);
+                      sysMenuQuery.setIsAffix(0);
+                      sysMenuQuery.setStatus(0);
+                      sysMenuQuery.setIsAlwaysShow(0);
+                      sysMenuQuery.setIsCache(0);
+                      sysMenuQuery.setOpenType(0);
+                      sysMenuQuery.setSort(0);
+                      sysMenuQuery.setRouteComponent(null);
+                      sysMenuQuery.setRouteName(null);
+                      sysMenuService.save(sysMenuQuery);
+                      btnDetails = new SysMenu();
+                      BeanUtilsPlus.copy(sysMenuQuery, btnDetails);
+                    }
+
+                  } catch (Exception e) {
+                    status.setRollbackOnly();
+                    e.printStackTrace();
+                    throw new Error("分配角色异常");
+                  }
+                }
+              }
+            }
+          }
+
+          return true;
+        });
+
+    return true;
   }
 
   public List<SysMenuTreeVo> selectOrganizationTree(List<SysMenu> list) {
@@ -289,7 +450,7 @@ public class AuthService {
             .map(
                 source -> {
                   SysMenuTreeForAntdVo target = new SysMenuTreeForAntdVo();
-                  BeanUtil.copyProperties(source, target, "routeName:router");
+                  BeanUtil.copyProperties(source, target);
                   target.setRouter(source.getRouteName());
                   return target;
                 })
@@ -310,52 +471,63 @@ public class AuthService {
         voList.stream()
             .filter(organization -> organization.getParentId().equals("0"))
             .collect(Collectors.toList());
-
+    collect.forEach(
+        item -> {
+          item.setId(null);
+          item.setParentId(null);
+        });
     return collect;
   }
 
-  public List<PermissionsForAntdVo> convertPermissionList(List<String> permissionList) {
-    Map<String, PermissionsForAntdVo> permissionMap = new HashMap<>();
-
-    for (String permission : permissionList) {
-      String[] parts = permission.split(":");
-      int length = parts.length;
-      PermissionsForAntdVo parent = null;
-
-      for (int i = 1; i < length; i++) {
-        String parentId = String.join(":", parts[0], parts[i - 1]);
-        parent = permissionMap.get(parentId);
-
-        if (parent == null) {
-          parent = new PermissionsForAntdVo(parentId, new ArrayList<String>());
-          permissionMap.put(parentId, parent);
-        }
-
-        if (i == length - 1) {
-          List<String> operations = parent.getOperation();
-          operations.add(permission);
-        }
+  public List<PermissionsForAntdVo> convertPermissionList(List<String> permissions) {
+    log.info("permissionList源数据:{}", permissions);
+    // 将权限数据转换成菜单项列表
+    List<PermissionsForAntdVo> result = new ArrayList<>();
+    Map<String, PermissionsForAntdVo> secendMap = new HashMap<>();
+    for (String permission : permissions) {
+      log.info("permission.lastIndexOf{},{}", permission, permission.lastIndexOf(":"));
+      if (permission.lastIndexOf(":") == -1) {
+        PermissionsForAntdVo item = new PermissionsForAntdVo();
+        item.setId(permission);
+        result.add(item);
       }
+      //      if (permission.lastIndexOf(":") == 1) {
+      //        PermissionsForAntdVo permissionCur = secendMap.get(secendMap);
+      //        if (ObjectUtil.isEmpty(permissionCur)) {
+      //          PermissionsForAntdVo item = new PermissionsForAntdVo();
+      //          item.setId(permission);
+      //          item.setOperation(new ArrayList<>());
+      //          secendMap.put(permission, item);
+      //        }
+      //      }
+      if (permission.lastIndexOf(":") != permission.indexOf(":") && permission.indexOf(":") != -1) {
+        String secendPermission = permission.substring(0, permission.lastIndexOf(":"));
+        log.info("permission.secendPermission{},{}", secendPermission);
 
-      if (length == 1) {
-        PermissionsForAntdVo permissionObj =
-            new PermissionsForAntdVo(permission, new ArrayList<String>());
-        permissionMap.put(permission, permissionObj);
-      } else if (length == 2) {
-        parent.setOperation(new ArrayList<String>());
+        PermissionsForAntdVo permissionCur = secendMap.get(secendPermission);
+        if (ObjectUtil.isEmpty(permissionCur)) {
+          PermissionsForAntdVo item = new PermissionsForAntdVo();
+          item.setId(permission);
+          item.setOperation(new ArrayList<>());
+          secendMap.put(secendPermission, item);
+        } else {
+          permissionCur.getOperation().add(permission);
+          secendMap.put(secendPermission, permissionCur);
+        }
       }
     }
-    ArrayList<PermissionsForAntdVo> permissionsForAntdVos = new ArrayList<>(permissionMap.values());
+    secendMap
+        .values()
+        .forEach(
+            (item) -> {
+              result.add(item);
+            });
 
-    List<PermissionsForAntdVo> collect =
-        permissionsForAntdVos.stream()
-            // 过滤掉sys:sys这种数据
-            .filter(
-                source ->
-                    !(StrUtil.contains(source.getId(), ":")
-                        && !StrUtil.contains(source.getId(), "_")))
-            .collect(Collectors.toList());
+    // 打印菜单的层级结构
 
-    return collect;
+    log.info("printMenu{}", result);
+    // 打印菜单的层级结构
+
+    return result;
   }
 }

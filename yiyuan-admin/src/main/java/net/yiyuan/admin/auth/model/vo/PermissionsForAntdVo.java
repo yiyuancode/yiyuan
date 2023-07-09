@@ -28,16 +28,23 @@ public class PermissionsForAntdVo {
    * @date 2023-06-24
    */
   private List<String> operation;
-
   /**
-   * 有参构造
+   * 操作表达式数组子集
    *
    * @see String
    * @author 一源团队--花和尚
    * @date 2023-06-24
    */
-  public PermissionsForAntdVo(String id, List<String> operation) {
-    this.id = id;
-    this.operation = operation;
-  }
+  private List<PermissionsForAntdVo> subMenuList;
+  //  /**
+  //   * 有参构造
+  //   *
+  //   * @see String
+  //   * @author 一源团队--花和尚
+  //   * @date 2023-06-24
+  //   */
+  //  public PermissionsForAntdVo(String id, List<String> operation) {
+  //    this.id = id;
+  //    this.operation = operation;
+  //  }
 }
