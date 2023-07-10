@@ -10,7 +10,7 @@ import java.util.List;
  * 菜单管理Service层接口
  *
  * @author 一源团队--花和尚
- * @date 2023-07-02
+ * @date 2023-07-09
  */
 public interface SysMenuService extends JoinIService<SysMenu> {
 
@@ -20,7 +20,7 @@ public interface SysMenuService extends JoinIService<SysMenu> {
    * @param request 菜单实体
    * @return {@link List}
    * @author 一源团队--花和尚
-   * @date 2023-07-02
+   * @date 2023-07-09
    */
   List<SysMenu> list(SysMenu request) throws Exception;
 
@@ -30,7 +30,7 @@ public interface SysMenuService extends JoinIService<SysMenu> {
    * @param request 菜单实体
    * @return {@link Page}
    * @author 一源团队--花和尚
-   * @date 2023-07-02
+   * @date 2023-07-09
    */
   Page<SysMenu> pages(SysMenu request, Integer pageSize, Integer pageNum) throws Exception;
 
@@ -40,7 +40,7 @@ public interface SysMenuService extends JoinIService<SysMenu> {
    * @param request 菜单实体
    * @return {@link SysMenu}
    * @author 一源团队--花和尚
-   * @date 2023-07-02
+   * @date 2023-07-09
    */
   SysMenu details(SysMenu request) throws Exception;
 
@@ -50,7 +50,7 @@ public interface SysMenuService extends JoinIService<SysMenu> {
    * @param request 菜单实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-02
+   * @date 2023-07-09
    */
   boolean del(SysMenu request) throws Exception;
 
@@ -60,9 +60,19 @@ public interface SysMenuService extends JoinIService<SysMenu> {
    * @param ids 逗号分割id
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-02
+   * @date 2023-07-09
    */
   boolean dels(String ids) throws Exception;
+
+  /**
+   * 批量删除菜单表(根据1对多属性)
+   *
+   * @param request 角色_菜单实体
+   * @return {@link boolean}
+   * @author 一源团队--花和尚
+   * @date 2023-07-02
+   */
+  boolean dels(SysMenu request) throws Exception;
 
   /**
    * 编辑菜单表
@@ -70,7 +80,7 @@ public interface SysMenuService extends JoinIService<SysMenu> {
    * @param request 菜单实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-02
+   * @date 2023-07-09
    */
   boolean edit(SysMenu request) throws Exception;
 
@@ -80,7 +90,7 @@ public interface SysMenuService extends JoinIService<SysMenu> {
    * @param request 菜单实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-02
+   * @date 2023-07-09
    */
   boolean add(SysMenu request) throws Exception;
 }

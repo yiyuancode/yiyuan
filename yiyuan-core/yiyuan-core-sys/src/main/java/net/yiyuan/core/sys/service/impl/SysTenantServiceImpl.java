@@ -17,7 +17,7 @@ import java.util.List;
  * 租户管理Service层接口实现
  *
  * @author 一源团队--花和尚
- * @date 2023-07-02
+ * @date 2023-07-09
  */
 @Slf4j
 @Service
@@ -31,7 +31,7 @@ public class SysTenantServiceImpl extends JoinServiceImpl<SysTenantMapper, SysTe
    * @param request 租户实体
    * @return {@link List}
    * @author 一源团队--花和尚
-   * @date 2023-07-02
+   * @date 2023-07-09
    */
   @Override
   public List<SysTenant> list(SysTenant request) throws Exception {
@@ -46,7 +46,7 @@ public class SysTenantServiceImpl extends JoinServiceImpl<SysTenantMapper, SysTe
    * @param request 租户实体
    * @return {@link Page}
    * @author 一源团队--花和尚
-   * @date 2023-07-02
+   * @date 2023-07-09
    */
   @Override
   public Page<SysTenant> pages(SysTenant request, Integer pageSize, Integer pageNum)
@@ -65,7 +65,7 @@ public class SysTenantServiceImpl extends JoinServiceImpl<SysTenantMapper, SysTe
    * @param request 租户实体
    * @return {@link SysTenant}
    * @author 一源团队--花和尚
-   * @date 2023-07-02
+   * @date 2023-07-09
    */
   @Override
   public SysTenant details(SysTenant request) throws Exception {
@@ -80,7 +80,7 @@ public class SysTenantServiceImpl extends JoinServiceImpl<SysTenantMapper, SysTe
    * @param request 租户实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-02
+   * @date 2023-07-09
    */
   @Override
   public boolean del(SysTenant request) throws Exception {
@@ -93,11 +93,25 @@ public class SysTenantServiceImpl extends JoinServiceImpl<SysTenantMapper, SysTe
    * @param ids 逗号分割id
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-02
+   * @date 2023-07-09
    */
   @Override
   public boolean dels(String ids) throws Exception {
     return removeByIds(Arrays.asList(ids.split(",")));
+  }
+
+  /**
+   * 批量删除租户表(根据同一属性)
+   *
+   * @param request 角色_菜单实体
+   * @return {@link boolean}
+   * @author 一源团队--花和尚
+   * @date 2023-07-02
+   */
+  @Override
+  public boolean dels(SysTenant request) throws Exception {
+    JoinLambdaWrapper<SysTenant> wrapper = new JoinLambdaWrapper<>(request);
+    return remove(wrapper);
   }
 
   /**
@@ -106,7 +120,7 @@ public class SysTenantServiceImpl extends JoinServiceImpl<SysTenantMapper, SysTe
    * @param request 租户实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-02
+   * @date 2023-07-09
    */
   @Override
   public boolean edit(SysTenant request) throws Exception {
@@ -120,7 +134,7 @@ public class SysTenantServiceImpl extends JoinServiceImpl<SysTenantMapper, SysTe
    * @param request 租户实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-02
+   * @date 2023-07-09
    */
   @Override
   public boolean add(SysTenant request) throws Exception {

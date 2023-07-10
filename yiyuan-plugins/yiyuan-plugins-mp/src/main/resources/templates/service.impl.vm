@@ -116,6 +116,19 @@ public boolean dels(String ids) throws Exception{
 return removeByIds(Arrays.asList(ids.split(",")));
 }
 
+/**
+* 批量删除${table.comment}(根据同一属性)
+*
+* @param request 角色_菜单实体
+* @return {@link boolean}
+* @author 一源团队--花和尚
+* @date 2023-07-02
+*/
+@Override
+public boolean dels(${table.entityName} request) throws Exception {
+JoinLambdaWrapper<${table.entityName}> wrapper = new JoinLambdaWrapper<>(request);
+return remove(wrapper);
+}
 
 /**
 * 编辑${table.comment}

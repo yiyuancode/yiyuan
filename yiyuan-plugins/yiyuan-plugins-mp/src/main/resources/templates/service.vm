@@ -73,6 +73,17 @@ boolean del(${table.entityName} request)throws Exception;
 */
 boolean dels(String ids)throws Exception;
 
+
+/**
+* 批量删除${table.comment}(根据1对多属性)
+*
+* @param request 角色_菜单实体
+* @return {@link boolean}
+* @author 一源团队--花和尚
+* @date 2023-07-02
+*/
+boolean dels(${table.entityName} request) throws Exception;
+
 /**
 * 编辑${table.comment}
 *

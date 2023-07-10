@@ -10,7 +10,7 @@ import java.util.Date;
  * 用户_角色管理实体
  *
  * @author 一源团队--花和尚
- * @date 2023-07-02
+ * @date 2023-07-09
  */
 @Data
 public class AuthAdminRole implements Serializable {
@@ -21,7 +21,7 @@ public class AuthAdminRole implements Serializable {
    *
    * @see String
    * @author 一源团队--花和尚
-   * @date 2023-07-02
+   * @date 2023-07-09
    */
   private String userId;
 
@@ -30,7 +30,7 @@ public class AuthAdminRole implements Serializable {
    *
    * @see String
    * @author 一源团队--花和尚
-   * @date 2023-07-02
+   * @date 2023-07-09
    */
   private String roleId;
 
@@ -39,7 +39,7 @@ public class AuthAdminRole implements Serializable {
    *
    * @see Date
    * @author 一源团队--花和尚
-   * @date 2023-07-02
+   * @date 2023-07-09
    */
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
@@ -50,7 +50,7 @@ public class AuthAdminRole implements Serializable {
    *
    * @see Date
    * @author 一源团队--花和尚
-   * @date 2023-07-02
+   * @date 2023-07-09
    */
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
@@ -61,7 +61,7 @@ public class AuthAdminRole implements Serializable {
    *
    * @see String
    * @author 一源团队--花和尚
-   * @date 2023-07-02
+   * @date 2023-07-09
    */
   private String tenantId;
 }

@@ -16,9 +16,15 @@ import cn.dev33.satoken.annotation.SaMode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.springframework.context.annotation.Description;
 
 import java.util.List;
 
+
+#set($modeName = $table.name.toLowerCase().replaceAll(".*_", ""))
+
+#set($modeZhName = $!{table.comment.replaceAll("表", "管理")})
+#set($modeZhKongName = ${table.comment.replaceAll("表", "")})
 /**
  * $!{table.comment.replaceAll("表", "管理")}
  *
@@ -57,9 +63,10 @@ private ${table.serviceName} ${serviceImplName};
  * @author  ${author}
  * @date ${date}
  */
-@SaCheckPermission(value = {"${package.ModuleName}:${table.name.toLowerCase()}:list"}, orRole = "admin")
+@Description("$!{cfg.apiMoudel}/$!{modeZhName}/查询$!{modeZhKongName}")
+@SaCheckPermission(value = {"${package.ModuleName}:${modeName}:query"}, orRole = "admin")
     ##@ApiOperation(value = "$!{table.comment.replaceAll("表", "")}列表(全部)" )
-@RequestMapping(value = "/${package.ModuleName}/${table.name.toLowerCase()}/list", method = RequestMethod.GET)
+@RequestMapping(value = "/${package.ModuleName}/${modeName}/list", method = RequestMethod.GET)
 @ResponseBody
 public CommonResult<List<${table.entityName}>>list(${table.entityName} request)throws Exception{
         return CommonResult.success(${serviceImplName}.list(request));
@@ -74,9 +81,9 @@ public CommonResult<List<${table.entityName}>>list(${table.entityName} request)t
  * @author  ${author}
  * @date ${date}
  */
-
-@SaCheckPermission(value = {"${package.ModuleName}:${table.name.toLowerCase()}:pages"}, orRole = "admin")
-@RequestMapping(value = "/${package.ModuleName}/${table.name.toLowerCase()}/pages", method = RequestMethod.GET)
+@Description("$!{cfg.apiMoudel}/$!{modeZhName}/查询$!{modeZhKongName}")
+@SaCheckPermission(value = {"${package.ModuleName}:${modeName}:query"}, orRole = "admin")
+@RequestMapping(value = "/${package.ModuleName}/${modeName}/pages", method = RequestMethod.GET)
 @ResponseBody
 public CommonResult<Page<${table.entityName}>>pages(
     ${table.entityName} request,
@@ -94,9 +101,9 @@ public CommonResult<Page<${table.entityName}>>pages(
  * @author  ${author}
  * @date ${date}
  */
-
-@SaCheckPermission(value = {"${package.ModuleName}:${table.name.toLowerCase()}:details"}, orRole = "admin")
-@RequestMapping(value = "/${package.ModuleName}/${table.name.toLowerCase()}/details", method = RequestMethod.GET)
+@Description("$!{cfg.apiMoudel}/$!{modeZhName}/查询$!{modeZhKongName}")
+@SaCheckPermission(value = {"${package.ModuleName}:${modeName}:query"}, orRole = "admin")
+@RequestMapping(value = "/${package.ModuleName}/${modeName}/details", method = RequestMethod.GET)
 @ResponseBody
 public CommonResult<${table.entityName}> details( ${table.entityName} request)throws Exception{
         return CommonResult.success(${serviceImplName}.details(request));
@@ -110,8 +117,9 @@ public CommonResult<${table.entityName}> details( ${table.entityName} request)th
  * @author  ${author}
  * @date ${date}
  */
-@SaCheckPermission(value = {"${package.ModuleName}:${table.name.toLowerCase()}:del"}, orRole = "admin")
-@RequestMapping(value = "/${package.ModuleName}/${table.name.toLowerCase()}/del", method = RequestMethod.POST)
+@Description("$!{cfg.apiMoudel}/$!{modeZhName}/删除$!{modeZhKongName}")
+@SaCheckPermission(value = {"${package.ModuleName}:${modeName}:del"}, orRole = "admin")
+@RequestMapping(value = "/${package.ModuleName}/${modeName}/del", method = RequestMethod.POST)
 @ResponseBody
 public CommonResult<String> del(@RequestBody @Validated   ${table.entityName} request)throws Exception{
         if(${serviceImplName}.del(request)){
@@ -130,8 +138,9 @@ public CommonResult<String> del(@RequestBody @Validated   ${table.entityName} re
  * @author  ${author}
  * @date ${date}
  */
-@SaCheckPermission(value = {"${package.ModuleName}:${table.name.toLowerCase()}:dels"}, orRole = "admin")
-@RequestMapping(value = "/${package.ModuleName}/${table.name.toLowerCase()}/dels", method = RequestMethod.POST)
+@Description("$!{cfg.apiMoudel}/$!{modeZhName}/批量删除$!{modeZhKongName}")
+@SaCheckPermission(value = {"${package.ModuleName}:${modeName}:dels"}, orRole = "admin")
+@RequestMapping(value = "/${package.ModuleName}/${modeName}/dels", method = RequestMethod.POST)
 @ResponseBody
 public CommonResult<String> dels(@RequestParam @Validated({NotEmpty.class}) String ids)throws Exception{
         if(${serviceImplName}.dels(ids)){
@@ -148,8 +157,9 @@ public CommonResult<String> dels(@RequestParam @Validated({NotEmpty.class}) Stri
  * @author  ${author}
  * @date ${date}
  */
-@SaCheckPermission(value = {"${package.ModuleName}:${table.name.toLowerCase()}:edit"}, orRole = "admin")
-@RequestMapping(value = "/${package.ModuleName}/${table.name.toLowerCase()}/edit", method = RequestMethod.POST)
+@Description("$!{cfg.apiMoudel}/$!{modeZhName}/编辑$!{modeZhKongName}")
+@SaCheckPermission(value = {"${package.ModuleName}:${modeName}:edit"}, orRole = "admin")
+@RequestMapping(value = "/${package.ModuleName}/${modeName}/edit", method = RequestMethod.POST)
 @ResponseBody
 public CommonResult<String> edit(@RequestBody @Validated   ${table.entityName} request)throws Exception{
         if(${serviceImplName}.edit(request)){
@@ -168,8 +178,9 @@ public CommonResult<String> edit(@RequestBody @Validated   ${table.entityName} r
  * @author  ${author}
  * @date ${date}
  */
-@SaCheckPermission(value = {"${package.ModuleName}:${table.name.toLowerCase()}:add"}, orRole = "admin")
-@RequestMapping(value = "/${package.ModuleName}/${table.name.toLowerCase()}/add", method = RequestMethod.POST)
+@Description("$!{cfg.apiMoudel}/$!{modeZhName}/新增$!{modeZhKongName}")
+@SaCheckPermission(value = {"${package.ModuleName}:${modeName}:add"}, orRole = "admin")
+@RequestMapping(value = "/${package.ModuleName}/${modeName}/add", method = RequestMethod.POST)
 @ResponseBody
 public CommonResult<String> add(@RequestBody @Validated  ${table.entityName} request)throws Exception{
         if(${serviceImplName}.add(request)){

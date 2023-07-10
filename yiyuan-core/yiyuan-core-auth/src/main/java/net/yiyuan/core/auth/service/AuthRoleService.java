@@ -3,7 +3,7 @@ package net.yiyuan.core.auth.service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import icu.mhb.mybatisplus.plugln.base.service.JoinIService;
 import net.yiyuan.core.auth.model.AuthRole;
-import net.yiyuan.core.auth.model.assign_menu.AssignMenuReq;
+import net.yiyuan.core.auth.model.req.AssignMenuReq;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ import java.util.List;
  * 角色管理Service层接口
  *
  * @author 一源团队--花和尚
- * @date 2023-07-02
+ * @date 2023-07-09
  */
 public interface AuthRoleService extends JoinIService<AuthRole> {
 
@@ -21,7 +21,7 @@ public interface AuthRoleService extends JoinIService<AuthRole> {
    * @param request 角色实体
    * @return {@link List}
    * @author 一源团队--花和尚
-   * @date 2023-07-02
+   * @date 2023-07-09
    */
   List<AuthRole> list(AuthRole request) throws Exception;
 
@@ -31,7 +31,7 @@ public interface AuthRoleService extends JoinIService<AuthRole> {
    * @param request 角色实体
    * @return {@link Page}
    * @author 一源团队--花和尚
-   * @date 2023-07-02
+   * @date 2023-07-09
    */
   Page<AuthRole> pages(AuthRole request, Integer pageSize, Integer pageNum) throws Exception;
 
@@ -41,7 +41,7 @@ public interface AuthRoleService extends JoinIService<AuthRole> {
    * @param request 角色实体
    * @return {@link AuthRole}
    * @author 一源团队--花和尚
-   * @date 2023-07-02
+   * @date 2023-07-09
    */
   AuthRole details(AuthRole request) throws Exception;
 
@@ -51,7 +51,7 @@ public interface AuthRoleService extends JoinIService<AuthRole> {
    * @param request 角色实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-02
+   * @date 2023-07-09
    */
   boolean del(AuthRole request) throws Exception;
 
@@ -61,9 +61,19 @@ public interface AuthRoleService extends JoinIService<AuthRole> {
    * @param ids 逗号分割id
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-02
+   * @date 2023-07-09
    */
   boolean dels(String ids) throws Exception;
+
+  /**
+   * 批量删除角色表(根据1对多属性)
+   *
+   * @param request 角色_菜单实体
+   * @return {@link boolean}
+   * @author 一源团队--花和尚
+   * @date 2023-07-02
+   */
+  boolean dels(AuthRole request) throws Exception;
 
   /**
    * 编辑角色表
@@ -71,7 +81,7 @@ public interface AuthRoleService extends JoinIService<AuthRole> {
    * @param request 角色实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-02
+   * @date 2023-07-09
    */
   boolean edit(AuthRole request) throws Exception;
 
@@ -81,7 +91,7 @@ public interface AuthRoleService extends JoinIService<AuthRole> {
    * @param request 角色实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-02
+   * @date 2023-07-09
    */
   boolean add(AuthRole request) throws Exception;
 

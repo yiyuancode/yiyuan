@@ -1,4 +1,4 @@
-package net.yiyuan.core.auth.model.assign_menu;
+package net.yiyuan.core.auth.model.req;
 
 import lombok.Data;
 

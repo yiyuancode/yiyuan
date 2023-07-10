@@ -1,4 +1,4 @@
-package net.yiyuan.core.auth.model.assign_role;
+package net.yiyuan.core.auth.model.vo;
 
 import lombok.Data;
 

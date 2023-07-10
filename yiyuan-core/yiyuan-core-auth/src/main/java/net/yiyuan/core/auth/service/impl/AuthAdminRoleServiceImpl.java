@@ -17,7 +17,7 @@ import java.util.List;
  * 用户_角色管理Service层接口实现
  *
  * @author 一源团队--花和尚
- * @date 2023-07-02
+ * @date 2023-07-09
  */
 @Slf4j
 @Service
@@ -31,7 +31,7 @@ public class AuthAdminRoleServiceImpl extends JoinServiceImpl<AuthAdminRoleMappe
    * @param request 用户_角色实体
    * @return {@link List}
    * @author 一源团队--花和尚
-   * @date 2023-07-02
+   * @date 2023-07-09
    */
   @Override
   public List<AuthAdminRole> list(AuthAdminRole request) throws Exception {
@@ -46,7 +46,7 @@ public class AuthAdminRoleServiceImpl extends JoinServiceImpl<AuthAdminRoleMappe
    * @param request 用户_角色实体
    * @return {@link Page}
    * @author 一源团队--花和尚
-   * @date 2023-07-02
+   * @date 2023-07-09
    */
   @Override
   public Page<AuthAdminRole> pages(AuthAdminRole request, Integer pageSize, Integer pageNum)
@@ -66,7 +66,7 @@ public class AuthAdminRoleServiceImpl extends JoinServiceImpl<AuthAdminRoleMappe
    * @param request 用户_角色实体
    * @return {@link AuthAdminRole}
    * @author 一源团队--花和尚
-   * @date 2023-07-02
+   * @date 2023-07-09
    */
   @Override
   public AuthAdminRole details(AuthAdminRole request) throws Exception {
@@ -81,7 +81,7 @@ public class AuthAdminRoleServiceImpl extends JoinServiceImpl<AuthAdminRoleMappe
    * @param request 用户_角色实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-02
+   * @date 2023-07-09
    */
   @Override
   public boolean del(AuthAdminRole request) throws Exception {
@@ -94,13 +94,21 @@ public class AuthAdminRoleServiceImpl extends JoinServiceImpl<AuthAdminRoleMappe
    * @param ids 逗号分割id
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-02
+   * @date 2023-07-09
    */
   @Override
   public boolean dels(String ids) throws Exception {
     return removeByIds(Arrays.asList(ids.split(",")));
   }
 
+  /**
+   * 批量删除用户_角色表(根据同一属性)
+   *
+   * @param request 角色_菜单实体
+   * @return {@link boolean}
+   * @author 一源团队--花和尚
+   * @date 2023-07-02
+   */
   @Override
   public boolean dels(AuthAdminRole request) throws Exception {
     JoinLambdaWrapper<AuthAdminRole> wrapper = new JoinLambdaWrapper<>(request);
@@ -113,7 +121,7 @@ public class AuthAdminRoleServiceImpl extends JoinServiceImpl<AuthAdminRoleMappe
    * @param request 用户_角色实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-02
+   * @date 2023-07-09
    */
   @Override
   public boolean edit(AuthAdminRole request) throws Exception {
@@ -127,7 +135,7 @@ public class AuthAdminRoleServiceImpl extends JoinServiceImpl<AuthAdminRoleMappe
    * @param request 用户_角色实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-02
+   * @date 2023-07-09
    */
   @Override
   public boolean add(AuthAdminRole request) throws Exception {

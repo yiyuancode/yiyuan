@@ -17,7 +17,7 @@ import java.util.List;
  * 菜单管理Service层接口实现
  *
  * @author 一源团队--花和尚
- * @date 2023-07-02
+ * @date 2023-07-09
  */
 @Slf4j
 @Service
@@ -31,7 +31,7 @@ public class SysMenuServiceImpl extends JoinServiceImpl<SysMenuMapper, SysMenu>
    * @param request 菜单实体
    * @return {@link List}
    * @author 一源团队--花和尚
-   * @date 2023-07-02
+   * @date 2023-07-09
    */
   @Override
   public List<SysMenu> list(SysMenu request) throws Exception {
@@ -46,7 +46,7 @@ public class SysMenuServiceImpl extends JoinServiceImpl<SysMenuMapper, SysMenu>
    * @param request 菜单实体
    * @return {@link Page}
    * @author 一源团队--花和尚
-   * @date 2023-07-02
+   * @date 2023-07-09
    */
   @Override
   public Page<SysMenu> pages(SysMenu request, Integer pageSize, Integer pageNum) throws Exception {
@@ -64,7 +64,7 @@ public class SysMenuServiceImpl extends JoinServiceImpl<SysMenuMapper, SysMenu>
    * @param request 菜单实体
    * @return {@link SysMenu}
    * @author 一源团队--花和尚
-   * @date 2023-07-02
+   * @date 2023-07-09
    */
   @Override
   public SysMenu details(SysMenu request) throws Exception {
@@ -79,7 +79,7 @@ public class SysMenuServiceImpl extends JoinServiceImpl<SysMenuMapper, SysMenu>
    * @param request 菜单实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-02
+   * @date 2023-07-09
    */
   @Override
   public boolean del(SysMenu request) throws Exception {
@@ -92,11 +92,25 @@ public class SysMenuServiceImpl extends JoinServiceImpl<SysMenuMapper, SysMenu>
    * @param ids 逗号分割id
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-02
+   * @date 2023-07-09
    */
   @Override
   public boolean dels(String ids) throws Exception {
     return removeByIds(Arrays.asList(ids.split(",")));
+  }
+
+  /**
+   * 批量删除菜单表(根据同一属性)
+   *
+   * @param request 角色_菜单实体
+   * @return {@link boolean}
+   * @author 一源团队--花和尚
+   * @date 2023-07-02
+   */
+  @Override
+  public boolean dels(SysMenu request) throws Exception {
+    JoinLambdaWrapper<SysMenu> wrapper = new JoinLambdaWrapper<>(request);
+    return remove(wrapper);
   }
 
   /**
@@ -105,7 +119,7 @@ public class SysMenuServiceImpl extends JoinServiceImpl<SysMenuMapper, SysMenu>
    * @param request 菜单实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-02
+   * @date 2023-07-09
    */
   @Override
   public boolean edit(SysMenu request) throws Exception {
@@ -119,7 +133,7 @@ public class SysMenuServiceImpl extends JoinServiceImpl<SysMenuMapper, SysMenu>
    * @param request 菜单实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-02
+   * @date 2023-07-09
    */
   @Override
   public boolean add(SysMenu request) throws Exception {

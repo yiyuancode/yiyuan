@@ -10,7 +10,7 @@ import java.util.List;
  * 角色_菜单管理Service层接口
  *
  * @author 一源团队--花和尚
- * @date 2023-07-02
+ * @date 2023-07-09
  */
 public interface AuthRoleMenuService extends JoinIService<AuthRoleMenu> {
 
@@ -20,7 +20,7 @@ public interface AuthRoleMenuService extends JoinIService<AuthRoleMenu> {
    * @param request 角色_菜单实体
    * @return {@link List}
    * @author 一源团队--花和尚
-   * @date 2023-07-02
+   * @date 2023-07-09
    */
   List<AuthRoleMenu> list(AuthRoleMenu request) throws Exception;
 
@@ -30,7 +30,7 @@ public interface AuthRoleMenuService extends JoinIService<AuthRoleMenu> {
    * @param request 角色_菜单实体
    * @return {@link Page}
    * @author 一源团队--花和尚
-   * @date 2023-07-02
+   * @date 2023-07-09
    */
   Page<AuthRoleMenu> pages(AuthRoleMenu request, Integer pageSize, Integer pageNum)
       throws Exception;
@@ -41,7 +41,7 @@ public interface AuthRoleMenuService extends JoinIService<AuthRoleMenu> {
    * @param request 角色_菜单实体
    * @return {@link AuthRoleMenu}
    * @author 一源团队--花和尚
-   * @date 2023-07-02
+   * @date 2023-07-09
    */
   AuthRoleMenu details(AuthRoleMenu request) throws Exception;
 
@@ -51,7 +51,7 @@ public interface AuthRoleMenuService extends JoinIService<AuthRoleMenu> {
    * @param request 角色_菜单实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-02
+   * @date 2023-07-09
    */
   boolean del(AuthRoleMenu request) throws Exception;
 
@@ -61,12 +61,12 @@ public interface AuthRoleMenuService extends JoinIService<AuthRoleMenu> {
    * @param ids 逗号分割id
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-02
+   * @date 2023-07-09
    */
   boolean dels(String ids) throws Exception;
 
   /**
-   * 批量删除角色_菜单表(根据同一属性)
+   * 批量删除角色_菜单表(根据1对多属性)
    *
    * @param request 角色_菜单实体
    * @return {@link boolean}
@@ -81,7 +81,7 @@ public interface AuthRoleMenuService extends JoinIService<AuthRoleMenu> {
    * @param request 角色_菜单实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-02
+   * @date 2023-07-09
    */
   boolean edit(AuthRoleMenu request) throws Exception;
 
@@ -91,7 +91,7 @@ public interface AuthRoleMenuService extends JoinIService<AuthRoleMenu> {
    * @param request 角色_菜单实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-02
+   * @date 2023-07-09
    */
   boolean add(AuthRoleMenu request) throws Exception;
 }

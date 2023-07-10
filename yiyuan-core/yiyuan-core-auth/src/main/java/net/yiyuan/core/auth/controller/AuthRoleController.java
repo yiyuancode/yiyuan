@@ -6,9 +6,10 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import net.yiyuan.common.model.vo.CommonResult;
 import net.yiyuan.core.auth.model.AuthRole;
-import net.yiyuan.core.auth.model.assign_menu.AssignMenuReq;
+import net.yiyuan.core.auth.model.req.AssignMenuReq;
 import net.yiyuan.core.auth.service.AuthRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Description;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +20,7 @@ import java.util.List;
  * 角色管理
  *
  * @author 一源团队--花和尚
- * @date 2023-07-02
+ * @date 2023-07-09
  * @module 权限管理
  * @folder 权限管理/角色管理
  */
@@ -35,12 +36,13 @@ public class AuthRoleController {
    * @param request 角色实体
    * @return {@link CommonResult<List<AuthRole>>}
    * @author 一源团队--花和尚
-   * @date 2023-07-02
+   * @date 2023-07-09
    */
+  @Description("权限管理/角色管理/查询角色")
   @SaCheckPermission(
-      value = {"auth:auth_role:list"},
+      value = {"auth:role:query"},
       orRole = "admin")
-  @RequestMapping(value = "/auth/auth_role/list", method = RequestMethod.GET)
+  @RequestMapping(value = "/auth/role/list", method = RequestMethod.GET)
   @ResponseBody
   public CommonResult<List<AuthRole>> list(AuthRole request) throws Exception {
     return CommonResult.success(authRoleService.list(request));
@@ -52,12 +54,13 @@ public class AuthRoleController {
    * @param request 角色实体
    * @return {@link CommonResult<Page<AuthRole>>}
    * @author 一源团队--花和尚
-   * @date 2023-07-02
+   * @date 2023-07-09
    */
+  @Description("权限管理/角色管理/查询角色")
   @SaCheckPermission(
-      value = {"auth:auth_role:pages"},
+      value = {"auth:role:query"},
       orRole = "admin")
-  @RequestMapping(value = "/auth/auth_role/pages", method = RequestMethod.GET)
+  @RequestMapping(value = "/auth/role/pages", method = RequestMethod.GET)
   @ResponseBody
   public CommonResult<Page<AuthRole>> pages(
       AuthRole request,
@@ -73,12 +76,13 @@ public class AuthRoleController {
    * @param request 角色实体
    * @return {@link CommonResult<AuthRole>}
    * @author 一源团队--花和尚
-   * @date 2023-07-02
+   * @date 2023-07-09
    */
+  @Description("权限管理/角色管理/查询角色")
   @SaCheckPermission(
-      value = {"auth:auth_role:details"},
+      value = {"auth:role:query"},
       orRole = "admin")
-  @RequestMapping(value = "/auth/auth_role/details", method = RequestMethod.GET)
+  @RequestMapping(value = "/auth/role/details", method = RequestMethod.GET)
   @ResponseBody
   public CommonResult<AuthRole> details(AuthRole request) throws Exception {
     return CommonResult.success(authRoleService.details(request));
@@ -90,12 +94,13 @@ public class AuthRoleController {
    * @param request 角色实体
    * @return {@link CommonResult<String>}
    * @author 一源团队--花和尚
-   * @date 2023-07-02
+   * @date 2023-07-09
    */
+  @Description("权限管理/角色管理/删除角色")
   @SaCheckPermission(
-      value = {"auth:auth_role:del"},
+      value = {"auth:role:del"},
       orRole = "admin")
-  @RequestMapping(value = "/auth/auth_role/del", method = RequestMethod.POST)
+  @RequestMapping(value = "/auth/role/del", method = RequestMethod.POST)
   @ResponseBody
   public CommonResult<String> del(@RequestBody @Validated AuthRole request) throws Exception {
     if (authRoleService.del(request)) {
@@ -111,12 +116,13 @@ public class AuthRoleController {
    * @param ids 逗号分割id
    * @return {@link CommonResult<String>}
    * @author 一源团队--花和尚
-   * @date 2023-07-02
+   * @date 2023-07-09
    */
+  @Description("权限管理/角色管理/批量删除角色")
   @SaCheckPermission(
-      value = {"auth:auth_role:dels"},
+      value = {"auth:role:dels"},
       orRole = "admin")
-  @RequestMapping(value = "/auth/auth_role/dels", method = RequestMethod.POST)
+  @RequestMapping(value = "/auth/role/dels", method = RequestMethod.POST)
   @ResponseBody
   public CommonResult<String> dels(@RequestParam @Validated({NotEmpty.class}) String ids)
       throws Exception {
@@ -132,12 +138,13 @@ public class AuthRoleController {
    * @param request 角色实体
    * @return {@link CommonResult<String>}
    * @author 一源团队--花和尚
-   * @date 2023-07-02
+   * @date 2023-07-09
    */
+  @Description("权限管理/角色管理/编辑角色")
   @SaCheckPermission(
-      value = {"auth:auth_role:edit"},
+      value = {"auth:role:edit"},
       orRole = "admin")
-  @RequestMapping(value = "/auth/auth_role/edit", method = RequestMethod.POST)
+  @RequestMapping(value = "/auth/role/edit", method = RequestMethod.POST)
   @ResponseBody
   public CommonResult<String> edit(@RequestBody @Validated AuthRole request) throws Exception {
     if (authRoleService.edit(request)) {
@@ -153,12 +160,13 @@ public class AuthRoleController {
    * @param request 角色实体
    * @return {@link CommonResult<String>}
    * @author 一源团队--花和尚
-   * @date 2023-07-02
+   * @date 2023-07-09
    */
+  @Description("权限管理/角色管理/新增角色")
   @SaCheckPermission(
-      value = {"auth:auth_role:add"},
+      value = {"auth:role:add"},
       orRole = "admin")
-  @RequestMapping(value = "/auth/auth_role/add", method = RequestMethod.POST)
+  @RequestMapping(value = "/auth/role/add", method = RequestMethod.POST)
   @ResponseBody
   public CommonResult<String> add(@RequestBody @Validated AuthRole request) throws Exception {
     if (authRoleService.add(request)) {
@@ -176,10 +184,11 @@ public class AuthRoleController {
    * @author 一源团队--花和尚
    * @date 2023-06-24
    */
+  @Description("权限管理/角色管理/分配菜单")
   @SaCheckPermission(
-      value = {"auth:auth_admin:assignMenu"},
+      value = {"auth:role:assignMenu"},
       orRole = "admin")
-  @RequestMapping(value = "/auth/auth_admin/assignMenu", method = RequestMethod.POST)
+  @RequestMapping(value = "/auth/role/assignMenu", method = RequestMethod.POST)
   @ResponseBody
   public CommonResult<String> assignMenu(@RequestBody @Validated AssignMenuReq request)
       throws Exception {

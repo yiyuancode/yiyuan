@@ -7,7 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import net.yiyuan.core.auth.mapper.AuthAdminMapper;
 import net.yiyuan.core.auth.model.AuthAdmin;
 import net.yiyuan.core.auth.model.AuthAdminRole;
-import net.yiyuan.core.auth.model.assign_role.AssignRoleReq;
+import net.yiyuan.core.auth.model.req.AssignRoleReq;
 import net.yiyuan.core.auth.service.AuthAdminRoleService;
 import net.yiyuan.core.auth.service.AuthAdminService;
 import org.springframework.stereotype.Service;
@@ -18,12 +18,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-
 /**
  * 用户管理Service层接口实现
  *
  * @author 一源团队--花和尚
- * @date 2023-07-02
+ * @date 2023-07-09
  */
 @Slf4j
 @Service
@@ -32,14 +31,13 @@ public class AuthAdminServiceImpl extends JoinServiceImpl<AuthAdminMapper, AuthA
   @Resource private AuthAdminMapper authAdminMapper;
   @Resource private AuthAdminRoleService authAdminRoleService;
   @Resource private TransactionTemplate transactionTemplate;
-
   /**
    * 用户列表(全部)
    *
    * @param request 用户实体
    * @return {@link List}
    * @author 一源团队--花和尚
-   * @date 2023-07-02
+   * @date 2023-07-09
    */
   @Override
   public List<AuthAdmin> list(AuthAdmin request) throws Exception {
@@ -54,7 +52,7 @@ public class AuthAdminServiceImpl extends JoinServiceImpl<AuthAdminMapper, AuthA
    * @param request 用户实体
    * @return {@link Page}
    * @author 一源团队--花和尚
-   * @date 2023-07-02
+   * @date 2023-07-09
    */
   @Override
   public Page<AuthAdmin> pages(AuthAdmin request, Integer pageSize, Integer pageNum)
@@ -73,7 +71,7 @@ public class AuthAdminServiceImpl extends JoinServiceImpl<AuthAdminMapper, AuthA
    * @param request 用户实体
    * @return {@link AuthAdmin}
    * @author 一源团队--花和尚
-   * @date 2023-07-02
+   * @date 2023-07-09
    */
   @Override
   public AuthAdmin details(AuthAdmin request) throws Exception {
@@ -88,7 +86,7 @@ public class AuthAdminServiceImpl extends JoinServiceImpl<AuthAdminMapper, AuthA
    * @param request 用户实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-02
+   * @date 2023-07-09
    */
   @Override
   public boolean del(AuthAdmin request) throws Exception {
@@ -101,11 +99,25 @@ public class AuthAdminServiceImpl extends JoinServiceImpl<AuthAdminMapper, AuthA
    * @param ids 逗号分割id
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-02
+   * @date 2023-07-09
    */
   @Override
   public boolean dels(String ids) throws Exception {
     return removeByIds(Arrays.asList(ids.split(",")));
+  }
+
+  /**
+   * 批量删除用户表(根据同一属性)
+   *
+   * @param request 角色_菜单实体
+   * @return {@link boolean}
+   * @author 一源团队--花和尚
+   * @date 2023-07-02
+   */
+  @Override
+  public boolean dels(AuthAdmin request) throws Exception {
+    JoinLambdaWrapper<AuthAdmin> wrapper = new JoinLambdaWrapper<>(request);
+    return remove(wrapper);
   }
 
   /**
@@ -114,7 +126,7 @@ public class AuthAdminServiceImpl extends JoinServiceImpl<AuthAdminMapper, AuthA
    * @param request 用户实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-02
+   * @date 2023-07-09
    */
   @Override
   public boolean edit(AuthAdmin request) throws Exception {
@@ -128,7 +140,7 @@ public class AuthAdminServiceImpl extends JoinServiceImpl<AuthAdminMapper, AuthA
    * @param request 用户实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-02
+   * @date 2023-07-09
    */
   @Override
   public boolean add(AuthAdmin request) throws Exception {
@@ -168,6 +180,7 @@ public class AuthAdminServiceImpl extends JoinServiceImpl<AuthAdminMapper, AuthA
                 // 在全量增加现在的
                 authAdminRoleService.saveBatch(addList);
               } catch (Exception e) {
+                e.printStackTrace();
                 status.setRollbackOnly();
                 throw new Error("分配角色异常");
               }

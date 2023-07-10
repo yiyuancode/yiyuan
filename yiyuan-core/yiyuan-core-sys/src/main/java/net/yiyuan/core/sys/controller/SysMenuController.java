@@ -8,6 +8,7 @@ import net.yiyuan.common.model.vo.CommonResult;
 import net.yiyuan.core.sys.model.SysMenu;
 import net.yiyuan.core.sys.service.SysMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Description;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +19,7 @@ import java.util.List;
  * 菜单管理
  *
  * @author 一源团队--花和尚
- * @date 2023-07-02
+ * @date 2023-07-09
  * @module 系统管理
  * @folder 系统管理/菜单管理
  */
@@ -34,12 +35,13 @@ public class SysMenuController {
    * @param request 菜单实体
    * @return {@link CommonResult<List<SysMenu>>}
    * @author 一源团队--花和尚
-   * @date 2023-07-02
+   * @date 2023-07-09
    */
+  @Description("系统管理/菜单管理/查询菜单")
   @SaCheckPermission(
-      value = {"sys:sys_menu:list"},
+      value = {"sys:menu:query"},
       orRole = "admin")
-  @RequestMapping(value = "/sys/sys_menu/list", method = RequestMethod.GET)
+  @RequestMapping(value = "/sys/menu/list", method = RequestMethod.GET)
   @ResponseBody
   public CommonResult<List<SysMenu>> list(SysMenu request) throws Exception {
     return CommonResult.success(sysMenuService.list(request));
@@ -51,12 +53,13 @@ public class SysMenuController {
    * @param request 菜单实体
    * @return {@link CommonResult<Page<SysMenu>>}
    * @author 一源团队--花和尚
-   * @date 2023-07-02
+   * @date 2023-07-09
    */
+  @Description("系统管理/菜单管理/查询菜单")
   @SaCheckPermission(
-      value = {"sys:sys_menu:pages"},
+      value = {"sys:menu:query"},
       orRole = "admin")
-  @RequestMapping(value = "/sys/sys_menu/pages", method = RequestMethod.GET)
+  @RequestMapping(value = "/sys/menu/pages", method = RequestMethod.GET)
   @ResponseBody
   public CommonResult<Page<SysMenu>> pages(
       SysMenu request,
@@ -72,12 +75,13 @@ public class SysMenuController {
    * @param request 菜单实体
    * @return {@link CommonResult<SysMenu>}
    * @author 一源团队--花和尚
-   * @date 2023-07-02
+   * @date 2023-07-09
    */
+  @Description("系统管理/菜单管理/查询菜单")
   @SaCheckPermission(
-      value = {"sys:sys_menu:details"},
+      value = {"sys:menu:query"},
       orRole = "admin")
-  @RequestMapping(value = "/sys/sys_menu/details", method = RequestMethod.GET)
+  @RequestMapping(value = "/sys/menu/details", method = RequestMethod.GET)
   @ResponseBody
   public CommonResult<SysMenu> details(SysMenu request) throws Exception {
     return CommonResult.success(sysMenuService.details(request));
@@ -89,12 +93,13 @@ public class SysMenuController {
    * @param request 菜单实体
    * @return {@link CommonResult<String>}
    * @author 一源团队--花和尚
-   * @date 2023-07-02
+   * @date 2023-07-09
    */
+  @Description("系统管理/菜单管理/删除菜单")
   @SaCheckPermission(
-      value = {"sys:sys_menu:del"},
+      value = {"sys:menu:del"},
       orRole = "admin")
-  @RequestMapping(value = "/sys/sys_menu/del", method = RequestMethod.POST)
+  @RequestMapping(value = "/sys/menu/del", method = RequestMethod.POST)
   @ResponseBody
   public CommonResult<String> del(@RequestBody @Validated SysMenu request) throws Exception {
     if (sysMenuService.del(request)) {
@@ -110,12 +115,13 @@ public class SysMenuController {
    * @param ids 逗号分割id
    * @return {@link CommonResult<String>}
    * @author 一源团队--花和尚
-   * @date 2023-07-02
+   * @date 2023-07-09
    */
+  @Description("系统管理/菜单管理/批量删除菜单")
   @SaCheckPermission(
-      value = {"sys:sys_menu:dels"},
+      value = {"sys:menu:dels"},
       orRole = "admin")
-  @RequestMapping(value = "/sys/sys_menu/dels", method = RequestMethod.POST)
+  @RequestMapping(value = "/sys/menu/dels", method = RequestMethod.POST)
   @ResponseBody
   public CommonResult<String> dels(@RequestParam @Validated({NotEmpty.class}) String ids)
       throws Exception {
@@ -131,12 +137,13 @@ public class SysMenuController {
    * @param request 菜单实体
    * @return {@link CommonResult<String>}
    * @author 一源团队--花和尚
-   * @date 2023-07-02
+   * @date 2023-07-09
    */
+  @Description("系统管理/菜单管理/编辑菜单")
   @SaCheckPermission(
-      value = {"sys:sys_menu:edit"},
+      value = {"sys:menu:edit"},
       orRole = "admin")
-  @RequestMapping(value = "/sys/sys_menu/edit", method = RequestMethod.POST)
+  @RequestMapping(value = "/sys/menu/edit", method = RequestMethod.POST)
   @ResponseBody
   public CommonResult<String> edit(@RequestBody @Validated SysMenu request) throws Exception {
     if (sysMenuService.edit(request)) {
@@ -152,12 +159,13 @@ public class SysMenuController {
    * @param request 菜单实体
    * @return {@link CommonResult<String>}
    * @author 一源团队--花和尚
-   * @date 2023-07-02
+   * @date 2023-07-09
    */
+  @Description("系统管理/菜单管理/新增菜单")
   @SaCheckPermission(
-      value = {"sys:sys_menu:add"},
+      value = {"sys:menu:add"},
       orRole = "admin")
-  @RequestMapping(value = "/sys/sys_menu/add", method = RequestMethod.POST)
+  @RequestMapping(value = "/sys/menu/add", method = RequestMethod.POST)
   @ResponseBody
   public CommonResult<String> add(@RequestBody @Validated SysMenu request) throws Exception {
     if (sysMenuService.add(request)) {
