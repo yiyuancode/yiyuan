@@ -359,7 +359,7 @@ public class AuthService {
                       }
                       // 查询大模块目录是否存在
                       sysMenuQuery = new SysMenu();
-                      sysMenuQuery.setPermission(btnPermAarry[1]);
+                      sysMenuQuery.setPermission(btnPermAarry[0] + ":" + btnPermAarry[1]);
                       childMoudelDetails = sysMenuService.details(sysMenuQuery);
                       if (ObjectUtil.isEmpty(childMoudelDetails)) {
                         sysMenuQuery.setName(menuNameAarry[1]);
@@ -507,8 +507,10 @@ public class AuthService {
         PermissionsForAntdVo permissionCur = secendMap.get(secendPermission);
         if (ObjectUtil.isEmpty(permissionCur)) {
           PermissionsForAntdVo item = new PermissionsForAntdVo();
-          item.setId(permission);
-          item.setOperation(new ArrayList<>());
+          item.setId(secendPermission);
+          List<String> permList = new ArrayList<>();
+          permList.add(permission);
+          item.setOperation(permList);
           secendMap.put(secendPermission, item);
         } else {
           permissionCur.getOperation().add(permission);
