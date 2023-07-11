@@ -12,7 +12,7 @@ import java.util.Date;
  * 菜单管理实体
  *
  * @author 一源团队--花和尚
- * @date 2023-07-09
+ * @date 2023-07-11
  */
 @Data
 public class SysMenu implements Serializable {
@@ -21,7 +21,7 @@ public class SysMenu implements Serializable {
   /**
    * 菜单ID
    *
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   @TableId(value = "id", type = IdType.ASSIGN_UUID)
   private String id;
@@ -31,7 +31,7 @@ public class SysMenu implements Serializable {
    *
    * @see String
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   private String name;
 
@@ -40,7 +40,7 @@ public class SysMenu implements Serializable {
    *
    * @see String
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   private String permission;
 
@@ -49,7 +49,7 @@ public class SysMenu implements Serializable {
    *
    * @see String
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   private String parentId;
 
@@ -58,7 +58,7 @@ public class SysMenu implements Serializable {
    *
    * @see String
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   private String icon;
 
@@ -67,7 +67,7 @@ public class SysMenu implements Serializable {
    *
    * @see String
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   private String activeMenu;
 
@@ -76,7 +76,7 @@ public class SysMenu implements Serializable {
    *
    * @see Integer
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   private Integer isFrame;
 
@@ -85,7 +85,7 @@ public class SysMenu implements Serializable {
    *
    * @see String
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   private String frameSrc;
 
@@ -94,7 +94,7 @@ public class SysMenu implements Serializable {
    *
    * @see Integer
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   private Integer isAffix;
 
@@ -103,7 +103,7 @@ public class SysMenu implements Serializable {
    *
    * @see Integer
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   private Integer status;
 
@@ -112,7 +112,7 @@ public class SysMenu implements Serializable {
    *
    * @see Integer
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   private Integer isAlwaysShow;
 
@@ -121,7 +121,7 @@ public class SysMenu implements Serializable {
    *
    * @see Integer
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   private Integer isCache;
 
@@ -130,7 +130,7 @@ public class SysMenu implements Serializable {
    *
    * @see Integer
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   private Integer type;
 
@@ -139,7 +139,7 @@ public class SysMenu implements Serializable {
    *
    * @see Integer
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   private Integer openType;
 
@@ -148,7 +148,7 @@ public class SysMenu implements Serializable {
    *
    * @see Integer
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   private Integer sort;
 
@@ -157,7 +157,7 @@ public class SysMenu implements Serializable {
    *
    * @see String
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   private String routeComponent;
 
@@ -166,7 +166,7 @@ public class SysMenu implements Serializable {
    *
    * @see String
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   private String routePath;
 
@@ -175,7 +175,7 @@ public class SysMenu implements Serializable {
    *
    * @see String
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   private String routeName;
 
@@ -184,7 +184,7 @@ public class SysMenu implements Serializable {
    *
    * @see String
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   private String routeRedirect;
 
@@ -193,7 +193,7 @@ public class SysMenu implements Serializable {
    *
    * @see Date
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
@@ -204,7 +204,7 @@ public class SysMenu implements Serializable {
    *
    * @see Date
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
@@ -215,7 +215,7 @@ public class SysMenu implements Serializable {
    *
    * @see String
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   private String tenantId;
 }

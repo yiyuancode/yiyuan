@@ -12,7 +12,7 @@ import java.util.Date;
  * 用户管理实体
  *
  * @author 一源团队--花和尚
- * @date 2023-07-09
+ * @date 2023-07-11
  */
 @Data
 public class AuthAdmin implements Serializable {
@@ -21,7 +21,7 @@ public class AuthAdmin implements Serializable {
   /**
    * 主键ID
    *
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   @TableId(value = "id", type = IdType.ASSIGN_UUID)
   private String id;
@@ -31,7 +31,7 @@ public class AuthAdmin implements Serializable {
    *
    * @see String
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   private String username;
 
@@ -40,7 +40,7 @@ public class AuthAdmin implements Serializable {
    *
    * @see String
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   private String password;
 
@@ -49,7 +49,7 @@ public class AuthAdmin implements Serializable {
    *
    * @see String
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   private String salt;
 
@@ -58,7 +58,7 @@ public class AuthAdmin implements Serializable {
    *
    * @see Integer
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   private Integer deptId;
 
@@ -69,7 +69,7 @@ public class AuthAdmin implements Serializable {
    *
    * @see String
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   private String giteeLogin;
 
@@ -78,7 +78,7 @@ public class AuthAdmin implements Serializable {
    *
    * @see String
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   private String oscId;
 
@@ -91,7 +91,7 @@ public class AuthAdmin implements Serializable {
    *
    * @see Integer
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   private Integer platform;
 
@@ -100,7 +100,7 @@ public class AuthAdmin implements Serializable {
    *
    * @see String
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   private String tenantId;
 
@@ -109,7 +109,7 @@ public class AuthAdmin implements Serializable {
    *
    * @see Date
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
@@ -120,7 +120,7 @@ public class AuthAdmin implements Serializable {
    *
    * @see Date
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")

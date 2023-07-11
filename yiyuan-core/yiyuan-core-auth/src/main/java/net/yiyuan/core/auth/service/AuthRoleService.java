@@ -4,14 +4,14 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import icu.mhb.mybatisplus.plugln.base.service.JoinIService;
 import net.yiyuan.core.auth.model.AuthRole;
 import net.yiyuan.core.auth.model.req.AssignMenuReq;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
 /**
  * 角色管理Service层接口
  *
  * @author 一源团队--花和尚
- * @date 2023-07-09
+ * @date 2023-07-11
  */
 public interface AuthRoleService extends JoinIService<AuthRole> {
 
@@ -21,7 +21,7 @@ public interface AuthRoleService extends JoinIService<AuthRole> {
    * @param request 角色实体
    * @return {@link List}
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   List<AuthRole> list(AuthRole request) throws Exception;
 
@@ -31,9 +31,19 @@ public interface AuthRoleService extends JoinIService<AuthRole> {
    * @param request 角色实体
    * @return {@link Page}
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   Page<AuthRole> pages(AuthRole request, Integer pageSize, Integer pageNum) throws Exception;
+
+  /**
+   * 角色详情
+   *
+   * @param id 角色id
+   * @return {@link AuthRole}
+   * @author 一源团队--花和尚
+   * @date 2023-07-11
+   */
+  AuthRole details(String id) throws Exception;
 
   /**
    * 角色详情
@@ -41,39 +51,29 @@ public interface AuthRoleService extends JoinIService<AuthRole> {
    * @param request 角色实体
    * @return {@link AuthRole}
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   AuthRole details(AuthRole request) throws Exception;
 
   /**
-   * 删除角色表
+   * 删除角色(支持批量)
+   *
+   * @param ids 角色id(多个逗号分割)
+   * @return {@link boolean}
+   * @author 一源团队--花和尚
+   * @date 2023-07-11
+   */
+  boolean delete(String ids) throws Exception;
+
+  /**
+   * 批量删除角色表(根据同一属性,针对中间表)
    *
    * @param request 角色实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
-  boolean del(AuthRole request) throws Exception;
-
-  /**
-   * 批量删除角色表
-   *
-   * @param ids 逗号分割id
-   * @return {@link boolean}
-   * @author 一源团队--花和尚
-   * @date 2023-07-09
-   */
-  boolean dels(String ids) throws Exception;
-
-  /**
-   * 批量删除角色表(根据1对多属性)
-   *
-   * @param request 角色_菜单实体
-   * @return {@link boolean}
-   * @author 一源团队--花和尚
-   * @date 2023-07-02
-   */
-  boolean dels(AuthRole request) throws Exception;
+  boolean delete(AuthRole request) throws Exception;
 
   /**
    * 编辑角色表
@@ -81,7 +81,7 @@ public interface AuthRoleService extends JoinIService<AuthRole> {
    * @param request 角色实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   boolean edit(AuthRole request) throws Exception;
 
@@ -91,7 +91,7 @@ public interface AuthRoleService extends JoinIService<AuthRole> {
    * @param request 角色实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   boolean add(AuthRole request) throws Exception;
 
@@ -103,5 +103,6 @@ public interface AuthRoleService extends JoinIService<AuthRole> {
    * @author 一源团队--花和尚
    * @date 2023-06-24
    */
+  @Transactional
   boolean assignMenu(AssignMenuReq request) throws Exception;
 }

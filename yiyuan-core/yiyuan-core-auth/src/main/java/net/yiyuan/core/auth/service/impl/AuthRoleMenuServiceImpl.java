@@ -17,7 +17,7 @@ import java.util.List;
  * 角色_菜单管理Service层接口实现
  *
  * @author 一源团队--花和尚
- * @date 2023-07-09
+ * @date 2023-07-11
  */
 @Slf4j
 @Service
@@ -31,7 +31,7 @@ public class AuthRoleMenuServiceImpl extends JoinServiceImpl<AuthRoleMenuMapper,
    * @param request 角色_菜单实体
    * @return {@link List}
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   @Override
   public List<AuthRoleMenu> list(AuthRoleMenu request) throws Exception {
@@ -46,7 +46,7 @@ public class AuthRoleMenuServiceImpl extends JoinServiceImpl<AuthRoleMenuMapper,
    * @param request 角色_菜单实体
    * @return {@link Page}
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   @Override
   public Page<AuthRoleMenu> pages(AuthRoleMenu request, Integer pageSize, Integer pageNum)
@@ -62,54 +62,55 @@ public class AuthRoleMenuServiceImpl extends JoinServiceImpl<AuthRoleMenuMapper,
   /**
    * 角色_菜单详情
    *
+   * @param id 角色_菜单id
+   * @return {@link AuthRoleMenu}
+   * @author 一源团队--花和尚
+   * @date 2023-07-11
+   */
+  @Override
+  public AuthRoleMenu details(String id) throws Exception {
+    AuthRoleMenu query = new AuthRoleMenu();
+    JoinLambdaWrapper<AuthRoleMenu> wrapper = new JoinLambdaWrapper<>(query);
+    return joinGetOne(wrapper, AuthRoleMenu.class);
+  }
+
+  /**
+   * 角色_菜单详情
+   *
    * @param request 角色_菜单实体
    * @return {@link AuthRoleMenu}
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   @Override
   public AuthRoleMenu details(AuthRoleMenu request) throws Exception {
-    AuthRoleMenu query = new AuthRoleMenu();
     JoinLambdaWrapper<AuthRoleMenu> wrapper = new JoinLambdaWrapper<>(request);
     return joinGetOne(wrapper, AuthRoleMenu.class);
   }
 
   /**
-   * 删除角色_菜单表
+   * 删除角色_菜单(支持批量)
    *
-   * @param request 角色_菜单实体
+   * @param ids 角色_菜单id(多个逗号分割)
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   @Override
-  public boolean del(AuthRoleMenu request) throws Exception {
-    return removeById(request);
-  }
-
-  /**
-   * 批量删除角色_菜单表
-   *
-   * @param ids 逗号分割id
-   * @return {@link boolean}
-   * @author 一源团队--花和尚
-   * @date 2023-07-09
-   */
-  @Override
-  public boolean dels(String ids) throws Exception {
+  public boolean delete(String ids) throws Exception {
     return removeByIds(Arrays.asList(ids.split(",")));
   }
 
   /**
-   * 批量删除角色_菜单表(根据同一属性)
+   * 批量删除角色_菜单表(根据同一属性,针对中间表)
    *
    * @param request 角色_菜单实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-02
+   * @date 2023-07-11
    */
   @Override
-  public boolean dels(AuthRoleMenu request) throws Exception {
+  public boolean delete(AuthRoleMenu request) throws Exception {
     JoinLambdaWrapper<AuthRoleMenu> wrapper = new JoinLambdaWrapper<>(request);
     return remove(wrapper);
   }
@@ -120,7 +121,7 @@ public class AuthRoleMenuServiceImpl extends JoinServiceImpl<AuthRoleMenuMapper,
    * @param request 角色_菜单实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   @Override
   public boolean edit(AuthRoleMenu request) throws Exception {
@@ -134,7 +135,7 @@ public class AuthRoleMenuServiceImpl extends JoinServiceImpl<AuthRoleMenuMapper,
    * @param request 角色_菜单实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   @Override
   public boolean add(AuthRoleMenu request) throws Exception {

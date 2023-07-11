@@ -17,7 +17,7 @@ import java.util.List;
  * 租户管理Service层接口实现
  *
  * @author 一源团队--花和尚
- * @date 2023-07-09
+ * @date 2023-07-11
  */
 @Slf4j
 @Service
@@ -31,7 +31,7 @@ public class SysTenantServiceImpl extends JoinServiceImpl<SysTenantMapper, SysTe
    * @param request 租户实体
    * @return {@link List}
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   @Override
   public List<SysTenant> list(SysTenant request) throws Exception {
@@ -46,7 +46,7 @@ public class SysTenantServiceImpl extends JoinServiceImpl<SysTenantMapper, SysTe
    * @param request 租户实体
    * @return {@link Page}
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   @Override
   public Page<SysTenant> pages(SysTenant request, Integer pageSize, Integer pageNum)
@@ -62,54 +62,56 @@ public class SysTenantServiceImpl extends JoinServiceImpl<SysTenantMapper, SysTe
   /**
    * 租户详情
    *
+   * @param id 租户id
+   * @return {@link SysTenant}
+   * @author 一源团队--花和尚
+   * @date 2023-07-11
+   */
+  @Override
+  public SysTenant details(String id) throws Exception {
+    SysTenant query = new SysTenant();
+    query.setId(id);
+    JoinLambdaWrapper<SysTenant> wrapper = new JoinLambdaWrapper<>(query);
+    return joinGetOne(wrapper, SysTenant.class);
+  }
+
+  /**
+   * 租户详情
+   *
    * @param request 租户实体
    * @return {@link SysTenant}
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   @Override
   public SysTenant details(SysTenant request) throws Exception {
-    SysTenant query = new SysTenant();
     JoinLambdaWrapper<SysTenant> wrapper = new JoinLambdaWrapper<>(request);
     return joinGetOne(wrapper, SysTenant.class);
   }
 
   /**
-   * 删除租户表
+   * 删除租户(支持批量)
    *
-   * @param request 租户实体
+   * @param ids 租户id(多个逗号分割)
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   @Override
-  public boolean del(SysTenant request) throws Exception {
-    return removeById(request);
-  }
-
-  /**
-   * 批量删除租户表
-   *
-   * @param ids 逗号分割id
-   * @return {@link boolean}
-   * @author 一源团队--花和尚
-   * @date 2023-07-09
-   */
-  @Override
-  public boolean dels(String ids) throws Exception {
+  public boolean delete(String ids) throws Exception {
     return removeByIds(Arrays.asList(ids.split(",")));
   }
 
   /**
-   * 批量删除租户表(根据同一属性)
+   * 批量删除租户表(根据同一属性,针对中间表)
    *
-   * @param request 角色_菜单实体
+   * @param request 租户实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-02
+   * @date 2023-07-11
    */
   @Override
-  public boolean dels(SysTenant request) throws Exception {
+  public boolean delete(SysTenant request) throws Exception {
     JoinLambdaWrapper<SysTenant> wrapper = new JoinLambdaWrapper<>(request);
     return remove(wrapper);
   }
@@ -120,7 +122,7 @@ public class SysTenantServiceImpl extends JoinServiceImpl<SysTenantMapper, SysTe
    * @param request 租户实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   @Override
   public boolean edit(SysTenant request) throws Exception {
@@ -134,7 +136,7 @@ public class SysTenantServiceImpl extends JoinServiceImpl<SysTenantMapper, SysTe
    * @param request 租户实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   @Override
   public boolean add(SysTenant request) throws Exception {

@@ -12,7 +12,7 @@ import java.util.Date;
  * 角色管理实体
  *
  * @author 一源团队--花和尚
- * @date 2023-07-09
+ * @date 2023-07-11
  */
 @Data
 public class AuthRole implements Serializable {
@@ -21,7 +21,7 @@ public class AuthRole implements Serializable {
   /**
    * 主键ID
    *
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   @TableId(value = "id", type = IdType.ASSIGN_UUID)
   private String id;
@@ -31,7 +31,7 @@ public class AuthRole implements Serializable {
    *
    * @see String
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   private String name;
 
@@ -40,7 +40,7 @@ public class AuthRole implements Serializable {
    *
    * @see String
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   private String code;
 
@@ -49,7 +49,7 @@ public class AuthRole implements Serializable {
    *
    * @see String
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   private String roleDesc;
 
@@ -58,7 +58,7 @@ public class AuthRole implements Serializable {
    *
    * @see String
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   private String deptId;
 
@@ -67,7 +67,7 @@ public class AuthRole implements Serializable {
    *
    * @see String
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   private String deptScope;
 
@@ -76,7 +76,7 @@ public class AuthRole implements Serializable {
    *
    * @see String
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   private String tenantId;
 
@@ -85,7 +85,7 @@ public class AuthRole implements Serializable {
    *
    * @see Date
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
@@ -96,7 +96,7 @@ public class AuthRole implements Serializable {
    *
    * @see Date
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")

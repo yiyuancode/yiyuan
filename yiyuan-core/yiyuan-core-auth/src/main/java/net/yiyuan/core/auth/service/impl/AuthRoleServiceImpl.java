@@ -13,7 +13,6 @@ import net.yiyuan.core.auth.model.req.AssignMenuReq;
 import net.yiyuan.core.auth.service.AuthRoleMenuService;
 import net.yiyuan.core.auth.service.AuthRoleService;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.support.TransactionTemplate;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -24,7 +23,7 @@ import java.util.List;
  * 角色管理Service层接口实现
  *
  * @author 一源团队--花和尚
- * @date 2023-07-09
+ * @date 2023-07-11
  */
 @Slf4j
 @Service
@@ -32,14 +31,13 @@ public class AuthRoleServiceImpl extends JoinServiceImpl<AuthRoleMapper, AuthRol
     implements AuthRoleService {
   @Resource private AuthRoleMapper authRoleMapper;
   @Resource private AuthRoleMenuService authRoleMenuService;
-  @Resource private TransactionTemplate transactionTemplate;
   /**
    * 角色列表(全部)
    *
    * @param request 角色实体
    * @return {@link List}
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   @Override
   public List<AuthRole> list(AuthRole request) throws Exception {
@@ -54,7 +52,7 @@ public class AuthRoleServiceImpl extends JoinServiceImpl<AuthRoleMapper, AuthRol
    * @param request 角色实体
    * @return {@link Page}
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   @Override
   public Page<AuthRole> pages(AuthRole request, Integer pageSize, Integer pageNum)
@@ -70,54 +68,56 @@ public class AuthRoleServiceImpl extends JoinServiceImpl<AuthRoleMapper, AuthRol
   /**
    * 角色详情
    *
+   * @param id 角色id
+   * @return {@link AuthRole}
+   * @author 一源团队--花和尚
+   * @date 2023-07-11
+   */
+  @Override
+  public AuthRole details(String id) throws Exception {
+    AuthRole query = new AuthRole();
+    query.setId(id);
+    JoinLambdaWrapper<AuthRole> wrapper = new JoinLambdaWrapper<>(query);
+    return joinGetOne(wrapper, AuthRole.class);
+  }
+
+  /**
+   * 角色详情
+   *
    * @param request 角色实体
    * @return {@link AuthRole}
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   @Override
   public AuthRole details(AuthRole request) throws Exception {
-    AuthRole query = new AuthRole();
     JoinLambdaWrapper<AuthRole> wrapper = new JoinLambdaWrapper<>(request);
     return joinGetOne(wrapper, AuthRole.class);
   }
 
   /**
-   * 删除角色表
+   * 删除角色(支持批量)
    *
-   * @param request 角色实体
+   * @param ids 角色id(多个逗号分割)
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   @Override
-  public boolean del(AuthRole request) throws Exception {
-    return removeById(request);
-  }
-
-  /**
-   * 批量删除角色表
-   *
-   * @param ids 逗号分割id
-   * @return {@link boolean}
-   * @author 一源团队--花和尚
-   * @date 2023-07-09
-   */
-  @Override
-  public boolean dels(String ids) throws Exception {
+  public boolean delete(String ids) throws Exception {
     return removeByIds(Arrays.asList(ids.split(",")));
   }
 
   /**
-   * 批量删除角色表(根据同一属性)
+   * 批量删除角色表(根据同一属性,针对中间表)
    *
-   * @param request 角色_菜单实体
+   * @param request 角色实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-02
+   * @date 2023-07-11
    */
   @Override
-  public boolean dels(AuthRole request) throws Exception {
+  public boolean delete(AuthRole request) throws Exception {
     JoinLambdaWrapper<AuthRole> wrapper = new JoinLambdaWrapper<>(request);
     return remove(wrapper);
   }
@@ -128,7 +128,7 @@ public class AuthRoleServiceImpl extends JoinServiceImpl<AuthRoleMapper, AuthRol
    * @param request 角色实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   @Override
   public boolean edit(AuthRole request) throws Exception {
@@ -142,7 +142,7 @@ public class AuthRoleServiceImpl extends JoinServiceImpl<AuthRoleMapper, AuthRol
    * @param request 角色实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   @Override
   public boolean add(AuthRole request) throws Exception {
@@ -172,23 +172,12 @@ public class AuthRoleServiceImpl extends JoinServiceImpl<AuthRoleMapper, AuthRol
           addList.add(item);
         });
 
-    boolean result =
-        transactionTemplate.execute(
-            status -> {
-              try {
-                // 先删除原来绑定的菜单id
-                AuthRoleMenu query = new AuthRoleMenu();
-                query.setRoleId(request.getRoleId());
-                authRoleMenuService.dels(query);
-                // 在全量增加现在的
-                authRoleMenuService.saveBatch(addList);
-              } catch (Exception e) {
-                e.printStackTrace();
-                status.setRollbackOnly();
-                throw new Error("分配菜单异常");
-              }
-              return true;
-            });
-    return result;
+    // 先删除原来绑定的菜单id
+    AuthRoleMenu query = new AuthRoleMenu();
+    query.setRoleId(request.getRoleId());
+    authRoleMenuService.delete(query);
+    // 在全量增加现在的
+    authRoleMenuService.saveBatch(addList);
+    return true;
   }
 }

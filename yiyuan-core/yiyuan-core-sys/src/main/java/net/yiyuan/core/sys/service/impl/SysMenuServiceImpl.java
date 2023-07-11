@@ -17,7 +17,7 @@ import java.util.List;
  * 菜单管理Service层接口实现
  *
  * @author 一源团队--花和尚
- * @date 2023-07-09
+ * @date 2023-07-11
  */
 @Slf4j
 @Service
@@ -31,7 +31,7 @@ public class SysMenuServiceImpl extends JoinServiceImpl<SysMenuMapper, SysMenu>
    * @param request 菜单实体
    * @return {@link List}
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   @Override
   public List<SysMenu> list(SysMenu request) throws Exception {
@@ -46,7 +46,7 @@ public class SysMenuServiceImpl extends JoinServiceImpl<SysMenuMapper, SysMenu>
    * @param request 菜单实体
    * @return {@link Page}
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   @Override
   public Page<SysMenu> pages(SysMenu request, Integer pageSize, Integer pageNum) throws Exception {
@@ -61,54 +61,56 @@ public class SysMenuServiceImpl extends JoinServiceImpl<SysMenuMapper, SysMenu>
   /**
    * 菜单详情
    *
+   * @param id 菜单id
+   * @return {@link SysMenu}
+   * @author 一源团队--花和尚
+   * @date 2023-07-11
+   */
+  @Override
+  public SysMenu details(String id) throws Exception {
+    SysMenu query = new SysMenu();
+    query.setId(id);
+    JoinLambdaWrapper<SysMenu> wrapper = new JoinLambdaWrapper<>(query);
+    return joinGetOne(wrapper, SysMenu.class);
+  }
+
+  /**
+   * 菜单详情
+   *
    * @param request 菜单实体
    * @return {@link SysMenu}
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   @Override
   public SysMenu details(SysMenu request) throws Exception {
-    SysMenu query = new SysMenu();
     JoinLambdaWrapper<SysMenu> wrapper = new JoinLambdaWrapper<>(request);
     return joinGetOne(wrapper, SysMenu.class);
   }
 
   /**
-   * 删除菜单表
+   * 删除菜单(支持批量)
    *
-   * @param request 菜单实体
+   * @param ids 菜单id(多个逗号分割)
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   @Override
-  public boolean del(SysMenu request) throws Exception {
-    return removeById(request);
-  }
-
-  /**
-   * 批量删除菜单表
-   *
-   * @param ids 逗号分割id
-   * @return {@link boolean}
-   * @author 一源团队--花和尚
-   * @date 2023-07-09
-   */
-  @Override
-  public boolean dels(String ids) throws Exception {
+  public boolean delete(String ids) throws Exception {
     return removeByIds(Arrays.asList(ids.split(",")));
   }
 
   /**
-   * 批量删除菜单表(根据同一属性)
+   * 批量删除菜单表(根据同一属性,针对中间表)
    *
-   * @param request 角色_菜单实体
+   * @param request 菜单实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-02
+   * @date 2023-07-11
    */
   @Override
-  public boolean dels(SysMenu request) throws Exception {
+  public boolean delete(SysMenu request) throws Exception {
     JoinLambdaWrapper<SysMenu> wrapper = new JoinLambdaWrapper<>(request);
     return remove(wrapper);
   }
@@ -119,7 +121,7 @@ public class SysMenuServiceImpl extends JoinServiceImpl<SysMenuMapper, SysMenu>
    * @param request 菜单实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   @Override
   public boolean edit(SysMenu request) throws Exception {
@@ -133,7 +135,7 @@ public class SysMenuServiceImpl extends JoinServiceImpl<SysMenuMapper, SysMenu>
    * @param request 菜单实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   @Override
   public boolean add(SysMenu request) throws Exception {

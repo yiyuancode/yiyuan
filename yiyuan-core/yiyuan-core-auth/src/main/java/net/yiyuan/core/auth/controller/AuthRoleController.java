@@ -20,7 +20,7 @@ import java.util.List;
  * 角色管理
  *
  * @author 一源团队--花和尚
- * @date 2023-07-09
+ * @date 2023-07-11
  * @module 权限管理
  * @folder 权限管理/角色管理
  */
@@ -36,13 +36,13 @@ public class AuthRoleController {
    * @param request 角色实体
    * @return {@link CommonResult<List<AuthRole>>}
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   @Description("权限管理/角色管理/查询角色")
   @SaCheckPermission(
       value = {"auth:role:query"},
       orRole = "admin")
-  @RequestMapping(value = "/auth/role/list", method = RequestMethod.GET)
+  @GetMapping(value = "/auth/role/list")
   @ResponseBody
   public CommonResult<List<AuthRole>> list(AuthRole request) throws Exception {
     return CommonResult.success(authRoleService.list(request));
@@ -54,13 +54,13 @@ public class AuthRoleController {
    * @param request 角色实体
    * @return {@link CommonResult<Page<AuthRole>>}
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   @Description("权限管理/角色管理/查询角色")
   @SaCheckPermission(
       value = {"auth:role:query"},
       orRole = "admin")
-  @RequestMapping(value = "/auth/role/pages", method = RequestMethod.GET)
+  @GetMapping(value = "/auth/role/pages")
   @ResponseBody
   public CommonResult<Page<AuthRole>> pages(
       AuthRole request,
@@ -73,63 +73,42 @@ public class AuthRoleController {
   /**
    * 角色详情
    *
-   * @param request 角色实体
+   * @param id 角色id
    * @return {@link CommonResult<AuthRole>}
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   @Description("权限管理/角色管理/查询角色")
   @SaCheckPermission(
       value = {"auth:role:query"},
       orRole = "admin")
-  @RequestMapping(value = "/auth/role/details", method = RequestMethod.GET)
+  @GetMapping(value = "/auth/role/details/{id}")
   @ResponseBody
-  public CommonResult<AuthRole> details(AuthRole request) throws Exception {
-    return CommonResult.success(authRoleService.details(request));
+  public CommonResult<AuthRole> details(@PathVariable("id") @Validated({NotEmpty.class}) String id)
+      throws Exception {
+    return CommonResult.success(authRoleService.details(id));
   }
 
   /**
-   * 删除角色
+   * 删除角色(支持批量)
    *
-   * @param request 角色实体
+   * @param ids 角色id(多个逗号分割)
    * @return {@link CommonResult<String>}
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   @Description("权限管理/角色管理/删除角色")
   @SaCheckPermission(
-      value = {"auth:role:del"},
+      value = {"auth:role:delete"},
       orRole = "admin")
-  @RequestMapping(value = "/auth/role/del", method = RequestMethod.POST)
+  @PostMapping(value = "/auth/role/delete")
   @ResponseBody
-  public CommonResult<String> del(@RequestBody @Validated AuthRole request) throws Exception {
-    if (authRoleService.del(request)) {
+  public CommonResult<String> delete(@RequestParam @Validated({NotEmpty.class}) String ids)
+      throws Exception {
+    if (authRoleService.delete(ids)) {
       return CommonResult.success("删除角色成功");
     } else {
       return CommonResult.failed("删除角色失败");
-    }
-  }
-
-  /**
-   * 批量删除角色
-   *
-   * @param ids 逗号分割id
-   * @return {@link CommonResult<String>}
-   * @author 一源团队--花和尚
-   * @date 2023-07-09
-   */
-  @Description("权限管理/角色管理/批量删除角色")
-  @SaCheckPermission(
-      value = {"auth:role:dels"},
-      orRole = "admin")
-  @RequestMapping(value = "/auth/role/dels", method = RequestMethod.POST)
-  @ResponseBody
-  public CommonResult<String> dels(@RequestParam @Validated({NotEmpty.class}) String ids)
-      throws Exception {
-    if (authRoleService.dels(ids)) {
-      return CommonResult.success("批量删除角色成功");
-    } else {
-      return CommonResult.failed("批量删除角色失败");
     }
   }
   /**
@@ -138,13 +117,13 @@ public class AuthRoleController {
    * @param request 角色实体
    * @return {@link CommonResult<String>}
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   @Description("权限管理/角色管理/编辑角色")
   @SaCheckPermission(
       value = {"auth:role:edit"},
       orRole = "admin")
-  @RequestMapping(value = "/auth/role/edit", method = RequestMethod.POST)
+  @PostMapping(value = "/auth/role/edit")
   @ResponseBody
   public CommonResult<String> edit(@RequestBody @Validated AuthRole request) throws Exception {
     if (authRoleService.edit(request)) {
@@ -160,13 +139,13 @@ public class AuthRoleController {
    * @param request 角色实体
    * @return {@link CommonResult<String>}
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   @Description("权限管理/角色管理/新增角色")
   @SaCheckPermission(
       value = {"auth:role:add"},
       orRole = "admin")
-  @RequestMapping(value = "/auth/role/add", method = RequestMethod.POST)
+  @PostMapping(value = "/auth/role/add")
   @ResponseBody
   public CommonResult<String> add(@RequestBody @Validated AuthRole request) throws Exception {
     if (authRoleService.add(request)) {

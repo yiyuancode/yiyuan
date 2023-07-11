@@ -11,7 +11,6 @@ import net.yiyuan.core.auth.model.req.AssignRoleReq;
 import net.yiyuan.core.auth.service.AuthAdminRoleService;
 import net.yiyuan.core.auth.service.AuthAdminService;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.support.TransactionTemplate;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -22,7 +21,7 @@ import java.util.List;
  * 用户管理Service层接口实现
  *
  * @author 一源团队--花和尚
- * @date 2023-07-09
+ * @date 2023-07-11
  */
 @Slf4j
 @Service
@@ -30,14 +29,14 @@ public class AuthAdminServiceImpl extends JoinServiceImpl<AuthAdminMapper, AuthA
     implements AuthAdminService {
   @Resource private AuthAdminMapper authAdminMapper;
   @Resource private AuthAdminRoleService authAdminRoleService;
-  @Resource private TransactionTemplate transactionTemplate;
+
   /**
    * 用户列表(全部)
    *
    * @param request 用户实体
    * @return {@link List}
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   @Override
   public List<AuthAdmin> list(AuthAdmin request) throws Exception {
@@ -52,7 +51,7 @@ public class AuthAdminServiceImpl extends JoinServiceImpl<AuthAdminMapper, AuthA
    * @param request 用户实体
    * @return {@link Page}
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   @Override
   public Page<AuthAdmin> pages(AuthAdmin request, Integer pageSize, Integer pageNum)
@@ -68,54 +67,56 @@ public class AuthAdminServiceImpl extends JoinServiceImpl<AuthAdminMapper, AuthA
   /**
    * 用户详情
    *
+   * @param id 用户id
+   * @return {@link AuthAdmin}
+   * @author 一源团队--花和尚
+   * @date 2023-07-11
+   */
+  @Override
+  public AuthAdmin details(String id) throws Exception {
+    AuthAdmin query = new AuthAdmin();
+    query.setId(id);
+    JoinLambdaWrapper<AuthAdmin> wrapper = new JoinLambdaWrapper<>(query);
+    return joinGetOne(wrapper, AuthAdmin.class);
+  }
+
+  /**
+   * 用户详情
+   *
    * @param request 用户实体
    * @return {@link AuthAdmin}
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   @Override
   public AuthAdmin details(AuthAdmin request) throws Exception {
-    AuthAdmin query = new AuthAdmin();
     JoinLambdaWrapper<AuthAdmin> wrapper = new JoinLambdaWrapper<>(request);
     return joinGetOne(wrapper, AuthAdmin.class);
   }
 
   /**
-   * 删除用户表
+   * 删除用户(支持批量)
    *
-   * @param request 用户实体
+   * @param ids 用户id(多个逗号分割)
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   @Override
-  public boolean del(AuthAdmin request) throws Exception {
-    return removeById(request);
-  }
-
-  /**
-   * 批量删除用户表
-   *
-   * @param ids 逗号分割id
-   * @return {@link boolean}
-   * @author 一源团队--花和尚
-   * @date 2023-07-09
-   */
-  @Override
-  public boolean dels(String ids) throws Exception {
+  public boolean delete(String ids) throws Exception {
     return removeByIds(Arrays.asList(ids.split(",")));
   }
 
   /**
-   * 批量删除用户表(根据同一属性)
+   * 批量删除用户表(根据同一属性,针对中间表)
    *
-   * @param request 角色_菜单实体
+   * @param request 用户实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-02
+   * @date 2023-07-11
    */
   @Override
-  public boolean dels(AuthAdmin request) throws Exception {
+  public boolean delete(AuthAdmin request) throws Exception {
     JoinLambdaWrapper<AuthAdmin> wrapper = new JoinLambdaWrapper<>(request);
     return remove(wrapper);
   }
@@ -126,7 +127,7 @@ public class AuthAdminServiceImpl extends JoinServiceImpl<AuthAdminMapper, AuthA
    * @param request 用户实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   @Override
   public boolean edit(AuthAdmin request) throws Exception {
@@ -140,7 +141,7 @@ public class AuthAdminServiceImpl extends JoinServiceImpl<AuthAdminMapper, AuthA
    * @param request 用户实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   @Override
   public boolean add(AuthAdmin request) throws Exception {
@@ -169,24 +170,12 @@ public class AuthAdminServiceImpl extends JoinServiceImpl<AuthAdminMapper, AuthA
           addList.add(item);
         });
 
-    boolean result =
-        transactionTemplate.execute(
-            status -> {
-              try {
-                // 先删除原来绑定的菜单id
-                AuthAdminRole query = new AuthAdminRole();
-                query.setRoleId(request.getUserId());
-                authAdminRoleService.dels(query);
-                // 在全量增加现在的
-                authAdminRoleService.saveBatch(addList);
-              } catch (Exception e) {
-                e.printStackTrace();
-                status.setRollbackOnly();
-                throw new Error("分配角色异常");
-              }
-              return true;
-            });
-
-    return result;
+    // 先删除原来绑定的菜单id
+    AuthAdminRole query = new AuthAdminRole();
+    query.setRoleId(request.getUserId());
+    authAdminRoleService.delete(query);
+    // 在全量增加现在的
+    authAdminRoleService.saveBatch(addList);
+    return true;
   }
 }

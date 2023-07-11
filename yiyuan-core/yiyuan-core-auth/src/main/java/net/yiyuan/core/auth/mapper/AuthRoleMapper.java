@@ -7,6 +7,6 @@ import net.yiyuan.core.auth.model.AuthRole;
  * 角色管理 Mapper接口
  *
  * @author 一源团队--花和尚
- * @date 2023-07-09
+ * @date 2023-07-11
  */
 public interface AuthRoleMapper extends JoinBaseMapper<AuthRole> {}

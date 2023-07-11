@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.transaction.annotation.Transactional;
 import icu.mhb.mybatisplus.plugln.base.service.JoinIService;
 import net.yiyuan.common.*;
-
+import org.springframework.transaction.annotation.Transactional;
 /**
 * $!{table.comment.replaceAll("表", "管理")}Service层接口
 *
@@ -44,6 +44,17 @@ Page< ${table.entityName} > pages( ${table.entityName} request, Integer pageSize
 /**
 * ${table.comment.replaceAll("表", "")}详情
 *
+* @param id $!{table.comment.replaceAll("表", "")}id
+* @return {@link ${table.entityName}}
+* @author  ${author}
+* @date ${date}
+*/
+${table.entityName} details(String id)throws Exception;
+
+
+/**
+* ${table.comment.replaceAll("表", "")}详情
+*
 * @param request $!{table.comment.replaceAll("表", "")}实体
 * @return {@link ${table.entityName}}
 * @author  ${author}
@@ -53,36 +64,26 @@ ${table.entityName} details(${table.entityName} request)throws Exception;
 
 
 /**
-* 删除${table.comment}
+* 删除${table.comment.replaceAll("表", "")}(支持批量)
+*
+* @param ids $!{table.comment.replaceAll("表", "")}id(多个逗号分割)
+* @return {@link boolean}
+* @author  ${author}
+* @date ${date}
+*/
+
+boolean delete(String ids)throws Exception;
+
+
+/**
+* 批量删除${table.comment}(根据同一属性,针对中间表)
 *
 * @param request $!{table.comment.replaceAll("表", "")}实体
 * @return {@link boolean}
 * @author  ${author}
 * @date ${date}
 */
-boolean del(${table.entityName} request)throws Exception;
-
-
-/**
-* 批量删除${table.comment}
-*
-* @param ids 逗号分割id
-* @return {@link boolean}
-* @author  ${author}
-* @date ${date}
-*/
-boolean dels(String ids)throws Exception;
-
-
-/**
-* 批量删除${table.comment}(根据1对多属性)
-*
-* @param request 角色_菜单实体
-* @return {@link boolean}
-* @author 一源团队--花和尚
-* @date 2023-07-02
-*/
-boolean dels(${table.entityName} request) throws Exception;
+boolean delete(${table.entityName} request) throws Exception;
 
 /**
 * 编辑${table.comment}

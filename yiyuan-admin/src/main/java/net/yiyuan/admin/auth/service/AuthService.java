@@ -110,7 +110,7 @@ public class AuthService {
   /**
    * 用户_角色列表(全部)
    *
-   * @param 用户_角色实体
+   * @param
    * @return {@link List}
    * @author 一源团队--花和尚
    * @date 2023-06-23

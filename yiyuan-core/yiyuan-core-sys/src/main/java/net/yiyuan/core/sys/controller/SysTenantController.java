@@ -19,7 +19,7 @@ import java.util.List;
  * 租户管理
  *
  * @author 一源团队--花和尚
- * @date 2023-07-09
+ * @date 2023-07-11
  * @module 系统管理
  * @folder 系统管理/租户管理
  */
@@ -35,13 +35,13 @@ public class SysTenantController {
    * @param request 租户实体
    * @return {@link CommonResult<List<SysTenant>>}
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   @Description("系统管理/租户管理/查询租户")
   @SaCheckPermission(
       value = {"sys:tenant:query"},
       orRole = "admin")
-  @RequestMapping(value = "/sys/tenant/list", method = RequestMethod.GET)
+  @GetMapping(value = "/sys/tenant/list")
   @ResponseBody
   public CommonResult<List<SysTenant>> list(SysTenant request) throws Exception {
     return CommonResult.success(sysTenantService.list(request));
@@ -53,13 +53,13 @@ public class SysTenantController {
    * @param request 租户实体
    * @return {@link CommonResult<Page<SysTenant>>}
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   @Description("系统管理/租户管理/查询租户")
   @SaCheckPermission(
       value = {"sys:tenant:query"},
       orRole = "admin")
-  @RequestMapping(value = "/sys/tenant/pages", method = RequestMethod.GET)
+  @GetMapping(value = "/sys/tenant/pages")
   @ResponseBody
   public CommonResult<Page<SysTenant>> pages(
       SysTenant request,
@@ -72,63 +72,42 @@ public class SysTenantController {
   /**
    * 租户详情
    *
-   * @param request 租户实体
+   * @param id 租户id
    * @return {@link CommonResult<SysTenant>}
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   @Description("系统管理/租户管理/查询租户")
   @SaCheckPermission(
       value = {"sys:tenant:query"},
       orRole = "admin")
-  @RequestMapping(value = "/sys/tenant/details", method = RequestMethod.GET)
+  @GetMapping(value = "/sys/tenant/details/{id}")
   @ResponseBody
-  public CommonResult<SysTenant> details(SysTenant request) throws Exception {
-    return CommonResult.success(sysTenantService.details(request));
+  public CommonResult<SysTenant> details(@PathVariable("id") @Validated({NotEmpty.class}) String id)
+      throws Exception {
+    return CommonResult.success(sysTenantService.details(id));
   }
 
   /**
-   * 删除租户
+   * 删除租户(支持批量)
    *
-   * @param request 租户实体
+   * @param ids 租户id(多个逗号分割)
    * @return {@link CommonResult<String>}
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   @Description("系统管理/租户管理/删除租户")
   @SaCheckPermission(
-      value = {"sys:tenant:del"},
+      value = {"sys:tenant:delete"},
       orRole = "admin")
-  @RequestMapping(value = "/sys/tenant/del", method = RequestMethod.POST)
+  @PostMapping(value = "/sys/tenant/delete")
   @ResponseBody
-  public CommonResult<String> del(@RequestBody @Validated SysTenant request) throws Exception {
-    if (sysTenantService.del(request)) {
+  public CommonResult<String> delete(@RequestParam @Validated({NotEmpty.class}) String ids)
+      throws Exception {
+    if (sysTenantService.delete(ids)) {
       return CommonResult.success("删除租户成功");
     } else {
       return CommonResult.failed("删除租户失败");
-    }
-  }
-
-  /**
-   * 批量删除租户
-   *
-   * @param ids 逗号分割id
-   * @return {@link CommonResult<String>}
-   * @author 一源团队--花和尚
-   * @date 2023-07-09
-   */
-  @Description("系统管理/租户管理/批量删除租户")
-  @SaCheckPermission(
-      value = {"sys:tenant:dels"},
-      orRole = "admin")
-  @RequestMapping(value = "/sys/tenant/dels", method = RequestMethod.POST)
-  @ResponseBody
-  public CommonResult<String> dels(@RequestParam @Validated({NotEmpty.class}) String ids)
-      throws Exception {
-    if (sysTenantService.dels(ids)) {
-      return CommonResult.success("批量删除租户成功");
-    } else {
-      return CommonResult.failed("批量删除租户失败");
     }
   }
   /**
@@ -137,13 +116,13 @@ public class SysTenantController {
    * @param request 租户实体
    * @return {@link CommonResult<String>}
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   @Description("系统管理/租户管理/编辑租户")
   @SaCheckPermission(
       value = {"sys:tenant:edit"},
       orRole = "admin")
-  @RequestMapping(value = "/sys/tenant/edit", method = RequestMethod.POST)
+  @PostMapping(value = "/sys/tenant/edit")
   @ResponseBody
   public CommonResult<String> edit(@RequestBody @Validated SysTenant request) throws Exception {
     if (sysTenantService.edit(request)) {
@@ -159,13 +138,13 @@ public class SysTenantController {
    * @param request 租户实体
    * @return {@link CommonResult<String>}
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   @Description("系统管理/租户管理/新增租户")
   @SaCheckPermission(
       value = {"sys:tenant:add"},
       orRole = "admin")
-  @RequestMapping(value = "/sys/tenant/add", method = RequestMethod.POST)
+  @PostMapping(value = "/sys/tenant/add")
   @ResponseBody
   public CommonResult<String> add(@RequestBody @Validated SysTenant request) throws Exception {
     if (sysTenantService.add(request)) {

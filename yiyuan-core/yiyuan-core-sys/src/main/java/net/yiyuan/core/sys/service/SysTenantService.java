@@ -5,12 +5,11 @@ import icu.mhb.mybatisplus.plugln.base.service.JoinIService;
 import net.yiyuan.core.sys.model.SysTenant;
 
 import java.util.List;
-
 /**
  * 租户管理Service层接口
  *
  * @author 一源团队--花和尚
- * @date 2023-07-09
+ * @date 2023-07-11
  */
 public interface SysTenantService extends JoinIService<SysTenant> {
 
@@ -20,7 +19,7 @@ public interface SysTenantService extends JoinIService<SysTenant> {
    * @param request 租户实体
    * @return {@link List}
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   List<SysTenant> list(SysTenant request) throws Exception;
 
@@ -30,9 +29,19 @@ public interface SysTenantService extends JoinIService<SysTenant> {
    * @param request 租户实体
    * @return {@link Page}
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   Page<SysTenant> pages(SysTenant request, Integer pageSize, Integer pageNum) throws Exception;
+
+  /**
+   * 租户详情
+   *
+   * @param id 租户id
+   * @return {@link SysTenant}
+   * @author 一源团队--花和尚
+   * @date 2023-07-11
+   */
+  SysTenant details(String id) throws Exception;
 
   /**
    * 租户详情
@@ -40,39 +49,29 @@ public interface SysTenantService extends JoinIService<SysTenant> {
    * @param request 租户实体
    * @return {@link SysTenant}
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   SysTenant details(SysTenant request) throws Exception;
 
   /**
-   * 删除租户表
+   * 删除租户(支持批量)
+   *
+   * @param ids 租户id(多个逗号分割)
+   * @return {@link boolean}
+   * @author 一源团队--花和尚
+   * @date 2023-07-11
+   */
+  boolean delete(String ids) throws Exception;
+
+  /**
+   * 批量删除租户表(根据同一属性,针对中间表)
    *
    * @param request 租户实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
-  boolean del(SysTenant request) throws Exception;
-
-  /**
-   * 批量删除租户表
-   *
-   * @param ids 逗号分割id
-   * @return {@link boolean}
-   * @author 一源团队--花和尚
-   * @date 2023-07-09
-   */
-  boolean dels(String ids) throws Exception;
-
-  /**
-   * 批量删除租户表(根据1对多属性)
-   *
-   * @param request 角色_菜单实体
-   * @return {@link boolean}
-   * @author 一源团队--花和尚
-   * @date 2023-07-02
-   */
-  boolean dels(SysTenant request) throws Exception;
+  boolean delete(SysTenant request) throws Exception;
 
   /**
    * 编辑租户表
@@ -80,7 +79,7 @@ public interface SysTenantService extends JoinIService<SysTenant> {
    * @param request 租户实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   boolean edit(SysTenant request) throws Exception;
 
@@ -90,7 +89,7 @@ public interface SysTenantService extends JoinIService<SysTenant> {
    * @param request 租户实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   boolean add(SysTenant request) throws Exception;
 }

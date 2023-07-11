@@ -20,7 +20,7 @@ import java.util.List;
  * 用户管理
  *
  * @author 一源团队--花和尚
- * @date 2023-07-09
+ * @date 2023-07-11
  * @module 权限管理
  * @folder 权限管理/用户管理
  */
@@ -36,13 +36,13 @@ public class AuthAdminController {
    * @param request 用户实体
    * @return {@link CommonResult<List<AuthAdmin>>}
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   @Description("权限管理/用户管理/查询用户")
   @SaCheckPermission(
       value = {"auth:admin:query"},
       orRole = "admin")
-  @RequestMapping(value = "/auth/admin/list", method = RequestMethod.GET)
+  @GetMapping(value = "/auth/admin/list")
   @ResponseBody
   public CommonResult<List<AuthAdmin>> list(AuthAdmin request) throws Exception {
     return CommonResult.success(authAdminService.list(request));
@@ -54,13 +54,13 @@ public class AuthAdminController {
    * @param request 用户实体
    * @return {@link CommonResult<Page<AuthAdmin>>}
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   @Description("权限管理/用户管理/查询用户")
   @SaCheckPermission(
       value = {"auth:admin:query"},
       orRole = "admin")
-  @RequestMapping(value = "/auth/admin/pages", method = RequestMethod.GET)
+  @GetMapping(value = "/auth/admin/pages")
   @ResponseBody
   public CommonResult<Page<AuthAdmin>> pages(
       AuthAdmin request,
@@ -73,63 +73,42 @@ public class AuthAdminController {
   /**
    * 用户详情
    *
-   * @param request 用户实体
+   * @param id 用户id
    * @return {@link CommonResult<AuthAdmin>}
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   @Description("权限管理/用户管理/查询用户")
   @SaCheckPermission(
       value = {"auth:admin:query"},
       orRole = "admin")
-  @RequestMapping(value = "/auth/admin/details", method = RequestMethod.GET)
+  @GetMapping(value = "/auth/admin/details/{id}")
   @ResponseBody
-  public CommonResult<AuthAdmin> details(AuthAdmin request) throws Exception {
-    return CommonResult.success(authAdminService.details(request));
+  public CommonResult<AuthAdmin> details(@PathVariable("id") @Validated({NotEmpty.class}) String id)
+      throws Exception {
+    return CommonResult.success(authAdminService.details(id));
   }
 
   /**
-   * 删除用户
+   * 删除用户(支持批量)
    *
-   * @param request 用户实体
+   * @param ids 用户id(多个逗号分割)
    * @return {@link CommonResult<String>}
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   @Description("权限管理/用户管理/删除用户")
   @SaCheckPermission(
-      value = {"auth:admin:del"},
+      value = {"auth:admin:delete"},
       orRole = "admin")
-  @RequestMapping(value = "/auth/admin/del", method = RequestMethod.POST)
+  @PostMapping(value = "/auth/admin/delete")
   @ResponseBody
-  public CommonResult<String> del(@RequestBody @Validated AuthAdmin request) throws Exception {
-    if (authAdminService.del(request)) {
+  public CommonResult<String> delete(@RequestParam @Validated({NotEmpty.class}) String ids)
+      throws Exception {
+    if (authAdminService.delete(ids)) {
       return CommonResult.success("删除用户成功");
     } else {
       return CommonResult.failed("删除用户失败");
-    }
-  }
-
-  /**
-   * 批量删除用户
-   *
-   * @param ids 逗号分割id
-   * @return {@link CommonResult<String>}
-   * @author 一源团队--花和尚
-   * @date 2023-07-09
-   */
-  @Description("权限管理/用户管理/批量删除用户")
-  @SaCheckPermission(
-      value = {"auth:admin:dels"},
-      orRole = "admin")
-  @RequestMapping(value = "/auth/admin/dels", method = RequestMethod.POST)
-  @ResponseBody
-  public CommonResult<String> dels(@RequestParam @Validated({NotEmpty.class}) String ids)
-      throws Exception {
-    if (authAdminService.dels(ids)) {
-      return CommonResult.success("批量删除用户成功");
-    } else {
-      return CommonResult.failed("批量删除用户失败");
     }
   }
   /**
@@ -138,13 +117,13 @@ public class AuthAdminController {
    * @param request 用户实体
    * @return {@link CommonResult<String>}
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   @Description("权限管理/用户管理/编辑用户")
   @SaCheckPermission(
       value = {"auth:admin:edit"},
       orRole = "admin")
-  @RequestMapping(value = "/auth/admin/edit", method = RequestMethod.POST)
+  @PostMapping(value = "/auth/admin/edit")
   @ResponseBody
   public CommonResult<String> edit(@RequestBody @Validated AuthAdmin request) throws Exception {
     if (authAdminService.edit(request)) {
@@ -160,13 +139,13 @@ public class AuthAdminController {
    * @param request 用户实体
    * @return {@link CommonResult<String>}
    * @author 一源团队--花和尚
-   * @date 2023-07-09
+   * @date 2023-07-11
    */
   @Description("权限管理/用户管理/新增用户")
   @SaCheckPermission(
       value = {"auth:admin:add"},
       orRole = "admin")
-  @RequestMapping(value = "/auth/admin/add", method = RequestMethod.POST)
+  @PostMapping(value = "/auth/admin/add")
   @ResponseBody
   public CommonResult<String> add(@RequestBody @Validated AuthAdmin request) throws Exception {
     if (authAdminService.add(request)) {
