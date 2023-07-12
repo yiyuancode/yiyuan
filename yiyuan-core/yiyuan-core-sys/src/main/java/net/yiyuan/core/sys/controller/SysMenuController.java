@@ -19,7 +19,7 @@ import java.util.List;
  * 菜单管理
  *
  * @author 一源团队--花和尚
- * @date 2023-07-11
+ * @date 2023-07-13
  * @module 系统管理
  * @folder 系统管理/菜单管理
  */
@@ -35,7 +35,7 @@ public class SysMenuController {
    * @param request 菜单实体
    * @return {@link CommonResult<List<SysMenu>>}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-13
    */
   @Description("系统管理/菜单管理/查询菜单")
   @SaCheckPermission(
@@ -53,7 +53,7 @@ public class SysMenuController {
    * @param request 菜单实体
    * @return {@link CommonResult<Page<SysMenu>>}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-13
    */
   @Description("系统管理/菜单管理/查询菜单")
   @SaCheckPermission(
@@ -75,7 +75,7 @@ public class SysMenuController {
    * @param id 菜单id
    * @return {@link CommonResult<SysMenu>}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-13
    */
   @Description("系统管理/菜单管理/查询菜单")
   @SaCheckPermission(
@@ -94,7 +94,7 @@ public class SysMenuController {
    * @param ids 菜单id(多个逗号分割)
    * @return {@link CommonResult<String>}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-13
    */
   @Description("系统管理/菜单管理/删除菜单")
   @SaCheckPermission(
@@ -116,7 +116,7 @@ public class SysMenuController {
    * @param request 菜单实体
    * @return {@link CommonResult<String>}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-13
    */
   @Description("系统管理/菜单管理/编辑菜单")
   @SaCheckPermission(
@@ -138,7 +138,7 @@ public class SysMenuController {
    * @param request 菜单实体
    * @return {@link CommonResult<String>}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-13
    */
   @Description("系统管理/菜单管理/新增菜单")
   @SaCheckPermission(

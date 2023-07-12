@@ -13,6 +13,18 @@
     <!--    作为依赖必须是pom,但是mp特殊，虽然不能编译，但是能执行main函数生成代码，pom读取不了resource，jar模式才有自己的resource-->
     <!--    <packaging>jar</packaging>-->
     <dependencies>
+        <!--common模块-->
+        <dependency>
+            <groupId>net.yiyuan</groupId>
+            <artifactId>yiyuan-common</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <!--ssh模块-->
+        <dependency>
+            <groupId>net.yiyuan</groupId>
+            <artifactId>yiyuan-plugins-ssh</artifactId>
+            <version>${revision}</version>
+        </dependency>
 
         <!--druid连接池-->
         <dependency>

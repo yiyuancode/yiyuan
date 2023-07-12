@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import net.yiyuan.core.sys.enums.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
@@ -12,7 +13,7 @@ import java.util.Date;
  * 菜单管理实体
  *
  * @author 一源团队--花和尚
- * @date 2023-07-11
+ * @date 2023-07-13
  */
 @Data
 public class SysMenu implements Serializable {
@@ -21,7 +22,7 @@ public class SysMenu implements Serializable {
   /**
    * 菜单ID
    *
-   * @date 2023-07-11
+   * @date 2023-07-13
    */
   @TableId(value = "id", type = IdType.ASSIGN_UUID)
   private String id;
@@ -31,7 +32,7 @@ public class SysMenu implements Serializable {
    *
    * @see String
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-13
    */
   private String name;
 
@@ -40,7 +41,7 @@ public class SysMenu implements Serializable {
    *
    * @see String
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-13
    */
   private String permission;
 
@@ -49,7 +50,7 @@ public class SysMenu implements Serializable {
    *
    * @see String
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-13
    */
   private String parentId;
 
@@ -58,7 +59,7 @@ public class SysMenu implements Serializable {
    *
    * @see String
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-13
    */
   private String icon;
 
@@ -67,88 +68,87 @@ public class SysMenu implements Serializable {
    *
    * @see String
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-13
    */
   private String activeMenu;
 
   /**
-   * 是否为外链(0-否|1-是)
+   * 外链#0=否|1=是
    *
    * @see Integer
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-13
    */
-  private Integer isFrame;
+  private SysMenuIsFrameEnum isFrame;
 
   /**
    * 外部链接地址
    *
    * @see String
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-13
    */
   private String frameSrc;
 
   /**
-   * 是否固定多页签(0-关闭|1-开启)
+   * 固定多页签#0=关闭|1=开启
    *
    * @see Integer
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-13
    */
-  private Integer isAffix;
+  private SysMenuIsAffixEnum isAffix;
 
   /**
-   * 菜单状态(0-停用|1-正常)
+   * 菜单状态#0=停用|1=正常
    *
    * @see Integer
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-13
    */
-  private Integer status;
+  private SysMenuStatusEnum status;
 
   /**
-   * 是否简化路由(0-否,1-是-子菜单只有一个时候直接显示子菜单不显示上级)
+   * 简化路由#0=关闭|1=开启#开启以后只有一个时候直接显示子菜单
    *
    * @see Integer
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-13
    */
-  private Integer isAlwaysShow;
+  private SysMenuIsAlwaysShowEnum isAlwaysShow;
 
   /**
    * 是否缓存(0-否|1-是)
    *
    * @see Integer
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-13
    */
-  private Integer isCache;
 
   /**
-   * 菜单类型(0-目录|1-菜单|1-按钮)
+   * 类型#0=目录|1=菜单|2=按钮
    *
    * @see Integer
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-13
    */
-  private Integer type;
+  private SysMenuTypeEnum type;
 
   /**
-   * 菜单类型(0-当前窗口|1-新窗口)
+   * 打开方式#0=当前窗口|1=新窗口
    *
    * @see Integer
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-13
    */
-  private Integer openType;
+  private SysMenuOpenTypeEnum openType;
 
   /**
    * 显示排序
    *
    * @see Integer
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-13
    */
   private Integer sort;
 
@@ -157,7 +157,7 @@ public class SysMenu implements Serializable {
    *
    * @see String
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-13
    */
   private String routeComponent;
 
@@ -166,7 +166,7 @@ public class SysMenu implements Serializable {
    *
    * @see String
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-13
    */
   private String routePath;
 
@@ -175,7 +175,7 @@ public class SysMenu implements Serializable {
    *
    * @see String
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-13
    */
   private String routeName;
 
@@ -184,7 +184,7 @@ public class SysMenu implements Serializable {
    *
    * @see String
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-13
    */
   private String routeRedirect;
 
@@ -193,7 +193,7 @@ public class SysMenu implements Serializable {
    *
    * @see Date
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-13
    */
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
@@ -204,7 +204,7 @@ public class SysMenu implements Serializable {
    *
    * @see Date
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-13
    */
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
@@ -215,7 +215,7 @@ public class SysMenu implements Serializable {
    *
    * @see String
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-13
    */
   private String tenantId;
 }

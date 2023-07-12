@@ -1,5 +1,6 @@
 package ${package.Entity};
 import ${package.Entity}.*;
+import $!{cfg.apiParent}.${package.ModuleName}.enums.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 import com.baomidou.mybatisplus.annotation.IdType;
@@ -114,7 +115,18 @@ private static final long serialVersionUID=1L;
      * @date ${date}
      */
     #end
-private ${field.propertyType} ${field.propertyName};
+
+
+    #if(${field.comment.indexOf("#")}!=-1&&${field.comment.indexOf("|")}!=-1&&${field.propertyName.indexOf(
+        "id")}==-1)
+        ##stringUtils.capitalizeFirstLetter($field.propertyName)
+    private ${entity}$field.propertyName.substring(0, 1).toUpperCase()$field.propertyName.substring(1)Enum ${field.propertyName};
+    #end
+    #if(${field.comment.indexOf("#")}==-1&&${field.comment.indexOf("|")}==-1)
+    private ${field.propertyType} ${field.propertyName};
+    #end
+
+
 #end
 ## ----------  END 字段循环遍历  ----------
 #if(!${entityLombokModel})di
@@ -143,7 +155,7 @@ private ${field.propertyType} ${field.propertyName};
 ## --end of #if(!${entityLombokModel})--
 #if(${entityColumnConstant})
     #foreach($field in ${table.fields})
-    public static final String ${field.name.toUpperCase()} ="${field.name}" ;
+    public static final String ${field.name.toUpperCase()} ="${field.name}";
     #end
 #end
 #if(${activeRecord})

@@ -28,6 +28,7 @@ import net.yiyuan.core.auth.model.AuthRoleMenu;
 import net.yiyuan.core.auth.service.AuthAdminRoleService;
 import net.yiyuan.core.auth.service.AuthAdminService;
 import net.yiyuan.core.auth.service.AuthRoleMenuService;
+import net.yiyuan.core.sys.enums.*;
 import net.yiyuan.core.sys.model.SysMenu;
 import net.yiyuan.core.sys.service.SysMenuService;
 import org.springframework.context.annotation.Description;
@@ -342,14 +343,13 @@ public class AuthService {
                       moudelDetails = sysMenuService.details(sysMenuQuery);
                       if (ObjectUtil.isEmpty(moudelDetails)) {
                         sysMenuQuery.setName(menuNameAarry[0]);
-                        sysMenuQuery.setType(0);
+                        sysMenuQuery.setType(SysMenuTypeEnum.DIRECTORY);
                         sysMenuQuery.setParentId("0");
-                        sysMenuQuery.setIsFrame(0);
-                        sysMenuQuery.setIsAffix(0);
-                        sysMenuQuery.setStatus(0);
-                        sysMenuQuery.setIsAlwaysShow(0);
-                        sysMenuQuery.setIsCache(0);
-                        sysMenuQuery.setOpenType(0);
+                        sysMenuQuery.setIsFrame(SysMenuIsFrameEnum.NO);
+                        sysMenuQuery.setIsAffix(SysMenuIsAffixEnum.SHUT_DOWN);
+                        sysMenuQuery.setStatus(SysMenuStatusEnum.NORMAL);
+                        sysMenuQuery.setIsAlwaysShow(SysMenuIsAlwaysShowEnum.OPEN);
+                        sysMenuQuery.setOpenType(SysMenuOpenTypeEnum.THE_CURRENT_WINDOW);
                         sysMenuQuery.setSort(0);
                         sysMenuQuery.setRouteComponent("/layouts/BlankView.vue");
                         sysMenuQuery.setRouteName(btnPermAarry[0]);
@@ -363,14 +363,15 @@ public class AuthService {
                       childMoudelDetails = sysMenuService.details(sysMenuQuery);
                       if (ObjectUtil.isEmpty(childMoudelDetails)) {
                         sysMenuQuery.setName(menuNameAarry[1]);
-                        sysMenuQuery.setType(1);
+                        sysMenuQuery.setType(SysMenuTypeEnum.THE_MENU);
                         sysMenuQuery.setParentId(moudelDetails.getId());
-                        sysMenuQuery.setIsFrame(0);
-                        sysMenuQuery.setIsAffix(0);
-                        sysMenuQuery.setStatus(0);
-                        sysMenuQuery.setIsAlwaysShow(0);
-                        sysMenuQuery.setIsCache(0);
-                        sysMenuQuery.setOpenType(0);
+
+                        sysMenuQuery.setIsFrame(SysMenuIsFrameEnum.NO);
+                        sysMenuQuery.setIsAffix(SysMenuIsAffixEnum.SHUT_DOWN);
+                        sysMenuQuery.setStatus(SysMenuStatusEnum.NORMAL);
+                        sysMenuQuery.setIsAlwaysShow(SysMenuIsAlwaysShowEnum.OPEN);
+                        sysMenuQuery.setOpenType(SysMenuOpenTypeEnum.THE_CURRENT_WINDOW);
+
                         sysMenuQuery.setSort(0);
                         sysMenuQuery.setRouteComponent(
                             "/pages/" + btnPermAarry[0] + "/" + btnPermAarry[1]);
@@ -386,14 +387,14 @@ public class AuthService {
                     SysMenu btnDetails = sysMenuService.details(sysMenuQuery);
                     if (ObjectUtil.isEmpty(btnDetails)) {
                       sysMenuQuery.setName(menuNameAarry[2]);
-                      sysMenuQuery.setType(2);
+                      sysMenuQuery.setType(SysMenuTypeEnum.BUTTON);
                       sysMenuQuery.setParentId(childMoudelDetails.getId());
-                      sysMenuQuery.setIsFrame(0);
-                      sysMenuQuery.setIsAffix(0);
-                      sysMenuQuery.setStatus(0);
-                      sysMenuQuery.setIsAlwaysShow(0);
-                      sysMenuQuery.setIsCache(0);
-                      sysMenuQuery.setOpenType(0);
+                      sysMenuQuery.setIsFrame(SysMenuIsFrameEnum.NO);
+                      sysMenuQuery.setIsAffix(SysMenuIsAffixEnum.SHUT_DOWN);
+                      sysMenuQuery.setStatus(SysMenuStatusEnum.NORMAL);
+                      sysMenuQuery.setIsAlwaysShow(SysMenuIsAlwaysShowEnum.OPEN);
+                      sysMenuQuery.setOpenType(SysMenuOpenTypeEnum.THE_CURRENT_WINDOW);
+
                       sysMenuQuery.setSort(0);
                       sysMenuQuery.setRouteComponent(null);
                       sysMenuQuery.setRouteName(null);

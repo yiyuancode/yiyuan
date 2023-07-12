@@ -7,6 +7,6 @@ import net.yiyuan.core.sys.model.SysTenant;
  * 租户管理 Mapper接口
  *
  * @author 一源团队--花和尚
- * @date 2023-07-11
+ * @date 2023-07-13
  */
 public interface SysTenantMapper extends JoinBaseMapper<SysTenant> {}

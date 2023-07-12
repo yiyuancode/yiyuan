@@ -17,7 +17,7 @@ import java.util.List;
  * 租户管理Service层接口实现
  *
  * @author 一源团队--花和尚
- * @date 2023-07-11
+ * @date 2023-07-13
  */
 @Slf4j
 @Service
@@ -31,7 +31,7 @@ public class SysTenantServiceImpl extends JoinServiceImpl<SysTenantMapper, SysTe
    * @param request 租户实体
    * @return {@link List}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-13
    */
   @Override
   public List<SysTenant> list(SysTenant request) throws Exception {
@@ -46,7 +46,7 @@ public class SysTenantServiceImpl extends JoinServiceImpl<SysTenantMapper, SysTe
    * @param request 租户实体
    * @return {@link Page}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-13
    */
   @Override
   public Page<SysTenant> pages(SysTenant request, Integer pageSize, Integer pageNum)
@@ -65,7 +65,7 @@ public class SysTenantServiceImpl extends JoinServiceImpl<SysTenantMapper, SysTe
    * @param id 租户id
    * @return {@link SysTenant}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-13
    */
   @Override
   public SysTenant details(String id) throws Exception {
@@ -81,7 +81,7 @@ public class SysTenantServiceImpl extends JoinServiceImpl<SysTenantMapper, SysTe
    * @param request 租户实体
    * @return {@link SysTenant}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-13
    */
   @Override
   public SysTenant details(SysTenant request) throws Exception {
@@ -95,7 +95,7 @@ public class SysTenantServiceImpl extends JoinServiceImpl<SysTenantMapper, SysTe
    * @param ids 租户id(多个逗号分割)
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-13
    */
   @Override
   public boolean delete(String ids) throws Exception {
@@ -108,7 +108,7 @@ public class SysTenantServiceImpl extends JoinServiceImpl<SysTenantMapper, SysTe
    * @param request 租户实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-13
    */
   @Override
   public boolean delete(SysTenant request) throws Exception {
@@ -122,7 +122,7 @@ public class SysTenantServiceImpl extends JoinServiceImpl<SysTenantMapper, SysTe
    * @param request 租户实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-13
    */
   @Override
   public boolean edit(SysTenant request) throws Exception {
@@ -136,7 +136,7 @@ public class SysTenantServiceImpl extends JoinServiceImpl<SysTenantMapper, SysTe
    * @param request 租户实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-13
    */
   @Override
   public boolean add(SysTenant request) throws Exception {

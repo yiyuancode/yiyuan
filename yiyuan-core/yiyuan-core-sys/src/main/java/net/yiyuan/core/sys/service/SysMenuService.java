@@ -9,7 +9,7 @@ import java.util.List;
  * 菜单管理Service层接口
  *
  * @author 一源团队--花和尚
- * @date 2023-07-11
+ * @date 2023-07-13
  */
 public interface SysMenuService extends JoinIService<SysMenu> {
 
@@ -19,7 +19,7 @@ public interface SysMenuService extends JoinIService<SysMenu> {
    * @param request 菜单实体
    * @return {@link List}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-13
    */
   List<SysMenu> list(SysMenu request) throws Exception;
 
@@ -29,7 +29,7 @@ public interface SysMenuService extends JoinIService<SysMenu> {
    * @param request 菜单实体
    * @return {@link Page}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-13
    */
   Page<SysMenu> pages(SysMenu request, Integer pageSize, Integer pageNum) throws Exception;
 
@@ -39,7 +39,7 @@ public interface SysMenuService extends JoinIService<SysMenu> {
    * @param id 菜单id
    * @return {@link SysMenu}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-13
    */
   SysMenu details(String id) throws Exception;
 
@@ -49,7 +49,7 @@ public interface SysMenuService extends JoinIService<SysMenu> {
    * @param request 菜单实体
    * @return {@link SysMenu}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-13
    */
   SysMenu details(SysMenu request) throws Exception;
 
@@ -59,7 +59,7 @@ public interface SysMenuService extends JoinIService<SysMenu> {
    * @param ids 菜单id(多个逗号分割)
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-13
    */
   boolean delete(String ids) throws Exception;
 
@@ -69,7 +69,7 @@ public interface SysMenuService extends JoinIService<SysMenu> {
    * @param request 菜单实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-13
    */
   boolean delete(SysMenu request) throws Exception;
 
@@ -79,7 +79,7 @@ public interface SysMenuService extends JoinIService<SysMenu> {
    * @param request 菜单实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-13
    */
   boolean edit(SysMenu request) throws Exception;
 
@@ -89,7 +89,7 @@ public interface SysMenuService extends JoinIService<SysMenu> {
    * @param request 菜单实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-13
    */
   boolean add(SysMenu request) throws Exception;
 }

@@ -10,19 +10,27 @@ import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.rules.DateType;
 import com.baomidou.mybatisplus.generator.config.rules.FileType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
+import lombok.extern.slf4j.Slf4j;
+import net.yiyuan.common.utils.StringUtilsPlus;
+import net.yiyuan.plugins.ssh.utils.SshUtil;
+import org.apache.velocity.Template;
+import org.apache.velocity.VelocityContext;
+import org.apache.velocity.app.VelocityEngine;
 
 import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.util.*;
 
 /**
  * mp生成器
  *
  * @author XUETAO
  */
+@Slf4j
 public class CodeGenerator {
   private static String DEFAULT_OUT_PUT_DIR = System.getProperty("user.dir") + "\\src\\main\\java";
   private static String DEFAULT_PARENT_PACK = "com.example.ams.modules";
@@ -83,6 +91,7 @@ public class CodeGenerator {
           @Override
           public void initMap() {
             Map<String, Object> map = new HashMap<>();
+            map.put("apiParent", DEFAULT_PARENT_PACK);
             map.put("apiMoudel", scanner("apiFox接口一级模块名称 * 例如系统管理"));
             //            map.put("apiFolder", scanner("apiFox接口一级/二级级模块名称* 例如 系统管理/菜单管理"));
             this.setMap(map);
@@ -148,386 +157,147 @@ public class CodeGenerator {
     strategy.setControllerMappingHyphenStyle(true);
     mpg.setStrategy(strategy);
     mpg.execute();
+    getTableFiled(inputTableName, pc);
     // mkdirBaseModel(inputTableName, DEFAULT_OUT_PUT_DIR, DEFAULT_PARENT_PACK, DEFAULT_MODULENAME);
     //		JoinGenerator.jonin(DEFAULT_MODULENAME);
   }
 
-  public static void mkdirBaseModel(
-      String inputTableName[],
-      String defaultOutPutDir,
-      String defaultParentPack,
-      String moduleName) {
-    try {
-      for (String tableNameItem : inputTableName) {
-        String defaultParentPackPath = defaultParentPack.replace(".", "\\");
-        System.out.println("defaultParentPackPath  " + defaultParentPackPath);
-        String baseModeVolFilePath =
-            defaultOutPutDir + "\\" + defaultParentPackPath + "\\" + moduleName + "\\" + "model\\";
-        File baseModeVolFilePathDir = new File(baseModeVolFilePath);
-        if (!baseModeVolFilePathDir.exists()) {
-          baseModeVolFilePathDir.mkdirs();
-        }
-        System.out.println("baseModelFilePath  " + baseModeVolFilePath);
-        String className = StrUtil.toCamelCase(tableNameItem) + "Dto";
-        File baseFile = new File(baseModeVolFilePath, className + ".java");
-        if (!baseFile.exists()) {
-          try {
-            //						baseFile.createNewFile();
-            //						String baseModeVolFileWriterPath = defaultOutPutDir + "\\" +
-            // defaultParentPackPath + "\\" + moduleName + "\\" + "dto\\";
-            //						File baseModeVolFileWriterPathDir = new File(baseModeVolFileWriterPath);
-            // //以某路径实例化一个File对象
-            //						if (!baseModeVolFileWriterPathDir.exists()){ //如果不存在
-            //							boolean dr = baseModeVolFileWriterPathDir.mkdirs(); //创建目录
-            //						}
-            //						File baseModeVolFileWriterPathDirFile = new File(baseModeVolFileWriterPath,
-            // className + ".java");
-            FileWriter enumFileWriter = new FileWriter(baseFile);
+  /**
+   * 根据用户输入的表获取每张表所有字段信息
+   *
+   * @param
+   * @author 一源团队--花和尚
+   * @date 2023-07-11
+   */
+  public static void getTableFiled(String inputTableName[], PackageConfig pc) throws Exception {
+    String hostSsh = "43.154.183.115";
+    int portSsh = 22;
+    String usernameSsh = "root";
+    String passwordSsh = "Zy2308416";
+    String commandSsh = "ww ";
 
-            //						FileWriter enumFileWriter = new FileWriter(baseModeVolFileWriterPathDirFile);
-            enumFileWriter.write(
-                "package " + defaultParentPack + "." + moduleName + ".model" + ";\n");
-            //						enumFileWriter.write("import com.fhs.core.trans.vo.TransPojo;\n");
-            enumFileWriter.write(
-                "import io.swagger.annotations.ApiModel;\n"
-                    + "import io.swagger.annotations.ApiModelProperty;\n"
-                    + "import com.fasterxml.jackson.annotation.JsonFormat;\n"
-                    + "import java.io.Serializable;\n"
-                    + "import icu.mhb.mybatisplus.plugln.core.JoinLambdaWrapper;\n"
-                    + "import lombok.*;\n");
-            enumFileWriter.write("@Data\n");
-            enumFileWriter.write("\n");
-            enumFileWriter.write(
-                "public class   "
-                    + className
-                    + " extends "
-                    + StrUtil.toCamelCase(tableNameItem)
-                    + "  implements Serializable {\n");
-            enumFileWriter.write("}");
-            enumFileWriter.close();
-          } catch (IOException e) {
-            e.printStackTrace();
+    String url = "jdbc:mysql://43.154.183.115:40020/admin_dev?serverTimezone=Asia/Shanghai";
+    String username = "root";
+    String password = "123456";
+    //    String tableName = "user";
+    Connection conn = DriverManager.getConnection(url, username, password);
+    // 获取 DatabaseMetaData 对象
+    DatabaseMetaData metaData = conn.getMetaData();
+
+    for (String tableName : inputTableName) {
+
+      ResultSet rs = metaData.getColumns(null, null, tableName, null);
+      while (rs.next()) {
+        List<Map<String, String>> tableColumns = new ArrayList<>();
+        String columnName = rs.getString("COLUMN_NAME");
+        String columnType = rs.getString("TYPE_NAME");
+        String columnComment = rs.getString("REMARKS");
+        boolean isPrimaryKey = "yes".equalsIgnoreCase(rs.getString("IS_AUTOINCREMENT"));
+        boolean isAutoIncrement = "yes".equalsIgnoreCase(rs.getString("IS_AUTOINCREMENT"));
+        boolean isNullable = "yes".equalsIgnoreCase(rs.getString("IS_NULLABLE"));
+        System.out.println("字段名：" + columnName);
+        System.out.println("字段注释：" + columnComment);
+        System.out.println("字段类型：" + columnType);
+        System.out.println("字段类型columnName：" + StrUtil.toCamelCase(columnName).toUpperCase());
+        if (StrUtil.contains(columnComment, "#")) {
+          String[] columnCommentArray = columnComment.split("#");
+          log.info("columnCommentArray{}", columnCommentArray);
+          log.info("columnCommentArray{}", columnCommentArray[1]);
+          String[] itemArray = columnCommentArray[1].split("\\|");
+          log.info("itemArray{},{}", itemArray[0], itemArray[1]);
+          for (String item : itemArray) {
+            // 以字段为单位创建生成一个枚举类
+            String[] kvArray = item.split("=");
+            System.out.println("kvArray：" + kvArray[0]);
+            System.out.println("kvArray" + kvArray[1]);
+            Map<String, String> columnMap = new HashMap<>();
+            columnMap.put("code", kvArray[0]);
+            columnMap.put("desc", kvArray[1]);
+            // String filed=TransUtils.toEn2(kvArray[1]).toUpperCase().replaceAll("\\s+", "_");
+            String filed =
+                StringUtilsPlus.trimAndFormatString(
+                        SshUtil.executeScript(
+                            hostSsh, portSsh, usernameSsh, passwordSsh, commandSsh + kvArray[1]))
+                    .toUpperCase();
+
+            columnMap.put("filed", filed);
+            log.info("itemArray.filed{}", filed);
+            tableColumns.add(columnMap);
           }
+          VelocityContext context = new VelocityContext();
+          context.put("path", DEFAULT_OUT_PUT_DIR);
+          context.put("packagePath", StringUtilsPlus.convertPackageNameToPath(pc.getParent()));
+          context.put("packageName", pc);
+          context.put(
+              "className",
+              StringUtilsPlus.convertToCamelCase(tableName)
+                  + StringUtilsPlus.convertToCamelCase(columnName)
+                  + "Enum");
+          context.put("tableColumns", tableColumns);
+          // 生成枚举文件
+          createByVelocity(context);
         }
-        String baseAdminControllerFilePath =
-            defaultOutPutDir
-                + "\\"
-                + defaultParentPackPath
-                + "\\"
-                + moduleName
-                + "\\"
-                + "controller\\";
-        String baseAdminControllerFileName =
-            StrUtil.toCamelCase(tableNameItem) + "AdminBaseController";
-        File baseAdminControllerFile =
-            new File(baseAdminControllerFilePath, baseAdminControllerFileName + ".java");
-        if (!baseAdminControllerFile.exists()) {
-          try {
-            baseAdminControllerFile.createNewFile();
-            FileWriter baseAdminControllerWriter = new FileWriter(baseAdminControllerFile);
-            baseAdminControllerWriter.write(
-                "package "
-                    + defaultParentPack
-                    + "."
-                    + moduleName
-                    + ".controller;\n"
-                    + "import io.swagger.annotations.Api;\n"
-                    + "import org.springframework.web.bind.annotation.*;"
-                    + "import lombok.extern.slf4j.Slf4j;\n"
-                    + "import org.slf4j.Logger;\n"
-                    + "import org.slf4j.LoggerFactory;\n"
-                    + "import org.springframework.web.bind.annotation.RestController;\n"
-                    + "\n"
-                    + "import java.util.Date;\n"
-                    + "import java.util.List;\n"
-                    + "\n"
-                    + "/**\n"
-                    + " * "
-                    + moduleName
-                    + "模块复杂业务接口(pc端)\n"
-                    + " */\n"
-                    + "@Slf4j\n"
-                    + "@RestController\n"
-                    + "@Api(tags = \""
-                    + ""
-                    + moduleName
-                    + "模块复杂业务接口(pc端)"
-                    + "\")  //配合swagger使用\n"
-                    + "@RequestMapping(value = \"/admin\")"
-                    + "public class "
-                    + baseAdminControllerFileName
-                    + " {\n"
-                    + "    private static final Logger LOGGER = LoggerFactory.getLogger("
-                    + baseAdminControllerFileName
-                    + ".class);\n"
-                    + "\n"
-                    + "}\n");
-            baseAdminControllerWriter.close();
-          } catch (IOException e) {
-            e.printStackTrace();
-          }
-        }
-        String baseMobileControllerFilePath =
-            defaultOutPutDir
-                + "\\"
-                + defaultParentPackPath
-                + "\\"
-                + moduleName
-                + "\\"
-                + "controller\\";
-        String baseMobileControllerFileName =
-            StrUtil.toCamelCase(tableNameItem) + "MobileBaseController";
-        File baseMobileControllerFile =
-            new File(baseMobileControllerFilePath, baseMobileControllerFileName + ".java");
-        if (!baseMobileControllerFile.exists()) {
-          try {
-            baseMobileControllerFile.createNewFile();
-            FileWriter baseMobileControllerWriter = new FileWriter(baseMobileControllerFile);
-            baseMobileControllerWriter.write(
-                "package "
-                    + defaultParentPack
-                    + "."
-                    + moduleName
-                    + ".controller;\n"
-                    + "import io.swagger.annotations.Api;\n"
-                    + "import org.springframework.web.bind.annotation.*;"
-                    + "import lombok.extern.slf4j.Slf4j;\n"
-                    + "import org.slf4j.Logger;\n"
-                    + "import org.slf4j.LoggerFactory;\n"
-                    + "import org.springframework.web.bind.annotation.RestController;\n"
-                    + "\n"
-                    + "import java.util.Date;\n"
-                    + "import java.util.List;\n"
-                    + "\n"
-                    + "/**\n"
-                    + " * "
-                    + moduleName
-                    + "模块复杂业务接口(移动端)\n"
-                    + " */\n"
-                    + "@Slf4j\n"
-                    + "@RestController\n"
-                    + "@Api(tags = \""
-                    + ""
-                    + moduleName
-                    + "模块复杂业务接口(移动端)"
-                    + "\")  //配合swagger使用\n"
-                    + "@RequestMapping(value = \"/mobile\")"
-                    + "public class "
-                    + baseMobileControllerFileName
-                    + " {\n"
-                    + "    private static final Logger LOGGER = LoggerFactory.getLogger("
-                    + baseMobileControllerFileName
-                    + ".class);\n"
-                    + "\n"
-                    + "}\n");
-            baseMobileControllerWriter.close();
-          } catch (IOException e) {
-            e.printStackTrace();
-          }
-        }
-        String baseAdminServiceFilePath =
-            defaultOutPutDir
-                + "\\"
-                + defaultParentPackPath
-                + "\\"
-                + moduleName
-                + "\\"
-                + "service\\";
-        String baseAdminServiceFileName = StrUtil.toCamelCase(tableNameItem) + "AdminBaseService";
-        File baseAdminServiceFile =
-            new File(baseAdminServiceFilePath, baseAdminServiceFileName + ".java");
-        if (!baseAdminServiceFile.exists()) {
-          try {
-            baseAdminServiceFile.createNewFile();
-            FileWriter baseAdminServiceWriter = new FileWriter(baseAdminServiceFile);
-            baseAdminServiceWriter.write(
-                "package "
-                    + defaultParentPack
-                    + "."
-                    + moduleName
-                    + ".service;\n"
-                    + "\n"
-                    + "\n"
-                    + "/**\n"
-                    + " * @description "
-                    + moduleName
-                    + "模块管理端复杂业务接口\n"
-                    + " * @date 2022-11-02\n"
-                    + " */\n"
-                    + "public interface "
-                    + baseAdminServiceFileName
-                    + " {\n"
-                    + "\n"
-                    + "    \n"
-                    + "}");
-            baseAdminServiceWriter.close();
-          } catch (IOException e) {
-            e.printStackTrace();
-          }
-        }
-        String baseAdminServiceImplFilePath =
-            defaultOutPutDir
-                + "\\"
-                + defaultParentPackPath
-                + "\\"
-                + moduleName
-                + "\\"
-                + "service\\"
-                + "impl\\";
-        String baseAdminServiceImplFileName =
-            StrUtil.toCamelCase(tableNameItem) + "AdminBaseServiceImpl";
-        File baseAdminServiceImplFile =
-            new File(baseAdminServiceImplFilePath, baseAdminServiceImplFileName + ".java");
-        if (!baseAdminServiceImplFile.exists()) {
-          try {
-            baseAdminServiceImplFile.createNewFile();
-            FileWriter baseAdminServiceImplWriter = new FileWriter(baseAdminServiceImplFile);
-            baseAdminServiceImplWriter.write(
-                "package "
-                    + defaultParentPack
-                    + "."
-                    + moduleName
-                    + ".service.impl;\n"
-                    + "\n"
-                    + "import "
-                    + defaultParentPack
-                    + "."
-                    + moduleName
-                    + ".service."
-                    + baseAdminServiceFileName
-                    + ";\n"
-                    + "\n"
-                    + "import org.slf4j.Logger;\n"
-                    + "import org.slf4j.LoggerFactory;\n"
-                    + "import org.springframework.stereotype.Service;\n"
-                    + "\n"
-                    + "\n"
-                    + "/**\n"
-                    + " * @author com.macro.mall.tiny.modules.mark\n"
-                    + " * @description "
-                    + moduleName
-                    + "模块复杂业务(pc端)\n"
-                    + " * @date 2022-11-02\n"
-                    + " */\n"
-                    + "@Service\n"
-                    + "public class "
-                    + baseAdminServiceImplFileName
-                    + "  implements "
-                    + baseAdminServiceFileName
-                    + " {\n"
-                    + "    private static final Logger LOGGER = LoggerFactory.getLogger("
-                    + baseAdminServiceImplFileName
-                    + ".class);\n"
-                    + "}");
-            baseAdminServiceImplWriter.close();
-          } catch (IOException e) {
-            e.printStackTrace();
-          }
-        }
-        String baseMobileServiceFilePath =
-            defaultOutPutDir
-                + "\\"
-                + defaultParentPackPath
-                + "\\"
-                + moduleName
-                + "\\"
-                + "service\\";
-        String baseMobileServiceFileName = StrUtil.toCamelCase(tableNameItem) + "MobileBaseService";
-        File baseMobileServiceFile =
-            new File(baseMobileServiceFilePath, baseMobileServiceFileName + ".java");
-        if (!baseMobileServiceFile.exists()) {
-          try {
-            baseMobileServiceFile.createNewFile();
-            FileWriter baseMobileServiceWriter = new FileWriter(baseMobileServiceFile);
-            baseMobileServiceWriter.write(
-                "package "
-                    + defaultParentPack
-                    + "."
-                    + moduleName
-                    + ".service;\n"
-                    + "\n"
-                    + "\n"
-                    + "/**\n"
-                    + " * @description "
-                    + moduleName
-                    + "移动端复杂业务接口\n"
-                    + " * @date 2022-11-02\n"
-                    + " */\n"
-                    + "public interface "
-                    + baseMobileServiceFileName
-                    + " {\n"
-                    + "\n"
-                    + "    \n"
-                    + "}");
-            baseMobileServiceWriter.close();
-          } catch (IOException e) {
-            e.printStackTrace();
-          }
-        }
-        String baseMobileServiceImplFilePath =
-            defaultOutPutDir
-                + "\\"
-                + defaultParentPackPath
-                + "\\"
-                + moduleName
-                + "\\"
-                + "service\\"
-                + "impl\\";
-        String baseMobileServiceImplFileName =
-            StrUtil.toCamelCase(tableNameItem) + "MobileBaseServiceImpl";
-        File baseMobileServiceImplFile =
-            new File(baseMobileServiceImplFilePath, baseMobileServiceImplFileName + ".java");
-        if (!baseMobileServiceImplFile.exists()) {
-          try {
-            baseMobileServiceImplFile.createNewFile();
-            FileWriter baseMobileServiceImplWriter = new FileWriter(baseMobileServiceImplFile);
-            baseMobileServiceImplWriter.write(
-                "package "
-                    + defaultParentPack
-                    + "."
-                    + moduleName
-                    + ".service.impl;\n"
-                    + "\n"
-                    + "import "
-                    + defaultParentPack
-                    + "."
-                    + moduleName
-                    + ".service."
-                    + baseMobileServiceFileName
-                    + ";\n"
-                    + "\n"
-                    + "import org.slf4j.Logger;\n"
-                    + "import org.slf4j.LoggerFactory;\n"
-                    + "import org.springframework.stereotype.Service;\n"
-                    + "\n"
-                    + "\n"
-                    + "/**\n"
-                    + " * @author com.macro.mall.tiny.modules.mark\n"
-                    + " * @description "
-                    + moduleName
-                    + "模块复杂业务(移动端)\n"
-                    + " * @date 2022-11-02\n"
-                    + " */\n"
-                    + "@Service\n"
-                    + "public class "
-                    + baseMobileServiceImplFileName
-                    + "  implements "
-                    + baseMobileServiceFileName
-                    + " {\n"
-                    + "    private static final Logger LOGGER = LoggerFactory.getLogger("
-                    + baseMobileServiceImplFileName
-                    + ".class);\n"
-                    + "}");
-            baseMobileServiceImplWriter.close();
-          } catch (IOException e) {
-            e.printStackTrace();
-          }
-        }
-        //                baseWriter.close();
-        //                enumFileWriter.close();
       }
-    } catch (Exception e) {
-      e.printStackTrace();
+
+      System.out.println("字段类型packageName：" + pc.getParent());
+      System.out.println("字段类型packageNam2e：" + pc.getPathInfo());
     }
+  }
+
+  /**
+   * 根据用户输入的表获取每张表所有字段信息
+   *
+   * @param
+   * @author 一源团队--花和尚
+   * @date 2023-07-11
+   */
+  public static void createByVelocity(VelocityContext context) throws Exception {
+    VelocityEngine velocityEngine = new VelocityEngine();
+    //    velocityEngine.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
+    //    velocityEngine.setProperty(
+    //        RuntimeConstants.RUNTIME_LOG_LOGSYSTEM_CLASS,
+    //        "org.apache.velocity.runtime.log.NullLogChute");
+    //
+    //    velocityEngine.init();
+
+    //    Properties p = new Properties();
+    //    p.put(
+    //        "file.resource.loader.class",
+    //        "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
+    //    velocityEngine.init(p);
+
+    Properties p = new Properties();
+    p.setProperty(
+        VelocityEngine.FILE_RESOURCE_LOADER_PATH,
+        "D:\\code\\20230712-20230729\\yiyuan\\yiyuan-plugins\\yiyuan-plugins-mp\\src\\main\\resources\\templates\\");
+    velocityEngine.init(p);
+    Template template = velocityEngine.getTemplate("enum.vm", "UTF-8");
+
+    //    VelocityContext context = new VelocityContext();
+    //    context.put("packageName", packageName);
+    //    context.put("className", className);
+    //    context.put("tableColumns", tableColumns);
+
+    //    StringWriter writer = new StringWriter();
+
+    //    File entityFile = new File(outputDir + "/entity/" + className + ".java");
+    String srcEnumsPath = context.get("path") + "/" + context.get("packagePath") + "/enums/";
+    log.info("srcEnumsPath{}", srcEnumsPath);
+    File folder = new File(srcEnumsPath);
+    if (!folder.exists()) {
+      // 如果文件夹不存在则创建它
+      folder.mkdirs();
+    }
+    String filePath = srcEnumsPath + context.get("className") + ".java";
+    File file = new File(filePath);
+    if (!file.exists()) {
+      // 如果文件不存在则创建它
+      file.createNewFile();
+    }
+
+    FileWriter writer = new FileWriter(filePath);
+    template.merge(context, writer);
+    writer.flush();
+    writer.close();
   }
 }

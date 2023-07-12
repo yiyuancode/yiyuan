@@ -17,7 +17,7 @@ import java.util.List;
  * 菜单管理Service层接口实现
  *
  * @author 一源团队--花和尚
- * @date 2023-07-11
+ * @date 2023-07-13
  */
 @Slf4j
 @Service
@@ -31,7 +31,7 @@ public class SysMenuServiceImpl extends JoinServiceImpl<SysMenuMapper, SysMenu>
    * @param request 菜单实体
    * @return {@link List}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-13
    */
   @Override
   public List<SysMenu> list(SysMenu request) throws Exception {
@@ -46,7 +46,7 @@ public class SysMenuServiceImpl extends JoinServiceImpl<SysMenuMapper, SysMenu>
    * @param request 菜单实体
    * @return {@link Page}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-13
    */
   @Override
   public Page<SysMenu> pages(SysMenu request, Integer pageSize, Integer pageNum) throws Exception {
@@ -64,7 +64,7 @@ public class SysMenuServiceImpl extends JoinServiceImpl<SysMenuMapper, SysMenu>
    * @param id 菜单id
    * @return {@link SysMenu}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-13
    */
   @Override
   public SysMenu details(String id) throws Exception {
@@ -80,7 +80,7 @@ public class SysMenuServiceImpl extends JoinServiceImpl<SysMenuMapper, SysMenu>
    * @param request 菜单实体
    * @return {@link SysMenu}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-13
    */
   @Override
   public SysMenu details(SysMenu request) throws Exception {
@@ -94,7 +94,7 @@ public class SysMenuServiceImpl extends JoinServiceImpl<SysMenuMapper, SysMenu>
    * @param ids 菜单id(多个逗号分割)
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-13
    */
   @Override
   public boolean delete(String ids) throws Exception {
@@ -107,7 +107,7 @@ public class SysMenuServiceImpl extends JoinServiceImpl<SysMenuMapper, SysMenu>
    * @param request 菜单实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-13
    */
   @Override
   public boolean delete(SysMenu request) throws Exception {
@@ -121,7 +121,7 @@ public class SysMenuServiceImpl extends JoinServiceImpl<SysMenuMapper, SysMenu>
    * @param request 菜单实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-13
    */
   @Override
   public boolean edit(SysMenu request) throws Exception {
@@ -135,7 +135,7 @@ public class SysMenuServiceImpl extends JoinServiceImpl<SysMenuMapper, SysMenu>
    * @param request 菜单实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-13
    */
   @Override
   public boolean add(SysMenu request) throws Exception {

@@ -1,16 +1,24 @@
 package net.yiyuan.plugins.mp.config;
 
 import cn.hutool.core.util.StrUtil;
+import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.baomidou.mybatisplus.annotation.DbType;
+import com.baomidou.mybatisplus.autoconfigure.MybatisPlusPropertiesCustomizer;
+import com.baomidou.mybatisplus.core.MybatisConfiguration;
+import com.baomidou.mybatisplus.core.config.GlobalConfig;
+import com.baomidou.mybatisplus.core.handlers.MybatisEnumTypeHandler;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.handler.TenantLineHandler;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.TenantLineInnerInterceptor;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import icu.mhb.mybatisplus.plugln.injector.JoinDefaultSqlInjector;
 import net.sf.jsqlparser.expression.Expression;
 import net.sf.jsqlparser.expression.NullValue;
 import net.sf.jsqlparser.expression.StringValue;
 import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -117,5 +125,23 @@ public class MybatisPlusConfig extends JoinDefaultSqlInjector {
     // 分页插件(如果要配置mp的多租户，分页插件需要放在多租户插件后面加入)
     interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));
     return interceptor;
+  }
+
+  @Bean
+  public MybatisPlusPropertiesCustomizer mybatisPlusPropertiesCustomizer() {
+    return properties -> {
+      GlobalConfig globalConfig = properties.getGlobalConfig();
+      globalConfig.setBanner(false);
+      MybatisConfiguration configuration = new MybatisConfiguration();
+      configuration.setDefaultEnumTypeHandler(MybatisEnumTypeHandler.class);
+      properties.setConfiguration(configuration);
+    };
+  }
+
+  @Bean
+  public Jackson2ObjectMapperBuilderCustomizer customizer() {
+    FastJsonConfig config = new FastJsonConfig();
+    config.setSerializerFeatures(SerializerFeature.WriteEnumUsingToString);
+    return builder -> builder.featuresToEnable(SerializationFeature.WRITE_ENUMS_USING_TO_STRING);
   }
 }
