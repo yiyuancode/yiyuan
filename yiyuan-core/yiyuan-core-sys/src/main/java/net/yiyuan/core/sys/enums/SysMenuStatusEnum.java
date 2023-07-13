@@ -3,17 +3,37 @@ package net.yiyuan.core.sys.enums;
 import com.baomidou.mybatisplus.annotation.EnumValue;
 import com.fasterxml.jackson.annotation.JsonValue;
 
+/**
+ * 菜单表-菜单状态枚举类
+ *
+ * @author 一源团队--花和尚
+ * @date 2023-07-13
+ */
 public enum SysMenuStatusEnum {
-  DISABLE(0, "停用"),
-  NORMAL(1, "正常");
-
-  @EnumValue // 使用注解的形式直接数据存放的值,这样类型更灵活，可以随意更换字段
-  private final int code;
-  @JsonValue // 标记响应json值
-  private final String desc;
-
-  SysMenuStatusEnum(int code, String desc) {
-    this.code = code;
-    this.desc = desc;
-  }
+    
+    /**
+     * 菜单状态#0=停用|1=正常
+     *
+     * @author 一源团队--花和尚
+     * @date 2023-07-13
+     * @see SysMenuStatusEnum
+     */
+    DISABLE(0, "停用" ),
+    /**
+     * 菜单状态#0=停用|1=正常
+     *
+     * @author 一源团队--花和尚
+     * @date 2023-07-13
+     * @see SysMenuStatusEnum
+     */
+    NORMAL(1, "正常" );
+    
+    @EnumValue
+    private final int code;
+    @JsonValue
+    private final String desc;
+    SysMenuStatusEnum(int code, String desc) {
+        this.code = code;
+        this.desc = desc;
+    }
 }

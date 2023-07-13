@@ -3,17 +3,37 @@ package net.yiyuan.core.sys.enums;
 import com.baomidou.mybatisplus.annotation.EnumValue;
 import com.fasterxml.jackson.annotation.JsonValue;
 
+/**
+ * 菜单表-简化路由枚举类
+ *
+ * @author 一源团队--花和尚
+ * @date 2023-07-13
+ */
 public enum SysMenuIsAlwaysShowEnum {
-  SHUT_DOWN(0, "关闭"),
-  OPEN(1, "开启");
-
-  @EnumValue // 使用注解的形式直接数据存放的值,这样类型更灵活，可以随意更换字段
-  private final int code;
-  @JsonValue // 标记响应json值
-  private final String desc;
-
-  SysMenuIsAlwaysShowEnum(int code, String desc) {
-    this.code = code;
-    this.desc = desc;
-  }
+    
+    /**
+     * 简化路由#0=关闭|1=开启#开启以后只有一个时候直接显示子菜单
+     *
+     * @author 一源团队--花和尚
+     * @date 2023-07-13
+     * @see SysMenuIsAlwaysShowEnum
+     */
+    SHUT_DOWN(0, "关闭" ),
+    /**
+     * 简化路由#0=关闭|1=开启#开启以后只有一个时候直接显示子菜单
+     *
+     * @author 一源团队--花和尚
+     * @date 2023-07-13
+     * @see SysMenuIsAlwaysShowEnum
+     */
+    OPEN(1, "开启" );
+    
+    @EnumValue
+    private final int code;
+    @JsonValue
+    private final String desc;
+    SysMenuIsAlwaysShowEnum(int code, String desc) {
+        this.code = code;
+        this.desc = desc;
+    }
 }

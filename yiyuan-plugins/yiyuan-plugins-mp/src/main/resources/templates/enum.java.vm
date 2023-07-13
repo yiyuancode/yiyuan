@@ -1,0 +1,36 @@
+package net.yiyuan.core.sys.enums;
+
+import com.baomidou.mybatisplus.annotation.EnumValue;
+import com.fasterxml.jackson.annotation.JsonValue;
+##使用vm模版生成，要使用相对路径的话 必须加.java.vm
+
+/**
+ * ${tableComment}-${columnComment}枚举类
+ *
+ * @author  ${author}
+ * @date ${date}
+ *
+ */
+public enum ${className} {
+
+    #foreach($columnsItem in ${tableColumns})
+            /**
+             * ${columnsItem.columnComment}
+             *
+             * @see ${className}
+             * @author  ${author}
+             * @date ${date}
+             */
+        ${columnsItem.filed}( ${columnsItem.code}, "${columnsItem.desc}")#if(!$foreach.last),#end#if($foreach.last);#end
+
+    #end
+
+    ${className}(int code,String desc){
+        this.code=code;
+        this.desc=desc;
+        }
+@EnumValue
+private final int code;
+@JsonValue
+private final String desc;
+        }
