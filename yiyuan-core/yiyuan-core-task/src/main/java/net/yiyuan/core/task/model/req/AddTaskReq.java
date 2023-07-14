@@ -18,9 +18,9 @@ public class AddTaskReq {
   /**
    * 任务类名
    *
-   * @see String
    * @author 一源团队--花和尚
    * @date 2023-06-23
+   * @see String
    */
   @NotEmpty(message = "任务类名不能为空")
   private String jobName;
@@ -28,9 +28,9 @@ public class AddTaskReq {
   /**
    * 任务组名
    *
-   * @see String
    * @author 一源团队--花和尚
    * @date 2023-06-23
+   * @see String
    */
   @NotEmpty(message = "任务组名不能为空")
   private String jobGroup;
@@ -38,9 +38,9 @@ public class AddTaskReq {
   /**
    * 任务执行表达式
    *
-   * @see String
    * @author 一源团队--花和尚
    * @date 2023-06-23
+   * @see String
    */
   @NotEmpty(message = "任务执行表达式不能为空")
   private String cronExpression;
@@ -48,9 +48,9 @@ public class AddTaskReq {
   /**
    * 任务开始时间
    *
-   * @see String
    * @author 一源团队--花和尚
    * @date 2023-06-23
+   * @see String
    */
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
@@ -59,9 +59,9 @@ public class AddTaskReq {
   /**
    * 任务结束时间
    *
-   * @see String
    * @author 一源团队--花和尚
    * @date 2023-06-23
+   * @see String
    */
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")

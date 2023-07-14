@@ -7,7 +7,7 @@ package net.yiyuan.common.model.vo;
  * @date 2023/06/23
  */
 public interface IErrorCode {
-    long getCode();
-    
-    String getMessage();
+  long getCode();
+
+  String getMessage();
 }

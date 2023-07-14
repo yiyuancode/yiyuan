@@ -21,7 +21,7 @@ public enum ${className} {
              * @author  ${author}
              * @date ${date}
              */
-        ${columnsItem.filed}( ${columnsItem.code}, "${columnsItem.desc}")#if(!$foreach.last),#end#if($foreach.last);#end
+        ${columnsItem.filed}( ${columnsItem.code},"${columnsItem.desc}")#if(!$foreach.last),#end#if($foreach.last);#end
 
     #end
 

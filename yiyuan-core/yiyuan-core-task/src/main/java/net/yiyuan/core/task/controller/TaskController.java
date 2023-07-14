@@ -23,6 +23,7 @@ import javax.annotation.Resource;
 @RestController
 public class TaskController {
   @Resource TaskService taskService;
+
   /**
    * 查询定时任务详情
    *

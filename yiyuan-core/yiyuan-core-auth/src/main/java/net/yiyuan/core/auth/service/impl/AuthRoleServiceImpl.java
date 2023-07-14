@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+
 /**
  * 角色管理Service层接口实现
  *
@@ -31,6 +32,7 @@ public class AuthRoleServiceImpl extends JoinServiceImpl<AuthRoleMapper, AuthRol
     implements AuthRoleService {
   @Resource private AuthRoleMapper authRoleMapper;
   @Resource private AuthRoleMenuService authRoleMenuService;
+
   /**
    * 角色列表(全部)
    *

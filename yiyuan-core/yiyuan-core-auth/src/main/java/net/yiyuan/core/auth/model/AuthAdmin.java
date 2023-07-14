@@ -8,6 +8,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
+
 /**
  * 用户管理实体
  *
@@ -29,36 +30,36 @@ public class AuthAdmin implements Serializable {
   /**
    * 用户名
    *
-   * @see String
    * @author 一源团队--花和尚
    * @date 2023-07-11
+   * @see String
    */
   private String username;
 
   /**
    * 密码
    *
-   * @see String
    * @author 一源团队--花和尚
    * @date 2023-07-11
+   * @see String
    */
   private String password;
 
   /**
    * 随机盐
    *
-   * @see String
    * @author 一源团队--花和尚
    * @date 2023-07-11
+   * @see String
    */
   private String salt;
 
   /**
    * 部门ID
    *
-   * @see Integer
    * @author 一源团队--花和尚
    * @date 2023-07-11
+   * @see Integer
    */
   private Integer deptId;
 
@@ -67,18 +68,18 @@ public class AuthAdmin implements Serializable {
   /**
    * 码云登录
    *
-   * @see String
    * @author 一源团队--花和尚
    * @date 2023-07-11
+   * @see String
    */
   private String giteeLogin;
 
   /**
    * 开源中国
    *
-   * @see String
    * @author 一源团队--花和尚
    * @date 2023-07-11
+   * @see String
    */
   private String oscId;
 
@@ -89,27 +90,27 @@ public class AuthAdmin implements Serializable {
   /**
    * 用户类型（0：平台账号，1：租户账号，2：租户C端账号）
    *
-   * @see Integer
    * @author 一源团队--花和尚
    * @date 2023-07-11
+   * @see Integer
    */
   private Integer platform;
 
   /**
    * 所属租户
    *
-   * @see String
    * @author 一源团队--花和尚
    * @date 2023-07-11
+   * @see String
    */
   private String tenantId;
 
   /**
    * 修改时间 DateTimeFormat//请求非body json时候 JsonFormat//请求为body json时候
    *
-   * @see Date
    * @author 一源团队--花和尚
    * @date 2023-07-11
+   * @see Date
    */
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
@@ -118,9 +119,9 @@ public class AuthAdmin implements Serializable {
   /**
    * 创建时间 DateTimeFormat//请求非body json时候 JsonFormat//请求为body json时候
    *
-   * @see Date
    * @author 一源团队--花和尚
    * @date 2023-07-11
+   * @see Date
    */
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")

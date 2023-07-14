@@ -16,44 +16,44 @@ public class GetUserInfoForAntdVo {
   /**
    * 用户名
    *
-   * @see String
    * @author 一源团队--花和尚
    * @date 2023-06-24
+   * @see String
    */
   private String username;
   /**
    * 角色列表
    *
-   * @see String
    * @author 一源团队--花和尚
    * @date 2023-06-24
+   * @see String
    */
   private List<AuthRole> roleList;
 
   /**
    * 异步路由
    *
-   * @see String
    * @author 一源团队--花和尚
    * @date 2023-06-24
+   * @see String
    */
   private List<SysMenuTreeForAntdVo> asyncRoutes;
 
   /**
    * 权限表达式（包含按钮表达式）
    *
-   * @see String
    * @author 一源团队--花和尚
    * @date 2023-06-24
+   * @see String
    */
   private List<PermissionsForAntdVo> permissions;
 
   /**
    * antd所需要角色数组（包含按钮表达式）
    *
-   * @see String
    * @author 一源团队--花和尚
    * @date 2023-06-24
+   * @see String
    */
   private List<AuthRole> roleAntdList;
 }

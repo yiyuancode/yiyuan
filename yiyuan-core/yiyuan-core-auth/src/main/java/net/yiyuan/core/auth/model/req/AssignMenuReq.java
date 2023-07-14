@@ -17,9 +17,9 @@ public class AssignMenuReq {
   /**
    * 角色Id
    *
-   * @see String
    * @author 一源团队--花和尚
    * @date 2023-06-23
+   * @see String
    */
   @NotBlank(message = "角色Id不能为空")
   private String roleId;
@@ -27,9 +27,9 @@ public class AssignMenuReq {
   /**
    * 菜单id List
    *
-   * @see List
    * @author 一源团队--花和尚
    * @date 2023-06-23
+   * @see List
    */
   @NotEmpty(message = "菜单id数组不能为空")
   private List<String> menuIdList;

@@ -12,63 +12,63 @@ public class TaskDeatilVo {
   /**
    * 调度名称
    *
-   * @see String
    * @author 一源团队--花和尚
    * @date 2023-07-06
+   * @see String
    */
   private String schedName;
 
   /**
    * 触发器的名字
    *
-   * @see String
    * @author 一源团队--花和尚
    * @date 2023-07-06
+   * @see String
    */
   private String triggerName;
 
   /**
    * 触发器所属组的名字
    *
-   * @see String
    * @author 一源团队--花和尚
    * @date 2023-07-06
+   * @see String
    */
   private String triggerGroup;
 
   /**
    * qrtz_job_details表job_name的外键
    *
-   * @see String
    * @author 一源团队--花和尚
    * @date 2023-07-06
+   * @see String
    */
   private String jobName;
 
   /**
    * qrtz_job_details表job_group的外键
    *
-   * @see String
    * @author 一源团队--花和尚
    * @date 2023-07-06
+   * @see String
    */
   private String jobGroup;
 
   /**
    * 相关介绍
    *
-   * @see String
    * @author 一源团队--花和尚
    * @date 2023-07-06
+   * @see String
    */
   private String description;
 
   /**
    * 上一次触发时间（毫秒）
    *
-   * @see Long
    * @author 一源团队--花和尚
    * @date 2023-07-06
+   * @see Long
    */
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
@@ -77,9 +77,9 @@ public class TaskDeatilVo {
   /**
    * 下一次触发时间（默认为-1表示不触发）
    *
-   * @see Long
    * @author 一源团队--花和尚
    * @date 2023-07-06
+   * @see Long
    */
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
@@ -88,36 +88,36 @@ public class TaskDeatilVo {
   /**
    * 优先级
    *
-   * @see Integer
    * @author 一源团队--花和尚
    * @date 2023-07-06
+   * @see Integer
    */
   private Integer priority;
 
   /**
    * 触发器状态(ACQUIRED=运行中,PAUSED=暂停中)
    *
-   * @see String
    * @author 一源团队--花和尚
    * @date 2023-07-06
+   * @see String
    */
   private String triggerState;
 
   /**
    * 触发器的类型
    *
-   * @see String
    * @author 一源团队--花和尚
    * @date 2023-07-06
+   * @see String
    */
   private String triggerType;
 
   /**
    * 开始时间
    *
-   * @see Long
    * @author 一源团队--花和尚
    * @date 2023-07-06
+   * @see Long
    */
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
@@ -126,9 +126,9 @@ public class TaskDeatilVo {
   /**
    * 结束时间
    *
-   * @see Long
    * @author 一源团队--花和尚
    * @date 2023-07-06
+   * @see Long
    */
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
@@ -137,18 +137,18 @@ public class TaskDeatilVo {
   /**
    * 日程表名称
    *
-   * @see String
    * @author 一源团队--花和尚
    * @date 2023-07-06
+   * @see String
    */
   private String calendarName;
 
   /**
    * 补偿执行的策略
    *
-   * @see Integer
    * @author 一源团队--花和尚
    * @date 2023-07-06
+   * @see Integer
    */
   private Integer misfireInstr;
 }

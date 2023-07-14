@@ -49,6 +49,7 @@ public class TaskService {
     BeanUtilsPlus.copy(details, result);
     return result;
   }
+
   /**
    * 添加定时任务
    *

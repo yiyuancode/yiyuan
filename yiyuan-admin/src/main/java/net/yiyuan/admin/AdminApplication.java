@@ -7,6 +7,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import java.net.UnknownHostException;
+
 // 开启注解事务
 @EnableTransactionManagement
 @SpringBootApplication(scanBasePackages = {"net.yiyuan"})

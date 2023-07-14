@@ -13,9 +13,9 @@ public class LoginVo {
   /**
    * 令牌
    *
-   * @see String
    * @author 一源团队-花和尚
    * @date 2023/06/24
+   * @see String
    */
   private String token;
 }

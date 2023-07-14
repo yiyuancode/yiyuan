@@ -17,9 +17,9 @@ public class AssignRoleReq {
   /**
    * 用户id
    *
-   * @see String
    * @author 一源团队--花和尚
    * @date 2023-06-23
+   * @see String
    */
   @NotBlank(message = "用户id不能为空")
   private String userId;
@@ -27,9 +27,9 @@ public class AssignRoleReq {
   /**
    * 角色id List
    *
-   * @see List
    * @author 一源团队--花和尚
    * @date 2023-06-23
+   * @see List
    */
   @NotEmpty(message = "角色数组不能为空")
   private List<String> rolesIdList;

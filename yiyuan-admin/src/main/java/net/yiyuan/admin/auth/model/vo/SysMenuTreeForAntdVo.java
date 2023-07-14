@@ -23,17 +23,17 @@ public class SysMenuTreeForAntdVo {
   /**
    * 上级菜单
    *
-   * @see String
    * @author 一源团队--花和尚
    * @date 2023-06-24
+   * @see String
    */
   private String parentId;
   /**
    * 菜单名称
    *
-   * @see String
    * @author 一源团队--花和尚
    * @date 2023-06-24
+   * @see String
    */
   private String router;
 
@@ -48,9 +48,9 @@ public class SysMenuTreeForAntdVo {
   /**
    * 子菜单
    *
-   * @see String
    * @author 一源团队--花和尚
    * @date 2023-06-24
+   * @see String
    */
   private List<SysMenuTreeForAntdVo> children;
 }

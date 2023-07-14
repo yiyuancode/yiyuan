@@ -31,6 +31,7 @@ import java.util.List;
 @RestController
 public class AuthController {
   @Resource private AuthService authService;
+
   /**
    * 登录
    *
@@ -45,6 +46,7 @@ public class AuthController {
   public CommonResult<LoginVo> login(@RequestBody @Validated LoginReq request) throws Exception {
     return CommonResult.success(authService.login(request));
   }
+
   /**
    * 注册
    *

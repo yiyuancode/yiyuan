@@ -15,9 +15,9 @@ public class LoginReq {
   /**
    * 用户名
    *
-   * @see String
    * @author 一源团队--花和尚
    * @date 2023-06-23
+   * @see String
    */
   @NotEmpty(message = "用户名不能为空")
   private String username;
@@ -25,9 +25,9 @@ public class LoginReq {
   /**
    * 密码
    *
-   * @see String
    * @author 一源团队--花和尚
    * @date 2023-06-23
+   * @see String
    */
   @NotEmpty(message = "密码不能为空")
   private String password;
