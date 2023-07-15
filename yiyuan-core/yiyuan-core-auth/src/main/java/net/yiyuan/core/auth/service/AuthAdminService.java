@@ -94,7 +94,6 @@ public interface AuthAdminService extends JoinIService<AuthAdmin> {
    * @date 2023-07-15
    */
   boolean add(AuthAdmin request) throws Exception;
-
   /**
    * 分配角色
    *

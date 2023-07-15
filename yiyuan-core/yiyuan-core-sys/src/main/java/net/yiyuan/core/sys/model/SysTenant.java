@@ -37,7 +37,7 @@ public class SysTenant implements Serializable {
    * @author 一源团队--花和尚
    * @date 2023-07-15
    */
-  @TableField(condition = CustomSqlCondition.LIKE_RIGHT)
+  @TableField(condition = CustomSqlCondition.LIKE)
   private String name;
 
   /**
@@ -47,7 +47,7 @@ public class SysTenant implements Serializable {
    * @author 一源团队--花和尚
    * @date 2023-07-15
    */
-  @TableField(condition = CustomSqlCondition.LIKE_RIGHT)
+  @TableField(condition = CustomSqlCondition.LIKE)
   private String code;
 
   /**
@@ -200,7 +200,7 @@ public class SysTenant implements Serializable {
    * @author 一源团队--花和尚
    * @date 2023-07-15
    */
-  @TableField(condition = CustomSqlCondition.LIKE_RIGHT)
+  @TableField(condition = CustomSqlCondition.LIKE)
   private String tenantId;
 
   /**
@@ -210,7 +210,7 @@ public class SysTenant implements Serializable {
    * @author 一源团队--花和尚
    * @date 2023-07-15
    */
-  @TableField(condition = CustomSqlCondition.LIKE_RIGHT)
+  @TableField(condition = CustomSqlCondition.LIKE)
   private String createUser;
 
   /**
@@ -220,6 +220,6 @@ public class SysTenant implements Serializable {
    * @author 一源团队--花和尚
    * @date 2023-07-15
    */
-  @TableField(condition = CustomSqlCondition.LIKE_RIGHT)
+  @TableField(condition = CustomSqlCondition.LIKE)
   private String updateUser;
 }

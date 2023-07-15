@@ -37,7 +37,7 @@ public class SysMenu implements Serializable {
    * @author 一源团队--花和尚
    * @date 2023-07-15
    */
-  @TableField(condition = CustomSqlCondition.LIKE_RIGHT)
+  @TableField(condition = CustomSqlCondition.LIKE)
   private String name;
 
   /**
@@ -47,7 +47,7 @@ public class SysMenu implements Serializable {
    * @author 一源团队--花和尚
    * @date 2023-07-15
    */
-  @TableField(condition = CustomSqlCondition.LIKE_RIGHT)
+  @TableField(condition = CustomSqlCondition.LIKE)
   private String permission;
 
   /**
@@ -66,7 +66,7 @@ public class SysMenu implements Serializable {
    * @author 一源团队--花和尚
    * @date 2023-07-15
    */
-  @TableField(condition = CustomSqlCondition.LIKE_RIGHT)
+  @TableField(condition = CustomSqlCondition.LIKE)
   private String icon;
 
   /**
@@ -76,7 +76,7 @@ public class SysMenu implements Serializable {
    * @author 一源团队--花和尚
    * @date 2023-07-15
    */
-  @TableField(condition = CustomSqlCondition.LIKE_RIGHT)
+  @TableField(condition = CustomSqlCondition.LIKE)
   private String activeMenu;
 
   /**
@@ -95,7 +95,7 @@ public class SysMenu implements Serializable {
    * @author 一源团队--花和尚
    * @date 2023-07-15
    */
-  @TableField(condition = CustomSqlCondition.LIKE_RIGHT)
+  @TableField(condition = CustomSqlCondition.LIKE)
   private String frameSrc;
 
   /**
@@ -167,7 +167,7 @@ public class SysMenu implements Serializable {
    * @author 一源团队--花和尚
    * @date 2023-07-15
    */
-  @TableField(condition = CustomSqlCondition.LIKE_RIGHT)
+  @TableField(condition = CustomSqlCondition.LIKE)
   private String routeComponent;
 
   /**
@@ -177,7 +177,7 @@ public class SysMenu implements Serializable {
    * @author 一源团队--花和尚
    * @date 2023-07-15
    */
-  @TableField(condition = CustomSqlCondition.LIKE_RIGHT)
+  @TableField(condition = CustomSqlCondition.LIKE)
   private String routePath;
 
   /**
@@ -187,7 +187,7 @@ public class SysMenu implements Serializable {
    * @author 一源团队--花和尚
    * @date 2023-07-15
    */
-  @TableField(condition = CustomSqlCondition.LIKE_RIGHT)
+  @TableField(condition = CustomSqlCondition.LIKE)
   private String routeName;
 
   /**
@@ -197,7 +197,7 @@ public class SysMenu implements Serializable {
    * @author 一源团队--花和尚
    * @date 2023-07-15
    */
-  @TableField(condition = CustomSqlCondition.LIKE_RIGHT)
+  @TableField(condition = CustomSqlCondition.LIKE)
   private String routeRedirect;
 
   /**
@@ -275,7 +275,7 @@ public class SysMenu implements Serializable {
    * @author 一源团队--花和尚
    * @date 2023-07-15
    */
-  @TableField(condition = CustomSqlCondition.LIKE_RIGHT)
+  @TableField(condition = CustomSqlCondition.LIKE)
   private String tenantId;
 
   /**
@@ -285,7 +285,7 @@ public class SysMenu implements Serializable {
    * @author 一源团队--花和尚
    * @date 2023-07-15
    */
-  @TableField(condition = CustomSqlCondition.LIKE_RIGHT)
+  @TableField(condition = CustomSqlCondition.LIKE)
   private String createUser;
 
   /**
@@ -295,6 +295,6 @@ public class SysMenu implements Serializable {
    * @author 一源团队--花和尚
    * @date 2023-07-15
    */
-  @TableField(condition = CustomSqlCondition.LIKE_RIGHT)
+  @TableField(condition = CustomSqlCondition.LIKE)
   private String updateUser;
 }

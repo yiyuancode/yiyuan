@@ -154,7 +154,6 @@ public class AuthAdminController {
       return CommonResult.failed("新增用户失败");
     }
   }
-
   /**
    * 分配角色
    *
@@ -172,7 +171,7 @@ public class AuthAdminController {
   public CommonResult<String> assignRole(@RequestBody @Validated AssignRoleReq request)
       throws Exception {
     if (authAdminService.assignRole(request)) {
-      return CommonResult.success(null, "分配角色成功");
+      return CommonResult.success("分配角色成功");
     } else {
       return CommonResult.failed("分配角色失败");
     }

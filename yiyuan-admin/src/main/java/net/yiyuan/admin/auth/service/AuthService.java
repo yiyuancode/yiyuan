@@ -206,7 +206,7 @@ public class AuthService {
         .end();
 
     List<AuthRole> authRoles = authAdminRoleService.joinList(wrapper, AuthRole.class);
-    if(StringUtilsPlus.isEmpty(authRoles)){
+    if (StringUtilsPlus.isEmpty(authRoles)) {
       throw new BusinessException(ResultCode.UNBOUND_ROLE);
     }
     // 转成antd前端所需要的角色数组格式
@@ -237,7 +237,7 @@ public class AuthService {
       wrapper2.in(AuthRoleMenu::getRoleId, authRolesIdsList);
       wrapper2.leftJoin(SysMenu.class, SysMenu::getId, AuthRoleMenu::getMenuId).selectAll().end();
       sysMenus = authRoleMenuService.joinList(wrapper2, SysMenu.class);
-      if(StringUtilsPlus.isEmpty(sysMenus)){
+      if (StringUtilsPlus.isEmpty(sysMenus)) {
         throw new BusinessException(ResultCode.UNBOUND_MENU);
       }
     } else {

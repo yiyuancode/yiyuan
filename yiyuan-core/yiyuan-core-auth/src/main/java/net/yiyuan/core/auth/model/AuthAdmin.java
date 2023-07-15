@@ -37,7 +37,7 @@ public class AuthAdmin implements Serializable {
    * @author 一源团队--花和尚
    * @date 2023-07-15
    */
-  @TableField(condition = CustomSqlCondition.LIKE_RIGHT)
+  @TableField(condition = CustomSqlCondition.LIKE)
   private String username;
 
   /**
@@ -47,7 +47,7 @@ public class AuthAdmin implements Serializable {
    * @author 一源团队--花和尚
    * @date 2023-07-15
    */
-  @TableField(condition = CustomSqlCondition.LIKE_RIGHT)
+  @TableField(condition = CustomSqlCondition.LIKE)
   private String password;
 
   /**
@@ -57,7 +57,7 @@ public class AuthAdmin implements Serializable {
    * @author 一源团队--花和尚
    * @date 2023-07-15
    */
-  @TableField(condition = CustomSqlCondition.LIKE_RIGHT)
+  @TableField(condition = CustomSqlCondition.LIKE)
   private String salt;
 
   /**
@@ -69,7 +69,7 @@ public class AuthAdmin implements Serializable {
    */
   private Integer deptId;
 
-  @TableField(condition = CustomSqlCondition.LIKE_RIGHT)
+  @TableField(condition = CustomSqlCondition.LIKE)
   private String miniOpenid;
 
   /**
@@ -79,7 +79,7 @@ public class AuthAdmin implements Serializable {
    * @author 一源团队--花和尚
    * @date 2023-07-15
    */
-  @TableField(condition = CustomSqlCondition.LIKE_RIGHT)
+  @TableField(condition = CustomSqlCondition.LIKE)
   private String giteeLogin;
 
   /**
@@ -89,13 +89,13 @@ public class AuthAdmin implements Serializable {
    * @author 一源团队--花和尚
    * @date 2023-07-15
    */
-  @TableField(condition = CustomSqlCondition.LIKE_RIGHT)
+  @TableField(condition = CustomSqlCondition.LIKE)
   private String oscId;
 
-  @TableField(condition = CustomSqlCondition.LIKE_RIGHT)
+  @TableField(condition = CustomSqlCondition.LIKE)
   private String wxOpenid;
 
-  @TableField(condition = CustomSqlCondition.LIKE_RIGHT)
+  @TableField(condition = CustomSqlCondition.LIKE)
   private String qqOpenid;
 
   /**
@@ -114,7 +114,7 @@ public class AuthAdmin implements Serializable {
    * @author 一源团队--花和尚
    * @date 2023-07-15
    */
-  @TableField(condition = CustomSqlCondition.LIKE_RIGHT)
+  @TableField(condition = CustomSqlCondition.LIKE)
   private String tenantId;
 
   /**
@@ -192,7 +192,7 @@ public class AuthAdmin implements Serializable {
    * @author 一源团队--花和尚
    * @date 2023-07-15
    */
-  @TableField(condition = CustomSqlCondition.LIKE_RIGHT)
+  @TableField(condition = CustomSqlCondition.LIKE)
   private String createUser;
 
   /**
@@ -202,6 +202,6 @@ public class AuthAdmin implements Serializable {
    * @author 一源团队--花和尚
    * @date 2023-07-15
    */
-  @TableField(condition = CustomSqlCondition.LIKE_RIGHT)
+  @TableField(condition = CustomSqlCondition.LIKE)
   private String updateUser;
 }

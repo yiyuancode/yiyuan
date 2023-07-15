@@ -63,13 +63,13 @@ private ${table.serviceName} ${serviceImplName};
  * @author  ${author}
  * @date ${date}
  */
-@Description("$!{cfg.apiMoudel}/$!{modeZhName}/查询$!{modeZhKongName}")
-@SaCheckPermission(value = {"${package.ModuleName}:${modeName}:query"}, orRole = "admin")
+@Description("$!{cfg.apiMoudel}/$!{modeZhName}/查询$!{modeZhKongName}" )
+@SaCheckPermission(value = {"${package.ModuleName}:${modeName}:query" }, orRole = "admin" )
     ##@ApiOperation(value = "$!{table.comment.replaceAll("表", "")}列表(全部)" )
-@GetMapping(value = "/${package.ModuleName}/${modeName}/list")
+@GetMapping(value = "/${package.ModuleName}/${modeName}/list" )
 @ResponseBody
 public CommonResult<List<${table.entityName}>>list( ${table.entityName} request)throws Exception{
-        return CommonResult.success(${serviceImplName}.list(request),"查询$!{table.comment.replaceAll("表", "")}列表成功");
+        return CommonResult.success(${serviceImplName}.list(request),"查询$!{table.comment.replaceAll("表", "")}列表成功" );
         }
 
 
@@ -81,17 +81,17 @@ public CommonResult<List<${table.entityName}>>list( ${table.entityName} request)
  * @author  ${author}
  * @date ${date}
  */
-@Description("$!{cfg.apiMoudel}/$!{modeZhName}/查询$!{modeZhKongName}")
-@SaCheckPermission(value = {"${package.ModuleName}:${modeName}:query"}, orRole = "admin")
-@GetMapping(value = "/${package.ModuleName}/${modeName}/pages")
+@Description("$!{cfg.apiMoudel}/$!{modeZhName}/查询$!{modeZhKongName}" )
+@SaCheckPermission(value = {"${package.ModuleName}:${modeName}:query" }, orRole = "admin" )
+@GetMapping(value = "/${package.ModuleName}/${modeName}/pages" )
 @ResponseBody
 public CommonResult<Page<${table.entityName}>>pages(
     ${table.entityName} request,
-@RequestParam(defaultValue = "10") Integer pageSize,
-@RequestParam(defaultValue = "1") Integer pageNum
+@RequestParam(defaultValue = "10" ) Integer pageSize,
+@RequestParam(defaultValue = "1" ) Integer pageNum
         )throws Exception{
         return CommonResult.success(${serviceImplName}.pages(request,pageSize,pageNum),"分页查询$!{table.comment.replaceAll(
-        "表", "")}成功");
+        "表", "")}成功" );
         }
 
 /**
@@ -102,12 +102,12 @@ public CommonResult<Page<${table.entityName}>>pages(
  * @author  ${author}
  * @date ${date}
  */
-@Description("$!{cfg.apiMoudel}/$!{modeZhName}/查询$!{modeZhKongName}")
-@SaCheckPermission(value = {"${package.ModuleName}:${modeName}:query"}, orRole = "admin")
-@GetMapping(value = "/${package.ModuleName}/${modeName}/details/{id}")
+@Description("$!{cfg.apiMoudel}/$!{modeZhName}/查询$!{modeZhKongName}" )
+@SaCheckPermission(value = {"${package.ModuleName}:${modeName}:query" }, orRole = "admin" )
+@GetMapping(value = "/${package.ModuleName}/${modeName}/details/{id}" )
 @ResponseBody
-public CommonResult<${table.entityName}> details(@PathVariable("id") @Validated({NotEmpty.class}) String id)throws Exception{
-        return CommonResult.success(${serviceImplName}.details(id),"查询$!{table.comment.replaceAll("表", "")}详情成功");
+public CommonResult<${table.entityName}> details(@PathVariable("id" ) @Validated({NotEmpty.class}) String id)throws Exception{
+        return CommonResult.success(${serviceImplName}.details(id),"查询$!{table.comment.replaceAll("表", "")}详情成功" );
         }
 
 
@@ -119,15 +119,15 @@ public CommonResult<${table.entityName}> details(@PathVariable("id") @Validated(
  * @author  ${author}
  * @date ${date}
  */
-@Description("$!{cfg.apiMoudel}/$!{modeZhName}/删除$!{modeZhKongName}")
-@SaCheckPermission(value = {"${package.ModuleName}:${modeName}:delete"}, orRole = "admin")
-@PostMapping(value = "/${package.ModuleName}/${modeName}/delete")
+@Description("$!{cfg.apiMoudel}/$!{modeZhName}/删除$!{modeZhKongName}" )
+@SaCheckPermission(value = {"${package.ModuleName}:${modeName}:delete" }, orRole = "admin" )
+@PostMapping(value = "/${package.ModuleName}/${modeName}/delete" )
 @ResponseBody
 public CommonResult<String> delete(@RequestParam @Validated({NotEmpty.class}) String ids)throws Exception{
         if(${serviceImplName}.delete(ids)){
-        return CommonResult.success(null,"删除$!{table.comment.replaceAll("表", "")}成功");
+        return CommonResult.success(null,"删除$!{table.comment.replaceAll("表", "")}成功" );
         }else{
-        return CommonResult.failed("删除$!{table.comment.replaceAll("表", "")}失败");
+        return CommonResult.failed("删除$!{table.comment.replaceAll("表", "")}失败" );
         }
         }
 /**
@@ -138,15 +138,15 @@ public CommonResult<String> delete(@RequestParam @Validated({NotEmpty.class}) St
  * @author  ${author}
  * @date ${date}
  */
-@Description("$!{cfg.apiMoudel}/$!{modeZhName}/编辑$!{modeZhKongName}")
-@SaCheckPermission(value = {"${package.ModuleName}:${modeName}:edit"}, orRole = "admin")
-@PostMapping(value = "/${package.ModuleName}/${modeName}/edit")
+@Description("$!{cfg.apiMoudel}/$!{modeZhName}/编辑$!{modeZhKongName}" )
+@SaCheckPermission(value = {"${package.ModuleName}:${modeName}:edit" }, orRole = "admin" )
+@PostMapping(value = "/${package.ModuleName}/${modeName}/edit" )
 @ResponseBody
 public CommonResult<String> edit(@RequestBody @Validated   ${table.entityName} request)throws Exception{
         if(${serviceImplName}.edit(request)){
-        return CommonResult.success(null,"修改$!{table.comment.replaceAll("表", "")}成功");
+        return CommonResult.success(null,"修改$!{table.comment.replaceAll("表", "")}成功" );
         }else{
-        return CommonResult.failed("修改$!{table.comment.replaceAll("表", "")}失败");
+        return CommonResult.failed("修改$!{table.comment.replaceAll("表", "")}失败" );
         }
         }
 
@@ -159,15 +159,15 @@ public CommonResult<String> edit(@RequestBody @Validated   ${table.entityName} r
  * @author  ${author}
  * @date ${date}
  */
-@Description("$!{cfg.apiMoudel}/$!{modeZhName}/新增$!{modeZhKongName}")
-@SaCheckPermission(value = {"${package.ModuleName}:${modeName}:add"}, orRole = "admin")
-@PostMapping(value = "/${package.ModuleName}/${modeName}/add")
+@Description("$!{cfg.apiMoudel}/$!{modeZhName}/新增$!{modeZhKongName}" )
+@SaCheckPermission(value = {"${package.ModuleName}:${modeName}:add" }, orRole = "admin" )
+@PostMapping(value = "/${package.ModuleName}/${modeName}/add" )
 @ResponseBody
 public CommonResult<String> add(@RequestBody @Validated  ${table.entityName} request)throws Exception{
         if(${serviceImplName}.add(request)){
-        return CommonResult.success(null,"新增$!{table.comment.replaceAll("表", "")}成功");
+        return CommonResult.success(null,"新增$!{table.comment.replaceAll("表", "")}成功" );
         }else{
-        return CommonResult.failed("新增$!{table.comment.replaceAll("表", "")}失败");
+        return CommonResult.failed("新增$!{table.comment.replaceAll("表", "")}失败" );
         }
         }
         }

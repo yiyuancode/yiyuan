@@ -65,6 +65,7 @@ public class AuthRoleMenuServiceImpl extends JoinServiceImpl<AuthRoleMenuMapper,
   @Override
   public AuthRoleMenu details(String id) throws Exception {
     AuthRoleMenu query = new AuthRoleMenu();
+    query.setId(id);
     JoinLambdaWrapper<AuthRoleMenu> wrapper = new JoinLambdaWrapper<>(query);
     return joinGetOne(wrapper, AuthRoleMenu.class);
   }
