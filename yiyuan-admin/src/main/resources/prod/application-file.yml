@@ -1,0 +1,19 @@
+file:
+  server:
+    common:
+      activeTypeName: MinIo
+    minio:
+      enabled: true
+      endpoint: http://43.154.183.115:40036
+      accessKey: admin
+      secretKey: 123/456/789
+    local:
+      rootPath: D:/files/yiyuan
+    huawei:
+      endabled: false
+      endpoint:
+      accessKey:
+      secretKey:
+    fastdfs:
+      enabled: false
+

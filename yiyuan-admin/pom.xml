@@ -37,7 +37,11 @@
             <artifactId>yiyuan-core-task</artifactId>
             <version>${revision}</version>
         </dependency>
-
+        <dependency>
+            <groupId>net.yiyuan</groupId>
+            <artifactId>yiyuan-core-file</artifactId>
+            <version>${revision}</version>
+        </dependency>
     </dependencies>
 
     <build>

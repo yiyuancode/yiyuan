@@ -25,7 +25,6 @@
         <module>yiyuan-admin</module>
         <module>yiyuan-app</module>
 
-
     </modules>
     <!--5:新增项目所有插件依赖版本号-->
     <properties>
@@ -351,7 +350,11 @@
                 <!-- 注意这里是import -->
                 <scope>import</scope>
             </dependency>
-
+            <dependency>
+                <groupId>com.squareup.okhttp3</groupId>
+                <artifactId>okhttp</artifactId>
+                <version>3.14.9</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
     <build>
