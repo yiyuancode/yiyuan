@@ -19,7 +19,7 @@ import java.util.List;
  * 菜单管理
  *
  * @author 一源团队--花和尚
- * @date 2023-07-14
+ * @date 2023-07-15
  * @module 系统管理
  * @folder 系统管理/菜单管理
  */
@@ -35,7 +35,7 @@ public class SysMenuController {
    * @param request 菜单实体
    * @return {@link CommonResult<List<SysMenu>>}
    * @author 一源团队--花和尚
-   * @date 2023-07-14
+   * @date 2023-07-15
    */
   @Description("系统管理/菜单管理/查询菜单")
   @SaCheckPermission(
@@ -44,7 +44,7 @@ public class SysMenuController {
   @GetMapping(value = "/sys/menu/list")
   @ResponseBody
   public CommonResult<List<SysMenu>> list(SysMenu request) throws Exception {
-    return CommonResult.success(sysMenuService.list(request));
+    return CommonResult.success(sysMenuService.list(request), "查询菜单列表成功");
   }
 
   /**
@@ -53,7 +53,7 @@ public class SysMenuController {
    * @param request 菜单实体
    * @return {@link CommonResult<Page<SysMenu>>}
    * @author 一源团队--花和尚
-   * @date 2023-07-14
+   * @date 2023-07-15
    */
   @Description("系统管理/菜单管理/查询菜单")
   @SaCheckPermission(
@@ -66,7 +66,7 @@ public class SysMenuController {
       @RequestParam(defaultValue = "10") Integer pageSize,
       @RequestParam(defaultValue = "1") Integer pageNum)
       throws Exception {
-    return CommonResult.success(sysMenuService.pages(request, pageSize, pageNum));
+    return CommonResult.success(sysMenuService.pages(request, pageSize, pageNum), "分页查询菜单成功");
   }
 
   /**
@@ -75,7 +75,7 @@ public class SysMenuController {
    * @param id 菜单id
    * @return {@link CommonResult<SysMenu>}
    * @author 一源团队--花和尚
-   * @date 2023-07-14
+   * @date 2023-07-15
    */
   @Description("系统管理/菜单管理/查询菜单")
   @SaCheckPermission(
@@ -85,7 +85,7 @@ public class SysMenuController {
   @ResponseBody
   public CommonResult<SysMenu> details(@PathVariable("id") @Validated({NotEmpty.class}) String id)
       throws Exception {
-    return CommonResult.success(sysMenuService.details(id));
+    return CommonResult.success(sysMenuService.details(id), "查询菜单详情成功");
   }
 
   /**
@@ -94,7 +94,7 @@ public class SysMenuController {
    * @param ids 菜单id(多个逗号分割)
    * @return {@link CommonResult<String>}
    * @author 一源团队--花和尚
-   * @date 2023-07-14
+   * @date 2023-07-15
    */
   @Description("系统管理/菜单管理/删除菜单")
   @SaCheckPermission(
@@ -105,7 +105,7 @@ public class SysMenuController {
   public CommonResult<String> delete(@RequestParam @Validated({NotEmpty.class}) String ids)
       throws Exception {
     if (sysMenuService.delete(ids)) {
-      return CommonResult.success("删除菜单成功");
+      return CommonResult.success(null, "删除菜单成功");
     } else {
       return CommonResult.failed("删除菜单失败");
     }
@@ -116,7 +116,7 @@ public class SysMenuController {
    * @param request 菜单实体
    * @return {@link CommonResult<String>}
    * @author 一源团队--花和尚
-   * @date 2023-07-14
+   * @date 2023-07-15
    */
   @Description("系统管理/菜单管理/编辑菜单")
   @SaCheckPermission(
@@ -126,7 +126,7 @@ public class SysMenuController {
   @ResponseBody
   public CommonResult<String> edit(@RequestBody @Validated SysMenu request) throws Exception {
     if (sysMenuService.edit(request)) {
-      return CommonResult.success("修改菜单成功");
+      return CommonResult.success(null, "修改菜单成功");
     } else {
       return CommonResult.failed("修改菜单失败");
     }
@@ -138,7 +138,7 @@ public class SysMenuController {
    * @param request 菜单实体
    * @return {@link CommonResult<String>}
    * @author 一源团队--花和尚
-   * @date 2023-07-14
+   * @date 2023-07-15
    */
   @Description("系统管理/菜单管理/新增菜单")
   @SaCheckPermission(
@@ -148,7 +148,7 @@ public class SysMenuController {
   @ResponseBody
   public CommonResult<String> add(@RequestBody @Validated SysMenu request) throws Exception {
     if (sysMenuService.add(request)) {
-      return CommonResult.success("新增菜单成功");
+      return CommonResult.success(null, "新增菜单成功");
     } else {
       return CommonResult.failed("新增菜单失败");
     }

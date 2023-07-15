@@ -5,12 +5,11 @@ import icu.mhb.mybatisplus.plugln.base.service.JoinIService;
 import net.yiyuan.core.auth.model.AuthAdminRole;
 
 import java.util.List;
-
 /**
  * 用户_角色管理Service层接口
  *
  * @author 一源团队--花和尚
- * @date 2023-07-11
+ * @date 2023-07-15
  */
 public interface AuthAdminRoleService extends JoinIService<AuthAdminRole> {
 
@@ -20,7 +19,7 @@ public interface AuthAdminRoleService extends JoinIService<AuthAdminRole> {
    * @param request 用户_角色实体
    * @return {@link List}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-15
    */
   List<AuthAdminRole> list(AuthAdminRole request) throws Exception;
 
@@ -30,7 +29,7 @@ public interface AuthAdminRoleService extends JoinIService<AuthAdminRole> {
    * @param request 用户_角色实体
    * @return {@link Page}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-15
    */
   Page<AuthAdminRole> pages(AuthAdminRole request, Integer pageSize, Integer pageNum)
       throws Exception;
@@ -41,7 +40,7 @@ public interface AuthAdminRoleService extends JoinIService<AuthAdminRole> {
    * @param id 用户_角色id
    * @return {@link AuthAdminRole}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-15
    */
   AuthAdminRole details(String id) throws Exception;
 
@@ -51,7 +50,7 @@ public interface AuthAdminRoleService extends JoinIService<AuthAdminRole> {
    * @param request 用户_角色实体
    * @return {@link AuthAdminRole}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-15
    */
   AuthAdminRole details(AuthAdminRole request) throws Exception;
 
@@ -61,7 +60,7 @@ public interface AuthAdminRoleService extends JoinIService<AuthAdminRole> {
    * @param ids 用户_角色id(多个逗号分割)
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-15
    */
   boolean delete(String ids) throws Exception;
 
@@ -71,7 +70,7 @@ public interface AuthAdminRoleService extends JoinIService<AuthAdminRole> {
    * @param request 用户_角色实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-15
    */
   boolean delete(AuthAdminRole request) throws Exception;
 
@@ -81,7 +80,7 @@ public interface AuthAdminRoleService extends JoinIService<AuthAdminRole> {
    * @param request 用户_角色实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-15
    */
   boolean edit(AuthAdminRole request) throws Exception;
 
@@ -91,7 +90,7 @@ public interface AuthAdminRoleService extends JoinIService<AuthAdminRole> {
    * @param request 用户_角色实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-15
    */
   boolean add(AuthAdminRole request) throws Exception;
 }

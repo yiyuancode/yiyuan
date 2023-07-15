@@ -15,14 +15,12 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
-
 /**
  * 用户管理Service层接口实现
  *
  * @author 一源团队--花和尚
- * @date 2023-07-11
+ * @date 2023-07-15
  */
 @Slf4j
 @Service
@@ -30,18 +28,16 @@ public class AuthAdminServiceImpl extends JoinServiceImpl<AuthAdminMapper, AuthA
     implements AuthAdminService {
   @Resource private AuthAdminMapper authAdminMapper;
   @Resource private AuthAdminRoleService authAdminRoleService;
-
   /**
    * 用户列表(全部)
    *
    * @param request 用户实体
    * @return {@link List}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-15
    */
   @Override
   public List<AuthAdmin> list(AuthAdmin request) throws Exception {
-    AuthAdmin query = new AuthAdmin();
     JoinLambdaWrapper<AuthAdmin> wrapper = new JoinLambdaWrapper<>(request);
     return joinList(wrapper, AuthAdmin.class);
   }
@@ -52,15 +48,12 @@ public class AuthAdminServiceImpl extends JoinServiceImpl<AuthAdminMapper, AuthA
    * @param request 用户实体
    * @return {@link Page}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-15
    */
   @Override
   public Page<AuthAdmin> pages(AuthAdmin request, Integer pageSize, Integer pageNum)
       throws Exception {
-    AuthAdmin query = new AuthAdmin();
     JoinLambdaWrapper<AuthAdmin> wrapper = new JoinLambdaWrapper<>(request);
-    wrapper.orderByDesc(AuthAdmin::getCreatedTime);
-
     Page<AuthAdmin> page = joinPage(new Page<>(pageNum, pageSize), wrapper, AuthAdmin.class);
     return page;
   }
@@ -71,7 +64,7 @@ public class AuthAdminServiceImpl extends JoinServiceImpl<AuthAdminMapper, AuthA
    * @param id 用户id
    * @return {@link AuthAdmin}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-15
    */
   @Override
   public AuthAdmin details(String id) throws Exception {
@@ -87,7 +80,7 @@ public class AuthAdminServiceImpl extends JoinServiceImpl<AuthAdminMapper, AuthA
    * @param request 用户实体
    * @return {@link AuthAdmin}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-15
    */
   @Override
   public AuthAdmin details(AuthAdmin request) throws Exception {
@@ -101,7 +94,7 @@ public class AuthAdminServiceImpl extends JoinServiceImpl<AuthAdminMapper, AuthA
    * @param ids 用户id(多个逗号分割)
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-15
    */
   @Override
   public boolean delete(String ids) throws Exception {
@@ -114,7 +107,7 @@ public class AuthAdminServiceImpl extends JoinServiceImpl<AuthAdminMapper, AuthA
    * @param request 用户实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-15
    */
   @Override
   public boolean delete(AuthAdmin request) throws Exception {
@@ -128,11 +121,10 @@ public class AuthAdminServiceImpl extends JoinServiceImpl<AuthAdminMapper, AuthA
    * @param request 用户实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-15
    */
   @Override
   public boolean edit(AuthAdmin request) throws Exception {
-    request.setUpdatedTime(new Date());
     return updateById(request);
   }
 
@@ -142,12 +134,10 @@ public class AuthAdminServiceImpl extends JoinServiceImpl<AuthAdminMapper, AuthA
    * @param request 用户实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-15
    */
   @Override
   public boolean add(AuthAdmin request) throws Exception {
-    request.setCreatedTime(new Date());
-    request.setUpdatedTime(new Date());
     return save(request);
   }
 

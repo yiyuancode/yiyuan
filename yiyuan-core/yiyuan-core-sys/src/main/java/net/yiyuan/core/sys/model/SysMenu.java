@@ -1,5 +1,6 @@
 package net.yiyuan.core.sys.model;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -15,7 +16,7 @@ import java.util.Date;
  * 菜单管理实体
  *
  * @author 一源团队--花和尚
- * @date 2023-07-14
+ * @date 2023-07-15
  */
 @Data
 public class SysMenu implements Serializable {
@@ -24,7 +25,7 @@ public class SysMenu implements Serializable {
   /**
    * 菜单ID
    *
-   * @date 2023-07-14
+   * @date 2023-07-15
    */
   @TableId(value = "id", type = IdType.ASSIGN_UUID)
   private String id;
@@ -34,7 +35,7 @@ public class SysMenu implements Serializable {
    *
    * @see String
    * @author 一源团队--花和尚
-   * @date 2023-07-14
+   * @date 2023-07-15
    */
   @TableField(condition = CustomSqlCondition.LIKE_RIGHT)
   private String name;
@@ -44,7 +45,7 @@ public class SysMenu implements Serializable {
    *
    * @see String
    * @author 一源团队--花和尚
-   * @date 2023-07-14
+   * @date 2023-07-15
    */
   @TableField(condition = CustomSqlCondition.LIKE_RIGHT)
   private String permission;
@@ -54,7 +55,7 @@ public class SysMenu implements Serializable {
    *
    * @see String
    * @author 一源团队--花和尚
-   * @date 2023-07-14
+   * @date 2023-07-15
    */
   private String parentId;
 
@@ -63,7 +64,7 @@ public class SysMenu implements Serializable {
    *
    * @see String
    * @author 一源团队--花和尚
-   * @date 2023-07-14
+   * @date 2023-07-15
    */
   @TableField(condition = CustomSqlCondition.LIKE_RIGHT)
   private String icon;
@@ -73,7 +74,7 @@ public class SysMenu implements Serializable {
    *
    * @see String
    * @author 一源团队--花和尚
-   * @date 2023-07-14
+   * @date 2023-07-15
    */
   @TableField(condition = CustomSqlCondition.LIKE_RIGHT)
   private String activeMenu;
@@ -83,7 +84,7 @@ public class SysMenu implements Serializable {
    *
    * @see Integer
    * @author 一源团队--花和尚
-   * @date 2023-07-14
+   * @date 2023-07-15
    */
   private SysMenuIsFrameEnum isFrame;
 
@@ -92,7 +93,7 @@ public class SysMenu implements Serializable {
    *
    * @see String
    * @author 一源团队--花和尚
-   * @date 2023-07-14
+   * @date 2023-07-15
    */
   @TableField(condition = CustomSqlCondition.LIKE_RIGHT)
   private String frameSrc;
@@ -102,7 +103,7 @@ public class SysMenu implements Serializable {
    *
    * @see Integer
    * @author 一源团队--花和尚
-   * @date 2023-07-14
+   * @date 2023-07-15
    */
   private SysMenuIsAffixEnum isAffix;
 
@@ -111,7 +112,7 @@ public class SysMenu implements Serializable {
    *
    * @see Integer
    * @author 一源团队--花和尚
-   * @date 2023-07-14
+   * @date 2023-07-15
    */
   private SysMenuStatusEnum status;
 
@@ -120,7 +121,7 @@ public class SysMenu implements Serializable {
    *
    * @see Integer
    * @author 一源团队--花和尚
-   * @date 2023-07-14
+   * @date 2023-07-15
    */
   private SysMenuIsAlwaysShowEnum isAlwaysShow;
 
@@ -129,7 +130,7 @@ public class SysMenu implements Serializable {
    *
    * @see Integer
    * @author 一源团队--花和尚
-   * @date 2023-07-14
+   * @date 2023-07-15
    */
 
   /**
@@ -137,7 +138,7 @@ public class SysMenu implements Serializable {
    *
    * @see Integer
    * @author 一源团队--花和尚
-   * @date 2023-07-14
+   * @date 2023-07-15
    */
   private SysMenuTypeEnum type;
 
@@ -146,7 +147,7 @@ public class SysMenu implements Serializable {
    *
    * @see Integer
    * @author 一源团队--花和尚
-   * @date 2023-07-14
+   * @date 2023-07-15
    */
   private SysMenuOpenTypeEnum openType;
 
@@ -155,7 +156,7 @@ public class SysMenu implements Serializable {
    *
    * @see Integer
    * @author 一源团队--花和尚
-   * @date 2023-07-14
+   * @date 2023-07-15
    */
   private Integer sort;
 
@@ -164,7 +165,7 @@ public class SysMenu implements Serializable {
    *
    * @see String
    * @author 一源团队--花和尚
-   * @date 2023-07-14
+   * @date 2023-07-15
    */
   @TableField(condition = CustomSqlCondition.LIKE_RIGHT)
   private String routeComponent;
@@ -174,7 +175,7 @@ public class SysMenu implements Serializable {
    *
    * @see String
    * @author 一源团队--花和尚
-   * @date 2023-07-14
+   * @date 2023-07-15
    */
   @TableField(condition = CustomSqlCondition.LIKE_RIGHT)
   private String routePath;
@@ -184,7 +185,7 @@ public class SysMenu implements Serializable {
    *
    * @see String
    * @author 一源团队--花和尚
-   * @date 2023-07-14
+   * @date 2023-07-15
    */
   @TableField(condition = CustomSqlCondition.LIKE_RIGHT)
   private String routeName;
@@ -194,7 +195,7 @@ public class SysMenu implements Serializable {
    *
    * @see String
    * @author 一源团队--花和尚
-   * @date 2023-07-14
+   * @date 2023-07-15
    */
   @TableField(condition = CustomSqlCondition.LIKE_RIGHT)
   private String routeRedirect;
@@ -204,74 +205,96 @@ public class SysMenu implements Serializable {
    *
    * @see Date
    * @author 一源团队--花和尚
-   * @date 2023-07-14
+   * @date 2023-07-15
    */
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-  private Date createdTime;
+  @TableField(fill = FieldFill.INSERT)
+  private Date createTime;
   /**
    * 创建时间(查询开始时间)
    *
    * @see Date
    * @author 一源团队--花和尚
-   * @date 2023-07-14
+   * @date 2023-07-15
    */
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
   @TableField(value = "created_time", condition = CustomSqlCondition.GET_EQUAL, select = false)
-  private Date createdTimeGte;
+  private Date createTimeGte;
   /**
    * 创建时间(查询结束时间)
    *
    * @see Date
    * @author 一源团队--花和尚
-   * @date 2023-07-14
+   * @date 2023-07-15
    */
   @TableField(value = "created_time", condition = CustomSqlCondition.LT_EQUAL, select = false)
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-  private Date createdTimeLt;
+  private Date createTimeLt;
 
   /**
    * 修改时间
    *
    * @see Date
    * @author 一源团队--花和尚
-   * @date 2023-07-14
+   * @date 2023-07-15
    */
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-  private Date updatedTime;
+  @TableField(fill = FieldFill.INSERT_UPDATE)
+  private Date updateTime;
   /**
    * 修改时间(查询开始时间)
    *
    * @see Date
    * @author 一源团队--花和尚
-   * @date 2023-07-14
+   * @date 2023-07-15
    */
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
   @TableField(value = "created_time", condition = CustomSqlCondition.GET_EQUAL, select = false)
-  private Date updatedTimeGte;
+  private Date updateTimeGte;
   /**
    * 修改时间(查询结束时间)
    *
    * @see Date
    * @author 一源团队--花和尚
-   * @date 2023-07-14
+   * @date 2023-07-15
    */
   @TableField(value = "created_time", condition = CustomSqlCondition.LT_EQUAL, select = false)
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-  private Date updatedTimeLt;
+  private Date updateTimeLt;
 
   /**
    * 租户id
    *
    * @see String
    * @author 一源团队--花和尚
-   * @date 2023-07-14
+   * @date 2023-07-15
    */
   @TableField(condition = CustomSqlCondition.LIKE_RIGHT)
   private String tenantId;
+
+  /**
+   * 创建人
+   *
+   * @see String
+   * @author 一源团队--花和尚
+   * @date 2023-07-15
+   */
+  @TableField(condition = CustomSqlCondition.LIKE_RIGHT)
+  private String createUser;
+
+  /**
+   * 修改人
+   *
+   * @see String
+   * @author 一源团队--花和尚
+   * @date 2023-07-15
+   */
+  @TableField(condition = CustomSqlCondition.LIKE_RIGHT)
+  private String updateUser;
 }

@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
  * 菜单表-简化路由枚举类
  *
  * @author 一源团队--花和尚
- * @date 2023-07-14
+ * @date 2023-07-15
  */
 public enum SysMenuIsAlwaysShowEnum {
 
@@ -16,7 +16,7 @@ public enum SysMenuIsAlwaysShowEnum {
    *
    * @see SysMenuIsAlwaysShowEnum
    * @author 一源团队--花和尚
-   * @date 2023-07-14
+   * @date 2023-07-15
    */
   SHUT_DOWN(0, "关闭"),
   /**
@@ -24,12 +24,13 @@ public enum SysMenuIsAlwaysShowEnum {
    *
    * @see SysMenuIsAlwaysShowEnum
    * @author 一源团队--花和尚
-   * @date 2023-07-14
+   * @date 2023-07-15
    */
   OPEN(1, "开启");
 
   @EnumValue private final int code;
   @JsonValue private final String desc;
+
   SysMenuIsAlwaysShowEnum(int code, String desc) {
     this.code = code;
     this.desc = desc;

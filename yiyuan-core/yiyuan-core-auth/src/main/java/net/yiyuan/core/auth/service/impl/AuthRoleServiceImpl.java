@@ -1,7 +1,5 @@
 package net.yiyuan.core.auth.service.impl;
 
-import cn.dev33.satoken.context.SaHolder;
-import cn.dev33.satoken.context.model.SaRequest;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import icu.mhb.mybatisplus.plugln.base.service.impl.JoinServiceImpl;
 import icu.mhb.mybatisplus.plugln.core.JoinLambdaWrapper;
@@ -17,14 +15,12 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
-
 /**
  * 角色管理Service层接口实现
  *
  * @author 一源团队--花和尚
- * @date 2023-07-11
+ * @date 2023-07-15
  */
 @Slf4j
 @Service
@@ -32,18 +28,16 @@ public class AuthRoleServiceImpl extends JoinServiceImpl<AuthRoleMapper, AuthRol
     implements AuthRoleService {
   @Resource private AuthRoleMapper authRoleMapper;
   @Resource private AuthRoleMenuService authRoleMenuService;
-
   /**
    * 角色列表(全部)
    *
    * @param request 角色实体
    * @return {@link List}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-15
    */
   @Override
   public List<AuthRole> list(AuthRole request) throws Exception {
-    AuthRole query = new AuthRole();
     JoinLambdaWrapper<AuthRole> wrapper = new JoinLambdaWrapper<>(request);
     return joinList(wrapper, AuthRole.class);
   }
@@ -54,15 +48,12 @@ public class AuthRoleServiceImpl extends JoinServiceImpl<AuthRoleMapper, AuthRol
    * @param request 角色实体
    * @return {@link Page}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-15
    */
   @Override
   public Page<AuthRole> pages(AuthRole request, Integer pageSize, Integer pageNum)
       throws Exception {
-    AuthRole query = new AuthRole();
     JoinLambdaWrapper<AuthRole> wrapper = new JoinLambdaWrapper<>(request);
-    wrapper.orderByDesc(AuthRole::getCreatedTime);
-
     Page<AuthRole> page = joinPage(new Page<>(pageNum, pageSize), wrapper, AuthRole.class);
     return page;
   }
@@ -73,7 +64,7 @@ public class AuthRoleServiceImpl extends JoinServiceImpl<AuthRoleMapper, AuthRol
    * @param id 角色id
    * @return {@link AuthRole}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-15
    */
   @Override
   public AuthRole details(String id) throws Exception {
@@ -89,7 +80,7 @@ public class AuthRoleServiceImpl extends JoinServiceImpl<AuthRoleMapper, AuthRol
    * @param request 角色实体
    * @return {@link AuthRole}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-15
    */
   @Override
   public AuthRole details(AuthRole request) throws Exception {
@@ -103,7 +94,7 @@ public class AuthRoleServiceImpl extends JoinServiceImpl<AuthRoleMapper, AuthRol
    * @param ids 角色id(多个逗号分割)
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-15
    */
   @Override
   public boolean delete(String ids) throws Exception {
@@ -116,7 +107,7 @@ public class AuthRoleServiceImpl extends JoinServiceImpl<AuthRoleMapper, AuthRol
    * @param request 角色实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-15
    */
   @Override
   public boolean delete(AuthRole request) throws Exception {
@@ -130,11 +121,10 @@ public class AuthRoleServiceImpl extends JoinServiceImpl<AuthRoleMapper, AuthRol
    * @param request 角色实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-15
    */
   @Override
   public boolean edit(AuthRole request) throws Exception {
-    request.setUpdatedTime(new Date());
     return updateById(request);
   }
 
@@ -144,12 +134,10 @@ public class AuthRoleServiceImpl extends JoinServiceImpl<AuthRoleMapper, AuthRol
    * @param request 角色实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-15
    */
   @Override
   public boolean add(AuthRole request) throws Exception {
-    request.setCreatedTime(new Date());
-    request.setUpdatedTime(new Date());
     return save(request);
   }
 
@@ -165,7 +153,6 @@ public class AuthRoleServiceImpl extends JoinServiceImpl<AuthRoleMapper, AuthRol
   public boolean assignMenu(AssignMenuReq request) throws Exception {
     List<AuthRoleMenu> addList = new ArrayList<>();
     List<String> menuIdList = request.getMenuIdList();
-    SaRequest httpRequest = SaHolder.getRequest();
     menuIdList.forEach(
         (e) -> {
           AuthRoleMenu item = new AuthRoleMenu();

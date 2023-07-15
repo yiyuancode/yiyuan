@@ -11,14 +11,12 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
-
 /**
  * 用户_角色管理Service层接口实现
  *
  * @author 一源团队--花和尚
- * @date 2023-07-11
+ * @date 2023-07-15
  */
 @Slf4j
 @Service
@@ -32,11 +30,10 @@ public class AuthAdminRoleServiceImpl extends JoinServiceImpl<AuthAdminRoleMappe
    * @param request 用户_角色实体
    * @return {@link List}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-15
    */
   @Override
   public List<AuthAdminRole> list(AuthAdminRole request) throws Exception {
-    AuthAdminRole query = new AuthAdminRole();
     JoinLambdaWrapper<AuthAdminRole> wrapper = new JoinLambdaWrapper<>(request);
     return joinList(wrapper, AuthAdminRole.class);
   }
@@ -47,15 +44,12 @@ public class AuthAdminRoleServiceImpl extends JoinServiceImpl<AuthAdminRoleMappe
    * @param request 用户_角色实体
    * @return {@link Page}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-15
    */
   @Override
   public Page<AuthAdminRole> pages(AuthAdminRole request, Integer pageSize, Integer pageNum)
       throws Exception {
-    AuthAdminRole query = new AuthAdminRole();
     JoinLambdaWrapper<AuthAdminRole> wrapper = new JoinLambdaWrapper<>(request);
-    wrapper.orderByDesc(AuthAdminRole::getCreatedTime);
-
     Page<AuthAdminRole> page =
         joinPage(new Page<>(pageNum, pageSize), wrapper, AuthAdminRole.class);
     return page;
@@ -67,7 +61,7 @@ public class AuthAdminRoleServiceImpl extends JoinServiceImpl<AuthAdminRoleMappe
    * @param id 用户_角色id
    * @return {@link AuthAdminRole}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-15
    */
   @Override
   public AuthAdminRole details(String id) throws Exception {
@@ -82,7 +76,7 @@ public class AuthAdminRoleServiceImpl extends JoinServiceImpl<AuthAdminRoleMappe
    * @param request 用户_角色实体
    * @return {@link AuthAdminRole}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-15
    */
   @Override
   public AuthAdminRole details(AuthAdminRole request) throws Exception {
@@ -96,7 +90,7 @@ public class AuthAdminRoleServiceImpl extends JoinServiceImpl<AuthAdminRoleMappe
    * @param ids 用户_角色id(多个逗号分割)
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-15
    */
   @Override
   public boolean delete(String ids) throws Exception {
@@ -109,7 +103,7 @@ public class AuthAdminRoleServiceImpl extends JoinServiceImpl<AuthAdminRoleMappe
    * @param request 用户_角色实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-15
    */
   @Override
   public boolean delete(AuthAdminRole request) throws Exception {
@@ -123,11 +117,10 @@ public class AuthAdminRoleServiceImpl extends JoinServiceImpl<AuthAdminRoleMappe
    * @param request 用户_角色实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-15
    */
   @Override
   public boolean edit(AuthAdminRole request) throws Exception {
-    request.setUpdatedTime(new Date());
     return updateById(request);
   }
 
@@ -137,12 +130,10 @@ public class AuthAdminRoleServiceImpl extends JoinServiceImpl<AuthAdminRoleMappe
    * @param request 用户_角色实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-15
    */
   @Override
   public boolean add(AuthAdminRole request) throws Exception {
-    request.setCreatedTime(new Date());
-    request.setUpdatedTime(new Date());
     return save(request);
   }
 }

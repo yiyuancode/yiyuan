@@ -11,13 +11,12 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 /**
  * 租户管理Service层接口实现
  *
  * @author 一源团队--花和尚
- * @date 2023-07-14
+ * @date 2023-07-15
  */
 @Slf4j
 @Service
@@ -31,11 +30,10 @@ public class SysTenantServiceImpl extends JoinServiceImpl<SysTenantMapper, SysTe
    * @param request 租户实体
    * @return {@link List}
    * @author 一源团队--花和尚
-   * @date 2023-07-14
+   * @date 2023-07-15
    */
   @Override
   public List<SysTenant> list(SysTenant request) throws Exception {
-    SysTenant query = new SysTenant();
     JoinLambdaWrapper<SysTenant> wrapper = new JoinLambdaWrapper<>(request);
     return joinList(wrapper, SysTenant.class);
   }
@@ -46,15 +44,12 @@ public class SysTenantServiceImpl extends JoinServiceImpl<SysTenantMapper, SysTe
    * @param request 租户实体
    * @return {@link Page}
    * @author 一源团队--花和尚
-   * @date 2023-07-14
+   * @date 2023-07-15
    */
   @Override
   public Page<SysTenant> pages(SysTenant request, Integer pageSize, Integer pageNum)
       throws Exception {
-    SysTenant query = new SysTenant();
     JoinLambdaWrapper<SysTenant> wrapper = new JoinLambdaWrapper<>(request);
-    wrapper.orderByDesc(SysTenant::getCreatedTime);
-
     Page<SysTenant> page = joinPage(new Page<>(pageNum, pageSize), wrapper, SysTenant.class);
     return page;
   }
@@ -65,7 +60,7 @@ public class SysTenantServiceImpl extends JoinServiceImpl<SysTenantMapper, SysTe
    * @param id 租户id
    * @return {@link SysTenant}
    * @author 一源团队--花和尚
-   * @date 2023-07-14
+   * @date 2023-07-15
    */
   @Override
   public SysTenant details(String id) throws Exception {
@@ -81,7 +76,7 @@ public class SysTenantServiceImpl extends JoinServiceImpl<SysTenantMapper, SysTe
    * @param request 租户实体
    * @return {@link SysTenant}
    * @author 一源团队--花和尚
-   * @date 2023-07-14
+   * @date 2023-07-15
    */
   @Override
   public SysTenant details(SysTenant request) throws Exception {
@@ -95,7 +90,7 @@ public class SysTenantServiceImpl extends JoinServiceImpl<SysTenantMapper, SysTe
    * @param ids 租户id(多个逗号分割)
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-14
+   * @date 2023-07-15
    */
   @Override
   public boolean delete(String ids) throws Exception {
@@ -108,7 +103,7 @@ public class SysTenantServiceImpl extends JoinServiceImpl<SysTenantMapper, SysTe
    * @param request 租户实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-14
+   * @date 2023-07-15
    */
   @Override
   public boolean delete(SysTenant request) throws Exception {
@@ -122,11 +117,10 @@ public class SysTenantServiceImpl extends JoinServiceImpl<SysTenantMapper, SysTe
    * @param request 租户实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-14
+   * @date 2023-07-15
    */
   @Override
   public boolean edit(SysTenant request) throws Exception {
-    request.setUpdatedTime(new Date());
     return updateById(request);
   }
 
@@ -136,12 +130,10 @@ public class SysTenantServiceImpl extends JoinServiceImpl<SysTenantMapper, SysTe
    * @param request 租户实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-14
+   * @date 2023-07-15
    */
   @Override
   public boolean add(SysTenant request) throws Exception {
-    request.setCreatedTime(new Date());
-    request.setUpdatedTime(new Date());
     return save(request);
   }
 }

@@ -50,6 +50,8 @@ public enum ResultCode implements IErrorCode {
   USER_PASS_OUT(500, "用户名或密码错误次数过多"),
   USER_NOTFIND_ERROR(500, "没有找到用户"),
   USER_ERROR(500, "用户名或密码不正确"),
+  UNBOUND_ROLE(500, "未绑定角色"),
+  UNBOUND_MENU(500, "未绑定菜单"),
   /**
    * 服务未知异常
    *

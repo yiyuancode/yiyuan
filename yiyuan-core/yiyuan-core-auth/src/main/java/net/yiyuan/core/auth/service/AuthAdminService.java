@@ -7,12 +7,11 @@ import net.yiyuan.core.auth.model.req.AssignRoleReq;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
 /**
  * 用户管理Service层接口
  *
  * @author 一源团队--花和尚
- * @date 2023-07-11
+ * @date 2023-07-15
  */
 public interface AuthAdminService extends JoinIService<AuthAdmin> {
 
@@ -22,7 +21,7 @@ public interface AuthAdminService extends JoinIService<AuthAdmin> {
    * @param request 用户实体
    * @return {@link List}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-15
    */
   List<AuthAdmin> list(AuthAdmin request) throws Exception;
 
@@ -32,7 +31,7 @@ public interface AuthAdminService extends JoinIService<AuthAdmin> {
    * @param request 用户实体
    * @return {@link Page}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-15
    */
   Page<AuthAdmin> pages(AuthAdmin request, Integer pageSize, Integer pageNum) throws Exception;
 
@@ -42,7 +41,7 @@ public interface AuthAdminService extends JoinIService<AuthAdmin> {
    * @param id 用户id
    * @return {@link AuthAdmin}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-15
    */
   AuthAdmin details(String id) throws Exception;
 
@@ -52,7 +51,7 @@ public interface AuthAdminService extends JoinIService<AuthAdmin> {
    * @param request 用户实体
    * @return {@link AuthAdmin}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-15
    */
   AuthAdmin details(AuthAdmin request) throws Exception;
 
@@ -62,7 +61,7 @@ public interface AuthAdminService extends JoinIService<AuthAdmin> {
    * @param ids 用户id(多个逗号分割)
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-15
    */
   boolean delete(String ids) throws Exception;
 
@@ -72,7 +71,7 @@ public interface AuthAdminService extends JoinIService<AuthAdmin> {
    * @param request 用户实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-15
    */
   boolean delete(AuthAdmin request) throws Exception;
 
@@ -82,7 +81,7 @@ public interface AuthAdminService extends JoinIService<AuthAdmin> {
    * @param request 用户实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-15
    */
   boolean edit(AuthAdmin request) throws Exception;
 
@@ -92,7 +91,7 @@ public interface AuthAdminService extends JoinIService<AuthAdmin> {
    * @param request 用户实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-15
    */
   boolean add(AuthAdmin request) throws Exception;
 

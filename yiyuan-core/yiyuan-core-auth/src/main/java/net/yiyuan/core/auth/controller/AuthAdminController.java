@@ -20,7 +20,7 @@ import java.util.List;
  * 用户管理
  *
  * @author 一源团队--花和尚
- * @date 2023-07-11
+ * @date 2023-07-15
  * @module 权限管理
  * @folder 权限管理/用户管理
  */
@@ -36,7 +36,7 @@ public class AuthAdminController {
    * @param request 用户实体
    * @return {@link CommonResult<List<AuthAdmin>>}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-15
    */
   @Description("权限管理/用户管理/查询用户")
   @SaCheckPermission(
@@ -45,7 +45,7 @@ public class AuthAdminController {
   @GetMapping(value = "/auth/admin/list")
   @ResponseBody
   public CommonResult<List<AuthAdmin>> list(AuthAdmin request) throws Exception {
-    return CommonResult.success(authAdminService.list(request));
+    return CommonResult.success(authAdminService.list(request), "查询用户列表成功");
   }
 
   /**
@@ -54,7 +54,7 @@ public class AuthAdminController {
    * @param request 用户实体
    * @return {@link CommonResult<Page<AuthAdmin>>}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-15
    */
   @Description("权限管理/用户管理/查询用户")
   @SaCheckPermission(
@@ -67,7 +67,7 @@ public class AuthAdminController {
       @RequestParam(defaultValue = "10") Integer pageSize,
       @RequestParam(defaultValue = "1") Integer pageNum)
       throws Exception {
-    return CommonResult.success(authAdminService.pages(request, pageSize, pageNum));
+    return CommonResult.success(authAdminService.pages(request, pageSize, pageNum), "分页查询用户成功");
   }
 
   /**
@@ -76,7 +76,7 @@ public class AuthAdminController {
    * @param id 用户id
    * @return {@link CommonResult<AuthAdmin>}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-15
    */
   @Description("权限管理/用户管理/查询用户")
   @SaCheckPermission(
@@ -86,7 +86,7 @@ public class AuthAdminController {
   @ResponseBody
   public CommonResult<AuthAdmin> details(@PathVariable("id") @Validated({NotEmpty.class}) String id)
       throws Exception {
-    return CommonResult.success(authAdminService.details(id));
+    return CommonResult.success(authAdminService.details(id), "查询用户详情成功");
   }
 
   /**
@@ -95,7 +95,7 @@ public class AuthAdminController {
    * @param ids 用户id(多个逗号分割)
    * @return {@link CommonResult<String>}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-15
    */
   @Description("权限管理/用户管理/删除用户")
   @SaCheckPermission(
@@ -106,19 +106,18 @@ public class AuthAdminController {
   public CommonResult<String> delete(@RequestParam @Validated({NotEmpty.class}) String ids)
       throws Exception {
     if (authAdminService.delete(ids)) {
-      return CommonResult.success("删除用户成功");
+      return CommonResult.success(null, "删除用户成功");
     } else {
       return CommonResult.failed("删除用户失败");
     }
   }
-
   /**
    * 编辑用户
    *
    * @param request 用户实体
    * @return {@link CommonResult<String>}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-15
    */
   @Description("权限管理/用户管理/编辑用户")
   @SaCheckPermission(
@@ -128,7 +127,7 @@ public class AuthAdminController {
   @ResponseBody
   public CommonResult<String> edit(@RequestBody @Validated AuthAdmin request) throws Exception {
     if (authAdminService.edit(request)) {
-      return CommonResult.success("修改用户成功");
+      return CommonResult.success(null, "修改用户成功");
     } else {
       return CommonResult.failed("修改用户失败");
     }
@@ -140,7 +139,7 @@ public class AuthAdminController {
    * @param request 用户实体
    * @return {@link CommonResult<String>}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-15
    */
   @Description("权限管理/用户管理/新增用户")
   @SaCheckPermission(
@@ -150,7 +149,7 @@ public class AuthAdminController {
   @ResponseBody
   public CommonResult<String> add(@RequestBody @Validated AuthAdmin request) throws Exception {
     if (authAdminService.add(request)) {
-      return CommonResult.success("新增用户成功");
+      return CommonResult.success(null, "新增用户成功");
     } else {
       return CommonResult.failed("新增用户失败");
     }
@@ -173,7 +172,7 @@ public class AuthAdminController {
   public CommonResult<String> assignRole(@RequestBody @Validated AssignRoleReq request)
       throws Exception {
     if (authAdminService.assignRole(request)) {
-      return CommonResult.success("分配角色成功");
+      return CommonResult.success(null, "分配角色成功");
     } else {
       return CommonResult.failed("分配角色失败");
     }

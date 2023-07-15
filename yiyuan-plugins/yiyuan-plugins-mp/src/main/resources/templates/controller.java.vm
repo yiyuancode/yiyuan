@@ -69,7 +69,7 @@ private ${table.serviceName} ${serviceImplName};
 @GetMapping(value = "/${package.ModuleName}/${modeName}/list")
 @ResponseBody
 public CommonResult<List<${table.entityName}>>list( ${table.entityName} request)throws Exception{
-        return CommonResult.success(${serviceImplName}.list(request));
+        return CommonResult.success(${serviceImplName}.list(request),"查询$!{table.comment.replaceAll("表", "")}列表成功");
         }
 
 
@@ -86,11 +86,12 @@ public CommonResult<List<${table.entityName}>>list( ${table.entityName} request)
 @GetMapping(value = "/${package.ModuleName}/${modeName}/pages")
 @ResponseBody
 public CommonResult<Page<${table.entityName}>>pages(
-  ${table.entityName} request,
+    ${table.entityName} request,
 @RequestParam(defaultValue = "10") Integer pageSize,
 @RequestParam(defaultValue = "1") Integer pageNum
         )throws Exception{
-        return CommonResult.success(${serviceImplName}.pages(request,pageSize,pageNum));
+        return CommonResult.success(${serviceImplName}.pages(request,pageSize,pageNum),"分页查询$!{table.comment.replaceAll(
+        "表", "")}成功");
         }
 
 /**
@@ -106,7 +107,7 @@ public CommonResult<Page<${table.entityName}>>pages(
 @GetMapping(value = "/${package.ModuleName}/${modeName}/details/{id}")
 @ResponseBody
 public CommonResult<${table.entityName}> details(@PathVariable("id") @Validated({NotEmpty.class}) String id)throws Exception{
-        return CommonResult.success(${serviceImplName}.details(id));
+        return CommonResult.success(${serviceImplName}.details(id),"查询$!{table.comment.replaceAll("表", "")}详情成功");
         }
 
 
@@ -124,7 +125,7 @@ public CommonResult<${table.entityName}> details(@PathVariable("id") @Validated(
 @ResponseBody
 public CommonResult<String> delete(@RequestParam @Validated({NotEmpty.class}) String ids)throws Exception{
         if(${serviceImplName}.delete(ids)){
-        return CommonResult.success("删除$!{table.comment.replaceAll("表", "")}成功");
+        return CommonResult.success(null,"删除$!{table.comment.replaceAll("表", "")}成功");
         }else{
         return CommonResult.failed("删除$!{table.comment.replaceAll("表", "")}失败");
         }
@@ -143,7 +144,7 @@ public CommonResult<String> delete(@RequestParam @Validated({NotEmpty.class}) St
 @ResponseBody
 public CommonResult<String> edit(@RequestBody @Validated   ${table.entityName} request)throws Exception{
         if(${serviceImplName}.edit(request)){
-        return CommonResult.success("修改$!{table.comment.replaceAll("表", "")}成功");
+        return CommonResult.success(null,"修改$!{table.comment.replaceAll("表", "")}成功");
         }else{
         return CommonResult.failed("修改$!{table.comment.replaceAll("表", "")}失败");
         }
@@ -164,7 +165,7 @@ public CommonResult<String> edit(@RequestBody @Validated   ${table.entityName} r
 @ResponseBody
 public CommonResult<String> add(@RequestBody @Validated  ${table.entityName} request)throws Exception{
         if(${serviceImplName}.add(request)){
-        return CommonResult.success("新增$!{table.comment.replaceAll("表", "")}成功");
+        return CommonResult.success(null,"新增$!{table.comment.replaceAll("表", "")}成功");
         }else{
         return CommonResult.failed("新增$!{table.comment.replaceAll("表", "")}失败");
         }

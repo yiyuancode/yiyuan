@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
  * 租户表-状态枚举类
  *
  * @author 一源团队--花和尚
- * @date 2023-07-14
+ * @date 2023-07-15
  */
 public enum SysTenantStatusEnum {
 
@@ -16,7 +16,7 @@ public enum SysTenantStatusEnum {
    *
    * @see SysTenantStatusEnum
    * @author 一源团队--花和尚
-   * @date 2023-07-14
+   * @date 2023-07-15
    */
   NORMAL(0, "正常"),
   /**
@@ -24,12 +24,13 @@ public enum SysTenantStatusEnum {
    *
    * @see SysTenantStatusEnum
    * @author 一源团队--花和尚
-   * @date 2023-07-14
+   * @date 2023-07-15
    */
   FREEZE(1, "冻结");
 
   @EnumValue private final int code;
   @JsonValue private final String desc;
+
   SysTenantStatusEnum(int code, String desc) {
     this.code = code;
     this.desc = desc;

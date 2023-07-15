@@ -19,7 +19,7 @@ import java.util.List;
  * 租户管理
  *
  * @author 一源团队--花和尚
- * @date 2023-07-14
+ * @date 2023-07-15
  * @module 系统管理
  * @folder 系统管理/租户管理
  */
@@ -35,7 +35,7 @@ public class SysTenantController {
    * @param request 租户实体
    * @return {@link CommonResult<List<SysTenant>>}
    * @author 一源团队--花和尚
-   * @date 2023-07-14
+   * @date 2023-07-15
    */
   @Description("系统管理/租户管理/查询租户")
   @SaCheckPermission(
@@ -44,7 +44,7 @@ public class SysTenantController {
   @GetMapping(value = "/sys/tenant/list")
   @ResponseBody
   public CommonResult<List<SysTenant>> list(SysTenant request) throws Exception {
-    return CommonResult.success(sysTenantService.list(request));
+    return CommonResult.success(sysTenantService.list(request), "查询租户列表成功");
   }
 
   /**
@@ -53,7 +53,7 @@ public class SysTenantController {
    * @param request 租户实体
    * @return {@link CommonResult<Page<SysTenant>>}
    * @author 一源团队--花和尚
-   * @date 2023-07-14
+   * @date 2023-07-15
    */
   @Description("系统管理/租户管理/查询租户")
   @SaCheckPermission(
@@ -66,7 +66,7 @@ public class SysTenantController {
       @RequestParam(defaultValue = "10") Integer pageSize,
       @RequestParam(defaultValue = "1") Integer pageNum)
       throws Exception {
-    return CommonResult.success(sysTenantService.pages(request, pageSize, pageNum));
+    return CommonResult.success(sysTenantService.pages(request, pageSize, pageNum), "分页查询租户成功");
   }
 
   /**
@@ -75,7 +75,7 @@ public class SysTenantController {
    * @param id 租户id
    * @return {@link CommonResult<SysTenant>}
    * @author 一源团队--花和尚
-   * @date 2023-07-14
+   * @date 2023-07-15
    */
   @Description("系统管理/租户管理/查询租户")
   @SaCheckPermission(
@@ -85,7 +85,7 @@ public class SysTenantController {
   @ResponseBody
   public CommonResult<SysTenant> details(@PathVariable("id") @Validated({NotEmpty.class}) String id)
       throws Exception {
-    return CommonResult.success(sysTenantService.details(id));
+    return CommonResult.success(sysTenantService.details(id), "查询租户详情成功");
   }
 
   /**
@@ -94,7 +94,7 @@ public class SysTenantController {
    * @param ids 租户id(多个逗号分割)
    * @return {@link CommonResult<String>}
    * @author 一源团队--花和尚
-   * @date 2023-07-14
+   * @date 2023-07-15
    */
   @Description("系统管理/租户管理/删除租户")
   @SaCheckPermission(
@@ -105,7 +105,7 @@ public class SysTenantController {
   public CommonResult<String> delete(@RequestParam @Validated({NotEmpty.class}) String ids)
       throws Exception {
     if (sysTenantService.delete(ids)) {
-      return CommonResult.success("删除租户成功");
+      return CommonResult.success(null, "删除租户成功");
     } else {
       return CommonResult.failed("删除租户失败");
     }
@@ -116,7 +116,7 @@ public class SysTenantController {
    * @param request 租户实体
    * @return {@link CommonResult<String>}
    * @author 一源团队--花和尚
-   * @date 2023-07-14
+   * @date 2023-07-15
    */
   @Description("系统管理/租户管理/编辑租户")
   @SaCheckPermission(
@@ -126,7 +126,7 @@ public class SysTenantController {
   @ResponseBody
   public CommonResult<String> edit(@RequestBody @Validated SysTenant request) throws Exception {
     if (sysTenantService.edit(request)) {
-      return CommonResult.success("修改租户成功");
+      return CommonResult.success(null, "修改租户成功");
     } else {
       return CommonResult.failed("修改租户失败");
     }
@@ -138,7 +138,7 @@ public class SysTenantController {
    * @param request 租户实体
    * @return {@link CommonResult<String>}
    * @author 一源团队--花和尚
-   * @date 2023-07-14
+   * @date 2023-07-15
    */
   @Description("系统管理/租户管理/新增租户")
   @SaCheckPermission(
@@ -148,7 +148,7 @@ public class SysTenantController {
   @ResponseBody
   public CommonResult<String> add(@RequestBody @Validated SysTenant request) throws Exception {
     if (sysTenantService.add(request)) {
-      return CommonResult.success("新增租户成功");
+      return CommonResult.success(null, "新增租户成功");
     } else {
       return CommonResult.failed("新增租户失败");
     }

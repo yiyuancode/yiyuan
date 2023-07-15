@@ -11,14 +11,12 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
-
 /**
  * 角色_菜单管理Service层接口实现
  *
  * @author 一源团队--花和尚
- * @date 2023-07-11
+ * @date 2023-07-15
  */
 @Slf4j
 @Service
@@ -32,11 +30,10 @@ public class AuthRoleMenuServiceImpl extends JoinServiceImpl<AuthRoleMenuMapper,
    * @param request 角色_菜单实体
    * @return {@link List}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-15
    */
   @Override
   public List<AuthRoleMenu> list(AuthRoleMenu request) throws Exception {
-    AuthRoleMenu query = new AuthRoleMenu();
     JoinLambdaWrapper<AuthRoleMenu> wrapper = new JoinLambdaWrapper<>(request);
     return joinList(wrapper, AuthRoleMenu.class);
   }
@@ -47,15 +44,12 @@ public class AuthRoleMenuServiceImpl extends JoinServiceImpl<AuthRoleMenuMapper,
    * @param request 角色_菜单实体
    * @return {@link Page}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-15
    */
   @Override
   public Page<AuthRoleMenu> pages(AuthRoleMenu request, Integer pageSize, Integer pageNum)
       throws Exception {
-    AuthRoleMenu query = new AuthRoleMenu();
     JoinLambdaWrapper<AuthRoleMenu> wrapper = new JoinLambdaWrapper<>(request);
-    wrapper.orderByDesc(AuthRoleMenu::getCreatedTime);
-
     Page<AuthRoleMenu> page = joinPage(new Page<>(pageNum, pageSize), wrapper, AuthRoleMenu.class);
     return page;
   }
@@ -66,7 +60,7 @@ public class AuthRoleMenuServiceImpl extends JoinServiceImpl<AuthRoleMenuMapper,
    * @param id 角色_菜单id
    * @return {@link AuthRoleMenu}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-15
    */
   @Override
   public AuthRoleMenu details(String id) throws Exception {
@@ -81,7 +75,7 @@ public class AuthRoleMenuServiceImpl extends JoinServiceImpl<AuthRoleMenuMapper,
    * @param request 角色_菜单实体
    * @return {@link AuthRoleMenu}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-15
    */
   @Override
   public AuthRoleMenu details(AuthRoleMenu request) throws Exception {
@@ -95,7 +89,7 @@ public class AuthRoleMenuServiceImpl extends JoinServiceImpl<AuthRoleMenuMapper,
    * @param ids 角色_菜单id(多个逗号分割)
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-15
    */
   @Override
   public boolean delete(String ids) throws Exception {
@@ -108,7 +102,7 @@ public class AuthRoleMenuServiceImpl extends JoinServiceImpl<AuthRoleMenuMapper,
    * @param request 角色_菜单实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-15
    */
   @Override
   public boolean delete(AuthRoleMenu request) throws Exception {
@@ -122,11 +116,10 @@ public class AuthRoleMenuServiceImpl extends JoinServiceImpl<AuthRoleMenuMapper,
    * @param request 角色_菜单实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-15
    */
   @Override
   public boolean edit(AuthRoleMenu request) throws Exception {
-    request.setUpdatedTime(new Date());
     return updateById(request);
   }
 
@@ -136,12 +129,10 @@ public class AuthRoleMenuServiceImpl extends JoinServiceImpl<AuthRoleMenuMapper,
    * @param request 角色_菜单实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-15
    */
   @Override
   public boolean add(AuthRoleMenu request) throws Exception {
-    request.setCreatedTime(new Date());
-    request.setUpdatedTime(new Date());
     return save(request);
   }
 }

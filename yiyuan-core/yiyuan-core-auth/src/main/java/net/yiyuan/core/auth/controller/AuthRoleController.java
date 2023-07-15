@@ -20,7 +20,7 @@ import java.util.List;
  * 角色管理
  *
  * @author 一源团队--花和尚
- * @date 2023-07-11
+ * @date 2023-07-15
  * @module 权限管理
  * @folder 权限管理/角色管理
  */
@@ -36,7 +36,7 @@ public class AuthRoleController {
    * @param request 角色实体
    * @return {@link CommonResult<List<AuthRole>>}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-15
    */
   @Description("权限管理/角色管理/查询角色")
   @SaCheckPermission(
@@ -45,7 +45,7 @@ public class AuthRoleController {
   @GetMapping(value = "/auth/role/list")
   @ResponseBody
   public CommonResult<List<AuthRole>> list(AuthRole request) throws Exception {
-    return CommonResult.success(authRoleService.list(request));
+    return CommonResult.success(authRoleService.list(request), "查询角色列表成功");
   }
 
   /**
@@ -54,7 +54,7 @@ public class AuthRoleController {
    * @param request 角色实体
    * @return {@link CommonResult<Page<AuthRole>>}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-15
    */
   @Description("权限管理/角色管理/查询角色")
   @SaCheckPermission(
@@ -67,7 +67,7 @@ public class AuthRoleController {
       @RequestParam(defaultValue = "10") Integer pageSize,
       @RequestParam(defaultValue = "1") Integer pageNum)
       throws Exception {
-    return CommonResult.success(authRoleService.pages(request, pageSize, pageNum));
+    return CommonResult.success(authRoleService.pages(request, pageSize, pageNum), "分页查询角色成功");
   }
 
   /**
@@ -76,7 +76,7 @@ public class AuthRoleController {
    * @param id 角色id
    * @return {@link CommonResult<AuthRole>}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-15
    */
   @Description("权限管理/角色管理/查询角色")
   @SaCheckPermission(
@@ -86,7 +86,7 @@ public class AuthRoleController {
   @ResponseBody
   public CommonResult<AuthRole> details(@PathVariable("id") @Validated({NotEmpty.class}) String id)
       throws Exception {
-    return CommonResult.success(authRoleService.details(id));
+    return CommonResult.success(authRoleService.details(id), "查询角色详情成功");
   }
 
   /**
@@ -95,7 +95,7 @@ public class AuthRoleController {
    * @param ids 角色id(多个逗号分割)
    * @return {@link CommonResult<String>}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-15
    */
   @Description("权限管理/角色管理/删除角色")
   @SaCheckPermission(
@@ -106,19 +106,18 @@ public class AuthRoleController {
   public CommonResult<String> delete(@RequestParam @Validated({NotEmpty.class}) String ids)
       throws Exception {
     if (authRoleService.delete(ids)) {
-      return CommonResult.success("删除角色成功");
+      return CommonResult.success(null, "删除角色成功");
     } else {
       return CommonResult.failed("删除角色失败");
     }
   }
-
   /**
    * 编辑角色
    *
    * @param request 角色实体
    * @return {@link CommonResult<String>}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-15
    */
   @Description("权限管理/角色管理/编辑角色")
   @SaCheckPermission(
@@ -128,7 +127,7 @@ public class AuthRoleController {
   @ResponseBody
   public CommonResult<String> edit(@RequestBody @Validated AuthRole request) throws Exception {
     if (authRoleService.edit(request)) {
-      return CommonResult.success("修改角色成功");
+      return CommonResult.success(null, "修改角色成功");
     } else {
       return CommonResult.failed("修改角色失败");
     }
@@ -140,7 +139,7 @@ public class AuthRoleController {
    * @param request 角色实体
    * @return {@link CommonResult<String>}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-15
    */
   @Description("权限管理/角色管理/新增角色")
   @SaCheckPermission(
@@ -150,7 +149,7 @@ public class AuthRoleController {
   @ResponseBody
   public CommonResult<String> add(@RequestBody @Validated AuthRole request) throws Exception {
     if (authRoleService.add(request)) {
-      return CommonResult.success("新增角色成功");
+      return CommonResult.success(null, "新增角色成功");
     } else {
       return CommonResult.failed("新增角色失败");
     }

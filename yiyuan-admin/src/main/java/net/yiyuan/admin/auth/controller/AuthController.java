@@ -8,8 +8,6 @@ import net.yiyuan.admin.auth.model.get_user_info.GetUserInfoVo;
 import net.yiyuan.admin.auth.model.get_user_info.SysMenuTreeVo;
 import net.yiyuan.admin.auth.model.login.LoginReq;
 import net.yiyuan.admin.auth.model.login.LoginVo;
-import net.yiyuan.admin.auth.model.register.RegisterReq;
-import net.yiyuan.admin.auth.model.register.RegisterVo;
 import net.yiyuan.admin.auth.model.vo.GetUserInfoForAntdVo;
 import net.yiyuan.admin.auth.service.AuthService;
 import net.yiyuan.common.model.vo.CommonResult;
@@ -41,27 +39,10 @@ public class AuthController {
    * @date 2023-06-23
    */
   @SaIgnore
-  @RequestMapping(value = "/auth/login", method = RequestMethod.POST)
+  @PostMapping(value = "/auth/login")
   @ResponseBody
   public CommonResult<LoginVo> login(@RequestBody @Validated LoginReq request) throws Exception {
-    return CommonResult.success(authService.login(request));
-  }
-
-  /**
-   * 注册
-   *
-   * @param request 用户实体
-   * @return {@link CommonResult<RegisterVo>}
-   * @author 一源团队--花和尚
-   * @date 2023-06-23
-   */
-  @SaIgnore
-  @RequestMapping(value = "/auth/register", method = RequestMethod.POST)
-  @ResponseBody
-  public CommonResult<RegisterVo> register(@RequestBody @Validated RegisterReq request)
-      throws Exception {
-    return null;
-    // return CommonResult.success(authService.adminRegister(request));
+    return CommonResult.success(authService.login(request), "登录成功");
   }
 
   /**
@@ -71,10 +52,10 @@ public class AuthController {
    * @author 一源团队--花和尚
    * @date 2023-06-23
    */
-  @RequestMapping(value = "/auth/loginout", method = RequestMethod.POST)
+  @PostMapping(value = "/auth/loginout")
   @ResponseBody
   public CommonResult<Boolean> loginout() throws Exception {
-    return CommonResult.success(authService.loginout());
+    return CommonResult.success(authService.loginout(), "退出登录成功");
   }
 
   /**
@@ -85,14 +66,14 @@ public class AuthController {
    * @date 2023-06-23
    */
   @SaCheckLogin
-  @RequestMapping(value = "/auth/getUserInfo", method = RequestMethod.POST)
+  @PostMapping(value = "/auth/getUserInfo")
   @ResponseBody
   public CommonResult<GetUserInfoForAntdVo> getUserInfo() throws Exception {
-    return CommonResult.success(authService.getUserInfoForAntd());
+    return CommonResult.success(authService.getUserInfoForAntd(), null);
   }
 
   /**
-   * 平台超管查询所有菜单(树结构)2
+   * 平台超管查询所有菜单(树结构)
    *
    * @return {@link CommonResult<List<SysMenuTreeVo>>}
    * @author 一源团队--花和尚
@@ -101,9 +82,10 @@ public class AuthController {
   @SaCheckPermission(
       value = {"auth:adminGetMenuTree"},
       orRole = "admin")
-  @RequestMapping(value = "/auth/adminGetMenuTree", method = RequestMethod.POST)
+  @GetMapping(value = "/auth/adminGetMenuTree")
+  @ResponseBody
   public CommonResult<List<SysMenuTreeVo>> adminGetMenuTree() throws Exception {
-    return CommonResult.success(authService.adminGetMenuTree());
+    return CommonResult.success(authService.adminGetMenuTree(), null);
   }
 
   /**
@@ -113,7 +95,8 @@ public class AuthController {
    * @author 一源团队--花和尚
    * @date 2023-06-23
    */
-  @RequestMapping(value = "/auth/tenantGetMenuTree", method = RequestMethod.POST)
+  @GetMapping(value = "/auth/tenantGetMenuTree")
+  @ResponseBody
   public CommonResult<List<SysMenuTreeVo>> tenantGetMenuTree() throws Exception {
     return CommonResult.success(authService.tenantGetMenuTree());
   }
@@ -126,14 +109,10 @@ public class AuthController {
    * @date 2023-06-23
    */
   @SaIgnore
-  @RequestMapping(value = "/auth/autoScanMenu", method = RequestMethod.POST)
+  @PostMapping(value = "/auth/autoScanMenu")
+  @ResponseBody
   public CommonResult autoScanMenu() throws Exception {
-    // 获取连接池的统计数据列表  该方法可以获取所有数据源的监控数据  https://blog.csdn.net/qq_34491508/article/details/103559872
-    // 扫描指定包下的类，并获取带有 @SaCheckPermission 注解的方法
-    // 定义权限标识的包名
-    // 定义需要扫描的包名和注解类型
-    // 定义需要扫描的包名和注解类型
     // 返回菜单列表
-    return CommonResult.success(authService.autoScanMenu());
+    return CommonResult.success(authService.autoScanMenu(), null);
   }
 }

@@ -44,7 +44,6 @@ private ${table.mapperName} ${table.mapperName.substring(0,1).toLowerCase()}${ta
 */
 @Override
 public List< ${table.entityName} > list(${table.entityName} request)throws Exception{
-${table.entityName} query=new ${table.entityName}();
 JoinLambdaWrapper<${table.entityName}> wrapper = new JoinLambdaWrapper<>(request);
 return joinList(wrapper,${table.entityName}.class);
 }
@@ -60,12 +59,7 @@ return joinList(wrapper,${table.entityName}.class);
 */
 @Override
 public Page< ${table.entityName} > pages(${table.entityName} request, Integer pageSize, Integer pageNum)throws Exception{
-${table.entityName} query=new ${table.entityName}();
 JoinLambdaWrapper<${table.entityName}> wrapper = new JoinLambdaWrapper<>(request);
-wrapper.orderByDesc(${table.entityName}::getCreatedTime);
-##${table.entityName}.setMarkPrizeInfosLeft(wrapper);
-##${table.entityName}.setUmsUserLeft(wrapper);
-
 Page< ${table.entityName} > page = joinPage(new Page<>(pageNum, pageSize), wrapper, ${table.entityName}.class);
 return page;
 }
@@ -142,7 +136,6 @@ return remove(wrapper);
 
 @Override
 public boolean edit(${table.entityName} request)throws Exception{
-request.setUpdatedTime(new Date());
 return updateById(request);
 }
 
@@ -158,8 +151,6 @@ return updateById(request);
 
 @Override
 public boolean add(${table.entityName} request)throws Exception{
-request.setCreatedTime(new Date());
-request.setUpdatedTime(new Date());
 return save(request);
 }
 }

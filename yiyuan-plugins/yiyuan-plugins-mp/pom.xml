@@ -16,6 +16,12 @@
         <!--common模块-->
         <dependency>
             <groupId>net.yiyuan</groupId>
+            <artifactId>yiyuan-plugins-satoken</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <!--common模块-->
+        <dependency>
+            <groupId>net.yiyuan</groupId>
             <artifactId>yiyuan-common</artifactId>
             <version>${revision}</version>
         </dependency>

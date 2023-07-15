@@ -7,12 +7,11 @@ import net.yiyuan.core.auth.model.req.AssignMenuReq;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
 /**
  * 角色管理Service层接口
  *
  * @author 一源团队--花和尚
- * @date 2023-07-11
+ * @date 2023-07-15
  */
 public interface AuthRoleService extends JoinIService<AuthRole> {
 
@@ -22,7 +21,7 @@ public interface AuthRoleService extends JoinIService<AuthRole> {
    * @param request 角色实体
    * @return {@link List}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-15
    */
   List<AuthRole> list(AuthRole request) throws Exception;
 
@@ -32,7 +31,7 @@ public interface AuthRoleService extends JoinIService<AuthRole> {
    * @param request 角色实体
    * @return {@link Page}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-15
    */
   Page<AuthRole> pages(AuthRole request, Integer pageSize, Integer pageNum) throws Exception;
 
@@ -42,7 +41,7 @@ public interface AuthRoleService extends JoinIService<AuthRole> {
    * @param id 角色id
    * @return {@link AuthRole}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-15
    */
   AuthRole details(String id) throws Exception;
 
@@ -52,7 +51,7 @@ public interface AuthRoleService extends JoinIService<AuthRole> {
    * @param request 角色实体
    * @return {@link AuthRole}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-15
    */
   AuthRole details(AuthRole request) throws Exception;
 
@@ -62,7 +61,7 @@ public interface AuthRoleService extends JoinIService<AuthRole> {
    * @param ids 角色id(多个逗号分割)
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-15
    */
   boolean delete(String ids) throws Exception;
 
@@ -72,7 +71,7 @@ public interface AuthRoleService extends JoinIService<AuthRole> {
    * @param request 角色实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-15
    */
   boolean delete(AuthRole request) throws Exception;
 
@@ -82,7 +81,7 @@ public interface AuthRoleService extends JoinIService<AuthRole> {
    * @param request 角色实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-15
    */
   boolean edit(AuthRole request) throws Exception;
 
@@ -92,7 +91,7 @@ public interface AuthRoleService extends JoinIService<AuthRole> {
    * @param request 角色实体
    * @return {@link boolean}
    * @author 一源团队--花和尚
-   * @date 2023-07-11
+   * @date 2023-07-15
    */
   boolean add(AuthRole request) throws Exception;
 
