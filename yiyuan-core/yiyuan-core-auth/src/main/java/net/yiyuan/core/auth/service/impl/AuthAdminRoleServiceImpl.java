@@ -66,7 +66,6 @@ public class AuthAdminRoleServiceImpl extends JoinServiceImpl<AuthAdminRoleMappe
   @Override
   public AuthAdminRole details(String id) throws Exception {
     AuthAdminRole query = new AuthAdminRole();
-    query.setId(id);
     JoinLambdaWrapper<AuthAdminRole> wrapper = new JoinLambdaWrapper<>(query);
     return joinGetOne(wrapper, AuthAdminRole.class);
   }
