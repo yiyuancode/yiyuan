@@ -21,4 +21,4 @@ sa-token:
   # jwt秘钥
   jwt-secret-key: abc123djededease
   # 配置当前项目的网络访问地址
-  curr-domain: http://localhost:8080/admin
+  curr-domain: http://localhost:8085

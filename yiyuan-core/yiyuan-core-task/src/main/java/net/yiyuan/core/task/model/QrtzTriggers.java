@@ -20,13 +20,6 @@ public class QrtzTriggers implements Serializable {
   /**
    * 调度名称
    *
-   * @date 2023-07-06
-   */
-  @TableId(value = "schedName", type = IdType.ASSIGN_UUID)
-
-  /**
-   * 调度名称
-   *
    * @see String
    * @author 一源团队--花和尚
    * @date 2023-07-06

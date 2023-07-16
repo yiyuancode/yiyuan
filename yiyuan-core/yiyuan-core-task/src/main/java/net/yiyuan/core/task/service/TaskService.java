@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 @Slf4j
@@ -188,5 +189,17 @@ public class TaskService {
     //    // 按新的trigger重新设置job执行
     //    scheduler.rescheduleJob(triggerKey, trigger);
     return true;
+  }
+
+  /**
+   * 恢复定时任务
+   *
+   * @return {@link Boolean}
+   * @author 一源团队--花和尚
+   * @date 2023-06-23
+   */
+  public List<QrtzTriggers> listTask() throws Exception {
+    List<QrtzTriggers> list = qrtzTriggersService.list();
+    return list;
   }
 }

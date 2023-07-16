@@ -4,12 +4,17 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import icu.mhb.mybatisplus.plugln.base.service.impl.JoinServiceImpl;
 import icu.mhb.mybatisplus.plugln.core.JoinLambdaWrapper;
 import lombok.extern.slf4j.Slf4j;
+import net.yiyuan.common.utils.BeanUtilsPlus;
+import net.yiyuan.common.utils.StringUtilsPlus;
 import net.yiyuan.core.auth.mapper.AuthAdminMapper;
 import net.yiyuan.core.auth.model.AuthAdmin;
 import net.yiyuan.core.auth.model.AuthAdminRole;
+import net.yiyuan.core.auth.model.AuthRole;
 import net.yiyuan.core.auth.model.req.AssignRoleReq;
+import net.yiyuan.core.auth.model.vo.AuthAdminQueryVo;
 import net.yiyuan.core.auth.service.AuthAdminRoleService;
 import net.yiyuan.core.auth.service.AuthAdminService;
+import net.yiyuan.core.auth.service.AuthRoleService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -28,6 +33,7 @@ public class AuthAdminServiceImpl extends JoinServiceImpl<AuthAdminMapper, AuthA
     implements AuthAdminService {
   @Resource private AuthAdminMapper authAdminMapper;
   @Resource private AuthAdminRoleService authAdminRoleService;
+  @Resource private AuthRoleService authRoleService;
   /**
    * 用户列表(全部)
    *
@@ -37,9 +43,35 @@ public class AuthAdminServiceImpl extends JoinServiceImpl<AuthAdminMapper, AuthA
    * @date 2023-07-15
    */
   @Override
-  public List<AuthAdmin> list(AuthAdmin request) throws Exception {
+  public List<AuthAdminQueryVo> list(AuthAdmin request) throws Exception {
     JoinLambdaWrapper<AuthAdmin> wrapper = new JoinLambdaWrapper<>(request);
-    return joinList(wrapper, AuthAdmin.class);
+    List<AuthAdmin> records = joinList(wrapper, AuthAdmin.class);
+    List<AuthAdminQueryVo> resultList = new ArrayList<>();
+    if (StringUtilsPlus.isNotEmpty(records)) {
+      records.forEach(
+          (user) -> {
+            // 查询角色
+            JoinLambdaWrapper<AuthAdminRole> authAdminRoleWrapper =
+                new JoinLambdaWrapper<>(AuthAdminRole.class);
+            authAdminRoleWrapper.eq(AuthAdminRole::getUserId, user.getId());
+            authAdminRoleWrapper.select(AuthAdminRole::getRoleId);
+            authAdminRoleWrapper
+                .leftJoin(AuthRole.class, AuthRole::getId, AuthAdminRole::getRoleId)
+                .select(AuthRole::getId, AuthRole::getCode, AuthRole::getName)
+                .end();
+
+            List<AuthRole> authRoles =
+                authAdminRoleService.joinList(authAdminRoleWrapper, AuthRole.class);
+              if(StringUtilsPlus.isEmpty(authRoles)){
+                  authRoles=new ArrayList<>();
+              }
+            AuthAdminQueryVo respItem = new AuthAdminQueryVo();
+            respItem.setRoleList(authRoles);
+            BeanUtilsPlus.copy(user, respItem);
+            resultList.add(respItem);
+          });
+    }
+    return resultList;
   }
 
   /**
@@ -51,11 +83,39 @@ public class AuthAdminServiceImpl extends JoinServiceImpl<AuthAdminMapper, AuthA
    * @date 2023-07-15
    */
   @Override
-  public Page<AuthAdmin> pages(AuthAdmin request, Integer pageSize, Integer pageNum)
+  public Page<AuthAdminQueryVo> pages(AuthAdmin request, Integer pageSize, Integer pageNum)
       throws Exception {
     JoinLambdaWrapper<AuthAdmin> wrapper = new JoinLambdaWrapper<>(request);
     Page<AuthAdmin> page = joinPage(new Page<>(pageNum, pageSize), wrapper, AuthAdmin.class);
-    return page;
+    Page<AuthAdminQueryVo> result = new Page<>();
+    BeanUtilsPlus.copy(page, result);
+    List<AuthAdmin> records = page.getRecords();
+    if (StringUtilsPlus.isNotEmpty(records)) {
+      records.forEach(
+          (user) -> {
+            // 查询角色
+            JoinLambdaWrapper<AuthAdminRole> authAdminRoleWrapper =
+                new JoinLambdaWrapper<>(AuthAdminRole.class);
+            authAdminRoleWrapper.eq(AuthAdminRole::getUserId, user.getId());
+            authAdminRoleWrapper.select(AuthAdminRole::getRoleId);
+            authAdminRoleWrapper
+                .leftJoin(AuthRole.class, AuthRole::getId, AuthAdminRole::getRoleId)
+                .select(AuthRole::getId, AuthRole::getCode, AuthRole::getName)
+                .end();
+
+            List<AuthRole> authRoles =
+                authAdminRoleService.joinList(authAdminRoleWrapper, AuthRole.class);
+            if(StringUtilsPlus.isEmpty(authRoles)){
+                authRoles=new ArrayList<>();
+            }
+            AuthAdminQueryVo respItem = new AuthAdminQueryVo();
+            respItem.setRoleList(authRoles);
+            BeanUtilsPlus.copy(user, respItem);
+            result.getRecords().add(respItem);
+          });
+    }
+
+    return result;
   }
 
   /**
@@ -67,11 +127,30 @@ public class AuthAdminServiceImpl extends JoinServiceImpl<AuthAdminMapper, AuthA
    * @date 2023-07-15
    */
   @Override
-  public AuthAdmin details(String id) throws Exception {
+  public AuthAdminQueryVo details(String id) throws Exception {
     AuthAdmin query = new AuthAdmin();
     query.setId(id);
     JoinLambdaWrapper<AuthAdmin> wrapper = new JoinLambdaWrapper<>(query);
-    return joinGetOne(wrapper, AuthAdmin.class);
+    AuthAdmin authAdmin = joinGetOne(wrapper, AuthAdmin.class);
+
+    // 查询角色
+    JoinLambdaWrapper<AuthAdminRole> authAdminRoleWrapper =
+        new JoinLambdaWrapper<>(AuthAdminRole.class);
+    authAdminRoleWrapper.eq(AuthAdminRole::getUserId, authAdmin.getId());
+    authAdminRoleWrapper.select(AuthAdminRole::getRoleId);
+    authAdminRoleWrapper
+        .leftJoin(AuthRole.class, AuthRole::getId, AuthAdminRole::getRoleId)
+        .select(AuthRole::getId, AuthRole::getCode, AuthRole::getName)
+        .end();
+
+    List<AuthRole> authRoles = authAdminRoleService.joinList(authAdminRoleWrapper, AuthRole.class);
+      if(StringUtilsPlus.isEmpty(authRoles)){
+          authRoles=new ArrayList<>();
+      }
+    AuthAdminQueryVo respItem = new AuthAdminQueryVo();
+    BeanUtilsPlus.copy(authAdmin, respItem);
+    respItem.setRoleList(authRoles);
+    return respItem;
   }
 
   /**

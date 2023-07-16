@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import net.yiyuan.common.model.vo.CommonResult;
 import net.yiyuan.core.auth.model.AuthAdmin;
 import net.yiyuan.core.auth.model.req.AssignRoleReq;
+import net.yiyuan.core.auth.model.vo.AuthAdminQueryVo;
 import net.yiyuan.core.auth.service.AuthAdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Description;
@@ -44,7 +45,7 @@ public class AuthAdminController {
       orRole = "admin")
   @GetMapping(value = "/auth/admin/list")
   @ResponseBody
-  public CommonResult<List<AuthAdmin>> list(AuthAdmin request) throws Exception {
+  public CommonResult<List<AuthAdminQueryVo>> list(AuthAdmin request) throws Exception {
     return CommonResult.success(authAdminService.list(request), "查询用户列表成功");
   }
 
@@ -62,7 +63,7 @@ public class AuthAdminController {
       orRole = "admin")
   @GetMapping(value = "/auth/admin/pages")
   @ResponseBody
-  public CommonResult<Page<AuthAdmin>> pages(
+  public CommonResult<Page<AuthAdminQueryVo>> pages(
       AuthAdmin request,
       @RequestParam(defaultValue = "10") Integer pageSize,
       @RequestParam(defaultValue = "1") Integer pageNum)
@@ -84,7 +85,7 @@ public class AuthAdminController {
       orRole = "admin")
   @GetMapping(value = "/auth/admin/details/{id}")
   @ResponseBody
-  public CommonResult<AuthAdmin> details(@PathVariable("id") @Validated({NotEmpty.class}) String id)
+  public CommonResult<AuthAdminQueryVo> details(@PathVariable("id") @Validated({NotEmpty.class}) String id)
       throws Exception {
     return CommonResult.success(authAdminService.details(id), "查询用户详情成功");
   }

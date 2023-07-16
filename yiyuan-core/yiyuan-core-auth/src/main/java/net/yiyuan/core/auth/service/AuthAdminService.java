@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import icu.mhb.mybatisplus.plugln.base.service.JoinIService;
 import net.yiyuan.core.auth.model.AuthAdmin;
 import net.yiyuan.core.auth.model.req.AssignRoleReq;
+import net.yiyuan.core.auth.model.vo.AuthAdminQueryVo;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -23,7 +24,7 @@ public interface AuthAdminService extends JoinIService<AuthAdmin> {
    * @author 一源团队--花和尚
    * @date 2023-07-15
    */
-  List<AuthAdmin> list(AuthAdmin request) throws Exception;
+  List<AuthAdminQueryVo> list(AuthAdmin request) throws Exception;
 
   /**
    * 用户列表(分页)
@@ -33,7 +34,7 @@ public interface AuthAdminService extends JoinIService<AuthAdmin> {
    * @author 一源团队--花和尚
    * @date 2023-07-15
    */
-  Page<AuthAdmin> pages(AuthAdmin request, Integer pageSize, Integer pageNum) throws Exception;
+  Page<AuthAdminQueryVo> pages(AuthAdmin request, Integer pageSize, Integer pageNum) throws Exception;
 
   /**
    * 用户详情
@@ -43,7 +44,7 @@ public interface AuthAdminService extends JoinIService<AuthAdmin> {
    * @author 一源团队--花和尚
    * @date 2023-07-15
    */
-  AuthAdmin details(String id) throws Exception;
+  AuthAdminQueryVo details(String id) throws Exception;
 
   /**
    * 用户详情

@@ -19,6 +19,7 @@
             <version>5.7.10</version>
         </dependency>
         <!--系统管理模块,引入依赖接口才会被加载-->
+        <!--系统管理模块,引入依赖接口才会被加载-->
         <dependency>
             <groupId>net.yiyuan</groupId>
             <artifactId>yiyuan-core-sys</artifactId>

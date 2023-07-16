@@ -100,8 +100,14 @@ public class SaTokenConfigure implements WebMvcConfigurer {
         .setAuth(
             obj -> {
               // 功能说明: 使用 .html , .css 或者 .js 结尾的任意路由都将跳过, 不会进入 check 方法,放行
+              String url = SaHolder.getRequest().getUrl();
+              boolean match = SaRouter.isMatch("druid", url);
+
               SaRouter.match("/**")
-                  .notMatch("*.html*", "*.css*", "*.js*", "*swagger*", "*api-docs*")
+                  .notMatch("/druid/**")
+                  .notMatch("/druid")
+                  .notMatch("*.html*", "*.css*", "*.js*", "*swagger*", "*api-docs*", "druid")
+                  //                  .notMatch("*druid*")
                   .check(
                       () -> {
                         SaRequest request = SaHolder.getRequest();
