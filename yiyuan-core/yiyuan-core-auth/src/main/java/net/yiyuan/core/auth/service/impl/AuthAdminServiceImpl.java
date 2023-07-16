@@ -50,21 +50,8 @@ public class AuthAdminServiceImpl extends JoinServiceImpl<AuthAdminMapper, AuthA
     if (StringUtilsPlus.isNotEmpty(records)) {
       records.forEach(
           (user) -> {
-            // 查询角色
-            JoinLambdaWrapper<AuthAdminRole> authAdminRoleWrapper =
-                new JoinLambdaWrapper<>(AuthAdminRole.class);
-            authAdminRoleWrapper.eq(AuthAdminRole::getUserId, user.getId());
-            authAdminRoleWrapper.select(AuthAdminRole::getRoleId);
-            authAdminRoleWrapper
-                .leftJoin(AuthRole.class, AuthRole::getId, AuthAdminRole::getRoleId)
-                .select(AuthRole::getId, AuthRole::getCode, AuthRole::getName)
-                .end();
-
-            List<AuthRole> authRoles =
-                authAdminRoleService.joinList(authAdminRoleWrapper, AuthRole.class);
-              if(StringUtilsPlus.isEmpty(authRoles)){
-                  authRoles=new ArrayList<>();
-              }
+            // 关联角色信息
+            List<AuthRole> authRoles = joinRoleUtil(user.getId());
             AuthAdminQueryVo respItem = new AuthAdminQueryVo();
             respItem.setRoleList(authRoles);
             BeanUtilsPlus.copy(user, respItem);
@@ -89,25 +76,13 @@ public class AuthAdminServiceImpl extends JoinServiceImpl<AuthAdminMapper, AuthA
     Page<AuthAdmin> page = joinPage(new Page<>(pageNum, pageSize), wrapper, AuthAdmin.class);
     Page<AuthAdminQueryVo> result = new Page<>();
     BeanUtilsPlus.copy(page, result);
+    result.setRecords(new ArrayList<>());
     List<AuthAdmin> records = page.getRecords();
     if (StringUtilsPlus.isNotEmpty(records)) {
       records.forEach(
           (user) -> {
-            // 查询角色
-            JoinLambdaWrapper<AuthAdminRole> authAdminRoleWrapper =
-                new JoinLambdaWrapper<>(AuthAdminRole.class);
-            authAdminRoleWrapper.eq(AuthAdminRole::getUserId, user.getId());
-            authAdminRoleWrapper.select(AuthAdminRole::getRoleId);
-            authAdminRoleWrapper
-                .leftJoin(AuthRole.class, AuthRole::getId, AuthAdminRole::getRoleId)
-                .select(AuthRole::getId, AuthRole::getCode, AuthRole::getName)
-                .end();
-
-            List<AuthRole> authRoles =
-                authAdminRoleService.joinList(authAdminRoleWrapper, AuthRole.class);
-            if(StringUtilsPlus.isEmpty(authRoles)){
-                authRoles=new ArrayList<>();
-            }
+            // 关联角色信息
+            List<AuthRole> authRoles = joinRoleUtil(user.getId());
             AuthAdminQueryVo respItem = new AuthAdminQueryVo();
             respItem.setRoleList(authRoles);
             BeanUtilsPlus.copy(user, respItem);
@@ -132,21 +107,8 @@ public class AuthAdminServiceImpl extends JoinServiceImpl<AuthAdminMapper, AuthA
     query.setId(id);
     JoinLambdaWrapper<AuthAdmin> wrapper = new JoinLambdaWrapper<>(query);
     AuthAdmin authAdmin = joinGetOne(wrapper, AuthAdmin.class);
-
-    // 查询角色
-    JoinLambdaWrapper<AuthAdminRole> authAdminRoleWrapper =
-        new JoinLambdaWrapper<>(AuthAdminRole.class);
-    authAdminRoleWrapper.eq(AuthAdminRole::getUserId, authAdmin.getId());
-    authAdminRoleWrapper.select(AuthAdminRole::getRoleId);
-    authAdminRoleWrapper
-        .leftJoin(AuthRole.class, AuthRole::getId, AuthAdminRole::getRoleId)
-        .select(AuthRole::getId, AuthRole::getCode, AuthRole::getName)
-        .end();
-
-    List<AuthRole> authRoles = authAdminRoleService.joinList(authAdminRoleWrapper, AuthRole.class);
-      if(StringUtilsPlus.isEmpty(authRoles)){
-          authRoles=new ArrayList<>();
-      }
+    // 关联角色信息
+    List<AuthRole> authRoles = joinRoleUtil(authAdmin.getId());
     AuthAdminQueryVo respItem = new AuthAdminQueryVo();
     BeanUtilsPlus.copy(authAdmin, respItem);
     respItem.setRoleList(authRoles);
@@ -247,5 +209,30 @@ public class AuthAdminServiceImpl extends JoinServiceImpl<AuthAdminMapper, AuthA
     // 在全量增加现在的
     authAdminRoleService.saveBatch(addList);
     return true;
+  }
+  /**
+   * 根据用户关联查询用户全部角色信息工具方法
+   *
+   * @param userId 用户id
+   * @return {@link boolean}
+   * @author 一源团队--花和尚
+   * @date 2023-06-24
+   */
+  public List<AuthRole> joinRoleUtil(String userId) {
+    // 查询角色
+    JoinLambdaWrapper<AuthAdminRole> authAdminRoleWrapper =
+        new JoinLambdaWrapper<>(AuthAdminRole.class);
+    authAdminRoleWrapper.eq(AuthAdminRole::getUserId, userId);
+    authAdminRoleWrapper.select(AuthAdminRole::getRoleId);
+    authAdminRoleWrapper
+        .leftJoin(AuthRole.class, AuthRole::getId, AuthAdminRole::getRoleId)
+        .select(AuthRole::getId, AuthRole::getCode, AuthRole::getName)
+        .end();
+
+    List<AuthRole> authRoles = authAdminRoleService.joinList(authAdminRoleWrapper, AuthRole.class);
+    if (StringUtilsPlus.isEmpty(authRoles)) {
+      authRoles = new ArrayList<>();
+    }
+    return authRoles;
   }
 }
