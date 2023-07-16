@@ -17,6 +17,7 @@ import icu.mhb.mybatisplus.plugln.injector.JoinDefaultSqlInjector;
 import net.sf.jsqlparser.expression.Expression;
 import net.sf.jsqlparser.expression.NullValue;
 import net.sf.jsqlparser.expression.StringValue;
+import net.yiyuan.common.utils.StringUtilsPlus;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
 import org.springframework.context.annotation.Bean;
@@ -94,6 +95,13 @@ public class MybatisPlusConfig extends JoinDefaultSqlInjector {
               @Override
               public boolean ignoreTable(String tableName) {
                 // StpUtil.checkRole();
+                ServletRequestAttributes requestAttributes =
+                    (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+                //排除定时任务操作数据库，没有请求域对象
+                if (StringUtilsPlus.isNull(requestAttributes)) {
+                  return true;
+                }
+
                 HttpServletRequest request =
                     ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
                         .getRequest();
