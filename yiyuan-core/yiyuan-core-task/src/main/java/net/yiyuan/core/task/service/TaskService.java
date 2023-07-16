@@ -11,9 +11,7 @@ import org.quartz.*;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Objects;
 
 @Slf4j
 @Service
@@ -60,10 +58,13 @@ public class TaskService {
    * @date 2023-06-23
    */
   public Boolean addTask(AddTaskReq request) throws Exception {
+
     // 构建Job信息
     JobDetail jobDetail =
         JobBuilder.newJob(JobUtil.getClass(request.getJobName()).getClass())
             .withIdentity(request.getJobName(), request.getJobGroup())
+            // 开启异步执行
+            .storeDurably()
             .build();
 
     // Cron表达式调度构建器(即任务执行的时间)
@@ -140,54 +141,53 @@ public class TaskService {
    */
   public Boolean editTaskCron(AddTaskReq request) throws Exception {
 
-    // build触发key
-    TriggerKey triggerKey = TriggerKey.triggerKey(request.getJobName(), request.getJobGroup());
-
-    // build新的cron执行器
-    CronScheduleBuilder cronScheduleBuilder =
-        CronScheduleBuilder.cronSchedule(request.getCronExpression());
-
-    try {
-
-      // 获取当前正在运行的触发器
-      CronTrigger cronTrigger = (CronTrigger) scheduler.getTrigger(triggerKey);
-
-      if (Objects.isNull(cronTrigger)) {
-        log.error("未找到触发器，jobName:{}", request.getJobName());
-        return false;
-      }
-
-      // 根据新的执行器重新关联触发器
-      cronTrigger =
-          cronTrigger
-              .getTriggerBuilder()
-              .withIdentity(triggerKey)
-              .withSchedule(cronScheduleBuilder)
-              .build();
-
-      log.info("重置了任务时间" + LocalDateTime.now());
-
-      // 重置对应的job
-      scheduler.rescheduleJob(triggerKey, cronTrigger);
-    } catch (SchedulerException e) {
-      throw new RuntimeException(e);
-    }
-
-    //    TriggerKey triggerKey =
-    //        TriggerKey.triggerKey(request.getJobClassName(), request.getJobGroupName());
-    //    // 表达式调度构建器
-    //    CronScheduleBuilder scheduleBuilder =
+    //    // build触发key
+    //    TriggerKey triggerKey = TriggerKey.triggerKey(request.getJobName(),
+    // request.getJobGroup());
+    //
+    //    // build新的cron执行器
+    //    CronScheduleBuilder cronScheduleBuilder =
     //        CronScheduleBuilder.cronSchedule(request.getCronExpression());
     //
-    //    CronTrigger trigger = (CronTrigger) scheduler.getTrigger(triggerKey);
+    //    try {
     //
-    //    // 根据Cron表达式构建一个Trigger
-    //    trigger =
+    //      // 获取当前正在运行的触发器
+    //      CronTrigger cronTrigger = (CronTrigger) scheduler.getTrigger(triggerKey);
     //
-    // trigger.getTriggerBuilder().withIdentity(triggerKey).withSchedule(scheduleBuilder).build();
+    //      if (Objects.isNull(cronTrigger)) {
+    //        log.error("未找到触发器，jobName:{}", request.getJobName());
+    //        return false;
+    //      }
     //
-    //    // 按新的trigger重新设置job执行
-    //    scheduler.rescheduleJob(triggerKey, trigger);
+    //      // 根据新的执行器重新关联触发器
+    //      cronTrigger =
+    //          cronTrigger
+    //              .getTriggerBuilder()
+    //              .withIdentity(triggerKey)
+    //              .withSchedule(cronScheduleBuilder)
+    //              .build();
+    //
+    //      log.info("重置了任务时间" + LocalDateTime.now());
+    //
+    //      // 重置对应的job
+    //      scheduler.rescheduleJob(triggerKey, cronTrigger);
+    //    } catch (SchedulerException e) {
+    //      throw new RuntimeException(e);
+    //    }
+
+    TriggerKey triggerKey = TriggerKey.triggerKey(request.getJobName(), request.getJobGroup());
+    // 表达式调度构建器
+    CronScheduleBuilder scheduleBuilder =
+        CronScheduleBuilder.cronSchedule(request.getCronExpression());
+
+    CronTrigger trigger = (CronTrigger) scheduler.getTrigger(triggerKey);
+
+    // 根据Cron表达式构建一个Trigger
+    trigger =
+        trigger.getTriggerBuilder().withIdentity(triggerKey).withSchedule(scheduleBuilder).build();
+
+    // 按新的trigger重新设置job执行
+    scheduler.rescheduleJob(triggerKey, trigger);
     return true;
   }
 
