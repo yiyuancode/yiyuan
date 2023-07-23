@@ -177,7 +177,7 @@ public class CodeGenerator {
     int portSsh = 22;
     String usernameSsh = "root";
     String passwordSsh = "Zy2308416";
-    String commandSsh = "ww ";
+    String commandSsh = "fy ";
 
     String url = "jdbc:mysql://43.154.183.115:40020/admin_dev?serverTimezone=Asia/Shanghai";
     String username = "root";
