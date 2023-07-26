@@ -342,4 +342,29 @@ public class StringUtilsPlus {
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
     return dateTime.format(formatter);
   }
+
+  /**
+   * 将输入字符串转换为大写形式并返回结果字符串。 如果输入字符串为null，则返回null。
+   *
+   * @param str 输入字符串
+   * @return 转换为大写的字符串
+   */
+  public static String toUpperCase(String str) {
+    if (str == null) {
+      return null;
+    }
+    return str.toUpperCase();
+  }
+  /**
+   * 将输入字符串转换为小写形式并返回结果字符串。 如果输入字符串为null，则返回null。
+   *
+   * @param str 输入字符串
+   * @return 转换为大写的字符串
+   */
+  public static String toLowerCase(String str) {
+    if (str == null) {
+      return null;
+    }
+    return str.toLowerCase();
+  }
 }

@@ -1,4 +1,6 @@
 package ${package.Controller};
+import ${cfg.apiParent}.${package.ModuleName}.vo.*;
+import ${cfg.apiParent}.${package.ModuleName}.dto.*;
 import ${package.Entity}.*;
 import net.yiyuan.common.model.vo.*;
 import lombok.extern.slf4j.Slf4j;
@@ -9,6 +11,8 @@ import ${package.Entity}.${table.entityName};
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.annotation.SaCheckPermission;
@@ -59,7 +63,7 @@ private ${table.serviceName} ${serviceImplName};
  * ${table.comment.replaceAll("表", "")}列表(全部)
  *
  * @param request $!{table.comment.replaceAll("表", "")}实体
- * @return {@link CommonResult<List<${table.entityName}>>}
+ * @return {@link CommonResult<List<${table.entityName}QueryVO>>}
  * @author  ${author}
  * @date ${date}
  */
@@ -68,7 +72,7 @@ private ${table.serviceName} ${serviceImplName};
     ##@ApiOperation(value = "$!{table.comment.replaceAll("表", "")}列表(全部)" )
 @GetMapping(value = "/${package.ModuleName}/${modeName}/list" )
 @ResponseBody
-public CommonResult<List<${table.entityName}>>list( ${table.entityName} request)throws Exception{
+public CommonResult<List<${table.entityName}QueryVO>> list( ${table.entityName}ListDTO request)throws Exception{
         return CommonResult.success(${serviceImplName}.list(request),"查询$!{table.comment.replaceAll("表", "")}列表成功" );
         }
 
@@ -77,20 +81,18 @@ public CommonResult<List<${table.entityName}>>list( ${table.entityName} request)
  * ${table.comment.replaceAll("表", "")}列表(分页)
  *
  * @param request $!{table.comment.replaceAll("表", "")}实体
- * @return {@link CommonResult<Page<${table.entityName}>>}
+ * @return {@link CommonResult<Page<${table.entityName}QueryVO>>}
  * @author  ${author}
  * @date ${date}
  */
 @Description("$!{cfg.apiMoudel}/$!{modeZhName}/查询$!{modeZhKongName}" )
 @SaCheckPermission(value = {"${package.ModuleName}:${modeName}:query" }, orRole = "admin" )
-@GetMapping(value = "/${package.ModuleName}/${modeName}/pages" )
+@GetMapping(value = "/${package.ModuleName}/${modeName}/page" )
 @ResponseBody
-public CommonResult<Page<${table.entityName}>>pages(
-    ${table.entityName} request,
-@RequestParam(defaultValue = "10" ) Integer pageSize,
-@RequestParam(defaultValue = "1" ) Integer pageNum
+public CommonResult<Page<${table.entityName}QueryVO>> page(
+    ${table.entityName}PageDTO request
         )throws Exception{
-        return CommonResult.success(${serviceImplName}.pages(request,pageSize,pageNum),"分页查询$!{table.comment.replaceAll(
+        return CommonResult.success(${serviceImplName}.page(request),"分页查询$!{table.comment.replaceAll(
         "表", "")}成功" );
         }
 
@@ -98,7 +100,7 @@ public CommonResult<Page<${table.entityName}>>pages(
  * ${table.comment.replaceAll("表", "")}详情
  *
  * @param id $!{table.comment.replaceAll("表", "")}id
- * @return {@link CommonResult<${table.entityName}>}
+ * @return {@link CommonResult<${table.entityName}QueryVO>}
  * @author  ${author}
  * @date ${date}
  */
@@ -106,7 +108,7 @@ public CommonResult<Page<${table.entityName}>>pages(
 @SaCheckPermission(value = {"${package.ModuleName}:${modeName}:query" }, orRole = "admin" )
 @GetMapping(value = "/${package.ModuleName}/${modeName}/details/{id}" )
 @ResponseBody
-public CommonResult<${table.entityName}> details(@PathVariable("id" ) @Validated({NotEmpty.class}) String id)throws Exception{
+public CommonResult<${table.entityName}QueryVO> details(@PathVariable("id" ) @Validated({NotBlank.class}) String id)throws Exception{
         return CommonResult.success(${serviceImplName}.details(id),"查询$!{table.comment.replaceAll("表", "")}详情成功" );
         }
 
@@ -123,7 +125,7 @@ public CommonResult<${table.entityName}> details(@PathVariable("id" ) @Validated
 @SaCheckPermission(value = {"${package.ModuleName}:${modeName}:delete" }, orRole = "admin" )
 @PostMapping(value = "/${package.ModuleName}/${modeName}/delete" )
 @ResponseBody
-public CommonResult<String> delete(@RequestParam @Validated({NotEmpty.class}) String ids)throws Exception{
+public CommonResult<String> delete(@RequestParam @Validated({NotBlank.class}) String ids)throws Exception{
         if(${serviceImplName}.delete(ids)){
         return CommonResult.success(null,"删除$!{table.comment.replaceAll("表", "")}成功" );
         }else{
@@ -142,7 +144,7 @@ public CommonResult<String> delete(@RequestParam @Validated({NotEmpty.class}) St
 @SaCheckPermission(value = {"${package.ModuleName}:${modeName}:edit" }, orRole = "admin" )
 @PostMapping(value = "/${package.ModuleName}/${modeName}/edit" )
 @ResponseBody
-public CommonResult<String> edit(@RequestBody @Validated   ${table.entityName} request)throws Exception{
+public CommonResult<String> edit(@RequestBody @Validated   ${table.entityName}EditDTO request)throws Exception{
         if(${serviceImplName}.edit(request)){
         return CommonResult.success(null,"修改$!{table.comment.replaceAll("表", "")}成功" );
         }else{
@@ -163,7 +165,7 @@ public CommonResult<String> edit(@RequestBody @Validated   ${table.entityName} r
 @SaCheckPermission(value = {"${package.ModuleName}:${modeName}:add" }, orRole = "admin" )
 @PostMapping(value = "/${package.ModuleName}/${modeName}/add" )
 @ResponseBody
-public CommonResult<String> add(@RequestBody @Validated  ${table.entityName} request)throws Exception{
+public CommonResult<String> add(@RequestBody @Validated  ${table.entityName}AddDTO request)throws Exception{
         if(${serviceImplName}.add(request)){
         return CommonResult.success(null,"新增$!{table.comment.replaceAll("表", "")}成功" );
         }else{

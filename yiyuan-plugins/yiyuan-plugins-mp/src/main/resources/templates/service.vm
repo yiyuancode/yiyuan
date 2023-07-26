@@ -1,4 +1,6 @@
 package ${package.Service};
+import ${cfg.apiParent}.${package.ModuleName}.vo.*;
+import ${cfg.apiParent}.${package.ModuleName}.dto.*;
 import icu.mhb.mybatisplus.plugln.core.JoinLambdaWrapper;
 import java.util.Date;
 import ${package.Entity}.${table.entityName};
@@ -23,33 +25,33 @@ public interface ${table.entityName}Service extends JoinIService<${table.entityN
 * ${table.comment.replaceAll("表", "")}列表(全部)
 *
 * @param request $!{table.comment.replaceAll("表", "")}实体
-* @return {@link List}
+* @return {@link List< ${table.entityName}QueryVO >}
 * @author  ${author}
 * @date ${date}
 */
-List< ${table.entityName} > list(${table.entityName} request)throws Exception;
+List< ${table.entityName}QueryVO > list(${table.entityName}ListDTO request)throws Exception;
 
 
 /**
 * ${table.comment.replaceAll("表", "")}列表(分页)
 *
 * @param request $!{table.comment.replaceAll("表", "")}实体
-* @return {@link Page}
+* @return {@link Page< ${table.entityName}QueryVO >}
 * @author  ${author}
 * @date ${date}
 */
-Page< ${table.entityName} > pages( ${table.entityName} request, Integer pageSize, Integer pageNum)throws Exception;
+Page< ${table.entityName}QueryVO > page( ${table.entityName}PageDTO request)throws Exception;
 
 
 /**
 * ${table.comment.replaceAll("表", "")}详情
 *
 * @param id $!{table.comment.replaceAll("表", "")}id
-* @return {@link ${table.entityName}}
+* @return {@link ${table.entityName}QueryVO}
 * @author  ${author}
 * @date ${date}
 */
-${table.entityName} details(String id)throws Exception;
+${table.entityName}QueryVO details(String id)throws Exception;
 
 
 /**
@@ -60,7 +62,7 @@ ${table.entityName} details(String id)throws Exception;
 * @author  ${author}
 * @date ${date}
 */
-${table.entityName} details(${table.entityName} request)throws Exception;
+${table.entityName}QueryVO details(${table.entityName} request)throws Exception;
 
 
 /**
@@ -93,7 +95,7 @@ boolean delete(${table.entityName} request) throws Exception;
 * @author  ${author}
 * @date ${date}
 */
-boolean edit(${table.entityName} request)throws Exception;
+boolean edit(${table.entityName}EditDTO request)throws Exception;
 
 
 /**
@@ -104,6 +106,6 @@ boolean edit(${table.entityName} request)throws Exception;
 * @author  ${author}
 * @date ${date}
 */
-boolean add(${table.entityName} request)throws Exception;
+boolean add(${table.entityName}AddDTO request)throws Exception;
 
 }

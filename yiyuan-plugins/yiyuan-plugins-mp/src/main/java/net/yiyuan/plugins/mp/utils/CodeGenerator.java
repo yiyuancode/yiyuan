@@ -173,8 +173,35 @@ public class CodeGenerator {
    * @date 2023-07-11
    */
   public static void getTableFiled(String inputTableName[], PackageConfig pc) throws Exception {
+    Map<String, String> mysqlToJavaTypeMap = new HashMap<>();
+    mysqlToJavaTypeMap.put("tinyint", "Byte");
+    mysqlToJavaTypeMap.put("smallint", "Short");
+    mysqlToJavaTypeMap.put("mediumint", "Integer");
+    mysqlToJavaTypeMap.put("int", "Integer");
+    mysqlToJavaTypeMap.put("integer", "Integer");
+    mysqlToJavaTypeMap.put("bigint", "Long");
+    mysqlToJavaTypeMap.put("float", "Float");
+    mysqlToJavaTypeMap.put("double", "Double");
+    mysqlToJavaTypeMap.put("decimal", "BigDecimal");
+    mysqlToJavaTypeMap.put("date", "Date");
+    mysqlToJavaTypeMap.put("datetime", "Date");
+    mysqlToJavaTypeMap.put("timestamp", "Timestamp");
+    mysqlToJavaTypeMap.put("time", "Time");
+    mysqlToJavaTypeMap.put("year", "Date");
+    mysqlToJavaTypeMap.put("char", "String");
+    mysqlToJavaTypeMap.put("varchar", "String");
+    mysqlToJavaTypeMap.put("tinytext", "String");
+    mysqlToJavaTypeMap.put("text", "String");
+    mysqlToJavaTypeMap.put("mediumtext", "String");
+    mysqlToJavaTypeMap.put("longtext", "String");
+    mysqlToJavaTypeMap.put("binary", "byte[]");
+    mysqlToJavaTypeMap.put("varbinary", "byte[]");
+    mysqlToJavaTypeMap.put("tinyblob", "byte[]");
+    mysqlToJavaTypeMap.put("blob", "byte[]");
+    mysqlToJavaTypeMap.put("mediumblob", "byte[]");
+    mysqlToJavaTypeMap.put("longblob", "byte[]");
     String hostSsh = "43.154.183.115";
-    int portSsh = 22;
+    int portSsh = 16920;
     String usernameSsh = "root";
     String passwordSsh = "Zy2308416";
     String commandSsh = "fy ";
@@ -188,9 +215,11 @@ public class CodeGenerator {
     DatabaseMetaData metaData = conn.getMetaData();
 
     for (String tableName : inputTableName) {
-      // List<Map<String, String>> tableColumns = new ArrayList<>();
-      //            ResultSet tables = metaData.getTables(null, null, null, new
-      // String[]{tableName});
+      // 定义生成基本增删改查的DTO
+      VelocityContext dtoContext = new VelocityContext();
+      // 定义dto字段的信息
+      List<Map<String, String>> dtoTableColumns = new ArrayList<>();
+
       ResultSet tables = metaData.getTables(null, null, tableName, new String[] {"TABLE"});
       String tableComment = "";
       while (tables.next()) {
@@ -213,19 +242,74 @@ public class CodeGenerator {
           System.out.println("表名注释：" + tableComment);
         }
 
+        dtoContext.put("className", StringUtilsPlus.convertToCamelCase(tableName));
+        dtoContext.put("tableComment", tableComment);
         // 处理表名及其注释信息
       }
+      // 获取表主键
+      ResultSet rsPrimary = metaData.getPrimaryKeys(null, null, tableName);
+      String columnNamePrimary = "";
+      while (rsPrimary.next()) {
+        columnNamePrimary = rsPrimary.getString("COLUMN_NAME");
+        System.out.println("Primary key column name: " + columnNamePrimary);
+      }
+
       ResultSet rs = metaData.getColumns(null, null, tableName, null);
+      // 批量翻译
+      //      while (rs.next()) {
+      //        String columnName = rs.getString("COLUMN_NAME");
+      //        String columnType = rs.getString("TYPE_NAME");
+      //        String columnComment = rs.getString("REMARKS");
+      //        boolean isNullable = rs.getInt("NULLABLE") == DatabaseMetaData.columnNullable;
+      //        String defaultValue = rs.getString("COLUMN_DEF");
+      //        // 生成枚举类
+      //        if (StrUtil.contains(columnComment, "#") && !StrUtil.contains(columnComment, "##"))
+      // {}
+      //      }
+
+      // rs = metaData.getColumns(null, null, tableName, null);
       while (rs.next()) {
+
         List<Map<String, String>> tableColumns = new ArrayList<>();
         String columnName = rs.getString("COLUMN_NAME");
         String columnType = rs.getString("TYPE_NAME");
         String columnComment = rs.getString("REMARKS");
+        boolean isNullable = rs.getInt("NULLABLE") == DatabaseMetaData.columnNullable;
+        String defaultValue = rs.getString("COLUMN_DEF");
+
         System.out.println("字段名：" + columnName);
         System.out.println("字段注释：" + columnComment);
         System.out.println("字段类型：" + columnType);
         System.out.println("字段类型columnName：" + StrUtil.toCamelCase(columnName).toUpperCase());
-        if (StrUtil.contains(columnComment, "#")) {
+        // 将所有字段全部封装到
+        Map<String, String> dtoColumnMap = new HashMap<>();
+        dtoColumnMap.put(
+            "columnName",
+            StringUtilsPlus.uncapitalize(StringUtilsPlus.convertToCamelCase(columnName)));
+        dtoColumnMap.put("columnType", columnType);
+        dtoColumnMap.put("columnComment", columnComment);
+        if (StringUtilsPlus.isEmpty(defaultValue)) {
+          dtoColumnMap.put("defaultValue", "NULL");
+        } else {
+          dtoColumnMap.put("defaultValue", defaultValue);
+        }
+
+        log.info("字段{}默认值{}", columnName, defaultValue);
+        if (isNullable) {
+          // 列允许为空
+          dtoColumnMap.put("isNullable", "0");
+        } else {
+          // 列不允许为空
+          dtoColumnMap.put("isNullable", "1");
+        }
+        // 设置主键
+        if (columnName.equals(columnNamePrimary)) {
+          dtoColumnMap.put("keyFlag", "true");
+        } else {
+          dtoColumnMap.put("keyFlag", "false");
+        }
+        // 生成枚举类
+        if (StrUtil.contains(columnComment, "#") && !StrUtil.contains(columnComment, "##")) {
           String[] columnCommentArray = columnComment.split("#");
           log.info("columnCommentArray{}", columnCommentArray);
           log.info("columnCommentArray{}", columnCommentArray[1]);
@@ -267,33 +351,32 @@ public class CodeGenerator {
                   + "Enum");
 
           context.put("tableColumns", tableColumns);
+          context.put("parentPck", pc.getParent());
+          context.put("moduleName", DEFAULT_MODULENAME);
           // 生成枚举文件
           createByVelocity(context);
-        }
-      }
 
-      //            VelocityContext context = new VelocityContext();
-      //            context.put("author", AUTHOR);
-      //            context.put("date", StringUtilsPlus.formatDateTime(LocalDateTime.now(),
-      // "yyyy-MM-dd" ));
-      //            context.put("tableComment", tableComment);
-      //            context.put("path", DEFAULT_OUT_PUT_DIR);
-      //            context.put("packagePath",
-      // StringUtilsPlus.convertPackageNameToPath(pc.getParent()));
-      //            context.put("packageName", pc);
-      //            context.put(
-      //                    "className",
-      //                    StringUtilsPlus.convertToCamelCase(tableName) + "Enum" );
-      //
-      ////            context.put(
-      ////                    "className",
-      ////                    StringUtilsPlus.convertToCamelCase(tableName)
-      ////                            + StringUtilsPlus.convertToCamelCase(columnName)
-      ////                            + "Enum");
-      //
-      //            context.put("tableColumns", tableColumns);
-      //            // 生成枚举文件
-      //            createByVelocity(context);
+          dtoColumnMap.put("propertyType", (String) context.get("className"));
+        } else {
+          dtoColumnMap.put(
+              "propertyType", mysqlToJavaTypeMap.get(StringUtilsPlus.toLowerCase(columnType)));
+        }
+        dtoTableColumns.add(dtoColumnMap);
+      }
+      dtoContext.put("author", AUTHOR);
+      dtoContext.put("date", StringUtilsPlus.formatDateTime(LocalDateTime.now(), "yyyy-MM-dd"));
+      dtoContext.put("dtoTableColumns", dtoTableColumns);
+      dtoContext.put("parentPack", DEFAULT_PARENT_PACK);
+      dtoContext.put("moduleName", DEFAULT_MODULENAME);
+      dtoContext.put("packagePath", StringUtilsPlus.convertPackageNameToPath(pc.getParent()));
+      dtoContext.put("path", DEFAULT_OUT_PUT_DIR);
+      dtoContext.put("parentPck", pc.getParent());
+      log.info("模板参数{}", dtoContext);
+      createAddDtoByVelocity(dtoContext);
+      createListDtoByVelocity(dtoContext);
+      createPageDtoByVelocity(dtoContext);
+      createEditDtoByVelocity(dtoContext);
+      createQueryVOByVelocity(dtoContext);
     }
   }
 
@@ -312,6 +395,19 @@ public class CodeGenerator {
         "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
     velocityEngine.init(prop);
 
+    String srcVoPath = context.get("path") + "/" + context.get("packagePath") + "/vo/";
+    String srcDtoPath = context.get("path") + "/" + context.get("packagePath") + "/dto/";
+    File voFolder = new File(srcVoPath);
+    if (!voFolder.exists()) {
+      // 如果文件夹不存在则创建它
+      voFolder.mkdirs();
+    }
+    File dtoFolder = new File(srcDtoPath);
+    if (!dtoFolder.exists()) {
+      // 如果文件夹不存在则创建它
+      dtoFolder.mkdirs();
+    }
+
     Template template = velocityEngine.getTemplate("templates\\enum.java.vm", "UTF-8");
     String srcEnumsPath = context.get("path") + "/" + context.get("packagePath") + "/enums/";
     log.info("srcEnumsPath{}", srcEnumsPath);
@@ -321,6 +417,250 @@ public class CodeGenerator {
       folder.mkdirs();
     }
     String filePath = srcEnumsPath + context.get("className") + ".java";
+    File file = new File(filePath);
+    if (!file.exists()) {
+      // 如果文件不存在则创建它
+      file.createNewFile();
+    }
+
+    FileWriter writer = new FileWriter(filePath);
+    template.merge(context, writer);
+    writer.flush();
+    writer.close();
+  }
+
+  /**
+   * 根据用户输入的表获取每张表所有字段信息
+   *
+   * @param
+   * @author 一源团队--花和尚
+   * @date 2023-07-11
+   */
+  public static void createAddDtoByVelocity(VelocityContext context) throws Exception {
+    VelocityEngine velocityEngine = new VelocityEngine();
+    Properties prop = new Properties();
+    prop.put(
+        "file.resource.loader.class",
+        "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
+    velocityEngine.init(prop);
+
+    String srcVoPath = context.get("path") + "/" + context.get("packagePath") + "/vo/";
+    String srcDtoPath = context.get("path") + "/" + context.get("packagePath") + "/dto/";
+    File voFolder = new File(srcVoPath);
+    if (!voFolder.exists()) {
+      // 如果文件夹不存在则创建它
+      voFolder.mkdirs();
+    }
+    File dtoFolder = new File(srcDtoPath);
+    if (!dtoFolder.exists()) {
+      // 如果文件夹不存在则创建它
+      dtoFolder.mkdirs();
+    }
+
+    Template template = velocityEngine.getTemplate("templates\\modelAddDTO.java.vm", "UTF-8");
+    String srcEnumsPath = context.get("path") + "/" + context.get("packagePath") + "/dto/";
+    log.info("srcEnumsPath{}", srcEnumsPath);
+    File folder = new File(srcEnumsPath);
+    if (!folder.exists()) {
+      // 如果文件夹不存在则创建它
+      folder.mkdirs();
+    }
+    String filePath = srcEnumsPath + context.get("className") + "AddDTO.java";
+    File file = new File(filePath);
+    if (!file.exists()) {
+      // 如果文件不存在则创建它
+      file.createNewFile();
+    }
+
+    FileWriter writer = new FileWriter(filePath);
+    template.merge(context, writer);
+    writer.flush();
+    writer.close();
+  }
+  /**
+   * 根据用户输入的表获取每张表所有字段信息
+   *
+   * @param
+   * @author 一源团队--花和尚
+   * @date 2023-07-11
+   */
+  public static void createListDtoByVelocity(VelocityContext context) throws Exception {
+    VelocityEngine velocityEngine = new VelocityEngine();
+    Properties prop = new Properties();
+    prop.put(
+        "file.resource.loader.class",
+        "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
+    velocityEngine.init(prop);
+
+    String srcVoPath = context.get("path") + "/" + context.get("packagePath") + "/vo/";
+    String srcDtoPath = context.get("path") + "/" + context.get("packagePath") + "/dto/";
+    File voFolder = new File(srcVoPath);
+    if (!voFolder.exists()) {
+      // 如果文件夹不存在则创建它
+      voFolder.mkdirs();
+    }
+    File dtoFolder = new File(srcDtoPath);
+    if (!dtoFolder.exists()) {
+      // 如果文件夹不存在则创建它
+      dtoFolder.mkdirs();
+    }
+
+    Template template = velocityEngine.getTemplate("templates\\modelListDTO.java.vm", "UTF-8");
+    String srcEnumsPath = context.get("path") + "/" + context.get("packagePath") + "/dto/";
+    log.info("srcEnumsPath{}", srcEnumsPath);
+    File folder = new File(srcEnumsPath);
+    if (!folder.exists()) {
+      // 如果文件夹不存在则创建它
+      folder.mkdirs();
+    }
+    String filePath = srcEnumsPath + context.get("className") + "ListDTO.java";
+    File file = new File(filePath);
+    if (!file.exists()) {
+      // 如果文件不存在则创建它
+      file.createNewFile();
+    }
+
+    FileWriter writer = new FileWriter(filePath);
+    template.merge(context, writer);
+    writer.flush();
+    writer.close();
+  }
+
+  /**
+   * 根据用户输入的表获取每张表所有字段信息
+   *
+   * @param
+   * @author 一源团队--花和尚
+   * @date 2023-07-11
+   */
+  public static void createPageDtoByVelocity(VelocityContext context) throws Exception {
+    VelocityEngine velocityEngine = new VelocityEngine();
+    Properties prop = new Properties();
+    prop.put(
+        "file.resource.loader.class",
+        "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
+    velocityEngine.init(prop);
+
+    String srcVoPath = context.get("path") + "/" + context.get("packagePath") + "/vo/";
+    String srcDtoPath = context.get("path") + "/" + context.get("packagePath") + "/dto/";
+    File voFolder = new File(srcVoPath);
+    if (!voFolder.exists()) {
+      // 如果文件夹不存在则创建它
+      voFolder.mkdirs();
+    }
+    File dtoFolder = new File(srcDtoPath);
+    if (!dtoFolder.exists()) {
+      // 如果文件夹不存在则创建它
+      dtoFolder.mkdirs();
+    }
+
+    Template template = velocityEngine.getTemplate("templates\\modelPageDTO.java.vm", "UTF-8");
+    String srcEnumsPath = context.get("path") + "/" + context.get("packagePath") + "/dto/";
+    log.info("srcEnumsPath{}", srcEnumsPath);
+    File folder = new File(srcEnumsPath);
+    if (!folder.exists()) {
+      // 如果文件夹不存在则创建它
+      folder.mkdirs();
+    }
+    String filePath = srcEnumsPath + context.get("className") + "PageDTO.java";
+    File file = new File(filePath);
+    if (!file.exists()) {
+      // 如果文件不存在则创建它
+      file.createNewFile();
+    }
+
+    FileWriter writer = new FileWriter(filePath);
+    template.merge(context, writer);
+    writer.flush();
+    writer.close();
+  }
+
+  /**
+   * 根据用户输入的表获取每张表所有字段信息
+   *
+   * @param
+   * @author 一源团队--花和尚
+   * @date 2023-07-11
+   */
+  public static void createEditDtoByVelocity(VelocityContext context) throws Exception {
+    VelocityEngine velocityEngine = new VelocityEngine();
+    Properties prop = new Properties();
+    prop.put(
+        "file.resource.loader.class",
+        "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
+    velocityEngine.init(prop);
+
+    String srcVoPath = context.get("path") + "/" + context.get("packagePath") + "/vo/";
+    String srcDtoPath = context.get("path") + "/" + context.get("packagePath") + "/dto/";
+    File voFolder = new File(srcVoPath);
+    if (!voFolder.exists()) {
+      // 如果文件夹不存在则创建它
+      voFolder.mkdirs();
+    }
+    File dtoFolder = new File(srcDtoPath);
+    if (!dtoFolder.exists()) {
+      // 如果文件夹不存在则创建它
+      dtoFolder.mkdirs();
+    }
+
+    Template template = velocityEngine.getTemplate("templates\\modelEditDTO.java.vm", "UTF-8");
+    String srcEnumsPath = context.get("path") + "/" + context.get("packagePath") + "/dto/";
+    log.info("srcEnumsPath{}", srcEnumsPath);
+    File folder = new File(srcEnumsPath);
+    if (!folder.exists()) {
+      // 如果文件夹不存在则创建它
+      folder.mkdirs();
+    }
+    String filePath = srcEnumsPath + context.get("className") + "EditDTO.java";
+    File file = new File(filePath);
+    if (!file.exists()) {
+      // 如果文件不存在则创建它
+      file.createNewFile();
+    }
+
+    FileWriter writer = new FileWriter(filePath);
+    template.merge(context, writer);
+    writer.flush();
+    writer.close();
+  }
+
+  /**
+   * 根据用户输入的表获取每张表所有字段信息
+   *
+   * @param
+   * @author 一源团队--花和尚
+   * @date 2023-07-11
+   */
+  public static void createQueryVOByVelocity(VelocityContext context) throws Exception {
+    VelocityEngine velocityEngine = new VelocityEngine();
+    Properties prop = new Properties();
+    prop.put(
+        "file.resource.loader.class",
+        "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
+    velocityEngine.init(prop);
+
+    String srcVoPath = context.get("path") + "/" + context.get("packagePath") + "/vo/";
+    String srcDtoPath = context.get("path") + "/" + context.get("packagePath") + "/dto/";
+    File voFolder = new File(srcVoPath);
+    if (!voFolder.exists()) {
+      // 如果文件夹不存在则创建它
+      voFolder.mkdirs();
+    }
+    File dtoFolder = new File(srcDtoPath);
+    if (!dtoFolder.exists()) {
+      // 如果文件夹不存在则创建它
+      dtoFolder.mkdirs();
+    }
+
+    Template template = velocityEngine.getTemplate("templates\\modelQueryVO.java.vm", "UTF-8");
+    String srcEnumsPath = context.get("path") + "/" + context.get("packagePath") + "/vo/";
+    log.info("srcEnumsPath{}", srcEnumsPath);
+    File folder = new File(srcEnumsPath);
+    if (!folder.exists()) {
+      // 如果文件夹不存在则创建它
+      folder.mkdirs();
+    }
+    String filePath = srcEnumsPath + context.get("className") + "QueryVO.java";
     File file = new File(filePath);
     if (!file.exists()) {
       // 如果文件不存在则创建它

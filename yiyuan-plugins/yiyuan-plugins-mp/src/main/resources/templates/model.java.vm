@@ -71,12 +71,12 @@ private static final long serialVersionUID=1L;
      * ${field.comment}
      * @date ${date}
      */
-    @TableId(value = "${field.propertyName}" , type = IdType.ASSIGN_UUID)
+    @TableId(value = "${field.propertyName}", type = IdType.ASSIGN_UUID)
         ## 普通字段
     #elseif(${field.fill})
         ## -----   存在字段填充设置   -----
         #if(${field.convert})
-        @TableField(value = "${field.annotationColumnName}" , fill = FieldFill.${field.fill})
+        @TableField(value = "${field.annotationColumnName}", fill = FieldFill.${field.fill})
         #else
         @TableField(fill = FieldFill.${field.fill})
         #end
@@ -106,8 +106,7 @@ private static final long serialVersionUID=1L;
     ##    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     ##    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     ##    #end
-    #if(${field.propertyType.indexOf("Date")}==-1&&${field.comment.indexOf("字典")}==-1&&${field.propertyName.indexOf(
-        "id")}==-1)
+    #if(${field.propertyType.indexOf("Date")}==-1&&${field.comment.indexOf("字典")}==-1&&${field.keyFlag}==-1)
     /**
      * ${field.comment}
      *
@@ -116,14 +115,13 @@ private static final long serialVersionUID=1L;
      * @date ${date}
      */
     #end
-    #if(${field.comment.indexOf("#")}!=-1&&${field.comment.indexOf("|")}!=-1&&${field.propertyName.indexOf(
-        "id")}==-1)
+    #if(${field.comment.indexOf("#")}!=-1&&${field.comment.indexOf("|")}!=-1&&${field.keyFlag})
         ##stringUtils.capitalizeFirstLetter($field.propertyName)
     private ${entity}$field.propertyName.substring(0, 1).toUpperCase()$field.propertyName.substring(1)Enum ${field.propertyName};
     #end
     #if(${field.comment.indexOf("#")}==-1&&${field.comment.indexOf("|")}==-1)
 
-        #if(${field.propertyName.equals("id")}||${field.propertyName.equals("parentId")})
+        #if(${field.keyFlag}||${field.propertyName.equals("parentId")})
         private ${field.propertyType} ${field.propertyName};
         #elseif(${field.propertyType.contains("String")})
         @TableField(condition = CustomSqlCondition.LIKE)
@@ -135,8 +133,7 @@ private static final long serialVersionUID=1L;
          * @author  ${author}
          * @date ${date}
          */
-        @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss" )
-        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss" , timezone = "GMT+8" )
+
             #if(${field.propertyName.equals("createTime")})
             @TableField(fill = FieldFill.INSERT)
             #elseif(${field.propertyName.equals("updateTime")})
@@ -150,20 +147,16 @@ private static final long serialVersionUID=1L;
          * @author  ${author}
          * @date ${date}
          */
-        @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss" )
-        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss" , timezone = "GMT+8" )
-        @TableField(value = "created_time" , condition = CustomSqlCondition.GET_EQUAL, select = false)
-        private ${field.propertyType} ${field.propertyName}Gte;
+        @TableField(value = "${field.name}", condition = CustomSqlCondition.START_EQUAL, select = false)
+        private ${field.propertyType} ${field.propertyName}Start;
         /**
          * ${field.comment}(查询结束时间)
          * @see ${field.propertyType}
          * @author  ${author}
          * @date ${date}
          */
-        @TableField(value = "created_time" , condition = CustomSqlCondition.LT_EQUAL, select = false)
-        @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss" )
-        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss" , timezone = "GMT+8" )
-        private ${field.propertyType} ${field.propertyName}Lt;
+        @TableField(value = "${field.name}", condition = CustomSqlCondition.END_EQUAL, select = false)
+        private ${field.propertyType} ${field.propertyName}End;
         #else
 
             #if(${field.propertyName.equals("createUser")})
@@ -208,7 +201,7 @@ private static final long serialVersionUID=1L;
 ## --end of #if(!${entityLombokModel})--
 #if(${entityColumnConstant})
     #foreach($field in ${table.fields})
-    public static final String ${field.name.toUpperCase()} ="${field.name}" ;
+    public static final String ${field.name.toUpperCase()} ="${field.name}";
     #end
 #end
 #if(${activeRecord})

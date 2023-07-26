@@ -11,7 +11,7 @@ public class CustomSqlCondition extends SqlCondition {
    * @author 一源团队-花和尚
    * @date 2023/07/14
    */
-  public static final String GET = "%s <![CDATA[ > ]]> #{%s} ";
+  public static final String START = "%s <![CDATA[ > ]]> #{%s} ";
   /**
    * 大于平等
    *
@@ -19,7 +19,7 @@ public class CustomSqlCondition extends SqlCondition {
    * @author 一源团队-花和尚
    * @date 2023/07/14
    */
-  public static final String GET_EQUAL = "%s <![CDATA[ >= ]]> #{%s}";
+  public static final String START_EQUAL = "%s <![CDATA[ >= ]]> #{%s}";
 
   /**
    * 小于
@@ -28,7 +28,7 @@ public class CustomSqlCondition extends SqlCondition {
    * @author 一源团队-花和尚
    * @date 2023/07/14
    */
-  public static final String LT = "%s  <![CDATA[ < ]]> #{%s}";
+  public static final String END = "%s  <![CDATA[ < ]]> #{%s}";
   /**
    * 小于等于
    *
@@ -36,5 +36,5 @@ public class CustomSqlCondition extends SqlCondition {
    * @author 一源团队-花和尚
    * @date 2023/07/14
    */
-  public static final String LT_EQUAL = "%s <![CDATA[ <= ]]> #{%s}";
+  public static final String END_EQUAL = "%s <![CDATA[ <= ]]> #{%s}";
 }

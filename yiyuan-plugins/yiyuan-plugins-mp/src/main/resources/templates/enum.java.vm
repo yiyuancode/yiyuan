@@ -1,4 +1,4 @@
-package net.yiyuan.core.sys.enums;
+package ${parentPck}.${moduleName}.enums;
 
 import com.baomidou.mybatisplus.annotation.EnumValue;
 import com.baomidou.mybatisplus.annotation.IEnum;
