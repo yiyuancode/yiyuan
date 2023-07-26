@@ -37,6 +37,19 @@ public class CodeGenerator {
   private static String DEFAULT_PARENT_PACK = "com.example.ams.modules";
   private static String DEFAULT_MODULENAME = "";
   private static String AUTHOR = "";
+  private static String MYSQL_URL = "jdbc:mysql://43.154.183.115:40020/admin_dev?serverTimezone=Asia/Shanghai";
+  private static String MYSQL_USERNAME ="root";
+  private static String MYSQL_PASSWORD ="123456";
+
+  private static String SSH_URL ="106.54.87.159";
+  private static int SSH_PORT =22;
+  private static String SSH_USERNAME ="root";
+  private static String SSH_PASSWORD ="Zy2308416";
+  private static String SSH_COMMAND_FY ="fy ";
+
+
+
+
 
   /** 读取控制台内容 */
   public static String scanner(String tip) {
@@ -119,11 +132,11 @@ public class CodeGenerator {
     mpg.setCfg(cfg);
     // 数据源配置
     DataSourceConfig dsc = new DataSourceConfig();
-    dsc.setUrl("jdbc:mysql://43.154.183.115:40020/admin_dev?serverTimezone=Asia/Shanghai");
+    dsc.setUrl(MYSQL_URL);
     // dsc.setSchemaName("public");
     dsc.setDriverName("com.mysql.cj.jdbc.Driver");
-    dsc.setUsername("root");
-    dsc.setPassword("123456");
+    dsc.setUsername(MYSQL_USERNAME);
+    dsc.setPassword(MYSQL_PASSWORD);
     mpg.setDataSource(dsc);
     // 包配置
     PackageConfig pc = new PackageConfig();
@@ -200,17 +213,10 @@ public class CodeGenerator {
     mysqlToJavaTypeMap.put("blob", "byte[]");
     mysqlToJavaTypeMap.put("mediumblob", "byte[]");
     mysqlToJavaTypeMap.put("longblob", "byte[]");
-    String hostSsh = "43.154.183.115";
-    int portSsh = 16920;
-    String usernameSsh = "root";
-    String passwordSsh = "Zy2308416";
-    String commandSsh = "fy ";
 
-    String url = "jdbc:mysql://43.154.183.115:40020/admin_dev?serverTimezone=Asia/Shanghai";
-    String username = "root";
-    String password = "123456";
+
     //    String tableName = "user";
-    Connection conn = DriverManager.getConnection(url, username, password);
+    Connection conn = DriverManager.getConnection(MYSQL_URL, MYSQL_USERNAME, MYSQL_PASSWORD);
     // 获取 DatabaseMetaData 对象
     DatabaseMetaData metaData = conn.getMetaData();
 
@@ -327,7 +333,7 @@ public class CodeGenerator {
             String filed =
                 StringUtilsPlus.trimAndFormatString(
                         SshUtil.executeScript(
-                            hostSsh, portSsh, usernameSsh, passwordSsh, commandSsh + kvArray[1]))
+                            SSH_URL, SSH_PORT, SSH_USERNAME, SSH_PASSWORD, SSH_COMMAND_FY + kvArray[1]))
                     .toUpperCase();
 
             columnMap.put("filed", filed);
