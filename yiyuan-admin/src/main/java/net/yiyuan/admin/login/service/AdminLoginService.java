@@ -13,25 +13,23 @@ import net.yiyuan.core.sys.model.SysTenant;
  * @date 2023-07-27
  */
 public interface AdminLoginService extends JoinIService<SysTenant> {
-    
-    /**
-     * 账号密码登录
-     *
-     * @param request
-     * @return {@link AccountLoginVo }
-     * @author 一源团队--花和尚
-     * @date 2023-07-27
-     */
-    AccountLoginVo accountLogin(AccountLoginDTO request) throws Exception;
-    
-    /**
-     * 账号密码登录
-     *
-     * @return {@link LoginGetUserInfoVo }
-     * @author 一源团队--花和尚
-     * @date 2023-07-27
-     */
-    LoginGetUserInfoVo getUserInfo() throws Exception;
-    
-    
+
+  /**
+   * 账号密码登录
+   *
+   * @param request
+   * @return {@link AccountLoginVo }
+   * @author 一源团队--花和尚
+   * @date 2023-07-27
+   */
+  AccountLoginVo accountLogin(AccountLoginDTO request) throws Exception;
+
+  /**
+   * 账号密码登录
+   *
+   * @return {@link LoginGetUserInfoVo }
+   * @author 一源团队--花和尚
+   * @date 2023-07-27
+   */
+  LoginGetUserInfoVo getUserInfo() throws Exception;
 }

@@ -71,12 +71,12 @@ private static final long serialVersionUID=1L;
      * ${field.comment}
      * @date ${date}
      */
-    @TableId(value = "${field.propertyName}", type = IdType.ASSIGN_UUID)
+    @TableId(value = "${field.propertyName}" , type = IdType.ASSIGN_UUID)
         ## 普通字段
     #elseif(${field.fill})
         ## -----   存在字段填充设置   -----
         #if(${field.convert})
-        @TableField(value = "${field.annotationColumnName}", fill = FieldFill.${field.fill})
+        @TableField(value = "${field.annotationColumnName}" , fill = FieldFill.${field.fill})
         #else
         @TableField(fill = FieldFill.${field.fill})
         #end
@@ -165,7 +165,7 @@ private static final long serialVersionUID=1L;
          * @author  ${author}
          * @date ${date}
          */
-        @TableField(value = "${field.name}", condition = CustomSqlCondition.START_EQUAL, select = false)
+        @TableField(value = "${field.name}" , condition = CustomSqlCondition.START_EQUAL, select = false)
         private ${field.propertyType} ${field.propertyName}Start;
         /**
          * ${field.comment}(查询结束时间)
@@ -173,7 +173,7 @@ private static final long serialVersionUID=1L;
          * @author  ${author}
          * @date ${date}
          */
-        @TableField(value = "${field.name}", condition = CustomSqlCondition.END_EQUAL, select = false)
+        @TableField(value = "${field.name}" , condition = CustomSqlCondition.END_EQUAL, select = false)
         private ${field.propertyType} ${field.propertyName}End;
         #else
 

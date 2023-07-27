@@ -51,132 +51,135 @@ public List< ${table.entityName}QueryVO > list(${table.entityName}ListDTO reques
 ${table.entityName} po = new ${table.entityName}();
 BeanUtilsPlus.copy(request, po);
 JoinLambdaWrapper<${table.entityName}> wrapper = new JoinLambdaWrapper<>(po);
-    List<${table.entityName}QueryVO> voList = joinList(wrapper, ${table.entityName}QueryVO.class);
-##List<${table.entityName}QueryVO> voList = BeanUtilsPlus.copyToList(list, ${table.entityName}QueryVO.class);
+List
+<${table.entityName}QueryVO> voList = joinList(wrapper, ${table.entityName}QueryVO.class);
+    ##List<${table.entityName}QueryVO> voList = BeanUtilsPlus.copyToList(list, ${table.entityName}QueryVO.class);
 
-return voList;
-}
+    return voList;
+    }
 
 
-/**
-* ${table.comment.replaceAll("表", "")}列表(分页)
-*
-* @param request $!{table.comment.replaceAll("表", "")}实体
-* @return {@link Page< ${table.entityName}QueryVO >}
-* @author  ${author}
-* @date ${date}
-*/
-@Override
-public Page< ${table.entityName}QueryVO > page(${table.entityName}PageDTO request)throws Exception{
+    /**
+    * ${table.comment.replaceAll("表", "")}列表(分页)
+    *
+    * @param request $!{table.comment.replaceAll("表", "")}实体
+    * @return {@link Page< ${table.entityName}QueryVO >}
+    * @author  ${author}
+    * @date ${date}
+    */
+    @Override
+    public Page< ${table.entityName}QueryVO > page(${table.entityName}PageDTO request)throws Exception{
     ${table.entityName} po = new ${table.entityName}();
     BeanUtilsPlus.copy(request, po);
     JoinLambdaWrapper<${table.entityName}> wrapper = new JoinLambdaWrapper<>(po);
-##    Page<${table.entityName}> page = joinPage(new Page<>(request.getPageNum(), request.getPageSize()), wrapper, ${table.entityName}.class);
-##    Page<${table.entityName}QueryVO> voPage =new Page<>();
-##    BeanUtilsPlus.copy(page,voPage);
-    Page<${table.entityName}QueryVO> voPage = joinPage(new Page<>(request.getPageNum(), request.getPageSize()), wrapper, ${table.entityName}QueryVO.class);
-    return voPage;
-}
+    ##    Page<${table.entityName}> page = joinPage(new Page<>(request.getPageNum(), request.getPageSize()), wrapper, ${table.entityName}.class);
+    ##    Page<${table.entityName}QueryVO> voPage =new Page<>();
+    ##    BeanUtilsPlus.copy(page,voPage);
+    Page
+    <${table.entityName}QueryVO> voPage = joinPage(new Page<>(request.getPageNum(), request.getPageSize()),
+        wrapper, ${table.entityName}QueryVO.class);
+        return voPage;
+        }
 
 
-/**
-* ${table.comment.replaceAll("表", "")}详情
-*
-* @param id $!{table.comment.replaceAll("表", "")}id
-* @return {@link ${table.entityName}QueryVO}
-* @author  ${author}
-* @date ${date}
-*/
-@Override
-public ${table.entityName}QueryVO details(String id)throws Exception{
+        /**
+        * ${table.comment.replaceAll("表", "")}详情
+        *
+        * @param id $!{table.comment.replaceAll("表", "")}id
+        * @return {@link ${table.entityName}QueryVO}
+        * @author  ${author}
+        * @date ${date}
+        */
+        @Override
+        public ${table.entityName}QueryVO details(String id)throws Exception{
         ${table.entityName} po = new ${table.entityName}();
         po.setId(id);
         JoinLambdaWrapper<${table.entityName}> wrapper = new JoinLambdaWrapper<>(po);
         ${table.entityName}QueryVO voBean = joinGetOne(wrapper, ${table.entityName}QueryVO.class);
         return voBean;
-}
+        }
 
 
-/**
-* ${table.comment.replaceAll("表", "")}详情
-*
-* @param request $!{table.comment.replaceAll("表", "")}实体
-* @return {@link ${table.entityName}}
-* @author  ${author}
-* @date ${date}
-*/
-@Override
-public ${table.entityName}QueryVO details(${table.entityName} request)throws Exception{
+        /**
+        * ${table.comment.replaceAll("表", "")}详情
+        *
+        * @param request $!{table.comment.replaceAll("表", "")}实体
+        * @return {@link ${table.entityName}}
+        * @author  ${author}
+        * @date ${date}
+        */
+        @Override
+        public ${table.entityName}QueryVO details(${table.entityName} request)throws Exception{
 
-JoinLambdaWrapper<${table.entityName}> wrapper = new JoinLambdaWrapper<>(request);
+        JoinLambdaWrapper<${table.entityName}> wrapper = new JoinLambdaWrapper<>(request);
         ${table.entityName}QueryVO voBean = joinGetOne(wrapper, ${table.entityName}QueryVO.class);
-return voBean;
-}
+        return voBean;
+        }
 
 
-/**
-* 删除${table.comment.replaceAll("表", "")}(支持批量)
-*
-* @param ids $!{table.comment.replaceAll("表", "")}id(多个逗号分割)
-* @return {@link boolean}
-* @author  ${author}
-* @date ${date}
-*/
+        /**
+        * 删除${table.comment.replaceAll("表", "")}(支持批量)
+        *
+        * @param ids $!{table.comment.replaceAll("表", "")}id(多个逗号分割)
+        * @return {@link boolean}
+        * @author  ${author}
+        * @date ${date}
+        */
 
-@Override
-public boolean delete(String ids) throws Exception{
-return removeByIds(Arrays.asList(ids.split(",")));
-}
+        @Override
+        public boolean delete(String ids) throws Exception{
+        return removeByIds(Arrays.asList(ids.split(",")));
+        }
 
-/**
-* 批量删除${table.comment.replaceAll("表", "")}(根据同一属性,针对中间表)
-*
-* @param request $!{table.comment.replaceAll("表", "")}实体
-* @return {@link boolean}
-* @author  ${author}
-* @date ${date}
-*/
-@Override
-public boolean delete(${table.entityName} request) throws Exception {
-JoinLambdaWrapper<${table.entityName}> wrapper = new JoinLambdaWrapper<>(request);
-return remove(wrapper);
-}
+        /**
+        * 批量删除${table.comment.replaceAll("表", "")}(根据同一属性,针对中间表)
+        *
+        * @param request $!{table.comment.replaceAll("表", "")}实体
+        * @return {@link boolean}
+        * @author  ${author}
+        * @date ${date}
+        */
+        @Override
+        public boolean delete(${table.entityName} request) throws Exception {
+        JoinLambdaWrapper<${table.entityName}> wrapper = new JoinLambdaWrapper<>(request);
+        return remove(wrapper);
+        }
 
-/**
-* 编辑${table.comment.replaceAll("表", "")}
-*
-* @param request $!{table.comment.replaceAll("表", "")}实体
-* @return {@link boolean}
-* @author  ${author}
-* @date ${date}
-*/
+        /**
+        * 编辑${table.comment.replaceAll("表", "")}
+        *
+        * @param request $!{table.comment.replaceAll("表", "")}实体
+        * @return {@link boolean}
+        * @author  ${author}
+        * @date ${date}
+        */
 
-@Override
-public boolean edit(${table.entityName}EditDTO request)throws Exception{
+        @Override
+        public boolean edit(${table.entityName}EditDTO request)throws Exception{
         ${table.entityName} po = new ${table.entityName}();
         BeanUtilsPlus.copy(request, po);
         JoinLambdaWrapper<${table.entityName}> wrapper = new JoinLambdaWrapper<>(po);
-##        boolean result = updateById(po);
+        ##        boolean result = updateById(po);
         return updateById(po);
-}
+        }
 
 
-/**
-* 新增${table.comment.replaceAll("表", "")}
-*
-* @param request $!{table.comment.replaceAll("表", "")}实体
-* @return {@link boolean}
-* @author  ${author}
-* @date ${date}
-*/
+        /**
+        * 新增${table.comment.replaceAll("表", "")}
+        *
+        * @param request $!{table.comment.replaceAll("表", "")}实体
+        * @return {@link boolean}
+        * @author  ${author}
+        * @date ${date}
+        */
 
-@Override
-public boolean add(${table.entityName}AddDTO request)throws Exception{
+        @Override
+        public boolean add(${table.entityName}AddDTO request)throws Exception{
         ${table.entityName} po = new ${table.entityName}();
         BeanUtilsPlus.copy(request, po);
-##        boolean result = save(po);
+        ##        boolean result = save(po);
         return save(po);
 
-}
-}
+        }
+        }
 

@@ -2,7 +2,6 @@ package net.yiyuan.plugins.mp.config;
 
 import cn.dev33.satoken.stp.StpUtil;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
-import net.yiyuan.common.utils.StringUtilsPlus;
 import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.stereotype.Component;
 

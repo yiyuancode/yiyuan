@@ -13,14 +13,11 @@ import java.io.Serializable;
 @Data
 public class AccountLoginVo implements Serializable {
 
-
-    /**
-     * token
-     *
-     * @author 一源团队--花和尚
-     * @date 2023-07-27
-     */
-    private String token;
-
-
+  /**
+   * token
+   *
+   * @author 一源团队--花和尚
+   * @date 2023-07-27
+   */
+  private String token;
 }

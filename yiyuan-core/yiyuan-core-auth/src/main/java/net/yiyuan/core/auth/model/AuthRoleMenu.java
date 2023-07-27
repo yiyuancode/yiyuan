@@ -17,131 +17,118 @@ import java.util.Date;
  * @date 2023-07-27
  */
 @Data
-
 public class AuthRoleMenu implements Serializable {
-    private static final long serialVersionUID = 1L;
-    
-    /**
-     * 主键
-     *
-     * @date 2023-07-27
-     */
-    @TableId(value = "id", type = IdType.ASSIGN_UUID)
-    
-    
-    /**
-     * 主键
-     * @see String
-     * @author 一源团队-花和尚
-     * @date 2023-07-27
-     */
-    private String id;
-    
-    
-    /**
-     * 角色ID
-     *
-     * @author 一源团队-花和尚
-     * @date 2023-07-27
-     * @see String
-     */
-    @TableField(condition = CustomSqlCondition.LIKE)
-    private String roleId;
-    
-    
-    /**
-     * 菜单ID
-     *
-     * @author 一源团队-花和尚
-     * @date 2023-07-27
-     * @see String
-     */
-    @TableField(condition = CustomSqlCondition.LIKE)
-    private String menuId;
-    
-    
-    /**
-     * 修改时间
-     *
-     * @author 一源团队-花和尚
-     * @date 2023-07-27
-     * @see Date
-     */
-    
-    @TableField(fill = FieldFill.INSERT_UPDATE)
-    
-    private Date updateTime;
-    /**
-     * 修改时间(查询开始时间)
-     *
-     * @author 一源团队-花和尚
-     * @date 2023-07-27
-     * @see Date
-     */
-    @TableField(value = "update_time", condition = CustomSqlCondition.START_EQUAL, select = false)
-    private Date updateTimeStart;
-    /**
-     * 修改时间(查询结束时间)
-     *
-     * @author 一源团队-花和尚
-     * @date 2023-07-27
-     * @see Date
-     */
-    @TableField(value = "update_time", condition = CustomSqlCondition.END_EQUAL, select = false)
-    private Date updateTimeEnd;
-    
-    
-    /**
-     * 创建时间
-     *
-     * @author 一源团队-花和尚
-     * @date 2023-07-27
-     * @see Date
-     */
-    
-    @TableField(fill = FieldFill.INSERT)
-    
-    private Date createTime;
-    /**
-     * 创建时间(查询开始时间)
-     *
-     * @author 一源团队-花和尚
-     * @date 2023-07-27
-     * @see Date
-     */
-    @TableField(value = "create_time", condition = CustomSqlCondition.START_EQUAL, select = false)
-    private Date createTimeStart;
-    /**
-     * 创建时间(查询结束时间)
-     *
-     * @author 一源团队-花和尚
-     * @date 2023-07-27
-     * @see Date
-     */
-    @TableField(value = "create_time", condition = CustomSqlCondition.END_EQUAL, select = false)
-    private Date createTimeEnd;
-    
-    
-    /**
-     * 创建人
-     *
-     * @author 一源团队-花和尚
-     * @date 2023-07-27
-     * @see String
-     */
-    @TableField(condition = CustomSqlCondition.LIKE)
-    private String createUser;
-    
-    
-    /**
-     * 修改人
-     *
-     * @author 一源团队-花和尚
-     * @date 2023-07-27
-     * @see String
-     */
-    @TableField(condition = CustomSqlCondition.LIKE)
-    private String updateUser;
-    
-    
+  private static final long serialVersionUID = 1L;
+
+  /**
+   * 主键
+   *
+   * @date 2023-07-27
+   */
+  @TableId(value = "id", type = IdType.ASSIGN_UUID)
+
+  /**
+   * 主键
+   *
+   * @see String
+   * @author 一源团队-花和尚
+   * @date 2023-07-27
+   */
+  private String id;
+
+  /**
+   * 角色ID
+   *
+   * @author 一源团队-花和尚
+   * @date 2023-07-27
+   * @see String
+   */
+  @TableField(condition = CustomSqlCondition.LIKE)
+  private String roleId;
+
+  /**
+   * 菜单ID
+   *
+   * @author 一源团队-花和尚
+   * @date 2023-07-27
+   * @see String
+   */
+  @TableField(condition = CustomSqlCondition.LIKE)
+  private String menuId;
+
+  /**
+   * 修改时间
+   *
+   * @author 一源团队-花和尚
+   * @date 2023-07-27
+   * @see Date
+   */
+  @TableField(fill = FieldFill.INSERT_UPDATE)
+  private Date updateTime;
+  /**
+   * 修改时间(查询开始时间)
+   *
+   * @author 一源团队-花和尚
+   * @date 2023-07-27
+   * @see Date
+   */
+  @TableField(value = "update_time", condition = CustomSqlCondition.START_EQUAL, select = false)
+  private Date updateTimeStart;
+  /**
+   * 修改时间(查询结束时间)
+   *
+   * @author 一源团队-花和尚
+   * @date 2023-07-27
+   * @see Date
+   */
+  @TableField(value = "update_time", condition = CustomSqlCondition.END_EQUAL, select = false)
+  private Date updateTimeEnd;
+
+  /**
+   * 创建时间
+   *
+   * @author 一源团队-花和尚
+   * @date 2023-07-27
+   * @see Date
+   */
+  @TableField(fill = FieldFill.INSERT)
+  private Date createTime;
+  /**
+   * 创建时间(查询开始时间)
+   *
+   * @author 一源团队-花和尚
+   * @date 2023-07-27
+   * @see Date
+   */
+  @TableField(value = "create_time", condition = CustomSqlCondition.START_EQUAL, select = false)
+  private Date createTimeStart;
+  /**
+   * 创建时间(查询结束时间)
+   *
+   * @author 一源团队-花和尚
+   * @date 2023-07-27
+   * @see Date
+   */
+  @TableField(value = "create_time", condition = CustomSqlCondition.END_EQUAL, select = false)
+  private Date createTimeEnd;
+
+  /**
+   * 创建人
+   *
+   * @author 一源团队-花和尚
+   * @date 2023-07-27
+   * @see String
+   */
+  @TableField(condition = CustomSqlCondition.LIKE)
+  private String createUser;
+
+  /**
+   * 修改人
+   *
+   * @author 一源团队-花和尚
+   * @date 2023-07-27
+   * @see String
+   */
+  @TableField(condition = CustomSqlCondition.LIKE)
+  private String updateUser;
 }

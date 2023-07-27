@@ -28,75 +28,70 @@ import java.util.stream.Collectors;
 @Component
 public class AdminStpInterfaceImpl implements StpInterface {
 
-    @Resource
-    private AuthAdminService authAdminService;
+  @Resource private AuthAdminService authAdminService;
 
-    @Resource
-    private AuthRoleService authRoleService;
+  @Resource private AuthRoleService authRoleService;
 
-    @Resource
-    private AuthAdminRoleService authAdminRoleService;
+  @Resource private AuthAdminRoleService authAdminRoleService;
 
-    @Resource
-    private AuthRoleMenuService authRoleMenuService;
+  @Resource private AuthRoleMenuService authRoleMenuService;
 
-    // 返回一个账号所拥有的权限码集合
-    @Override
-    public List<String> getPermissionList(Object loginId, String loginType) {
+  // 返回一个账号所拥有的权限码集合
+  @Override
+  public List<String> getPermissionList(Object loginId, String loginType) {
 
-        // 1. 声明权限码集合
-        List<String> permissionList = new ArrayList<>();
-        List<String> roleList = getRoleList(loginId, loginType);
-       
+    // 1. 声明权限码集合
+    List<String> permissionList = new ArrayList<>();
+    List<String> roleList = getRoleList(loginId, loginType);
 
-        // 包含平台管理员角色 不用查询权限表达式了
-        if (roleList.contains("admin" )) {
-            return permissionList;
-        }
-
-        // 从数据库查询这个角色所拥有的权限列表
-        JoinLambdaWrapper<AuthAdminRole> wrapper = new JoinLambdaWrapper<>(AuthAdminRole.class);
-        wrapper.eq(AuthAdminRole::getUserId, loginId);
-        wrapper.select(AuthAdminRole::getRoleId);
-        wrapper
-                .leftJoin(AuthRole.class, AuthRole::getId, AuthAdminRole::getRoleId)
-                .select(AuthRole::getId, AuthRole::getCode)
-                .end();
-        wrapper
-                .leftJoin(AuthRoleMenu.class, AuthRoleMenu::getRoleId, AuthRole::getId)
-                .select(AuthRoleMenu::getMenuId)
-                .end();
-        wrapper
-                .leftJoin(SysMenu.class, SysMenu::getId, AuthRoleMenu::getMenuId)
-                .select(SysMenu::getPermission)
-                .end();
-        List<SysMenu> roleMenuList = authAdminRoleService.joinList(wrapper, SysMenu.class);
-        List<String> rolePermissionList =
-                roleMenuList.stream().map(p -> p.getPermission()).collect(Collectors.toList());
-        permissionList.addAll(rolePermissionList);
-        log.info("登录账号所有权限:{}", permissionList);
-        // 3. 返回权限码集合
-        return permissionList;
+    // 包含平台管理员角色 不用查询权限表达式了
+    if (roleList.contains("admin")) {
+      return permissionList;
     }
 
-    // 返回一个账号所拥有的角色标识集合
-    @Override
-    public List<String> getRoleList(Object loginId, String loginType) {
+    // 从数据库查询这个角色所拥有的权限列表
+    JoinLambdaWrapper<AuthAdminRole> wrapper = new JoinLambdaWrapper<>(AuthAdminRole.class);
+    wrapper.eq(AuthAdminRole::getUserId, loginId);
+    wrapper.select(AuthAdminRole::getRoleId);
+    wrapper
+        .leftJoin(AuthRole.class, AuthRole::getId, AuthAdminRole::getRoleId)
+        .select(AuthRole::getId, AuthRole::getCode)
+        .end();
+    wrapper
+        .leftJoin(AuthRoleMenu.class, AuthRoleMenu::getRoleId, AuthRole::getId)
+        .select(AuthRoleMenu::getMenuId)
+        .end();
+    wrapper
+        .leftJoin(SysMenu.class, SysMenu::getId, AuthRoleMenu::getMenuId)
+        .select(SysMenu::getPermission)
+        .end();
+    List<SysMenu> roleMenuList = authAdminRoleService.joinList(wrapper, SysMenu.class);
+    List<String> rolePermissionList =
+        roleMenuList.stream().map(p -> p.getPermission()).collect(Collectors.toList());
+    permissionList.addAll(rolePermissionList);
+    log.info("登录账号所有权限:{}", permissionList);
+    // 3. 返回权限码集合
+    return permissionList;
+  }
 
-        JoinLambdaWrapper<AuthAdminRole> wrapper = new JoinLambdaWrapper<>(AuthAdminRole.class);
-        wrapper.eq(AuthAdminRole::getUserId, loginId);
-        wrapper
-                .leftJoin(AuthRole.class, AuthRole::getId, AuthAdminRole::getRoleId)
-                .select(AuthRole::getId, AuthRole::getCode)
-                .end();
-        List<AuthRole> authRoles = authAdminRoleService.joinList(wrapper, AuthRole.class);
-        List<String> rolesCodeList =
-                //        authRoles.stream().map(p -> p.getId() + "-" +
-                // p.getCode()).collect(Collectors.toList());
-                authRoles.stream().map(p -> p.getCode()).collect(Collectors.toList());
-        //
-        log.info("登录账号所有角色:{}", rolesCodeList);
-//        rolesCodeList.add("admin" );
-        return rolesCodeList;
-    }
+  // 返回一个账号所拥有的角色标识集合
+  @Override
+  public List<String> getRoleList(Object loginId, String loginType) {
+
+    JoinLambdaWrapper<AuthAdminRole> wrapper = new JoinLambdaWrapper<>(AuthAdminRole.class);
+    wrapper.eq(AuthAdminRole::getUserId, loginId);
+    wrapper
+        .leftJoin(AuthRole.class, AuthRole::getId, AuthAdminRole::getRoleId)
+        .select(AuthRole::getId, AuthRole::getCode)
+        .end();
+    List<AuthRole> authRoles = authAdminRoleService.joinList(wrapper, AuthRole.class);
+    List<String> rolesCodeList =
+        //        authRoles.stream().map(p -> p.getId() + "-" +
+        // p.getCode()).collect(Collectors.toList());
+        authRoles.stream().map(p -> p.getCode()).collect(Collectors.toList());
+    //
+    log.info("登录账号所有角色:{}", rolesCodeList);
+    //        rolesCodeList.add("admin" );
+    return rolesCodeList;
+  }
 }

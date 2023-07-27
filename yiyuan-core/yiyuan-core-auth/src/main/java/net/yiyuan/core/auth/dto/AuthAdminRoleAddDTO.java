@@ -13,43 +13,30 @@ import java.io.Serializable;
  */
 @Data
 public class AuthAdminRoleAddDTO implements Serializable {
-    
-    
-    /**
-     * 用户ID
-     *
-     * @author 一源团队--花和尚
-     * @date 2023-07-27
-     */
-    
-    @NotBlank(message = "用户ID不能为空" )
-    
-    
-    private String userId;
-    
-    
-    /**
-     * 角色ID
-     *
-     * @author 一源团队--花和尚
-     * @date 2023-07-27
-     */
-    
-    @NotBlank(message = "角色ID不能为空" )
-    
-    
-    private String roleId;
-    
-    
-    /**
-     * 租户id
-     *
-     * @author 一源团队--花和尚
-     * @date 2023-07-27
-     */
-    
-    
-    private String tenantId;
-    
-    
+
+  /**
+   * 用户ID
+   *
+   * @author 一源团队--花和尚
+   * @date 2023-07-27
+   */
+  @NotBlank(message = "用户ID不能为空")
+  private String userId;
+
+  /**
+   * 角色ID
+   *
+   * @author 一源团队--花和尚
+   * @date 2023-07-27
+   */
+  @NotBlank(message = "角色ID不能为空")
+  private String roleId;
+
+  /**
+   * 租户id
+   *
+   * @author 一源团队--花和尚
+   * @date 2023-07-27
+   */
+  private String tenantId;
 }

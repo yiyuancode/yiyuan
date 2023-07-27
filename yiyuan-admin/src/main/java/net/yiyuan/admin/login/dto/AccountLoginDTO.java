@@ -14,26 +14,21 @@ import java.io.Serializable;
 @Data
 public class AccountLoginDTO implements Serializable {
 
+  /**
+   * 用户名
+   *
+   * @author 一源团队--花和尚
+   * @date 2023-07-27
+   */
+  @NotBlank(message = "用户名不能为空")
+  private String username;
 
-    /**
-     * 用户名
-     *
-     * @author 一源团队--花和尚
-     * @date 2023-07-27
-     */
-
-    @NotBlank(message = "用户名不能为空" )
-    private String username;
-
-    /**
-     * 密码
-     *
-     * @author 一源团队--花和尚
-     * @date 2023-07-27
-     */
-
-    @NotBlank(message = "密码不能为空" )
-    private String password;
-
-
+  /**
+   * 密码
+   *
+   * @author 一源团队--花和尚
+   * @date 2023-07-27
+   */
+  @NotBlank(message = "密码不能为空")
+  private String password;
 }

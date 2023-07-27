@@ -72,7 +72,7 @@ private ${table.serviceName} ${serviceImplName};
     ##@ApiOperation(value = "$!{table.comment.replaceAll("表", "")}列表(全部)" )
 @GetMapping(value = "/${package.ModuleName}/${modeName}/list" )
 @ResponseBody
-public CommonResult<List<${table.entityName}QueryVO>> list( ${table.entityName}ListDTO request)throws Exception{
+public CommonResult<List<${table.entityName}QueryVO>>list( ${table.entityName}ListDTO request)throws Exception{
         return CommonResult.success(${serviceImplName}.list(request),"查询$!{table.comment.replaceAll("表", "")}列表成功" );
         }
 
@@ -89,7 +89,7 @@ public CommonResult<List<${table.entityName}QueryVO>> list( ${table.entityName}L
 @SaCheckPermission(value = {"${package.ModuleName}:${modeName}:query" }, orRole = "admin" )
 @GetMapping(value = "/${package.ModuleName}/${modeName}/page" )
 @ResponseBody
-public CommonResult<Page<${table.entityName}QueryVO>> page(
+public CommonResult<Page<${table.entityName}QueryVO>>page(
     ${table.entityName}PageDTO request
         )throws Exception{
         return CommonResult.success(${serviceImplName}.page(request),"分页查询$!{table.comment.replaceAll(

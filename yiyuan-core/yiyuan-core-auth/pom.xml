@@ -19,12 +19,12 @@
         权限验证模块：包括登录验证、权限验证、身份验证等功能
     </description>
     <dependencies>
-    <!--common模块-->
-    <dependency>
-        <groupId>net.yiyuan</groupId>
-        <artifactId>yiyuan-core-sys</artifactId>
-        <version>${revision}</version>
-    </dependency>
+        <!--common模块-->
+        <dependency>
+            <groupId>net.yiyuan</groupId>
+            <artifactId>yiyuan-core-sys</artifactId>
+            <version>${revision}</version>
+        </dependency>
     </dependencies>
 
 </project>

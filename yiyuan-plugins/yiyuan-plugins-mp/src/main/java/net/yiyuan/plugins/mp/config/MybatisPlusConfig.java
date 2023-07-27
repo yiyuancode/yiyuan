@@ -97,7 +97,7 @@ public class MybatisPlusConfig extends JoinDefaultSqlInjector {
                 // StpUtil.checkRole();
                 ServletRequestAttributes requestAttributes =
                     (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-                //排除定时任务操作数据库，没有请求域对象
+                // 排除定时任务操作数据库，没有请求域对象
                 if (StringUtilsPlus.isNull(requestAttributes)) {
                   return true;
                 }

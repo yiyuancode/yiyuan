@@ -15,70 +15,61 @@ import java.util.Date;
  */
 @Data
 public class SysTenantEditDTO implements Serializable {
-    
-    
-    /**
-     * 租户id
-     *
-     * @author 一源团队--花和尚
-     * @date 2023-07-27
-     */
-    @NotBlank(message = "租户id不能为空" )
-    private String id;
-    
-    
-    /**
-     * 租户名称
-     *
-     * @author 一源团队--花和尚
-     * @date 2023-07-27
-     */
-    private String name;
-    
-    
-    /**
-     * 租户编号
-     *
-     * @author 一源团队--花和尚
-     * @date 2023-07-27
-     */
-    private String code;
-    
-    
-    /**
-     * 开始时间
-     *
-     * @author 一源团队--花和尚
-     * @date 2023-07-27
-     */
-    private Date startTime;
-    
-    
-    /**
-     * 结束时间
-     *
-     * @author 一源团队--花和尚
-     * @date 2023-07-27
-     */
-    private Date endTime;
-    
-    
-    /**
-     * 状态#0=正常|1=冻结
-     *
-     * @author 一源团队--花和尚
-     * @date 2023-07-27
-     */
-    private SysTenantStatusEnum status;
-    
-    
-    /**
-     * 租户id
-     *
-     * @author 一源团队--花和尚
-     * @date 2023-07-27
-     */
-    private String tenantId;
-    
-    
+
+  /**
+   * 租户id
+   *
+   * @author 一源团队--花和尚
+   * @date 2023-07-27
+   */
+  @NotBlank(message = "租户id不能为空")
+  private String id;
+
+  /**
+   * 租户名称
+   *
+   * @author 一源团队--花和尚
+   * @date 2023-07-27
+   */
+  private String name;
+
+  /**
+   * 租户编号
+   *
+   * @author 一源团队--花和尚
+   * @date 2023-07-27
+   */
+  private String code;
+
+  /**
+   * 开始时间
+   *
+   * @author 一源团队--花和尚
+   * @date 2023-07-27
+   */
+  private Date startTime;
+
+  /**
+   * 结束时间
+   *
+   * @author 一源团队--花和尚
+   * @date 2023-07-27
+   */
+  private Date endTime;
+
+  /**
+   * 状态#0=正常|1=冻结
+   *
+   * @author 一源团队--花和尚
+   * @date 2023-07-27
+   */
+  private SysTenantStatusEnum status;
+
+  /**
+   * 租户id
+   *
+   * @author 一源团队--花和尚
+   * @date 2023-07-27
+   */
+  private String tenantId;
 }

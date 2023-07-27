@@ -10,11 +10,13 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.*;
 import net.yiyuan.common.*;
 import com.baomidou.mybatisplus.annotation.FieldFill;
+
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.util.Date;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+
 /**
  *  $!{tableComment.replaceAll("表", "")}分页接口请求入参实体
  *
@@ -54,7 +56,7 @@ public class ${className}PageDTO implements Serializable {
              * @date ${date}
              */
             @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss" )
-            @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8" )
+            @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss" , timezone = "GMT+8" )
             private Date ${columnsItem.columnName}Start;
             /**
              * ${columnsItem.columnComment}(查询结束时间)
@@ -64,7 +66,7 @@ public class ${className}PageDTO implements Serializable {
              * @date ${date}
              */
             @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss" )
-            @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8" )
+            @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss" , timezone = "GMT+8" )
             private Date ${columnsItem.columnName}End;
 
         #elseif(!${columnsItem.propertyType.equals("Date")})
@@ -81,6 +83,5 @@ public class ${className}PageDTO implements Serializable {
 
 
     #end
-
 
 }

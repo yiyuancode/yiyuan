@@ -37,19 +37,16 @@ public class CodeGenerator {
   private static String DEFAULT_PARENT_PACK = "com.example.ams.modules";
   private static String DEFAULT_MODULENAME = "";
   private static String AUTHOR = "";
-  private static String MYSQL_URL = "jdbc:mysql://43.154.183.115:24457/admin_dev?serverTimezone=Asia/Shanghai";
-  private static String MYSQL_USERNAME ="root";
-  private static String MYSQL_PASSWORD ="Av*duP#992CBd##wdL&K";
+  private static String MYSQL_URL =
+      "jdbc:mysql://43.154.183.115:24457/admin_dev?serverTimezone=Asia/Shanghai";
+  private static String MYSQL_USERNAME = "root";
+  private static String MYSQL_PASSWORD = "Av*duP#992CBd##wdL&K";
 
-  private static String SSH_URL ="43.154.183.115";
-  private static int SSH_PORT =22;
-  private static String SSH_USERNAME ="root";
-  private static String SSH_PASSWORD ="ABC123#123CBd";
-  private static String SSH_COMMAND_FY ="fy ";
-
-
-
-
+  private static String SSH_URL = "43.154.183.115";
+  private static int SSH_PORT = 22;
+  private static String SSH_USERNAME = "root";
+  private static String SSH_PASSWORD = "ABC123#123CBd";
+  private static String SSH_COMMAND_FY = "fy ";
 
   /** 读取控制台内容 */
   public static String scanner(String tip) {
@@ -214,7 +211,6 @@ public class CodeGenerator {
     mysqlToJavaTypeMap.put("mediumblob", "byte[]");
     mysqlToJavaTypeMap.put("longblob", "byte[]");
 
-
     //    String tableName = "user";
     Connection conn = DriverManager.getConnection(MYSQL_URL, MYSQL_USERNAME, MYSQL_PASSWORD);
     // 获取 DatabaseMetaData 对象
@@ -333,7 +329,11 @@ public class CodeGenerator {
             String filed =
                 StringUtilsPlus.trimAndFormatString(
                         SshUtil.executeScript(
-                            SSH_URL, SSH_PORT, SSH_USERNAME, SSH_PASSWORD, SSH_COMMAND_FY + kvArray[1]))
+                            SSH_URL,
+                            SSH_PORT,
+                            SSH_USERNAME,
+                            SSH_PASSWORD,
+                            SSH_COMMAND_FY + kvArray[1]))
                     .toUpperCase();
 
             columnMap.put("filed", filed);
