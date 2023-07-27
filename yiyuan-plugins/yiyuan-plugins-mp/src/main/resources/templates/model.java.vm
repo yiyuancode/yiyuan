@@ -115,15 +115,33 @@ private static final long serialVersionUID=1L;
      * @date ${date}
      */
     #end
-    #if(${field.comment.indexOf("#")}!=-1&&${field.comment.indexOf("|")}!=-1&&${field.keyFlag})
+    #if(${field.comment.indexOf("#")}!=-1&&${field.comment.indexOf("|")}!=-1&&!${field.keyFlag})
+    /**
+     * ${field.comment}
+     * @see ${field.propertyType}
+     * @author  ${author}
+     * @date ${date}
+     */
         ##stringUtils.capitalizeFirstLetter($field.propertyName)
     private ${entity}$field.propertyName.substring(0, 1).toUpperCase()$field.propertyName.substring(1)Enum ${field.propertyName};
     #end
     #if(${field.comment.indexOf("#")}==-1&&${field.comment.indexOf("|")}==-1)
 
         #if(${field.keyFlag}||${field.propertyName.equals("parentId")})
+        /**
+         * ${field.comment}
+         * @see ${field.propertyType}
+         * @author  ${author}
+         * @date ${date}
+         */
         private ${field.propertyType} ${field.propertyName};
         #elseif(${field.propertyType.contains("String")})
+        /**
+         * ${field.comment}
+         * @see ${field.propertyType}
+         * @author  ${author}
+         * @date ${date}
+         */
         @TableField(condition = CustomSqlCondition.LIKE)
         private ${field.propertyType} ${field.propertyName};
         #elseif(${field.propertyType.contains("Date")})

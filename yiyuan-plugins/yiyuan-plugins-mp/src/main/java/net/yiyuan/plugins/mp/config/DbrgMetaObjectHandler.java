@@ -17,9 +17,10 @@ public class DbrgMetaObjectHandler implements MetaObjectHandler {
 
   @Override
   public void insertFill(MetaObject metaObject) {
-    String loginIdAsString = StpUtil.getLoginIdAsString();
+    boolean isLogin = StpUtil.isLogin();
     // 1、自动设置创建人信息,当外部接口调用时，用户可能为空
-    if (StringUtilsPlus.isNotEmpty(loginIdAsString)) {
+    if (isLogin) {
+      String loginIdAsString = StpUtil.getLoginIdAsString();
       this.setFieldValByName(CREATE_USER_BY_FIELD_NAME, loginIdAsString, metaObject);
       this.setFieldValByName(UPDATE_USER_BY_FIELD_NAME, loginIdAsString, metaObject);
     }
@@ -31,9 +32,10 @@ public class DbrgMetaObjectHandler implements MetaObjectHandler {
 
   @Override
   public void updateFill(MetaObject metaObject) {
-    String loginIdAsString = StpUtil.getLoginIdAsString();
+    boolean isLogin = StpUtil.isLogin();
     // 1、自动设置更新人信息,当外部接口调用时，用户可能为空
-    if (StringUtilsPlus.isNotEmpty(loginIdAsString)) {
+    if (isLogin) {
+      String loginIdAsString = StpUtil.getLoginIdAsString();
       this.setFieldValByName(UPDATE_USER_BY_FIELD_NAME, loginIdAsString, metaObject);
     }
     // 2、自动设置更新时间

@@ -78,7 +78,7 @@ boolean delete(String ids)throws Exception;
 
 
 /**
-* 批量删除${table.comment}(根据同一属性,针对中间表)
+* 批量删除${table.comment.replaceAll("表", "")}(根据同一属性,针对中间表)
 *
 * @param request $!{table.comment.replaceAll("表", "")}实体
 * @return {@link boolean}
@@ -88,7 +88,7 @@ boolean delete(String ids)throws Exception;
 boolean delete(${table.entityName} request) throws Exception;
 
 /**
-* 编辑${table.comment}
+* 编辑${table.comment.replaceAll("表", "")}
 *
 * @param request $!{table.comment.replaceAll("表", "")}实体
 * @return {@link boolean}
@@ -99,7 +99,7 @@ boolean edit(${table.entityName}EditDTO request)throws Exception;
 
 
 /**
-* 新增${table.comment}
+* 新增${table.comment.replaceAll("表", "")}
 *
 * @param request $!{table.comment.replaceAll("表", "")}实体
 * @return {@link boolean}

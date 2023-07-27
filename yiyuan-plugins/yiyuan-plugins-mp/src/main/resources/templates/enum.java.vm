@@ -7,7 +7,7 @@ import lombok.Getter;
 ##使用vm模版生成，要使用相对路径的话 必须加.java.vm
 
 /**
- * ${tableComment}-${columnComment}枚举类
+ * $!{tableComment.replaceAll("表", "管理")}-${columnComment}枚举类
  *
  * @author  ${author}
  * @date ${date}
