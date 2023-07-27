@@ -60,42 +60,5 @@ public class AdminLoginController {
     public CommonResult<LoginGetUserInfoVo> getUserInfo() throws Exception {
         return CommonResult.success(adminLoginService.getUserInfo(), "获取用户信息成功");
     }
-
-//
-//    /**
-//     * 主机记录详情
-//     *
-//     * @param id 主机记录id
-//     * @return {@link CommonResult<SysHostQueryVO>}
-//     * @author 一源团队--花和尚
-//     * @date 2023-07-27
-//     */
-//    @Description("系统管理/主机记录管理/查询主机记录" )
-//    @SaCheckPermission(value = {"sys:host:query"}, orRole = "admin" )
-//    @GetMapping(value = "/sys/host/details/{id}" )
-//    @ResponseBody
-//    public CommonResult<SysHostQueryVO> details(@PathVariable("id" ) @Validated({NotBlank.class}) String id) throws Exception {
-//        return CommonResult.success(sysHostService.details(id), "查询主机记录详情成功" );
-//    }
-//
-//
-//    /**
-//     * 新增主机记录
-//     *
-//     * @param request 主机记录实体
-//     * @return {@link CommonResult<String>}
-//     * @author 一源团队--花和尚
-//     * @date 2023-07-27
-//     */
-//    @Description("系统管理/主机记录管理/新增主机记录" )
-//    @SaCheckPermission(value = {"sys:host:add"}, orRole = "admin" )
-//    @PostMapping(value = "/sys/host/add" )
-//    @ResponseBody
-//    public CommonResult<String> add(@RequestBody @Validated SysHostAddDTO request) throws Exception {
-//        if (sysHostService.add(request)) {
-//            return CommonResult.success(null, "新增主机记录成功" );
-//        } else {
-//            return CommonResult.failed("新增主机记录失败" );
-//        }
-//    }
+    
 }
