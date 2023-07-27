@@ -7,6 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 菜单查询请求响应参数实体
@@ -236,6 +237,14 @@ public class SysMenuQueryVO implements Serializable {
      * @date 2023-07-27
      */
     private String updateUser;
+    
+    /**
+     * 子菜单集合
+     *
+     * @author 一源团队--花和尚
+     * @date 2023-07-27
+     */
+    private List<SysMenuQueryVO> children;
     
     
 }

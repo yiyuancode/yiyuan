@@ -1,5 +1,6 @@
 package net.yiyuan.core.auth.service;
 
+import cn.hutool.core.lang.tree.Tree;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import icu.mhb.mybatisplus.plugln.base.service.JoinIService;
 import net.yiyuan.core.auth.dto.*;
@@ -115,5 +116,16 @@ public interface AuthAdminService extends JoinIService<AuthAdmin> {
      */
     @Transactional
     boolean assignRole(AuthAdminAssignRoleDTO request) throws Exception;
+    
+    
+    /**
+     * 查询用户信息关联查询角色和菜单信息
+     *
+     * @param id 用户id
+     * @return {@link AuthAdminQueryVO}
+     * @author 一源团队--花和尚
+     * @date 2023-07-27
+     */
+    List<Tree<String>> detailsJoinRoleAndPermission(String id) throws Exception;
     
 }

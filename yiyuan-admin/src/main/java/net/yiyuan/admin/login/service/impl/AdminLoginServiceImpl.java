@@ -1,16 +1,28 @@
 package net.yiyuan.admin.login.service.impl;
 
+import cn.dev33.satoken.context.SaHolder;
+import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.stp.StpUtil;
+import cn.hutool.core.lang.tree.Tree;
+import cn.hutool.core.util.ObjectUtil;
 import icu.mhb.mybatisplus.plugln.base.service.impl.JoinServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import net.yiyuan.admin.login.dto.AccountLoginDTO;
 import net.yiyuan.admin.login.service.AdminLoginService;
 import net.yiyuan.admin.login.vo.AccountLoginVo;
+import net.yiyuan.admin.login.vo.LoginGetUserInfoVo;
+import net.yiyuan.common.constatnt.ResultCode;
+import net.yiyuan.common.exception.BusinessException;
+import net.yiyuan.core.auth.enums.AuthAdminPlatformEnum;
+import net.yiyuan.core.auth.model.AuthAdmin;
+import net.yiyuan.core.auth.service.AuthAdminService;
+import net.yiyuan.core.auth.vo.AuthAdminQueryVO;
 import net.yiyuan.core.sys.mapper.SysTenantMapper;
 import net.yiyuan.core.sys.model.SysTenant;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * 登录管理Service层接口实现
@@ -21,10 +33,11 @@ import javax.annotation.Resource;
 @Slf4j
 @Service
 public class AdminLoginServiceImpl extends JoinServiceImpl<SysTenantMapper, SysTenant> implements AdminLoginService {
+    
     @Resource
-    private SysTenantMapper sysTenantMapper;
-
-
+    private AuthAdminService authAdminService;
+    
+    
     /**
      * 账号密码登录
      *
@@ -38,7 +51,42 @@ public class AdminLoginServiceImpl extends JoinServiceImpl<SysTenantMapper, SysT
         StpUtil.login(request.getUsername());
         AccountLoginVo voBean = new AccountLoginVo();
         voBean.setToken(StpUtil.getTokenValue());
-        return voBean;
+        
+        
+        SaRequest httpRequest = SaHolder.getRequest();
+        // platform 平台区分 0 平台  1 租户 2 c端
+        String platform = httpRequest.getHeader("platform" );
+        //    String tenantId = httpRequest.getHeader("tenantId");
+        // 查询用户信息
+        AuthAdmin query = new AuthAdmin();
+        query.setUsername(request.getUsername());
+        query.setPlatform(AuthAdminPlatformEnum.PLATFORM_SIDE);
+        AuthAdminQueryVO adminQueryVO = authAdminService.details(query);
+        // 用户不存在
+        if (ObjectUtil.isNull(adminQueryVO)) {
+            throw new BusinessException(ResultCode.USER_NOT_FIND);
+        }
+        // 密码错误
+        if (!adminQueryVO.getPassword().equals(request.getPassword())) {
+            throw new BusinessException(ResultCode.USER_ERROR);
+        }
+        // satoken登录
+        StpUtil.login(adminQueryVO.getId());
+        String tokenValue = StpUtil.getTokenValue();
+        AccountLoginVo voResult = new AccountLoginVo();
+        voResult.setToken(tokenValue);
+        
+        return voResult;
+    }
+    
+    @Override
+    public LoginGetUserInfoVo getUserInfo() throws Exception {
+        String loginId = StpUtil.getLoginIdAsString();
+        List<Tree<String>> trees = authAdminService.detailsJoinRoleAndPermission(loginId);
+        log.info("trees树结构{}", trees);
+        LoginGetUserInfoVo vo = new LoginGetUserInfoVo();
+        vo.setTrees(trees);
+        return vo;
     }
 }
 

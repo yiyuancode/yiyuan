@@ -1,5 +1,8 @@
 package net.yiyuan.core.auth.service.impl;
 
+import cn.hutool.core.lang.tree.Tree;
+import cn.hutool.core.lang.tree.TreeNodeConfig;
+import cn.hutool.core.lang.tree.TreeUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import icu.mhb.mybatisplus.plugln.base.service.impl.JoinServiceImpl;
 import icu.mhb.mybatisplus.plugln.core.JoinLambdaWrapper;
@@ -9,15 +12,21 @@ import net.yiyuan.core.auth.dto.*;
 import net.yiyuan.core.auth.mapper.AuthAdminMapper;
 import net.yiyuan.core.auth.model.AuthAdmin;
 import net.yiyuan.core.auth.model.AuthAdminRole;
+import net.yiyuan.core.auth.model.AuthRole;
+import net.yiyuan.core.auth.model.AuthRoleMenu;
 import net.yiyuan.core.auth.service.AuthAdminRoleService;
 import net.yiyuan.core.auth.service.AuthAdminService;
+import net.yiyuan.core.auth.service.AuthRoleMenuService;
 import net.yiyuan.core.auth.vo.AuthAdminQueryVO;
+import net.yiyuan.core.sys.model.SysMenu;
+import net.yiyuan.core.sys.vo.SysMenuQueryVO;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 用户管理Service层接口实现
@@ -32,6 +41,8 @@ public class AuthAdminServiceImpl extends JoinServiceImpl<AuthAdminMapper, AuthA
     private AuthAdminMapper authAdminMapper;
     @Resource
     private AuthAdminRoleService authAdminRoleService;
+    @Resource
+    AuthRoleMenuService authRoleMenuService;
     
     /**
      * 用户列表(全部)
@@ -189,6 +200,60 @@ public class AuthAdminServiceImpl extends JoinServiceImpl<AuthAdminMapper, AuthA
         authAdminRoleService.saveBatch(addList);
         
         return true;
+    }
+    
+    @Override
+    public List<Tree<String>> detailsJoinRoleAndPermission(String id) throws Exception {
+//        AuthAdminQueryVO queryVO = this.details(id);
+        
+        // 查询角色
+        JoinLambdaWrapper<AuthAdminRole> wrapper = new JoinLambdaWrapper<>(AuthAdminRole.class);
+        wrapper.eq(AuthAdminRole::getUserId, id);
+        wrapper.select(AuthAdminRole::getRoleId);
+        wrapper
+                .leftJoin(AuthRole.class, AuthRole::getId, AuthAdminRole::getRoleId)
+                .select(AuthRole::getId, AuthRole::getCode, AuthRole::getName)
+                .end();
+        List<AuthRole> authRoles = authAdminRoleService.joinList(wrapper, AuthRole.class);
+        
+        //查询菜单
+        List<String> authRolesIdsList =
+                authRoles.stream().map(p -> p.getId()).collect(Collectors.toList());
+        JoinLambdaWrapper<AuthRoleMenu> wrapper2 = new JoinLambdaWrapper<>(AuthRoleMenu.class);
+        wrapper2.in(AuthRoleMenu::getRoleId, authRolesIdsList);
+        //主表不查询，不然id会错乱
+        wrapper2.notDefaultSelectAll();
+        wrapper2.leftJoin(SysMenu.class, SysMenu::getId, AuthRoleMenu::getMenuId).selectAll().end();
+        List<SysMenuQueryVO> sysMenus = authRoleMenuService.joinList(wrapper2, SysMenuQueryVO.class);
+        
+        
+        log.info("单个list{}", sysMenus);
+        
+        //菜单list转树结构
+        //配置
+        TreeNodeConfig treeNodeConfig = new TreeNodeConfig();
+        treeNodeConfig.setIdKey("id" );
+        treeNodeConfig.setWeightKey("sort" );
+        treeNodeConfig.setParentIdKey("parentId" );
+        treeNodeConfig.setChildrenKey("children" );
+// 最大递归深度
+//        treeNodeConfig.setDeep(3);
+
+//转换器 (含义:找出父节点为字符串零的所有子节点, 并递归查找对应的子节点, 深度最多为 3)
+        List<Tree<String>> treeNodes = TreeUtil.build(sysMenus, "0", treeNodeConfig,
+                (treeNode, tree) -> {
+                    tree.setId(treeNode.getId());
+                    tree.setParentId(treeNode.getParentId());
+                    tree.setWeight(treeNode.getSort());
+                    tree.setName(treeNode.getName());
+                    // 扩展属性 ...
+                    tree.putExtra("other", treeNode);
+                    log.info("单个{}", treeNode);
+                    
+                });
+        
+        
+        return treeNodes;
     }
 }
 

@@ -1,12 +1,15 @@
 package net.yiyuan.core.auth.vo;
 
+import cn.hutool.core.lang.tree.Tree;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import net.yiyuan.core.auth.enums.AuthAdminPlatformEnum;
+import net.yiyuan.core.auth.model.AuthRole;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 用户查询请求响应参数实体
@@ -164,6 +167,23 @@ public class AuthAdminQueryVO implements Serializable {
      * @date 2023-07-27
      */
     private String updateUser;
+    
+    
+    /**
+     * 对应角色信息
+     *
+     * @author 一源团队--花和尚
+     * @date 2023-07-27
+     */
+    private List<AuthRole> roleList;
+    
+    /**
+     * 对应菜单权限信息
+     *
+     * @author 一源团队--花和尚
+     * @date 2023-07-27
+     */
+    private List<Tree<String>> menuList;
     
     
 }

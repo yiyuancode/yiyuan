@@ -18,5 +18,13 @@
         角色管理模块：包括角色添加、角色修改、角色删除、角色权限分配等功能。
         权限验证模块：包括登录验证、权限验证、身份验证等功能
     </description>
+    <dependencies>
+    <!--common模块-->
+    <dependency>
+        <groupId>net.yiyuan</groupId>
+        <artifactId>yiyuan-core-sys</artifactId>
+        <version>${revision}</version>
+    </dependency>
+    </dependencies>
 
 </project>
