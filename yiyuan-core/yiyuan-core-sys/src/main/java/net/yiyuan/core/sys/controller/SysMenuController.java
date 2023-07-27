@@ -169,4 +169,6 @@ public class SysMenuController {
             return CommonResult.failed("自动生成菜单数据失败" );
         }
     }
+
+
 }

@@ -10,6 +10,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 用户查询请求响应参数实体
@@ -19,8 +20,8 @@ import java.util.List;
  */
 @Data
 public class AuthAdminQueryVO implements Serializable {
-    
-    
+
+
     /**
      * 主键ID
      *
@@ -28,8 +29,8 @@ public class AuthAdminQueryVO implements Serializable {
      * @date 2023-07-27
      */
     private String id;
-    
-    
+
+
     /**
      * 用户名
      *
@@ -37,8 +38,8 @@ public class AuthAdminQueryVO implements Serializable {
      * @date 2023-07-27
      */
     private String username;
-    
-    
+
+
     /**
      * 密码
      *
@@ -46,8 +47,8 @@ public class AuthAdminQueryVO implements Serializable {
      * @date 2023-07-27
      */
     private String password;
-    
-    
+
+
     /**
      * 随机盐
      *
@@ -55,8 +56,8 @@ public class AuthAdminQueryVO implements Serializable {
      * @date 2023-07-27
      */
     private String salt;
-    
-    
+
+
     /**
      * 部门ID
      *
@@ -64,8 +65,8 @@ public class AuthAdminQueryVO implements Serializable {
      * @date 2023-07-27
      */
     private Integer deptId;
-    
-    
+
+
     /**
      * 小程序openid
      *
@@ -73,8 +74,8 @@ public class AuthAdminQueryVO implements Serializable {
      * @date 2023-07-27
      */
     private String miniOpenid;
-    
-    
+
+
     /**
      * 码云登录
      *
@@ -82,8 +83,8 @@ public class AuthAdminQueryVO implements Serializable {
      * @date 2023-07-27
      */
     private String giteeLogin;
-    
-    
+
+
     /**
      * 开源中国
      *
@@ -91,8 +92,8 @@ public class AuthAdminQueryVO implements Serializable {
      * @date 2023-07-27
      */
     private String oscId;
-    
-    
+
+
     /**
      * 微信openid
      *
@@ -100,8 +101,8 @@ public class AuthAdminQueryVO implements Serializable {
      * @date 2023-07-27
      */
     private String wxOpenid;
-    
-    
+
+
     /**
      * QQ openid
      *
@@ -109,8 +110,8 @@ public class AuthAdminQueryVO implements Serializable {
      * @date 2023-07-27
      */
     private String qqOpenid;
-    
-    
+
+
     /**
      * 平台类型#0=平台端|1=租户端|2=移动端
      *
@@ -118,8 +119,8 @@ public class AuthAdminQueryVO implements Serializable {
      * @date 2023-07-27
      */
     private AuthAdminPlatformEnum platform;
-    
-    
+
+
     /**
      * 所属租户
      *
@@ -127,30 +128,30 @@ public class AuthAdminQueryVO implements Serializable {
      * @date 2023-07-27
      */
     private String tenantId;
-    
-    
+
+
     /**
      * 创建时间
      *
      * @author 一源团队--花和尚
      * @date 2023-07-27
      */
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss" )
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8" )
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
-    
-    
+
+
     /**
      * 修改时间
      *
      * @author 一源团队--花和尚
      * @date 2023-07-27
      */
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss" )
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8" )
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date updateTime;
-    
-    
+
+
     /**
      * 创建人
      *
@@ -158,8 +159,8 @@ public class AuthAdminQueryVO implements Serializable {
      * @date 2023-07-27
      */
     private String createUser;
-    
-    
+
+
     /**
      * 修改人
      *
@@ -167,8 +168,8 @@ public class AuthAdminQueryVO implements Serializable {
      * @date 2023-07-27
      */
     private String updateUser;
-    
-    
+
+
     /**
      * 对应角色信息
      *
@@ -176,14 +177,22 @@ public class AuthAdminQueryVO implements Serializable {
      * @date 2023-07-27
      */
     private List<AuthRole> roleList;
-    
+
     /**
      * 对应菜单权限信息
      *
      * @author 一源团队--花和尚
      * @date 2023-07-27
      */
-    private List<Tree<String>> menuList;
-    
-    
+    private List<Tree<String>> menuTreeList;
+
+    /**
+     * antd前端所需权限表达式集合
+     *
+     * @author 一源团队--花和尚
+     * @date 2023-07-27
+     */
+    private List<Map<String, Object>> permissionsList;
+
+
 }

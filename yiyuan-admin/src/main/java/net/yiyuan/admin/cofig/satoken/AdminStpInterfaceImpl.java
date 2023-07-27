@@ -96,7 +96,7 @@ public class AdminStpInterfaceImpl implements StpInterface {
                 authRoles.stream().map(p -> p.getCode()).collect(Collectors.toList());
         //
         log.info("登录账号所有角色:{}", rolesCodeList);
-        rolesCodeList.add("admin" );
+//        rolesCodeList.add("admin" );
         return rolesCodeList;
     }
 }
