@@ -21,15 +21,15 @@ import java.util.Date;
 
 public class SysHost implements Serializable {
     private static final long serialVersionUID = 1L;
-
+    
     /**
      * 主键ID
      *
      * @date 2023-07-27
      */
     @TableId(value = "id", type = IdType.ASSIGN_UUID)
-
-
+    
+    
     /**
      * 主键ID
      * @see String
@@ -37,8 +37,8 @@ public class SysHost implements Serializable {
      * @date 2023-07-27
      */
     private String id;
-
-
+    
+    
     /**
      * 主机名
      *
@@ -48,8 +48,8 @@ public class SysHost implements Serializable {
      */
     @TableField(condition = CustomSqlCondition.LIKE)
     private String hostName;
-
-
+    
+    
     /**
      * IP地址
      *
@@ -59,11 +59,11 @@ public class SysHost implements Serializable {
      */
     @TableField(condition = CustomSqlCondition.LIKE)
     private String host;
-
-
+    
+    
     private Integer sshPort;
-
-
+    
+    
     /**
      * SSH登录用户名
      *
@@ -73,8 +73,8 @@ public class SysHost implements Serializable {
      */
     @TableField(condition = CustomSqlCondition.LIKE)
     private String sshUsername;
-
-
+    
+    
     /**
      * SSH登录密码
      *
@@ -84,8 +84,8 @@ public class SysHost implements Serializable {
      */
     @TableField(condition = CustomSqlCondition.LIKE)
     private String sshPassword;
-
-
+    
+    
     /**
      * 开启监控#0=开启|1=关闭|
      *
@@ -94,11 +94,11 @@ public class SysHost implements Serializable {
      * @see Integer
      */
     private SysHostIsMonitorEnabledEnum isMonitorEnabled;
-
-
+    
+    
     private Integer sortBy;
-
-
+    
+    
     /**
      * 创建时间
      *
@@ -106,9 +106,9 @@ public class SysHost implements Serializable {
      * @date 2023-07-27
      * @see Date
      */
-
+    
     @TableField(fill = FieldFill.INSERT)
-
+    
     private Date createTime;
     /**
      * 创建时间(查询开始时间)
@@ -128,8 +128,8 @@ public class SysHost implements Serializable {
      */
     @TableField(value = "create_time", condition = CustomSqlCondition.END_EQUAL, select = false)
     private Date createTimeEnd;
-
-
+    
+    
     /**
      * 修改时间
      *
@@ -137,9 +137,9 @@ public class SysHost implements Serializable {
      * @date 2023-07-27
      * @see Date
      */
-
+    
     @TableField(fill = FieldFill.INSERT_UPDATE)
-
+    
     private Date updateTime;
     /**
      * 修改时间(查询开始时间)
@@ -159,8 +159,8 @@ public class SysHost implements Serializable {
      */
     @TableField(value = "update_time", condition = CustomSqlCondition.END_EQUAL, select = false)
     private Date updateTimeEnd;
-
-
+    
+    
     /**
      * 创建人
      *
@@ -170,8 +170,8 @@ public class SysHost implements Serializable {
      */
     @TableField(condition = CustomSqlCondition.LIKE)
     private String createUser;
-
-
+    
+    
     /**
      * 修改人
      *
@@ -181,6 +181,6 @@ public class SysHost implements Serializable {
      */
     @TableField(condition = CustomSqlCondition.LIKE)
     private String updateUser;
-
-
+    
+    
 }

@@ -13,8 +13,8 @@ import java.io.Serializable;
  */
 @Data
 public class AuthRoleMenuEditDTO implements Serializable {
-
-
+    
+    
     /**
      * 主键
      *
@@ -23,8 +23,8 @@ public class AuthRoleMenuEditDTO implements Serializable {
      */
     @NotBlank(message = "主键不能为空" )
     private String id;
-
-
+    
+    
     /**
      * 角色ID
      *
@@ -32,8 +32,8 @@ public class AuthRoleMenuEditDTO implements Serializable {
      * @date 2023-07-27
      */
     private String roleId;
-
-
+    
+    
     /**
      * 菜单ID
      *
@@ -41,6 +41,6 @@ public class AuthRoleMenuEditDTO implements Serializable {
      * @date 2023-07-27
      */
     private String menuId;
-
-
+    
+    
 }

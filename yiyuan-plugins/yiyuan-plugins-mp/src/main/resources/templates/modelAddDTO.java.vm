@@ -40,6 +40,8 @@ public class ${className}AddDTO implements Serializable {
                  * @author ${author}
                  * @date ${date}
                  */
+                ##            #elseif(true)
+
             #else
                 /**
                  * ${columnsItem.columnComment}

@@ -15,8 +15,8 @@ import java.util.Date;
  */
 @Data
 public class AuthAdminRoleListDTO implements Serializable {
-
-
+    
+    
     /**
      * 主键
      *
@@ -24,8 +24,8 @@ public class AuthAdminRoleListDTO implements Serializable {
      * @date 2023-07-27
      */
     private String id;
-
-
+    
+    
     /**
      * 用户ID
      *
@@ -33,8 +33,8 @@ public class AuthAdminRoleListDTO implements Serializable {
      * @date 2023-07-27
      */
     private String userId;
-
-
+    
+    
     /**
      * 角色ID
      *
@@ -42,8 +42,8 @@ public class AuthAdminRoleListDTO implements Serializable {
      * @date 2023-07-27
      */
     private String roleId;
-
-
+    
+    
     /**
      * 修改时间(查询开始时间)
      *
@@ -64,8 +64,8 @@ public class AuthAdminRoleListDTO implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss" )
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8" )
     private Date updateTimeEnd;
-
-
+    
+    
     /**
      * 租户id
      *
@@ -73,8 +73,8 @@ public class AuthAdminRoleListDTO implements Serializable {
      * @date 2023-07-27
      */
     private String tenantId;
-
-
+    
+    
     /**
      * 创建时间(查询开始时间)
      *
@@ -95,8 +95,8 @@ public class AuthAdminRoleListDTO implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss" )
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8" )
     private Date createTimeEnd;
-
-
+    
+    
     /**
      * 创建人
      *
@@ -104,8 +104,8 @@ public class AuthAdminRoleListDTO implements Serializable {
      * @date 2023-07-27
      */
     private String createUser;
-
-
+    
+    
     /**
      * 修改人
      *
@@ -113,6 +113,6 @@ public class AuthAdminRoleListDTO implements Serializable {
      * @date 2023-07-27
      */
     private String updateUser;
-
-
+    
+    
 }

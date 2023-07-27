@@ -30,7 +30,7 @@ import java.util.List;
 public class SysHostServiceImpl extends JoinServiceImpl<SysHostMapper, SysHost> implements SysHostService {
     @Resource
     private SysHostMapper sysHostMapper;
-
+    
     /**
      * 主机记录列表(全部)
      *
@@ -41,16 +41,16 @@ public class SysHostServiceImpl extends JoinServiceImpl<SysHostMapper, SysHost> 
      */
     @Override
     public List<SysHostQueryVO> list(SysHostListDTO request) throws Exception {
-
+        
         SysHost po = new SysHost();
         BeanUtilsPlus.copy(request, po);
         JoinLambdaWrapper<SysHost> wrapper = new JoinLambdaWrapper<>(po);
         List<SysHostQueryVO> voList = joinList(wrapper, SysHostQueryVO.class);
-
+        
         return voList;
     }
-
-
+    
+    
     /**
      * 主机记录列表(分页)
      *
@@ -67,8 +67,8 @@ public class SysHostServiceImpl extends JoinServiceImpl<SysHostMapper, SysHost> 
         Page<SysHostQueryVO> voPage = joinPage(new Page<>(request.getPageNum(), request.getPageSize()), wrapper, SysHostQueryVO.class);
         return voPage;
     }
-
-
+    
+    
     /**
      * 主机记录详情
      *
@@ -85,8 +85,8 @@ public class SysHostServiceImpl extends JoinServiceImpl<SysHostMapper, SysHost> 
         SysHostQueryVO voBean = joinGetOne(wrapper, SysHostQueryVO.class);
         return voBean;
     }
-
-
+    
+    
     /**
      * 主机记录详情
      *
@@ -97,13 +97,13 @@ public class SysHostServiceImpl extends JoinServiceImpl<SysHostMapper, SysHost> 
      */
     @Override
     public SysHostQueryVO details(SysHost request) throws Exception {
-
+        
         JoinLambdaWrapper<SysHost> wrapper = new JoinLambdaWrapper<>(request);
         SysHostQueryVO voBean = joinGetOne(wrapper, SysHostQueryVO.class);
         return voBean;
     }
-
-
+    
+    
     /**
      * 删除主机记录(支持批量)
      *
@@ -112,12 +112,12 @@ public class SysHostServiceImpl extends JoinServiceImpl<SysHostMapper, SysHost> 
      * @author 一源团队--花和尚
      * @date 2023-07-27
      */
-
+    
     @Override
     public boolean delete(String ids) throws Exception {
         return removeByIds(Arrays.asList(ids.split("," )));
     }
-
+    
     /**
      * 批量删除主机记录(根据同一属性,针对中间表)
      *
@@ -131,7 +131,7 @@ public class SysHostServiceImpl extends JoinServiceImpl<SysHostMapper, SysHost> 
         JoinLambdaWrapper<SysHost> wrapper = new JoinLambdaWrapper<>(request);
         return remove(wrapper);
     }
-
+    
     /**
      * 编辑主机记录
      *
@@ -140,7 +140,7 @@ public class SysHostServiceImpl extends JoinServiceImpl<SysHostMapper, SysHost> 
      * @author 一源团队--花和尚
      * @date 2023-07-27
      */
-
+    
     @Override
     public boolean edit(SysHostEditDTO request) throws Exception {
         SysHost po = new SysHost();
@@ -148,8 +148,8 @@ public class SysHostServiceImpl extends JoinServiceImpl<SysHostMapper, SysHost> 
         JoinLambdaWrapper<SysHost> wrapper = new JoinLambdaWrapper<>(po);
         return updateById(po);
     }
-
-
+    
+    
     /**
      * 新增主机记录
      *
@@ -158,13 +158,13 @@ public class SysHostServiceImpl extends JoinServiceImpl<SysHostMapper, SysHost> 
      * @author 一源团队--花和尚
      * @date 2023-07-27
      */
-
+    
     @Override
     public boolean add(SysHostAddDTO request) throws Exception {
         SysHost po = new SysHost();
         BeanUtilsPlus.copy(request, po);
         return save(po);
-
+        
     }
 }
 

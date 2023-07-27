@@ -32,7 +32,7 @@ public class AuthRoleServiceImpl extends JoinServiceImpl<AuthRoleMapper, AuthRol
     private AuthRoleMapper authRoleMapper;
     @Resource
     private AuthRoleMenuService authRoleMenuService;
-
+    
     /**
      * 角色列表(全部)
      *
@@ -43,16 +43,16 @@ public class AuthRoleServiceImpl extends JoinServiceImpl<AuthRoleMapper, AuthRol
      */
     @Override
     public List<AuthRoleQueryVO> list(AuthRoleListDTO request) throws Exception {
-
+        
         AuthRole po = new AuthRole();
         BeanUtilsPlus.copy(request, po);
         JoinLambdaWrapper<AuthRole> wrapper = new JoinLambdaWrapper<>(po);
         List<AuthRoleQueryVO> voList = joinList(wrapper, AuthRoleQueryVO.class);
-
+        
         return voList;
     }
-
-
+    
+    
     /**
      * 角色列表(分页)
      *
@@ -69,8 +69,8 @@ public class AuthRoleServiceImpl extends JoinServiceImpl<AuthRoleMapper, AuthRol
         Page<AuthRoleQueryVO> voPage = joinPage(new Page<>(request.getPageNum(), request.getPageSize()), wrapper, AuthRoleQueryVO.class);
         return voPage;
     }
-
-
+    
+    
     /**
      * 角色详情
      *
@@ -87,8 +87,8 @@ public class AuthRoleServiceImpl extends JoinServiceImpl<AuthRoleMapper, AuthRol
         AuthRoleQueryVO voBean = joinGetOne(wrapper, AuthRoleQueryVO.class);
         return voBean;
     }
-
-
+    
+    
     /**
      * 角色详情
      *
@@ -99,13 +99,13 @@ public class AuthRoleServiceImpl extends JoinServiceImpl<AuthRoleMapper, AuthRol
      */
     @Override
     public AuthRoleQueryVO details(AuthRole request) throws Exception {
-
+        
         JoinLambdaWrapper<AuthRole> wrapper = new JoinLambdaWrapper<>(request);
         AuthRoleQueryVO voBean = joinGetOne(wrapper, AuthRoleQueryVO.class);
         return voBean;
     }
-
-
+    
+    
     /**
      * 删除角色(支持批量)
      *
@@ -114,12 +114,12 @@ public class AuthRoleServiceImpl extends JoinServiceImpl<AuthRoleMapper, AuthRol
      * @author 一源团队--花和尚
      * @date 2023-07-27
      */
-
+    
     @Override
     public boolean delete(String ids) throws Exception {
         return removeByIds(Arrays.asList(ids.split("," )));
     }
-
+    
     /**
      * 批量删除角色(根据同一属性,针对中间表)
      *
@@ -133,7 +133,7 @@ public class AuthRoleServiceImpl extends JoinServiceImpl<AuthRoleMapper, AuthRol
         JoinLambdaWrapper<AuthRole> wrapper = new JoinLambdaWrapper<>(request);
         return remove(wrapper);
     }
-
+    
     /**
      * 编辑角色
      *
@@ -142,7 +142,7 @@ public class AuthRoleServiceImpl extends JoinServiceImpl<AuthRoleMapper, AuthRol
      * @author 一源团队--花和尚
      * @date 2023-07-27
      */
-
+    
     @Override
     public boolean edit(AuthRoleEditDTO request) throws Exception {
         AuthRole po = new AuthRole();
@@ -150,8 +150,8 @@ public class AuthRoleServiceImpl extends JoinServiceImpl<AuthRoleMapper, AuthRol
         JoinLambdaWrapper<AuthRole> wrapper = new JoinLambdaWrapper<>(po);
         return updateById(po);
     }
-
-
+    
+    
     /**
      * 新增角色
      *
@@ -160,15 +160,15 @@ public class AuthRoleServiceImpl extends JoinServiceImpl<AuthRoleMapper, AuthRol
      * @author 一源团队--花和尚
      * @date 2023-07-27
      */
-
+    
     @Override
     public boolean add(AuthRoleAddDTO request) throws Exception {
         AuthRole po = new AuthRole();
         BeanUtilsPlus.copy(request, po);
         return save(po);
-
+        
     }
-
+    
     @Override
     public boolean assignMenu(AuthRoleAssignMenuDTO request) throws Exception {
         List<AuthRoleMenu> addList = new ArrayList<>();
@@ -180,7 +180,7 @@ public class AuthRoleServiceImpl extends JoinServiceImpl<AuthRoleMapper, AuthRol
                     item.setMenuId(e);
                     addList.add(item);
                 });
-
+        
         // 先删除原来绑定的菜单id
         AuthRoleMenu query = new AuthRoleMenu();
         query.setRoleId(request.getRoleId());

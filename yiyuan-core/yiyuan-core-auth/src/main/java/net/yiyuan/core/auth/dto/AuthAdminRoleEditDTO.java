@@ -13,8 +13,8 @@ import java.io.Serializable;
  */
 @Data
 public class AuthAdminRoleEditDTO implements Serializable {
-
-
+    
+    
     /**
      * 主键
      *
@@ -23,8 +23,8 @@ public class AuthAdminRoleEditDTO implements Serializable {
      */
     @NotBlank(message = "主键不能为空" )
     private String id;
-
-
+    
+    
     /**
      * 用户ID
      *
@@ -32,8 +32,8 @@ public class AuthAdminRoleEditDTO implements Serializable {
      * @date 2023-07-27
      */
     private String userId;
-
-
+    
+    
     /**
      * 角色ID
      *
@@ -41,8 +41,8 @@ public class AuthAdminRoleEditDTO implements Serializable {
      * @date 2023-07-27
      */
     private String roleId;
-
-
+    
+    
     /**
      * 租户id
      *
@@ -50,6 +50,6 @@ public class AuthAdminRoleEditDTO implements Serializable {
      * @date 2023-07-27
      */
     private String tenantId;
-
-
+    
+    
 }

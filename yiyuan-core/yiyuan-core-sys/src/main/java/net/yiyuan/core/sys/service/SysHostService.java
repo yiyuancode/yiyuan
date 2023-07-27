@@ -18,7 +18,7 @@ import java.util.List;
  * @date 2023-07-27
  */
 public interface SysHostService extends JoinIService<SysHost> {
-
+    
     /**
      * 主机记录列表(全部)
      *
@@ -28,8 +28,8 @@ public interface SysHostService extends JoinIService<SysHost> {
      * @date 2023-07-27
      */
     List<SysHostQueryVO> list(SysHostListDTO request) throws Exception;
-
-
+    
+    
     /**
      * 主机记录列表(分页)
      *
@@ -39,8 +39,8 @@ public interface SysHostService extends JoinIService<SysHost> {
      * @date 2023-07-27
      */
     Page<SysHostQueryVO> page(SysHostPageDTO request) throws Exception;
-
-
+    
+    
     /**
      * 主机记录详情
      *
@@ -50,8 +50,8 @@ public interface SysHostService extends JoinIService<SysHost> {
      * @date 2023-07-27
      */
     SysHostQueryVO details(String id) throws Exception;
-
-
+    
+    
     /**
      * 主机记录详情
      *
@@ -61,8 +61,8 @@ public interface SysHostService extends JoinIService<SysHost> {
      * @date 2023-07-27
      */
     SysHostQueryVO details(SysHost request) throws Exception;
-
-
+    
+    
     /**
      * 删除主机记录(支持批量)
      *
@@ -71,10 +71,10 @@ public interface SysHostService extends JoinIService<SysHost> {
      * @author 一源团队--花和尚
      * @date 2023-07-27
      */
-
+    
     boolean delete(String ids) throws Exception;
-
-
+    
+    
     /**
      * 批量删除主机记录(根据同一属性,针对中间表)
      *
@@ -84,7 +84,7 @@ public interface SysHostService extends JoinIService<SysHost> {
      * @date 2023-07-27
      */
     boolean delete(SysHost request) throws Exception;
-
+    
     /**
      * 编辑主机记录
      *
@@ -94,8 +94,8 @@ public interface SysHostService extends JoinIService<SysHost> {
      * @date 2023-07-27
      */
     boolean edit(SysHostEditDTO request) throws Exception;
-
-
+    
+    
     /**
      * 新增主机记录
      *
@@ -105,5 +105,5 @@ public interface SysHostService extends JoinIService<SysHost> {
      * @date 2023-07-27
      */
     boolean add(SysHostAddDTO request) throws Exception;
-
+    
 }

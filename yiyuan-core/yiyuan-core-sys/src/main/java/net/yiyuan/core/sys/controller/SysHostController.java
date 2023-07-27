@@ -34,8 +34,8 @@ import java.util.List;
 public class SysHostController {
     @Autowired
     private SysHostService sysHostService;
-
-
+    
+    
     /**
      * 主机记录列表(全部)
      *
@@ -51,8 +51,8 @@ public class SysHostController {
     public CommonResult<List<SysHostQueryVO>> list(SysHostListDTO request) throws Exception {
         return CommonResult.success(sysHostService.list(request), "查询主机记录列表成功" );
     }
-
-
+    
+    
     /**
      * 主机记录列表(分页)
      *
@@ -70,7 +70,7 @@ public class SysHostController {
     ) throws Exception {
         return CommonResult.success(sysHostService.page(request), "分页查询主机记录成功" );
     }
-
+    
     /**
      * 主机记录详情
      *
@@ -86,8 +86,8 @@ public class SysHostController {
     public CommonResult<SysHostQueryVO> details(@PathVariable("id" ) @Validated({NotBlank.class}) String id) throws Exception {
         return CommonResult.success(sysHostService.details(id), "查询主机记录详情成功" );
     }
-
-
+    
+    
     /**
      * 删除主机记录(支持批量)
      *
@@ -107,7 +107,7 @@ public class SysHostController {
             return CommonResult.failed("删除主机记录失败" );
         }
     }
-
+    
     /**
      * 编辑主机记录
      *
@@ -127,8 +127,8 @@ public class SysHostController {
             return CommonResult.failed("修改主机记录失败" );
         }
     }
-
-
+    
+    
     /**
      * 新增主机记录
      *

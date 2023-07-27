@@ -30,7 +30,7 @@ import java.util.List;
 public class AuthAdminRoleServiceImpl extends JoinServiceImpl<AuthAdminRoleMapper, AuthAdminRole> implements AuthAdminRoleService {
     @Resource
     private AuthAdminRoleMapper authAdminRoleMapper;
-
+    
     /**
      * 用户_角色列表(全部)
      *
@@ -41,16 +41,16 @@ public class AuthAdminRoleServiceImpl extends JoinServiceImpl<AuthAdminRoleMappe
      */
     @Override
     public List<AuthAdminRoleQueryVO> list(AuthAdminRoleListDTO request) throws Exception {
-
+        
         AuthAdminRole po = new AuthAdminRole();
         BeanUtilsPlus.copy(request, po);
         JoinLambdaWrapper<AuthAdminRole> wrapper = new JoinLambdaWrapper<>(po);
         List<AuthAdminRoleQueryVO> voList = joinList(wrapper, AuthAdminRoleQueryVO.class);
-
+        
         return voList;
     }
-
-
+    
+    
     /**
      * 用户_角色列表(分页)
      *
@@ -67,8 +67,8 @@ public class AuthAdminRoleServiceImpl extends JoinServiceImpl<AuthAdminRoleMappe
         Page<AuthAdminRoleQueryVO> voPage = joinPage(new Page<>(request.getPageNum(), request.getPageSize()), wrapper, AuthAdminRoleQueryVO.class);
         return voPage;
     }
-
-
+    
+    
     /**
      * 用户_角色详情
      *
@@ -85,8 +85,8 @@ public class AuthAdminRoleServiceImpl extends JoinServiceImpl<AuthAdminRoleMappe
         AuthAdminRoleQueryVO voBean = joinGetOne(wrapper, AuthAdminRoleQueryVO.class);
         return voBean;
     }
-
-
+    
+    
     /**
      * 用户_角色详情
      *
@@ -97,13 +97,13 @@ public class AuthAdminRoleServiceImpl extends JoinServiceImpl<AuthAdminRoleMappe
      */
     @Override
     public AuthAdminRoleQueryVO details(AuthAdminRole request) throws Exception {
-
+        
         JoinLambdaWrapper<AuthAdminRole> wrapper = new JoinLambdaWrapper<>(request);
         AuthAdminRoleQueryVO voBean = joinGetOne(wrapper, AuthAdminRoleQueryVO.class);
         return voBean;
     }
-
-
+    
+    
     /**
      * 删除用户_角色(支持批量)
      *
@@ -112,12 +112,12 @@ public class AuthAdminRoleServiceImpl extends JoinServiceImpl<AuthAdminRoleMappe
      * @author 一源团队--花和尚
      * @date 2023-07-27
      */
-
+    
     @Override
     public boolean delete(String ids) throws Exception {
         return removeByIds(Arrays.asList(ids.split("," )));
     }
-
+    
     /**
      * 批量删除用户_角色(根据同一属性,针对中间表)
      *
@@ -131,7 +131,7 @@ public class AuthAdminRoleServiceImpl extends JoinServiceImpl<AuthAdminRoleMappe
         JoinLambdaWrapper<AuthAdminRole> wrapper = new JoinLambdaWrapper<>(request);
         return remove(wrapper);
     }
-
+    
     /**
      * 编辑用户_角色
      *
@@ -140,7 +140,7 @@ public class AuthAdminRoleServiceImpl extends JoinServiceImpl<AuthAdminRoleMappe
      * @author 一源团队--花和尚
      * @date 2023-07-27
      */
-
+    
     @Override
     public boolean edit(AuthAdminRoleEditDTO request) throws Exception {
         AuthAdminRole po = new AuthAdminRole();
@@ -148,8 +148,8 @@ public class AuthAdminRoleServiceImpl extends JoinServiceImpl<AuthAdminRoleMappe
         JoinLambdaWrapper<AuthAdminRole> wrapper = new JoinLambdaWrapper<>(po);
         return updateById(po);
     }
-
-
+    
+    
     /**
      * 新增用户_角色
      *
@@ -158,13 +158,13 @@ public class AuthAdminRoleServiceImpl extends JoinServiceImpl<AuthAdminRoleMappe
      * @author 一源团队--花和尚
      * @date 2023-07-27
      */
-
+    
     @Override
     public boolean add(AuthAdminRoleAddDTO request) throws Exception {
         AuthAdminRole po = new AuthAdminRole();
         BeanUtilsPlus.copy(request, po);
         return save(po);
-
+        
     }
 }
 

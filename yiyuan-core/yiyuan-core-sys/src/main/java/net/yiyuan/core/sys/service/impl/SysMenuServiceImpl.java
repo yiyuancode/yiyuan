@@ -36,7 +36,7 @@ import java.util.*;
 public class SysMenuServiceImpl extends JoinServiceImpl<SysMenuMapper, SysMenu> implements SysMenuService {
     @Resource
     private SysMenuMapper sysMenuMapper;
-
+    
     /**
      * 菜单列表(全部)
      *
@@ -47,16 +47,16 @@ public class SysMenuServiceImpl extends JoinServiceImpl<SysMenuMapper, SysMenu> 
      */
     @Override
     public List<SysMenuQueryVO> list(SysMenuListDTO request) throws Exception {
-
+        
         SysMenu po = new SysMenu();
         BeanUtilsPlus.copy(request, po);
         JoinLambdaWrapper<SysMenu> wrapper = new JoinLambdaWrapper<>(po);
         List<SysMenuQueryVO> voList = joinList(wrapper, SysMenuQueryVO.class);
-
+        
         return voList;
     }
-
-
+    
+    
     /**
      * 菜单列表(分页)
      *
@@ -73,8 +73,8 @@ public class SysMenuServiceImpl extends JoinServiceImpl<SysMenuMapper, SysMenu> 
         Page<SysMenuQueryVO> voPage = joinPage(new Page<>(request.getPageNum(), request.getPageSize()), wrapper, SysMenuQueryVO.class);
         return voPage;
     }
-
-
+    
+    
     /**
      * 菜单详情
      *
@@ -91,8 +91,8 @@ public class SysMenuServiceImpl extends JoinServiceImpl<SysMenuMapper, SysMenu> 
         SysMenuQueryVO voBean = joinGetOne(wrapper, SysMenuQueryVO.class);
         return voBean;
     }
-
-
+    
+    
     /**
      * 菜单详情
      *
@@ -103,12 +103,12 @@ public class SysMenuServiceImpl extends JoinServiceImpl<SysMenuMapper, SysMenu> 
      */
     @Override
     public SysMenuQueryVO details(SysMenu request) throws Exception {
-
+        
         JoinLambdaWrapper<SysMenu> wrapper = new JoinLambdaWrapper<>(request);
         SysMenuQueryVO voBean = joinGetOne(wrapper, SysMenuQueryVO.class);
         return voBean;
     }
-
+    
     @Override
     public SysMenuQueryVO detailsEqual(SysMenu request) throws Exception {
         JoinLambdaWrapper<SysMenu> wrapper = new JoinLambdaWrapper<>(request);
@@ -116,8 +116,8 @@ public class SysMenuServiceImpl extends JoinServiceImpl<SysMenuMapper, SysMenu> 
         SysMenuQueryVO voBean = joinGetOne(wrapper, SysMenuQueryVO.class);
         return voBean;
     }
-
-
+    
+    
     /**
      * 删除菜单(支持批量)
      *
@@ -126,12 +126,12 @@ public class SysMenuServiceImpl extends JoinServiceImpl<SysMenuMapper, SysMenu> 
      * @author 一源团队--花和尚
      * @date 2023-07-27
      */
-
+    
     @Override
     public boolean delete(String ids) throws Exception {
         return removeByIds(Arrays.asList(ids.split("," )));
     }
-
+    
     /**
      * 批量删除菜单(根据同一属性,针对中间表)
      *
@@ -145,7 +145,7 @@ public class SysMenuServiceImpl extends JoinServiceImpl<SysMenuMapper, SysMenu> 
         JoinLambdaWrapper<SysMenu> wrapper = new JoinLambdaWrapper<>(request);
         return remove(wrapper);
     }
-
+    
     /**
      * 编辑菜单
      *
@@ -154,7 +154,7 @@ public class SysMenuServiceImpl extends JoinServiceImpl<SysMenuMapper, SysMenu> 
      * @author 一源团队--花和尚
      * @date 2023-07-27
      */
-
+    
     @Override
     public boolean edit(SysMenuEditDTO request) throws Exception {
         SysMenu po = new SysMenu();
@@ -162,8 +162,8 @@ public class SysMenuServiceImpl extends JoinServiceImpl<SysMenuMapper, SysMenu> 
         JoinLambdaWrapper<SysMenu> wrapper = new JoinLambdaWrapper<>(po);
         return updateById(po);
     }
-
-
+    
+    
     /**
      * 新增菜单
      *
@@ -172,15 +172,15 @@ public class SysMenuServiceImpl extends JoinServiceImpl<SysMenuMapper, SysMenu> 
      * @author 一源团队--花和尚
      * @date 2023-07-27
      */
-
+    
     @Override
     public boolean add(SysMenuAddDTO request) throws Exception {
         SysMenu po = new SysMenu();
         BeanUtilsPlus.copy(request, po);
         return save(po);
-
+        
     }
-
+    
     /**
      * 新增菜单
      *
@@ -190,12 +190,12 @@ public class SysMenuServiceImpl extends JoinServiceImpl<SysMenuMapper, SysMenu> 
      */
     @Override
     public boolean autoScanMenu() throws Exception {
-
+        
         String[] packageNames = {
                 "net.yiyuan.core.auth.controller", "net.yiyuan.core.sys.controller"
         };
         Class<RestController> annotationClass = RestController.class;
-
+        
         // 扫描指定包下标注了指定注解的类和方法
         Set<Class<?>> classes = new HashSet<>();
         for (String packageName : packageNames) {
@@ -204,11 +204,11 @@ public class SysMenuServiceImpl extends JoinServiceImpl<SysMenuMapper, SysMenu> 
         //    Set<Class<?>> classes = ClassScanner.scanAllPackage();
         log.info("ClassUtil.classes", classes.size());
         // 定义存储菜单的列表
-
+        
         // 遍历所有标注了 @SaCheckPermission 注解的类和方法
         for (Class<?> clazz : classes) {
             List<SysMenu> menuList = new ArrayList<>();
-
+            
             log.info("classes", clazz);
             Method[] methods = clazz.getDeclaredMethods();
             for (Method method : methods) {
@@ -216,13 +216,13 @@ public class SysMenuServiceImpl extends JoinServiceImpl<SysMenuMapper, SysMenu> 
                 if (permission != null) {
                     // 获取权限表达式
                     String[] permissions = permission.value();
-
+                    
                     // 从注解中获取中文注释作为菜单名称
                     String menuName2 = "";
                     Description annotation = method.getAnnotation(Description.class);
                     if (!ObjectUtil.isEmpty(annotation)) {
                         String menuName = annotation.value();
-
+                        
                         try {
                             String btnPerm = permissions[0];
                             String[] btnPermAarry = permissions[0].split(":" );
@@ -234,7 +234,7 @@ public class SysMenuServiceImpl extends JoinServiceImpl<SysMenuMapper, SysMenu> 
                                 // 查询大模块目录是否存在
                                 SysMenu sysMenuQuery = new SysMenu();
                                 sysMenuQuery.setPermission(btnPermAarry[0]);
-
+                                
                                 moudelDetails = this.detailsEqual(sysMenuQuery);
                                 if (ObjectUtil.isEmpty(moudelDetails)) {
                                     sysMenuQuery.setName(menuNameAarry[0]);
@@ -260,13 +260,13 @@ public class SysMenuServiceImpl extends JoinServiceImpl<SysMenuMapper, SysMenu> 
                                     sysMenuQuery.setName(menuNameAarry[1]);
                                     sysMenuQuery.setType(SysMenuTypeEnum.MENU);
                                     sysMenuQuery.setParentId(moudelDetails.getId());
-
+                                    
                                     sysMenuQuery.setIsFrame(SysMenuIsFrameEnum.NO);
                                     sysMenuQuery.setIsAffix(SysMenuIsAffixEnum.CLOSE);
                                     sysMenuQuery.setStatus(SysMenuStatusEnum.NORMAL);
                                     sysMenuQuery.setIsAlwaysShow(SysMenuIsAlwaysShowEnum.OPEN);
                                     sysMenuQuery.setOpenType(SysMenuOpenTypeEnum.CURRENT_WINDOW);
-
+                                    
                                     sysMenuQuery.setSort(0);
                                     sysMenuQuery.setRouteComponent(
                                             "/pages/" + btnPermAarry[0] + "/" + btnPermAarry[1]);
@@ -289,7 +289,7 @@ public class SysMenuServiceImpl extends JoinServiceImpl<SysMenuMapper, SysMenu> 
                                 sysMenuQuery.setStatus(SysMenuStatusEnum.NORMAL);
                                 sysMenuQuery.setIsAlwaysShow(SysMenuIsAlwaysShowEnum.OPEN);
                                 sysMenuQuery.setOpenType(SysMenuOpenTypeEnum.CURRENT_WINDOW);
-
+                                
                                 sysMenuQuery.setSort(0);
                                 sysMenuQuery.setRouteComponent(null);
                                 sysMenuQuery.setRouteName(null);
@@ -297,9 +297,9 @@ public class SysMenuServiceImpl extends JoinServiceImpl<SysMenuMapper, SysMenu> 
                                 btnDetails = new SysMenuQueryVO();
                                 BeanUtilsPlus.copy(sysMenuQuery, btnDetails);
                             }
-
+                            
                         } catch (Exception e) {
-
+                            
                             e.printStackTrace();
                             throw new Error("自动生成菜单异常" );
                         }
@@ -307,7 +307,7 @@ public class SysMenuServiceImpl extends JoinServiceImpl<SysMenuMapper, SysMenu> 
                 }
             }
         }
-
+        
         return true;
     }
 }

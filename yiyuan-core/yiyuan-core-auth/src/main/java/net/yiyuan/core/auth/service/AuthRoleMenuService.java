@@ -18,7 +18,7 @@ import java.util.List;
  * @date 2023-07-27
  */
 public interface AuthRoleMenuService extends JoinIService<AuthRoleMenu> {
-
+    
     /**
      * 角色_菜单列表(全部)
      *
@@ -28,8 +28,8 @@ public interface AuthRoleMenuService extends JoinIService<AuthRoleMenu> {
      * @date 2023-07-27
      */
     List<AuthRoleMenuQueryVO> list(AuthRoleMenuListDTO request) throws Exception;
-
-
+    
+    
     /**
      * 角色_菜单列表(分页)
      *
@@ -39,8 +39,8 @@ public interface AuthRoleMenuService extends JoinIService<AuthRoleMenu> {
      * @date 2023-07-27
      */
     Page<AuthRoleMenuQueryVO> page(AuthRoleMenuPageDTO request) throws Exception;
-
-
+    
+    
     /**
      * 角色_菜单详情
      *
@@ -50,8 +50,8 @@ public interface AuthRoleMenuService extends JoinIService<AuthRoleMenu> {
      * @date 2023-07-27
      */
     AuthRoleMenuQueryVO details(String id) throws Exception;
-
-
+    
+    
     /**
      * 角色_菜单详情
      *
@@ -61,8 +61,8 @@ public interface AuthRoleMenuService extends JoinIService<AuthRoleMenu> {
      * @date 2023-07-27
      */
     AuthRoleMenuQueryVO details(AuthRoleMenu request) throws Exception;
-
-
+    
+    
     /**
      * 删除角色_菜单(支持批量)
      *
@@ -71,10 +71,10 @@ public interface AuthRoleMenuService extends JoinIService<AuthRoleMenu> {
      * @author 一源团队--花和尚
      * @date 2023-07-27
      */
-
+    
     boolean delete(String ids) throws Exception;
-
-
+    
+    
     /**
      * 批量删除角色_菜单(根据同一属性,针对中间表)
      *
@@ -84,7 +84,7 @@ public interface AuthRoleMenuService extends JoinIService<AuthRoleMenu> {
      * @date 2023-07-27
      */
     boolean delete(AuthRoleMenu request) throws Exception;
-
+    
     /**
      * 编辑角色_菜单
      *
@@ -94,8 +94,8 @@ public interface AuthRoleMenuService extends JoinIService<AuthRoleMenu> {
      * @date 2023-07-27
      */
     boolean edit(AuthRoleMenuEditDTO request) throws Exception;
-
-
+    
+    
     /**
      * 新增角色_菜单
      *
@@ -105,5 +105,5 @@ public interface AuthRoleMenuService extends JoinIService<AuthRoleMenu> {
      * @date 2023-07-27
      */
     boolean add(AuthRoleMenuAddDTO request) throws Exception;
-
+    
 }

@@ -34,8 +34,8 @@ import java.util.List;
 public class SysTenantController {
     @Autowired
     private SysTenantService sysTenantService;
-
-
+    
+    
     /**
      * 租户列表(全部)
      *
@@ -51,8 +51,8 @@ public class SysTenantController {
     public CommonResult<List<SysTenantQueryVO>> list(SysTenantListDTO request) throws Exception {
         return CommonResult.success(sysTenantService.list(request), "查询租户列表成功" );
     }
-
-
+    
+    
     /**
      * 租户列表(分页)
      *
@@ -70,7 +70,7 @@ public class SysTenantController {
     ) throws Exception {
         return CommonResult.success(sysTenantService.page(request), "分页查询租户成功" );
     }
-
+    
     /**
      * 租户详情
      *
@@ -86,8 +86,8 @@ public class SysTenantController {
     public CommonResult<SysTenantQueryVO> details(@PathVariable("id" ) @Validated({NotBlank.class}) String id) throws Exception {
         return CommonResult.success(sysTenantService.details(id), "查询租户详情成功" );
     }
-
-
+    
+    
     /**
      * 删除租户(支持批量)
      *
@@ -107,7 +107,7 @@ public class SysTenantController {
             return CommonResult.failed("删除租户失败" );
         }
     }
-
+    
     /**
      * 编辑租户
      *
@@ -127,8 +127,8 @@ public class SysTenantController {
             return CommonResult.failed("修改租户失败" );
         }
     }
-
-
+    
+    
     /**
      * 新增租户
      *

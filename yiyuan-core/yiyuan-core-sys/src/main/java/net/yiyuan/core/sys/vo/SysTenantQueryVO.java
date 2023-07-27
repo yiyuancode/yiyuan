@@ -16,8 +16,8 @@ import java.util.Date;
  */
 @Data
 public class SysTenantQueryVO implements Serializable {
-
-
+    
+    
     /**
      * 租户id
      *
@@ -25,8 +25,8 @@ public class SysTenantQueryVO implements Serializable {
      * @date 2023-07-27
      */
     private String id;
-
-
+    
+    
     /**
      * 租户名称
      *
@@ -34,8 +34,8 @@ public class SysTenantQueryVO implements Serializable {
      * @date 2023-07-27
      */
     private String name;
-
-
+    
+    
     /**
      * 租户编号
      *
@@ -43,8 +43,8 @@ public class SysTenantQueryVO implements Serializable {
      * @date 2023-07-27
      */
     private String code;
-
-
+    
+    
     /**
      * 开始时间
      *
@@ -54,8 +54,8 @@ public class SysTenantQueryVO implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss" )
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8" )
     private Date startTime;
-
-
+    
+    
     /**
      * 结束时间
      *
@@ -65,8 +65,8 @@ public class SysTenantQueryVO implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss" )
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8" )
     private Date endTime;
-
-
+    
+    
     /**
      * 修改时间
      *
@@ -76,8 +76,8 @@ public class SysTenantQueryVO implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss" )
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8" )
     private Date updateTime;
-
-
+    
+    
     /**
      * 创建时间
      *
@@ -87,8 +87,8 @@ public class SysTenantQueryVO implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss" )
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8" )
     private Date createTime;
-
-
+    
+    
     /**
      * 状态#0=正常|1=冻结
      *
@@ -96,8 +96,8 @@ public class SysTenantQueryVO implements Serializable {
      * @date 2023-07-27
      */
     private SysTenantStatusEnum status;
-
-
+    
+    
     /**
      * 租户id
      *
@@ -105,8 +105,8 @@ public class SysTenantQueryVO implements Serializable {
      * @date 2023-07-27
      */
     private String tenantId;
-
-
+    
+    
     /**
      * 创建人
      *
@@ -114,8 +114,8 @@ public class SysTenantQueryVO implements Serializable {
      * @date 2023-07-27
      */
     private String createUser;
-
-
+    
+    
     /**
      * 修改人
      *
@@ -123,6 +123,6 @@ public class SysTenantQueryVO implements Serializable {
      * @date 2023-07-27
      */
     private String updateUser;
-
-
+    
+    
 }

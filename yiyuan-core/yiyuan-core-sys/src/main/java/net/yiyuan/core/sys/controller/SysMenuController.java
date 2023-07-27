@@ -35,8 +35,8 @@ import java.util.List;
 public class SysMenuController {
     @Autowired
     private SysMenuService sysMenuService;
-
-
+    
+    
     /**
      * 菜单列表(全部)
      *
@@ -52,8 +52,8 @@ public class SysMenuController {
     public CommonResult<List<SysMenuQueryVO>> list(SysMenuListDTO request) throws Exception {
         return CommonResult.success(sysMenuService.list(request), "查询菜单列表成功" );
     }
-
-
+    
+    
     /**
      * 菜单列表(分页)
      *
@@ -71,7 +71,7 @@ public class SysMenuController {
     ) throws Exception {
         return CommonResult.success(sysMenuService.page(request), "分页查询菜单成功" );
     }
-
+    
     /**
      * 菜单详情
      *
@@ -87,8 +87,8 @@ public class SysMenuController {
     public CommonResult<SysMenuQueryVO> details(@PathVariable("id" ) @Validated({NotBlank.class}) String id) throws Exception {
         return CommonResult.success(sysMenuService.details(id), "查询菜单详情成功" );
     }
-
-
+    
+    
     /**
      * 删除菜单(支持批量)
      *
@@ -108,7 +108,7 @@ public class SysMenuController {
             return CommonResult.failed("删除菜单失败" );
         }
     }
-
+    
     /**
      * 编辑菜单
      *
@@ -128,8 +128,8 @@ public class SysMenuController {
             return CommonResult.failed("修改菜单失败" );
         }
     }
-
-
+    
+    
     /**
      * 新增菜单
      *
@@ -149,7 +149,7 @@ public class SysMenuController {
             return CommonResult.failed("新增菜单失败" );
         }
     }
-
+    
     /**
      * 自动生成菜单数据
      *

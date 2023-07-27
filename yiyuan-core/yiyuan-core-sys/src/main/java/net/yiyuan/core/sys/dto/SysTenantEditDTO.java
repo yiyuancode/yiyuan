@@ -15,8 +15,8 @@ import java.util.Date;
  */
 @Data
 public class SysTenantEditDTO implements Serializable {
-
-
+    
+    
     /**
      * 租户id
      *
@@ -25,8 +25,8 @@ public class SysTenantEditDTO implements Serializable {
      */
     @NotBlank(message = "租户id不能为空" )
     private String id;
-
-
+    
+    
     /**
      * 租户名称
      *
@@ -34,8 +34,8 @@ public class SysTenantEditDTO implements Serializable {
      * @date 2023-07-27
      */
     private String name;
-
-
+    
+    
     /**
      * 租户编号
      *
@@ -43,8 +43,8 @@ public class SysTenantEditDTO implements Serializable {
      * @date 2023-07-27
      */
     private String code;
-
-
+    
+    
     /**
      * 开始时间
      *
@@ -52,8 +52,8 @@ public class SysTenantEditDTO implements Serializable {
      * @date 2023-07-27
      */
     private Date startTime;
-
-
+    
+    
     /**
      * 结束时间
      *
@@ -61,8 +61,8 @@ public class SysTenantEditDTO implements Serializable {
      * @date 2023-07-27
      */
     private Date endTime;
-
-
+    
+    
     /**
      * 状态#0=正常|1=冻结
      *
@@ -70,8 +70,8 @@ public class SysTenantEditDTO implements Serializable {
      * @date 2023-07-27
      */
     private SysTenantStatusEnum status;
-
-
+    
+    
     /**
      * 租户id
      *
@@ -79,6 +79,6 @@ public class SysTenantEditDTO implements Serializable {
      * @date 2023-07-27
      */
     private String tenantId;
-
-
+    
+    
 }

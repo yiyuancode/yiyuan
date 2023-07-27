@@ -5,17 +5,17 @@ import icu.mhb.mybatisplus.plugln.base.service.impl.JoinServiceImpl;
 import icu.mhb.mybatisplus.plugln.core.JoinLambdaWrapper;
 import lombok.extern.slf4j.Slf4j;
 import net.yiyuan.common.utils.BeanUtilsPlus;
-import net.yiyuan.core.auth.dto.AuthAdminAddDTO;
-import net.yiyuan.core.auth.dto.AuthAdminEditDTO;
-import net.yiyuan.core.auth.dto.AuthAdminListDTO;
-import net.yiyuan.core.auth.dto.AuthAdminPageDTO;
+import net.yiyuan.core.auth.dto.*;
 import net.yiyuan.core.auth.mapper.AuthAdminMapper;
 import net.yiyuan.core.auth.model.AuthAdmin;
+import net.yiyuan.core.auth.model.AuthAdminRole;
+import net.yiyuan.core.auth.service.AuthAdminRoleService;
 import net.yiyuan.core.auth.service.AuthAdminService;
 import net.yiyuan.core.auth.vo.AuthAdminQueryVO;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -30,7 +30,9 @@ import java.util.List;
 public class AuthAdminServiceImpl extends JoinServiceImpl<AuthAdminMapper, AuthAdmin> implements AuthAdminService {
     @Resource
     private AuthAdminMapper authAdminMapper;
-
+    @Resource
+    private AuthAdminRoleService authAdminRoleService;
+    
     /**
      * 用户列表(全部)
      *
@@ -41,16 +43,16 @@ public class AuthAdminServiceImpl extends JoinServiceImpl<AuthAdminMapper, AuthA
      */
     @Override
     public List<AuthAdminQueryVO> list(AuthAdminListDTO request) throws Exception {
-
+        
         AuthAdmin po = new AuthAdmin();
         BeanUtilsPlus.copy(request, po);
         JoinLambdaWrapper<AuthAdmin> wrapper = new JoinLambdaWrapper<>(po);
         List<AuthAdminQueryVO> voList = joinList(wrapper, AuthAdminQueryVO.class);
-
+        
         return voList;
     }
-
-
+    
+    
     /**
      * 用户列表(分页)
      *
@@ -67,8 +69,8 @@ public class AuthAdminServiceImpl extends JoinServiceImpl<AuthAdminMapper, AuthA
         Page<AuthAdminQueryVO> voPage = joinPage(new Page<>(request.getPageNum(), request.getPageSize()), wrapper, AuthAdminQueryVO.class);
         return voPage;
     }
-
-
+    
+    
     /**
      * 用户详情
      *
@@ -85,8 +87,8 @@ public class AuthAdminServiceImpl extends JoinServiceImpl<AuthAdminMapper, AuthA
         AuthAdminQueryVO voBean = joinGetOne(wrapper, AuthAdminQueryVO.class);
         return voBean;
     }
-
-
+    
+    
     /**
      * 用户详情
      *
@@ -97,13 +99,13 @@ public class AuthAdminServiceImpl extends JoinServiceImpl<AuthAdminMapper, AuthA
      */
     @Override
     public AuthAdminQueryVO details(AuthAdmin request) throws Exception {
-
+        
         JoinLambdaWrapper<AuthAdmin> wrapper = new JoinLambdaWrapper<>(request);
         AuthAdminQueryVO voBean = joinGetOne(wrapper, AuthAdminQueryVO.class);
         return voBean;
     }
-
-
+    
+    
     /**
      * 删除用户(支持批量)
      *
@@ -112,12 +114,12 @@ public class AuthAdminServiceImpl extends JoinServiceImpl<AuthAdminMapper, AuthA
      * @author 一源团队--花和尚
      * @date 2023-07-27
      */
-
+    
     @Override
     public boolean delete(String ids) throws Exception {
         return removeByIds(Arrays.asList(ids.split("," )));
     }
-
+    
     /**
      * 批量删除用户(根据同一属性,针对中间表)
      *
@@ -131,7 +133,7 @@ public class AuthAdminServiceImpl extends JoinServiceImpl<AuthAdminMapper, AuthA
         JoinLambdaWrapper<AuthAdmin> wrapper = new JoinLambdaWrapper<>(request);
         return remove(wrapper);
     }
-
+    
     /**
      * 编辑用户
      *
@@ -140,7 +142,7 @@ public class AuthAdminServiceImpl extends JoinServiceImpl<AuthAdminMapper, AuthA
      * @author 一源团队--花和尚
      * @date 2023-07-27
      */
-
+    
     @Override
     public boolean edit(AuthAdminEditDTO request) throws Exception {
         AuthAdmin po = new AuthAdmin();
@@ -148,8 +150,8 @@ public class AuthAdminServiceImpl extends JoinServiceImpl<AuthAdminMapper, AuthA
         JoinLambdaWrapper<AuthAdmin> wrapper = new JoinLambdaWrapper<>(po);
         return updateById(po);
     }
-
-
+    
+    
     /**
      * 新增用户
      *
@@ -158,13 +160,35 @@ public class AuthAdminServiceImpl extends JoinServiceImpl<AuthAdminMapper, AuthA
      * @author 一源团队--花和尚
      * @date 2023-07-27
      */
-
+    
     @Override
     public boolean add(AuthAdminAddDTO request) throws Exception {
         AuthAdmin po = new AuthAdmin();
         BeanUtilsPlus.copy(request, po);
         return save(po);
-
+        
+    }
+    
+    @Override
+    public boolean assignRole(AuthAdminAssignRoleDTO request) throws Exception {
+        List<AuthAdminRole> addList = new ArrayList<>();
+        List<String> rolesIdList = request.getRolesIdList();
+        rolesIdList.forEach(
+                (e) -> {
+                    AuthAdminRole item = new AuthAdminRole();
+                    item.setUserId(request.getUserId());
+                    item.setRoleId(e);
+                    addList.add(item);
+                });
+        
+        // 先删除原来绑定的菜单id
+        AuthAdminRole query = new AuthAdminRole();
+        query.setRoleId(request.getUserId());
+        authAdminRoleService.delete(query);
+        // 在全量增加现在的
+        authAdminRoleService.saveBatch(addList);
+        
+        return true;
     }
 }
 

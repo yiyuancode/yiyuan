@@ -15,52 +15,52 @@ import java.util.Date;
  */
 @Data
 public class SysTenantAddDTO implements Serializable {
-
-
+    
+    
     /**
      * 租户名称
      *
      * @author 一源团队--花和尚
      * @date 2023-07-27
      */
-
-
+    
+    
     private String name;
-
-
+    
+    
     /**
      * 租户编号
      *
      * @author 一源团队--花和尚
      * @date 2023-07-27
      */
-
-
+    
+    
     private String code;
-
-
+    
+    
     /**
      * 开始时间
      *
      * @author 一源团队--花和尚
      * @date 2023-07-27
      */
-
-
+    
+    
     private Date startTime;
-
-
+    
+    
     /**
      * 结束时间
      *
      * @author 一源团队--花和尚
      * @date 2023-07-27
      */
-
-
+    
+    
     private Date endTime;
-
-
+    
+    
     /**
      * 状态#0=正常|1=冻结
      *
@@ -68,22 +68,22 @@ public class SysTenantAddDTO implements Serializable {
      * @author 一源团队--花和尚
      * @date 2023-07-27
      */
-
+    
     @NotNull(message = "状态#0=正常|1=冻结不能为空" )
-
-
+    
+    
     private SysTenantStatusEnum status;
-
-
+    
+    
     /**
      * 租户id
      *
      * @author 一源团队--花和尚
      * @date 2023-07-27
      */
-
-
+    
+    
     private String tenantId;
-
-
+    
+    
 }

@@ -14,8 +14,8 @@ import java.io.Serializable;
  */
 @Data
 public class AuthAdminEditDTO implements Serializable {
-
-
+    
+    
     /**
      * 主键ID
      *
@@ -24,8 +24,8 @@ public class AuthAdminEditDTO implements Serializable {
      */
     @NotBlank(message = "主键ID不能为空" )
     private String id;
-
-
+    
+    
     /**
      * 用户名
      *
@@ -33,8 +33,8 @@ public class AuthAdminEditDTO implements Serializable {
      * @date 2023-07-27
      */
     private String username;
-
-
+    
+    
     /**
      * 密码
      *
@@ -42,8 +42,8 @@ public class AuthAdminEditDTO implements Serializable {
      * @date 2023-07-27
      */
     private String password;
-
-
+    
+    
     /**
      * 随机盐
      *
@@ -51,8 +51,8 @@ public class AuthAdminEditDTO implements Serializable {
      * @date 2023-07-27
      */
     private String salt;
-
-
+    
+    
     /**
      * 部门ID
      *
@@ -60,8 +60,8 @@ public class AuthAdminEditDTO implements Serializable {
      * @date 2023-07-27
      */
     private Integer deptId;
-
-
+    
+    
     /**
      * 小程序openid
      *
@@ -69,8 +69,8 @@ public class AuthAdminEditDTO implements Serializable {
      * @date 2023-07-27
      */
     private String miniOpenid;
-
-
+    
+    
     /**
      * 码云登录
      *
@@ -78,8 +78,8 @@ public class AuthAdminEditDTO implements Serializable {
      * @date 2023-07-27
      */
     private String giteeLogin;
-
-
+    
+    
     /**
      * 开源中国
      *
@@ -87,8 +87,8 @@ public class AuthAdminEditDTO implements Serializable {
      * @date 2023-07-27
      */
     private String oscId;
-
-
+    
+    
     /**
      * 微信openid
      *
@@ -96,8 +96,8 @@ public class AuthAdminEditDTO implements Serializable {
      * @date 2023-07-27
      */
     private String wxOpenid;
-
-
+    
+    
     /**
      * QQ openid
      *
@@ -105,8 +105,8 @@ public class AuthAdminEditDTO implements Serializable {
      * @date 2023-07-27
      */
     private String qqOpenid;
-
-
+    
+    
     /**
      * 平台类型#0=平台端|1=租户端|2=移动端
      *
@@ -114,8 +114,8 @@ public class AuthAdminEditDTO implements Serializable {
      * @date 2023-07-27
      */
     private AuthAdminPlatformEnum platform;
-
-
+    
+    
     /**
      * 所属租户
      *
@@ -123,6 +123,6 @@ public class AuthAdminEditDTO implements Serializable {
      * @date 2023-07-27
      */
     private String tenantId;
-
-
+    
+    
 }

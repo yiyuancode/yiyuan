@@ -21,15 +21,15 @@ import java.util.Date;
 
 public class SysTenant implements Serializable {
     private static final long serialVersionUID = 1L;
-
+    
     /**
      * 租户id
      *
      * @date 2023-07-27
      */
     @TableId(value = "id", type = IdType.ASSIGN_UUID)
-
-
+    
+    
     /**
      * 租户id
      * @see String
@@ -37,8 +37,8 @@ public class SysTenant implements Serializable {
      * @date 2023-07-27
      */
     private String id;
-
-
+    
+    
     /**
      * 租户名称
      *
@@ -48,8 +48,8 @@ public class SysTenant implements Serializable {
      */
     @TableField(condition = CustomSqlCondition.LIKE)
     private String name;
-
-
+    
+    
     /**
      * 租户编号
      *
@@ -59,8 +59,8 @@ public class SysTenant implements Serializable {
      */
     @TableField(condition = CustomSqlCondition.LIKE)
     private String code;
-
-
+    
+    
     /**
      * 开始时间
      *
@@ -68,8 +68,8 @@ public class SysTenant implements Serializable {
      * @date 2023-07-27
      * @see Date
      */
-
-
+    
+    
     private Date startTime;
     /**
      * 开始时间(查询开始时间)
@@ -89,8 +89,8 @@ public class SysTenant implements Serializable {
      */
     @TableField(value = "start_time", condition = CustomSqlCondition.END_EQUAL, select = false)
     private Date startTimeEnd;
-
-
+    
+    
     /**
      * 结束时间
      *
@@ -98,8 +98,8 @@ public class SysTenant implements Serializable {
      * @date 2023-07-27
      * @see Date
      */
-
-
+    
+    
     private Date endTime;
     /**
      * 结束时间(查询开始时间)
@@ -119,8 +119,8 @@ public class SysTenant implements Serializable {
      */
     @TableField(value = "end_time", condition = CustomSqlCondition.END_EQUAL, select = false)
     private Date endTimeEnd;
-
-
+    
+    
     /**
      * 修改时间
      *
@@ -128,9 +128,9 @@ public class SysTenant implements Serializable {
      * @date 2023-07-27
      * @see Date
      */
-
+    
     @TableField(fill = FieldFill.INSERT_UPDATE)
-
+    
     private Date updateTime;
     /**
      * 修改时间(查询开始时间)
@@ -150,8 +150,8 @@ public class SysTenant implements Serializable {
      */
     @TableField(value = "update_time", condition = CustomSqlCondition.END_EQUAL, select = false)
     private Date updateTimeEnd;
-
-
+    
+    
     /**
      * 创建时间
      *
@@ -159,9 +159,9 @@ public class SysTenant implements Serializable {
      * @date 2023-07-27
      * @see Date
      */
-
+    
     @TableField(fill = FieldFill.INSERT)
-
+    
     private Date createTime;
     /**
      * 创建时间(查询开始时间)
@@ -181,8 +181,8 @@ public class SysTenant implements Serializable {
      */
     @TableField(value = "create_time", condition = CustomSqlCondition.END_EQUAL, select = false)
     private Date createTimeEnd;
-
-
+    
+    
     /**
      * 状态#0=正常|1=冻结
      *
@@ -191,8 +191,8 @@ public class SysTenant implements Serializable {
      * @see Integer
      */
     private SysTenantStatusEnum status;
-
-
+    
+    
     /**
      * 租户id
      *
@@ -202,8 +202,8 @@ public class SysTenant implements Serializable {
      */
     @TableField(condition = CustomSqlCondition.LIKE)
     private String tenantId;
-
-
+    
+    
     /**
      * 创建人
      *
@@ -213,8 +213,8 @@ public class SysTenant implements Serializable {
      */
     @TableField(condition = CustomSqlCondition.LIKE)
     private String createUser;
-
-
+    
+    
     /**
      * 修改人
      *
@@ -224,6 +224,6 @@ public class SysTenant implements Serializable {
      */
     @TableField(condition = CustomSqlCondition.LIKE)
     private String updateUser;
-
-
+    
+    
 }

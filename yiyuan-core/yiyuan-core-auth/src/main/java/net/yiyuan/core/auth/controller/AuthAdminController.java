@@ -5,10 +5,8 @@ import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import net.yiyuan.common.model.vo.CommonResult;
-import net.yiyuan.core.auth.dto.AuthAdminAddDTO;
-import net.yiyuan.core.auth.dto.AuthAdminEditDTO;
-import net.yiyuan.core.auth.dto.AuthAdminListDTO;
-import net.yiyuan.core.auth.dto.AuthAdminPageDTO;
+import net.yiyuan.core.auth.dto.*;
+import net.yiyuan.core.auth.model.AuthAdmin;
 import net.yiyuan.core.auth.service.AuthAdminService;
 import net.yiyuan.core.auth.vo.AuthAdminQueryVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,8 +32,8 @@ import java.util.List;
 public class AuthAdminController {
     @Autowired
     private AuthAdminService authAdminService;
-
-
+    
+    
     /**
      * 用户列表(全部)
      *
@@ -51,8 +49,8 @@ public class AuthAdminController {
     public CommonResult<List<AuthAdminQueryVO>> list(AuthAdminListDTO request) throws Exception {
         return CommonResult.success(authAdminService.list(request), "查询用户列表成功" );
     }
-
-
+    
+    
     /**
      * 用户列表(分页)
      *
@@ -70,7 +68,7 @@ public class AuthAdminController {
     ) throws Exception {
         return CommonResult.success(authAdminService.page(request), "分页查询用户成功" );
     }
-
+    
     /**
      * 用户详情
      *
@@ -86,8 +84,8 @@ public class AuthAdminController {
     public CommonResult<AuthAdminQueryVO> details(@PathVariable("id" ) @Validated({NotBlank.class}) String id) throws Exception {
         return CommonResult.success(authAdminService.details(id), "查询用户详情成功" );
     }
-
-
+    
+    
     /**
      * 删除用户(支持批量)
      *
@@ -107,7 +105,7 @@ public class AuthAdminController {
             return CommonResult.failed("删除用户失败" );
         }
     }
-
+    
     /**
      * 编辑用户
      *
@@ -127,8 +125,8 @@ public class AuthAdminController {
             return CommonResult.failed("修改用户失败" );
         }
     }
-
-
+    
+    
     /**
      * 新增用户
      *
@@ -146,6 +144,30 @@ public class AuthAdminController {
             return CommonResult.success(null, "新增用户成功" );
         } else {
             return CommonResult.failed("新增用户失败" );
+        }
+    }
+    
+    
+    /**
+     * 分配角色
+     *
+     * @param request 分配角色请求实体
+     * @return {@link CommonResult}
+     * @author 一源团队--花和尚
+     * @date 2023-06-24
+     */
+    @Description("权限管理/用户管理/分配角色")
+    @SaCheckPermission(
+            value = {"auth:admin:assignRole"},
+            orRole = "admin")
+    @RequestMapping(value = "/auth/admin/assignRole", method = RequestMethod.POST)
+    @ResponseBody
+    public CommonResult<String> assignRole(@RequestBody @Validated AuthAdminAssignRoleDTO request)
+            throws Exception {
+        if (authAdminService.assignRole(request)) {
+            return CommonResult.success("分配角色成功");
+        } else {
+            return CommonResult.failed("分配角色失败");
         }
     }
 }

@@ -2,12 +2,10 @@ package net.yiyuan.core.auth.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import icu.mhb.mybatisplus.plugln.base.service.JoinIService;
-import net.yiyuan.core.auth.dto.AuthAdminAddDTO;
-import net.yiyuan.core.auth.dto.AuthAdminEditDTO;
-import net.yiyuan.core.auth.dto.AuthAdminListDTO;
-import net.yiyuan.core.auth.dto.AuthAdminPageDTO;
+import net.yiyuan.core.auth.dto.*;
 import net.yiyuan.core.auth.model.AuthAdmin;
 import net.yiyuan.core.auth.vo.AuthAdminQueryVO;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -18,7 +16,7 @@ import java.util.List;
  * @date 2023-07-27
  */
 public interface AuthAdminService extends JoinIService<AuthAdmin> {
-
+    
     /**
      * 用户列表(全部)
      *
@@ -28,8 +26,8 @@ public interface AuthAdminService extends JoinIService<AuthAdmin> {
      * @date 2023-07-27
      */
     List<AuthAdminQueryVO> list(AuthAdminListDTO request) throws Exception;
-
-
+    
+    
     /**
      * 用户列表(分页)
      *
@@ -39,8 +37,8 @@ public interface AuthAdminService extends JoinIService<AuthAdmin> {
      * @date 2023-07-27
      */
     Page<AuthAdminQueryVO> page(AuthAdminPageDTO request) throws Exception;
-
-
+    
+    
     /**
      * 用户详情
      *
@@ -50,8 +48,8 @@ public interface AuthAdminService extends JoinIService<AuthAdmin> {
      * @date 2023-07-27
      */
     AuthAdminQueryVO details(String id) throws Exception;
-
-
+    
+    
     /**
      * 用户详情
      *
@@ -61,8 +59,8 @@ public interface AuthAdminService extends JoinIService<AuthAdmin> {
      * @date 2023-07-27
      */
     AuthAdminQueryVO details(AuthAdmin request) throws Exception;
-
-
+    
+    
     /**
      * 删除用户(支持批量)
      *
@@ -71,10 +69,10 @@ public interface AuthAdminService extends JoinIService<AuthAdmin> {
      * @author 一源团队--花和尚
      * @date 2023-07-27
      */
-
+    
     boolean delete(String ids) throws Exception;
-
-
+    
+    
     /**
      * 批量删除用户(根据同一属性,针对中间表)
      *
@@ -84,7 +82,7 @@ public interface AuthAdminService extends JoinIService<AuthAdmin> {
      * @date 2023-07-27
      */
     boolean delete(AuthAdmin request) throws Exception;
-
+    
     /**
      * 编辑用户
      *
@@ -94,8 +92,8 @@ public interface AuthAdminService extends JoinIService<AuthAdmin> {
      * @date 2023-07-27
      */
     boolean edit(AuthAdminEditDTO request) throws Exception;
-
-
+    
+    
     /**
      * 新增用户
      *
@@ -105,5 +103,17 @@ public interface AuthAdminService extends JoinIService<AuthAdmin> {
      * @date 2023-07-27
      */
     boolean add(AuthAdminAddDTO request) throws Exception;
-
+    
+    
+    /**
+     * 分配角色
+     *
+     * @param request 分配角色请求实体
+     * @return {@link boolean}
+     * @author 一源团队--花和尚
+     * @date 2023-06-24
+     */
+    @Transactional
+    boolean assignRole(AuthAdminAssignRoleDTO request) throws Exception;
+    
 }

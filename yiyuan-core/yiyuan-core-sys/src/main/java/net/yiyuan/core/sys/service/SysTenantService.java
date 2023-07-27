@@ -18,7 +18,7 @@ import java.util.List;
  * @date 2023-07-27
  */
 public interface SysTenantService extends JoinIService<SysTenant> {
-
+    
     /**
      * 租户列表(全部)
      *
@@ -28,8 +28,8 @@ public interface SysTenantService extends JoinIService<SysTenant> {
      * @date 2023-07-27
      */
     List<SysTenantQueryVO> list(SysTenantListDTO request) throws Exception;
-
-
+    
+    
     /**
      * 租户列表(分页)
      *
@@ -39,8 +39,8 @@ public interface SysTenantService extends JoinIService<SysTenant> {
      * @date 2023-07-27
      */
     Page<SysTenantQueryVO> page(SysTenantPageDTO request) throws Exception;
-
-
+    
+    
     /**
      * 租户详情
      *
@@ -50,8 +50,8 @@ public interface SysTenantService extends JoinIService<SysTenant> {
      * @date 2023-07-27
      */
     SysTenantQueryVO details(String id) throws Exception;
-
-
+    
+    
     /**
      * 租户详情
      *
@@ -61,8 +61,8 @@ public interface SysTenantService extends JoinIService<SysTenant> {
      * @date 2023-07-27
      */
     SysTenantQueryVO details(SysTenant request) throws Exception;
-
-
+    
+    
     /**
      * 删除租户(支持批量)
      *
@@ -71,10 +71,10 @@ public interface SysTenantService extends JoinIService<SysTenant> {
      * @author 一源团队--花和尚
      * @date 2023-07-27
      */
-
+    
     boolean delete(String ids) throws Exception;
-
-
+    
+    
     /**
      * 批量删除租户(根据同一属性,针对中间表)
      *
@@ -84,7 +84,7 @@ public interface SysTenantService extends JoinIService<SysTenant> {
      * @date 2023-07-27
      */
     boolean delete(SysTenant request) throws Exception;
-
+    
     /**
      * 编辑租户
      *
@@ -94,8 +94,8 @@ public interface SysTenantService extends JoinIService<SysTenant> {
      * @date 2023-07-27
      */
     boolean edit(SysTenantEditDTO request) throws Exception;
-
-
+    
+    
     /**
      * 新增租户
      *
@@ -105,5 +105,5 @@ public interface SysTenantService extends JoinIService<SysTenant> {
      * @date 2023-07-27
      */
     boolean add(SysTenantAddDTO request) throws Exception;
-
+    
 }

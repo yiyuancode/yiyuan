@@ -31,8 +31,8 @@ import java.util.List;
 public class AuthRoleController {
     @Autowired
     private AuthRoleService authRoleService;
-
-
+    
+    
     /**
      * 角色列表(全部)
      *
@@ -48,8 +48,8 @@ public class AuthRoleController {
     public CommonResult<List<AuthRoleQueryVO>> list(AuthRoleListDTO request) throws Exception {
         return CommonResult.success(authRoleService.list(request), "查询角色列表成功" );
     }
-
-
+    
+    
     /**
      * 角色列表(分页)
      *
@@ -67,7 +67,7 @@ public class AuthRoleController {
     ) throws Exception {
         return CommonResult.success(authRoleService.page(request), "分页查询角色成功" );
     }
-
+    
     /**
      * 角色详情
      *
@@ -83,8 +83,8 @@ public class AuthRoleController {
     public CommonResult<AuthRoleQueryVO> details(@PathVariable("id" ) @Validated({NotBlank.class}) String id) throws Exception {
         return CommonResult.success(authRoleService.details(id), "查询角色详情成功" );
     }
-
-
+    
+    
     /**
      * 删除角色(支持批量)
      *
@@ -104,7 +104,7 @@ public class AuthRoleController {
             return CommonResult.failed("删除角色失败" );
         }
     }
-
+    
     /**
      * 编辑角色
      *
@@ -124,8 +124,8 @@ public class AuthRoleController {
             return CommonResult.failed("修改角色失败" );
         }
     }
-
-
+    
+    
     /**
      * 新增角色
      *
@@ -145,9 +145,8 @@ public class AuthRoleController {
             return CommonResult.failed("新增角色失败" );
         }
     }
-
-
-
+    
+    
     /**
      * 分配菜单
      *
@@ -156,18 +155,18 @@ public class AuthRoleController {
      * @author 一源团队--花和尚
      * @date 2023-06-24
      */
-    @Description("权限管理/角色管理/分配菜单")
+    @Description("权限管理/角色管理/分配菜单" )
     @SaCheckPermission(
             value = {"auth:role:assignMenu"},
-            orRole = "admin")
+            orRole = "admin" )
     @RequestMapping(value = "/auth/role/assignMenu", method = RequestMethod.POST)
     @ResponseBody
     public CommonResult<String> assignMenu(@RequestBody @Validated AuthRoleAssignMenuDTO request)
             throws Exception {
         if (authRoleService.assignMenu(request)) {
-            return CommonResult.success("分配菜单成功");
+            return CommonResult.success("分配菜单成功" );
         } else {
-            return CommonResult.failed("分配菜单失败");
+            return CommonResult.failed("分配菜单失败" );
         }
     }
 }

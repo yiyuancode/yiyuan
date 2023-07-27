@@ -14,7 +14,7 @@ import lombok.Getter;
 @Getter  // 没有引入lombok依赖包的，可以自己实现get方法
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)  // 实现场景2，只需要加上这个注解
 public enum SysHostIsMonitorEnabledEnum implements IEnum<Integer> {
-
+    
     /**
      * 开启监控#0=开启|1=关闭|
      *
@@ -31,15 +31,16 @@ public enum SysHostIsMonitorEnabledEnum implements IEnum<Integer> {
      * @see SysHostIsMonitorEnabledEnum
      */
     CLOSE(1, "关闭" );
-
+    
     @EnumValue
     private final int value;
     private final String desc;
+    
     SysHostIsMonitorEnabledEnum(int value, String desc) {
         this.value = value;
         this.desc = desc;
     }
-
+    
     @Override
     public Integer getValue() {
         return this.value;

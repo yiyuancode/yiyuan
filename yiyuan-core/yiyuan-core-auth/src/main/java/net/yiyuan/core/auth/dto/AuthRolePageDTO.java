@@ -34,8 +34,8 @@ public class AuthRolePageDTO implements Serializable {
      */
     @NotNull(message = "分页页数不能为空" )
     private Integer pageNum;
-
-
+    
+    
     /**
      * 主键ID
      *
@@ -43,8 +43,8 @@ public class AuthRolePageDTO implements Serializable {
      * @date 2023-07-27
      */
     private String id;
-
-
+    
+    
     /**
      * 角色中文名称(可以修改)
      *
@@ -52,8 +52,8 @@ public class AuthRolePageDTO implements Serializable {
      * @date 2023-07-27
      */
     private String name;
-
-
+    
+    
     /**
      * 角色英文编码(例如Root等，无法修改,satoken会用)唯一性
      *
@@ -61,8 +61,8 @@ public class AuthRolePageDTO implements Serializable {
      * @date 2023-07-27
      */
     private String code;
-
-
+    
+    
     /**
      * 角色备注
      *
@@ -70,8 +70,8 @@ public class AuthRolePageDTO implements Serializable {
      * @date 2023-07-27
      */
     private String roleDesc;
-
-
+    
+    
     /**
      * 所属部门
      *
@@ -79,8 +79,8 @@ public class AuthRolePageDTO implements Serializable {
      * @date 2023-07-27
      */
     private String deptId;
-
-
+    
+    
     /**
      * 数据权限范围(部门id集合)
      *
@@ -88,8 +88,8 @@ public class AuthRolePageDTO implements Serializable {
      * @date 2023-07-27
      */
     private String deptScope;
-
-
+    
+    
     /**
      * 所属租户
      *
@@ -97,8 +97,8 @@ public class AuthRolePageDTO implements Serializable {
      * @date 2023-07-27
      */
     private String tenantId;
-
-
+    
+    
     /**
      * 创建时间(查询开始时间)
      *
@@ -119,8 +119,8 @@ public class AuthRolePageDTO implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss" )
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8" )
     private Date createTimeEnd;
-
-
+    
+    
     /**
      * 修改时间(查询开始时间)
      *
@@ -141,8 +141,8 @@ public class AuthRolePageDTO implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss" )
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8" )
     private Date updateTimeEnd;
-
-
+    
+    
     /**
      * 创建人
      *
@@ -150,8 +150,8 @@ public class AuthRolePageDTO implements Serializable {
      * @date 2023-07-27
      */
     private String createUser;
-
-
+    
+    
     /**
      * 修改人
      *
@@ -159,6 +159,6 @@ public class AuthRolePageDTO implements Serializable {
      * @date 2023-07-27
      */
     private String updateUser;
-
-
+    
+    
 }

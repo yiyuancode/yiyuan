@@ -35,8 +35,8 @@ public class SysTenantPageDTO implements Serializable {
      */
     @NotNull(message = "分页页数不能为空" )
     private Integer pageNum;
-
-
+    
+    
     /**
      * 租户id
      *
@@ -44,8 +44,8 @@ public class SysTenantPageDTO implements Serializable {
      * @date 2023-07-27
      */
     private String id;
-
-
+    
+    
     /**
      * 租户名称
      *
@@ -53,8 +53,8 @@ public class SysTenantPageDTO implements Serializable {
      * @date 2023-07-27
      */
     private String name;
-
-
+    
+    
     /**
      * 租户编号
      *
@@ -62,8 +62,8 @@ public class SysTenantPageDTO implements Serializable {
      * @date 2023-07-27
      */
     private String code;
-
-
+    
+    
     /**
      * 开始时间(查询开始时间)
      *
@@ -84,8 +84,8 @@ public class SysTenantPageDTO implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss" )
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8" )
     private Date startTimeEnd;
-
-
+    
+    
     /**
      * 结束时间(查询开始时间)
      *
@@ -106,8 +106,8 @@ public class SysTenantPageDTO implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss" )
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8" )
     private Date endTimeEnd;
-
-
+    
+    
     /**
      * 修改时间(查询开始时间)
      *
@@ -128,8 +128,8 @@ public class SysTenantPageDTO implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss" )
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8" )
     private Date updateTimeEnd;
-
-
+    
+    
     /**
      * 创建时间(查询开始时间)
      *
@@ -150,8 +150,8 @@ public class SysTenantPageDTO implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss" )
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8" )
     private Date createTimeEnd;
-
-
+    
+    
     /**
      * 状态#0=正常|1=冻结
      *
@@ -159,8 +159,8 @@ public class SysTenantPageDTO implements Serializable {
      * @date 2023-07-27
      */
     private SysTenantStatusEnum status;
-
-
+    
+    
     /**
      * 租户id
      *
@@ -168,8 +168,8 @@ public class SysTenantPageDTO implements Serializable {
      * @date 2023-07-27
      */
     private String tenantId;
-
-
+    
+    
     /**
      * 创建人
      *
@@ -177,8 +177,8 @@ public class SysTenantPageDTO implements Serializable {
      * @date 2023-07-27
      */
     private String createUser;
-
-
+    
+    
     /**
      * 修改人
      *
@@ -186,6 +186,6 @@ public class SysTenantPageDTO implements Serializable {
      * @date 2023-07-27
      */
     private String updateUser;
-
-
+    
+    
 }

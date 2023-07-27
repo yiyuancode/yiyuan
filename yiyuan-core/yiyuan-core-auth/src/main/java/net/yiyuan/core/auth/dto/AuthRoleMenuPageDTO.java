@@ -34,8 +34,8 @@ public class AuthRoleMenuPageDTO implements Serializable {
      */
     @NotNull(message = "分页页数不能为空" )
     private Integer pageNum;
-
-
+    
+    
     /**
      * 主键
      *
@@ -43,8 +43,8 @@ public class AuthRoleMenuPageDTO implements Serializable {
      * @date 2023-07-27
      */
     private String id;
-
-
+    
+    
     /**
      * 角色ID
      *
@@ -52,8 +52,8 @@ public class AuthRoleMenuPageDTO implements Serializable {
      * @date 2023-07-27
      */
     private String roleId;
-
-
+    
+    
     /**
      * 菜单ID
      *
@@ -61,8 +61,8 @@ public class AuthRoleMenuPageDTO implements Serializable {
      * @date 2023-07-27
      */
     private String menuId;
-
-
+    
+    
     /**
      * 修改时间(查询开始时间)
      *
@@ -83,8 +83,8 @@ public class AuthRoleMenuPageDTO implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss" )
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8" )
     private Date updateTimeEnd;
-
-
+    
+    
     /**
      * 创建时间(查询开始时间)
      *
@@ -105,8 +105,8 @@ public class AuthRoleMenuPageDTO implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss" )
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8" )
     private Date createTimeEnd;
-
-
+    
+    
     /**
      * 创建人
      *
@@ -114,8 +114,8 @@ public class AuthRoleMenuPageDTO implements Serializable {
      * @date 2023-07-27
      */
     private String createUser;
-
-
+    
+    
     /**
      * 修改人
      *
@@ -123,6 +123,6 @@ public class AuthRoleMenuPageDTO implements Serializable {
      * @date 2023-07-27
      */
     private String updateUser;
-
-
+    
+    
 }

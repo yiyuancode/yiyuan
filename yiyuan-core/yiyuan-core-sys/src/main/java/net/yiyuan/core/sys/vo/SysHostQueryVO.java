@@ -16,8 +16,8 @@ import java.util.Date;
  */
 @Data
 public class SysHostQueryVO implements Serializable {
-
-
+    
+    
     /**
      * 主键ID
      *
@@ -25,8 +25,8 @@ public class SysHostQueryVO implements Serializable {
      * @date 2023-07-27
      */
     private String id;
-
-
+    
+    
     /**
      * 主机名
      *
@@ -34,8 +34,8 @@ public class SysHostQueryVO implements Serializable {
      * @date 2023-07-27
      */
     private String hostName;
-
-
+    
+    
     /**
      * IP地址
      *
@@ -43,8 +43,8 @@ public class SysHostQueryVO implements Serializable {
      * @date 2023-07-27
      */
     private String host;
-
-
+    
+    
     /**
      * SSH端口
      *
@@ -52,8 +52,8 @@ public class SysHostQueryVO implements Serializable {
      * @date 2023-07-27
      */
     private Integer sshPort;
-
-
+    
+    
     /**
      * SSH登录用户名
      *
@@ -61,8 +61,8 @@ public class SysHostQueryVO implements Serializable {
      * @date 2023-07-27
      */
     private String sshUsername;
-
-
+    
+    
     /**
      * SSH登录密码
      *
@@ -70,8 +70,8 @@ public class SysHostQueryVO implements Serializable {
      * @date 2023-07-27
      */
     private String sshPassword;
-
-
+    
+    
     /**
      * 开启监控#0=开启|1=关闭|
      *
@@ -79,8 +79,8 @@ public class SysHostQueryVO implements Serializable {
      * @date 2023-07-27
      */
     private SysHostIsMonitorEnabledEnum isMonitorEnabled;
-
-
+    
+    
     /**
      * 排序字段
      *
@@ -88,8 +88,8 @@ public class SysHostQueryVO implements Serializable {
      * @date 2023-07-27
      */
     private Integer sortBy;
-
-
+    
+    
     /**
      * 创建时间
      *
@@ -99,8 +99,8 @@ public class SysHostQueryVO implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss" )
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8" )
     private Date createTime;
-
-
+    
+    
     /**
      * 修改时间
      *
@@ -110,8 +110,8 @@ public class SysHostQueryVO implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss" )
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8" )
     private Date updateTime;
-
-
+    
+    
     /**
      * 创建人
      *
@@ -119,8 +119,8 @@ public class SysHostQueryVO implements Serializable {
      * @date 2023-07-27
      */
     private String createUser;
-
-
+    
+    
     /**
      * 修改人
      *
@@ -128,6 +128,6 @@ public class SysHostQueryVO implements Serializable {
      * @date 2023-07-27
      */
     private String updateUser;
-
-
+    
+    
 }

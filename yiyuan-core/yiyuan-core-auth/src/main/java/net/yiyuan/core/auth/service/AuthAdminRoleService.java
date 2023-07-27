@@ -18,7 +18,7 @@ import java.util.List;
  * @date 2023-07-27
  */
 public interface AuthAdminRoleService extends JoinIService<AuthAdminRole> {
-
+    
     /**
      * 用户_角色列表(全部)
      *
@@ -28,8 +28,8 @@ public interface AuthAdminRoleService extends JoinIService<AuthAdminRole> {
      * @date 2023-07-27
      */
     List<AuthAdminRoleQueryVO> list(AuthAdminRoleListDTO request) throws Exception;
-
-
+    
+    
     /**
      * 用户_角色列表(分页)
      *
@@ -39,8 +39,8 @@ public interface AuthAdminRoleService extends JoinIService<AuthAdminRole> {
      * @date 2023-07-27
      */
     Page<AuthAdminRoleQueryVO> page(AuthAdminRolePageDTO request) throws Exception;
-
-
+    
+    
     /**
      * 用户_角色详情
      *
@@ -50,8 +50,8 @@ public interface AuthAdminRoleService extends JoinIService<AuthAdminRole> {
      * @date 2023-07-27
      */
     AuthAdminRoleQueryVO details(String id) throws Exception;
-
-
+    
+    
     /**
      * 用户_角色详情
      *
@@ -61,8 +61,8 @@ public interface AuthAdminRoleService extends JoinIService<AuthAdminRole> {
      * @date 2023-07-27
      */
     AuthAdminRoleQueryVO details(AuthAdminRole request) throws Exception;
-
-
+    
+    
     /**
      * 删除用户_角色(支持批量)
      *
@@ -71,10 +71,10 @@ public interface AuthAdminRoleService extends JoinIService<AuthAdminRole> {
      * @author 一源团队--花和尚
      * @date 2023-07-27
      */
-
+    
     boolean delete(String ids) throws Exception;
-
-
+    
+    
     /**
      * 批量删除用户_角色(根据同一属性,针对中间表)
      *
@@ -84,7 +84,7 @@ public interface AuthAdminRoleService extends JoinIService<AuthAdminRole> {
      * @date 2023-07-27
      */
     boolean delete(AuthAdminRole request) throws Exception;
-
+    
     /**
      * 编辑用户_角色
      *
@@ -94,8 +94,8 @@ public interface AuthAdminRoleService extends JoinIService<AuthAdminRole> {
      * @date 2023-07-27
      */
     boolean edit(AuthAdminRoleEditDTO request) throws Exception;
-
-
+    
+    
     /**
      * 新增用户_角色
      *
@@ -105,5 +105,5 @@ public interface AuthAdminRoleService extends JoinIService<AuthAdminRole> {
      * @date 2023-07-27
      */
     boolean add(AuthAdminRoleAddDTO request) throws Exception;
-
+    
 }

@@ -30,7 +30,7 @@ import java.util.List;
 public class SysTenantServiceImpl extends JoinServiceImpl<SysTenantMapper, SysTenant> implements SysTenantService {
     @Resource
     private SysTenantMapper sysTenantMapper;
-
+    
     /**
      * 租户列表(全部)
      *
@@ -41,16 +41,16 @@ public class SysTenantServiceImpl extends JoinServiceImpl<SysTenantMapper, SysTe
      */
     @Override
     public List<SysTenantQueryVO> list(SysTenantListDTO request) throws Exception {
-
+        
         SysTenant po = new SysTenant();
         BeanUtilsPlus.copy(request, po);
         JoinLambdaWrapper<SysTenant> wrapper = new JoinLambdaWrapper<>(po);
         List<SysTenantQueryVO> voList = joinList(wrapper, SysTenantQueryVO.class);
-
+        
         return voList;
     }
-
-
+    
+    
     /**
      * 租户列表(分页)
      *
@@ -67,8 +67,8 @@ public class SysTenantServiceImpl extends JoinServiceImpl<SysTenantMapper, SysTe
         Page<SysTenantQueryVO> voPage = joinPage(new Page<>(request.getPageNum(), request.getPageSize()), wrapper, SysTenantQueryVO.class);
         return voPage;
     }
-
-
+    
+    
     /**
      * 租户详情
      *
@@ -85,8 +85,8 @@ public class SysTenantServiceImpl extends JoinServiceImpl<SysTenantMapper, SysTe
         SysTenantQueryVO voBean = joinGetOne(wrapper, SysTenantQueryVO.class);
         return voBean;
     }
-
-
+    
+    
     /**
      * 租户详情
      *
@@ -97,13 +97,13 @@ public class SysTenantServiceImpl extends JoinServiceImpl<SysTenantMapper, SysTe
      */
     @Override
     public SysTenantQueryVO details(SysTenant request) throws Exception {
-
+        
         JoinLambdaWrapper<SysTenant> wrapper = new JoinLambdaWrapper<>(request);
         SysTenantQueryVO voBean = joinGetOne(wrapper, SysTenantQueryVO.class);
         return voBean;
     }
-
-
+    
+    
     /**
      * 删除租户(支持批量)
      *
@@ -112,12 +112,12 @@ public class SysTenantServiceImpl extends JoinServiceImpl<SysTenantMapper, SysTe
      * @author 一源团队--花和尚
      * @date 2023-07-27
      */
-
+    
     @Override
     public boolean delete(String ids) throws Exception {
         return removeByIds(Arrays.asList(ids.split("," )));
     }
-
+    
     /**
      * 批量删除租户(根据同一属性,针对中间表)
      *
@@ -131,7 +131,7 @@ public class SysTenantServiceImpl extends JoinServiceImpl<SysTenantMapper, SysTe
         JoinLambdaWrapper<SysTenant> wrapper = new JoinLambdaWrapper<>(request);
         return remove(wrapper);
     }
-
+    
     /**
      * 编辑租户
      *
@@ -140,7 +140,7 @@ public class SysTenantServiceImpl extends JoinServiceImpl<SysTenantMapper, SysTe
      * @author 一源团队--花和尚
      * @date 2023-07-27
      */
-
+    
     @Override
     public boolean edit(SysTenantEditDTO request) throws Exception {
         SysTenant po = new SysTenant();
@@ -148,8 +148,8 @@ public class SysTenantServiceImpl extends JoinServiceImpl<SysTenantMapper, SysTe
         JoinLambdaWrapper<SysTenant> wrapper = new JoinLambdaWrapper<>(po);
         return updateById(po);
     }
-
-
+    
+    
     /**
      * 新增租户
      *
@@ -158,13 +158,13 @@ public class SysTenantServiceImpl extends JoinServiceImpl<SysTenantMapper, SysTe
      * @author 一源团队--花和尚
      * @date 2023-07-27
      */
-
+    
     @Override
     public boolean add(SysTenantAddDTO request) throws Exception {
         SysTenant po = new SysTenant();
         BeanUtilsPlus.copy(request, po);
         return save(po);
-
+        
     }
 }
 

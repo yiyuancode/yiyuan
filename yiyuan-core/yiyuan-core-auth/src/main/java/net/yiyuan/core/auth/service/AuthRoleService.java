@@ -16,7 +16,7 @@ import java.util.List;
  * @date 2023-07-27
  */
 public interface AuthRoleService extends JoinIService<AuthRole> {
-
+    
     /**
      * 角色列表(全部)
      *
@@ -26,8 +26,8 @@ public interface AuthRoleService extends JoinIService<AuthRole> {
      * @date 2023-07-27
      */
     List<AuthRoleQueryVO> list(AuthRoleListDTO request) throws Exception;
-
-
+    
+    
     /**
      * 角色列表(分页)
      *
@@ -37,8 +37,8 @@ public interface AuthRoleService extends JoinIService<AuthRole> {
      * @date 2023-07-27
      */
     Page<AuthRoleQueryVO> page(AuthRolePageDTO request) throws Exception;
-
-
+    
+    
     /**
      * 角色详情
      *
@@ -48,8 +48,8 @@ public interface AuthRoleService extends JoinIService<AuthRole> {
      * @date 2023-07-27
      */
     AuthRoleQueryVO details(String id) throws Exception;
-
-
+    
+    
     /**
      * 角色详情
      *
@@ -59,8 +59,8 @@ public interface AuthRoleService extends JoinIService<AuthRole> {
      * @date 2023-07-27
      */
     AuthRoleQueryVO details(AuthRole request) throws Exception;
-
-
+    
+    
     /**
      * 删除角色(支持批量)
      *
@@ -69,10 +69,10 @@ public interface AuthRoleService extends JoinIService<AuthRole> {
      * @author 一源团队--花和尚
      * @date 2023-07-27
      */
-
+    
     boolean delete(String ids) throws Exception;
-
-
+    
+    
     /**
      * 批量删除角色(根据同一属性,针对中间表)
      *
@@ -82,7 +82,7 @@ public interface AuthRoleService extends JoinIService<AuthRole> {
      * @date 2023-07-27
      */
     boolean delete(AuthRole request) throws Exception;
-
+    
     /**
      * 编辑角色
      *
@@ -92,8 +92,8 @@ public interface AuthRoleService extends JoinIService<AuthRole> {
      * @date 2023-07-27
      */
     boolean edit(AuthRoleEditDTO request) throws Exception;
-
-
+    
+    
     /**
      * 新增角色
      *
@@ -103,7 +103,7 @@ public interface AuthRoleService extends JoinIService<AuthRole> {
      * @date 2023-07-27
      */
     boolean add(AuthRoleAddDTO request) throws Exception;
-
+    
     /**
      * 分配菜单
      *
@@ -114,5 +114,5 @@ public interface AuthRoleService extends JoinIService<AuthRole> {
      */
     @Transactional
     boolean assignMenu(AuthRoleAssignMenuDTO request) throws Exception;
-
+    
 }

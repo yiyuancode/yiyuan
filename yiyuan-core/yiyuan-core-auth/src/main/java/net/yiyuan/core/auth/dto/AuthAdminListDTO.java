@@ -16,8 +16,8 @@ import java.util.Date;
  */
 @Data
 public class AuthAdminListDTO implements Serializable {
-
-
+    
+    
     /**
      * 主键ID
      *
@@ -25,8 +25,8 @@ public class AuthAdminListDTO implements Serializable {
      * @date 2023-07-27
      */
     private String id;
-
-
+    
+    
     /**
      * 用户名
      *
@@ -34,8 +34,8 @@ public class AuthAdminListDTO implements Serializable {
      * @date 2023-07-27
      */
     private String username;
-
-
+    
+    
     /**
      * 密码
      *
@@ -43,8 +43,8 @@ public class AuthAdminListDTO implements Serializable {
      * @date 2023-07-27
      */
     private String password;
-
-
+    
+    
     /**
      * 随机盐
      *
@@ -52,8 +52,8 @@ public class AuthAdminListDTO implements Serializable {
      * @date 2023-07-27
      */
     private String salt;
-
-
+    
+    
     /**
      * 部门ID
      *
@@ -61,8 +61,8 @@ public class AuthAdminListDTO implements Serializable {
      * @date 2023-07-27
      */
     private Integer deptId;
-
-
+    
+    
     /**
      * 小程序openid
      *
@@ -70,8 +70,8 @@ public class AuthAdminListDTO implements Serializable {
      * @date 2023-07-27
      */
     private String miniOpenid;
-
-
+    
+    
     /**
      * 码云登录
      *
@@ -79,8 +79,8 @@ public class AuthAdminListDTO implements Serializable {
      * @date 2023-07-27
      */
     private String giteeLogin;
-
-
+    
+    
     /**
      * 开源中国
      *
@@ -88,8 +88,8 @@ public class AuthAdminListDTO implements Serializable {
      * @date 2023-07-27
      */
     private String oscId;
-
-
+    
+    
     /**
      * 微信openid
      *
@@ -97,8 +97,8 @@ public class AuthAdminListDTO implements Serializable {
      * @date 2023-07-27
      */
     private String wxOpenid;
-
-
+    
+    
     /**
      * QQ openid
      *
@@ -106,8 +106,8 @@ public class AuthAdminListDTO implements Serializable {
      * @date 2023-07-27
      */
     private String qqOpenid;
-
-
+    
+    
     /**
      * 平台类型#0=平台端|1=租户端|2=移动端
      *
@@ -115,8 +115,8 @@ public class AuthAdminListDTO implements Serializable {
      * @date 2023-07-27
      */
     private AuthAdminPlatformEnum platform;
-
-
+    
+    
     /**
      * 所属租户
      *
@@ -124,8 +124,8 @@ public class AuthAdminListDTO implements Serializable {
      * @date 2023-07-27
      */
     private String tenantId;
-
-
+    
+    
     /**
      * 创建时间(查询开始时间)
      *
@@ -146,8 +146,8 @@ public class AuthAdminListDTO implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss" )
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8" )
     private Date createTimeEnd;
-
-
+    
+    
     /**
      * 修改时间(查询开始时间)
      *
@@ -168,8 +168,8 @@ public class AuthAdminListDTO implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss" )
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8" )
     private Date updateTimeEnd;
-
-
+    
+    
     /**
      * 创建人
      *
@@ -177,8 +177,8 @@ public class AuthAdminListDTO implements Serializable {
      * @date 2023-07-27
      */
     private String createUser;
-
-
+    
+    
     /**
      * 修改人
      *
@@ -186,6 +186,6 @@ public class AuthAdminListDTO implements Serializable {
      * @date 2023-07-27
      */
     private String updateUser;
-
-
+    
+    
 }

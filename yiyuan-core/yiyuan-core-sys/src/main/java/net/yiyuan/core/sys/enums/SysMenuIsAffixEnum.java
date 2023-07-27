@@ -14,7 +14,7 @@ import lombok.Getter;
 @Getter  // 没有引入lombok依赖包的，可以自己实现get方法
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)  // 实现场景2，只需要加上这个注解
 public enum SysMenuIsAffixEnum implements IEnum<Integer> {
-
+    
     /**
      * 固定多页签#0=关闭|1=开启
      *
@@ -31,15 +31,16 @@ public enum SysMenuIsAffixEnum implements IEnum<Integer> {
      * @see SysMenuIsAffixEnum
      */
     OPEN(1, "开启" );
-
+    
     @EnumValue
     private final int value;
     private final String desc;
+    
     SysMenuIsAffixEnum(int value, String desc) {
         this.value = value;
         this.desc = desc;
     }
-
+    
     @Override
     public Integer getValue() {
         return this.value;
