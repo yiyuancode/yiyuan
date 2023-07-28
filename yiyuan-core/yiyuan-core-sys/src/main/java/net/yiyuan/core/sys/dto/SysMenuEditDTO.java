@@ -4,6 +4,7 @@ import lombok.Data;
 import net.yiyuan.core.sys.enums.*;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -30,6 +31,7 @@ public class SysMenuEditDTO implements Serializable {
    * @author 一源团队--花和尚
    * @date 2023-07-27
    */
+  @NotBlank(message = "菜单名称不能为空")
   private String name;
 
   /**
@@ -38,6 +40,7 @@ public class SysMenuEditDTO implements Serializable {
    * @author 一源团队--花和尚
    * @date 2023-07-27
    */
+  @NotBlank(message = "权限表达式不能为空")
   private String permission;
 
   /**
@@ -46,6 +49,7 @@ public class SysMenuEditDTO implements Serializable {
    * @author 一源团队--花和尚
    * @date 2023-07-27
    */
+  @NotBlank(message = "上级菜单不能为空")
   private String parentId;
 
   /**
@@ -67,9 +71,11 @@ public class SysMenuEditDTO implements Serializable {
   /**
    * 外链#0=否|1=是
    *
+   * @mock 0
    * @author 一源团队--花和尚
    * @date 2023-07-27
    */
+  @NotNull(message = "外链#0=否|1=是不能为空")
   private SysMenuIsFrameEnum isFrame;
 
   /**
@@ -83,57 +89,71 @@ public class SysMenuEditDTO implements Serializable {
   /**
    * 固定多页签#0=关闭|1=开启
    *
+   * @mock 0
    * @author 一源团队--花和尚
    * @date 2023-07-27
    */
+  @NotNull(message = "固定多页签#0=关闭|1=开启不能为空")
   private SysMenuIsAffixEnum isAffix;
 
   /**
    * 菜单状态#0=停用|1=正常
    *
+   * @mock 1
    * @author 一源团队--花和尚
    * @date 2023-07-27
    */
+  @NotNull(message = "菜单状态#0=停用|1=正常不能为空")
   private SysMenuStatusEnum status;
 
   /**
    * 简化路由#0=关闭|1=开启
    *
+   * @mock 0
    * @author 一源团队--花和尚
    * @date 2023-07-27
    */
+  @NotNull(message = "简化路由#0=关闭|1=开启不能为空")
   private SysMenuIsAlwaysShowEnum isAlwaysShow;
 
   /**
    * 是否缓存#0=否|1=是
    *
+   * @mock 0
    * @author 一源团队--花和尚
    * @date 2023-07-27
    */
+  @NotNull(message = "是否缓存#0=否|1=是不能为空")
   private SysMenuIsCacheEnum isCache;
 
   /**
    * 类型#0=目录|1=菜单|2=按钮
    *
+   * @mock 0
    * @author 一源团队--花和尚
    * @date 2023-07-27
    */
+  @NotNull(message = "类型#0=目录|1=菜单|2=按钮不能为空")
   private SysMenuTypeEnum type;
 
   /**
    * 打开方式#0=当前窗口|1=新窗口
    *
+   * @mock 0
    * @author 一源团队--花和尚
    * @date 2023-07-27
    */
+  @NotNull(message = "打开方式#0=当前窗口|1=新窗口不能为空")
   private SysMenuOpenTypeEnum openType;
 
   /**
    * 显示排序
    *
+   * @mock 0
    * @author 一源团队--花和尚
    * @date 2023-07-27
    */
+  @NotNull(message = "显示排序不能为空")
   private Integer sort;
 
   /**

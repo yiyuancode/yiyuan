@@ -4,6 +4,7 @@ import lombok.Data;
 import net.yiyuan.core.sys.enums.SysTenantStatusEnum;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -60,9 +61,11 @@ public class SysTenantEditDTO implements Serializable {
   /**
    * 状态#0=正常|1=冻结
    *
+   * @mock 0
    * @author 一源团队--花和尚
    * @date 2023-07-27
    */
+  @NotNull(message = "状态#0=正常|1=冻结不能为空")
   private SysTenantStatusEnum status;
 
   /**
