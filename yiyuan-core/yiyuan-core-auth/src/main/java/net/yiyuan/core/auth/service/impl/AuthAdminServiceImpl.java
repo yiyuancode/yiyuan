@@ -286,6 +286,8 @@ public class AuthAdminServiceImpl extends JoinServiceImpl<AuthAdminMapper, AuthA
               tree.setWeight(treeNode.getSort());
               tree.setName(treeNode.getName());
               tree.putExtra("routeComponent", treeNode.getRouteComponent());
+              String[] permission = treeNode.getPermission().split(":");
+              tree.putExtra("router", permission[permission.length - 1]);
               // 扩展属性 ...
               tree.putExtra("permission", treeNode.getPermission());
               tree.putExtra("isFrame", treeNode.getIsFrame());
@@ -295,7 +297,6 @@ public class AuthAdminServiceImpl extends JoinServiceImpl<AuthAdminMapper, AuthA
               tree.putExtra("isCache", treeNode.getIsCache());
               tree.putExtra("type", treeNode.getType());
               tree.putExtra("openType", treeNode.getOpenType());
-
             });
 
     voResult.setPermissionsList(permissionsList);
