@@ -38,9 +38,9 @@ public class CodeGenerator {
   private static String DEFAULT_MODULENAME = "";
   private static String AUTHOR = "";
   private static String MYSQL_URL =
-      "jdbc:mysql://43.154.183.115:24457/admin_dev?serverTimezone=Asia/Shanghai";
+      "jdbc:mysql://106.54.87.159:23306/admin_dev?serverTimezone=Asia/Shanghai";
   private static String MYSQL_USERNAME = "root";
-  private static String MYSQL_PASSWORD = "Av*duP#992CBd##wdL&K";
+  private static String MYSQL_PASSWORD = "123456";
 
   private static String SSH_URL = "43.154.183.115";
   private static int SSH_PORT = 22;

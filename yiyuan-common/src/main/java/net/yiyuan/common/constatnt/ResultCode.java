@@ -52,6 +52,16 @@ public enum ResultCode implements IErrorCode {
   USER_ERROR(500, "用户名或密码不正确"),
   UNBOUND_ROLE(500, "未绑定角色"),
   UNBOUND_MENU(500, "未绑定菜单"),
+
+  /**
+   * 定时任务相关：600-699
+   *
+   * @author 一源团队-花和尚
+   * @date 2023/06/24
+   * @see ResultCode
+   */
+  JOB_EXISTS(500, "任务已存在"),
+
   /**
    * 服务未知异常
    *

@@ -35,7 +35,7 @@
         <!--定时任务模块-->
         <dependency>
             <groupId>net.yiyuan</groupId>
-            <artifactId>yiyuan-core-task</artifactId>
+            <artifactId>yiyuan-core-qrtz</artifactId>
             <version>${revision}</version>
         </dependency>
 
