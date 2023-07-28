@@ -61,6 +61,7 @@ public enum ResultCode implements IErrorCode {
    * @see ResultCode
    */
   JOB_EXISTS(500, "任务已存在"),
+  JOB_DELETE_ERROR(500, "任务删除异常"),
 
   /**
    * 服务未知异常

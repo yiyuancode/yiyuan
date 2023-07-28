@@ -108,7 +108,7 @@ public CommonResult<Page<${table.entityName}QueryVO>>page(
 @SaCheckPermission(value = {"${package.ModuleName}:${modeName}:query" }, orRole = "admin" )
 @GetMapping(value = "/${package.ModuleName}/${modeName}/details/{id}" )
 @ResponseBody
-public CommonResult<${table.entityName}QueryVO> details(@PathVariable("id" ) @Validated({NotBlank.class}) String id)throws Exception{
+public CommonResult<${table.entityName}QueryVO> details(@PathVariable("id" ) @NotBlank String id)throws Exception{
         return CommonResult.success(${serviceImplName}.details(id),"查询$!{table.comment.replaceAll("表", "")}详情成功" );
         }
 
@@ -125,7 +125,7 @@ public CommonResult<${table.entityName}QueryVO> details(@PathVariable("id" ) @Va
 @SaCheckPermission(value = {"${package.ModuleName}:${modeName}:delete" }, orRole = "admin" )
 @PostMapping(value = "/${package.ModuleName}/${modeName}/delete" )
 @ResponseBody
-public CommonResult<String> delete(@RequestParam @Validated({NotBlank.class}) String ids)throws Exception{
+public CommonResult<String> delete(@RequestParam(name = "ids") @Validated({NotBlank.class}) String ids)throws Exception{
         if(${serviceImplName}.delete(ids)){
         return CommonResult.success(null,"删除$!{table.comment.replaceAll("表", "")}成功" );
         }else{

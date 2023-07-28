@@ -85,7 +85,7 @@ public class SysMenuController {
   @GetMapping(value = "/sys/menu/details/{id}")
   @ResponseBody
   public CommonResult<SysMenuQueryVO> details(
-      @PathVariable("id") @Validated({NotBlank.class}) String id) throws Exception {
+      @PathVariable("id") @NotBlank String id) throws Exception {
     return CommonResult.success(sysMenuService.details(id), "查询菜单详情成功");
   }
 
@@ -103,7 +103,7 @@ public class SysMenuController {
       orRole = "admin")
   @PostMapping(value = "/sys/menu/delete")
   @ResponseBody
-  public CommonResult<String> delete(@RequestParam @Validated({NotBlank.class}) String ids)
+  public CommonResult<String> delete(@RequestParam(name = "ids") @Validated({NotBlank.class}) String ids)
       throws Exception {
     if (sysMenuService.delete(ids)) {
       return CommonResult.success(null, "删除菜单成功");

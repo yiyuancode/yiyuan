@@ -1,7 +1,7 @@
-package net.yiyuan.core.qrtz.utils;
+package net.yiyuan.core.sys.utils;
 
 
-import net.yiyuan.core.qrtz.config.BaseJob;
+import net.yiyuan.core.sys.config.BaseJob;
 
 public class JobUtil {
   /**

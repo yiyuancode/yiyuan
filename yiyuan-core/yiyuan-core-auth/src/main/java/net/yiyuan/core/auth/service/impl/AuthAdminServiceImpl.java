@@ -211,6 +211,10 @@ public class AuthAdminServiceImpl extends JoinServiceImpl<AuthAdminMapper, AuthA
     //        AuthAdminQueryVO queryVO = this.details(id);
     AuthAdminQueryVO voResult = new AuthAdminQueryVO();
 
+    AuthAdminQueryVO details = this.details(id);
+    BeanUtilsPlus.copy(details, voResult);
+    voResult.setPassword(null);
+
     // 查询角色
     JoinLambdaWrapper<AuthAdminRole> wrapper = new JoinLambdaWrapper<>(AuthAdminRole.class);
     wrapper.eq(AuthAdminRole::getUserId, id);
@@ -281,6 +285,7 @@ public class AuthAdminServiceImpl extends JoinServiceImpl<AuthAdminMapper, AuthA
               tree.setParentId(treeNode.getParentId());
               tree.setWeight(treeNode.getSort());
               tree.setName(treeNode.getName());
+              tree.putExtra("routeComponent", treeNode.getRouteComponent());
               // 扩展属性 ...
               tree.putExtra("permission", treeNode.getPermission());
               tree.putExtra("isFrame", treeNode.getIsFrame());
@@ -290,6 +295,7 @@ public class AuthAdminServiceImpl extends JoinServiceImpl<AuthAdminMapper, AuthA
               tree.putExtra("isCache", treeNode.getIsCache());
               tree.putExtra("type", treeNode.getType());
               tree.putExtra("openType", treeNode.getOpenType());
+
             });
 
     voResult.setPermissionsList(permissionsList);

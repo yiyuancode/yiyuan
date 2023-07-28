@@ -81,7 +81,7 @@ public class AuthRoleController {
   @GetMapping(value = "/auth/role/details/{id}")
   @ResponseBody
   public CommonResult<AuthRoleQueryVO> details(
-      @PathVariable("id") @Validated({NotBlank.class}) String id) throws Exception {
+      @PathVariable("id") @NotBlank String id) throws Exception {
     return CommonResult.success(authRoleService.details(id), "查询角色详情成功");
   }
 
@@ -99,7 +99,7 @@ public class AuthRoleController {
       orRole = "admin")
   @PostMapping(value = "/auth/role/delete")
   @ResponseBody
-  public CommonResult<String> delete(@RequestParam @Validated({NotBlank.class}) String ids)
+  public CommonResult<String> delete(@RequestParam(name = "ids") @Validated({NotBlank.class}) String ids)
       throws Exception {
     if (authRoleService.delete(ids)) {
       return CommonResult.success(null, "删除角色成功");

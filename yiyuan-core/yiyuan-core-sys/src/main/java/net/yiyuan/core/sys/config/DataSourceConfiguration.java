@@ -1,4 +1,4 @@
-package net.yiyuan.core.qrtz.config;
+package net.yiyuan.core.sys.config;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceBuilder;

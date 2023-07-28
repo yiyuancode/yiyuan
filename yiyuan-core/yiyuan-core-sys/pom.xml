@@ -23,5 +23,12 @@
         系统配置模块：包括系统参数配置、应用程序配置、环境配置等。
         菜单管理模块：包括菜单添加、菜单修改、菜单删除、菜单权限分配等功能。
     </description>
+    <dependencies>
+        <!-- quartz -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-quartz</artifactId>
+        </dependency>
 
+    </dependencies>
 </project>

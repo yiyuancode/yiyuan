@@ -1,24 +1,23 @@
-package net.yiyuan.core.qrtz.model;
+package net.yiyuan.core.sys.model;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
-import net.yiyuan.core.qrtz.enums.QrtzJobJobStatusEnum;
+import net.yiyuan.core.sys.enums.SysQrtzJobStatusEnum;
 import net.yiyuan.plugins.mp.constant.CustomSqlCondition;
 
 import java.io.Serializable;
 import java.util.Date;
-
 /**
- * 定时任务管理管理实体
+ * 定时任务管理实体
  *
  * @author 一源团队--花和尚
  * @date 2023-07-28
  */
 @Data
-public class QrtzJob implements Serializable {
+public class SysQrtz implements Serializable {
   private static final long serialVersionUID = 1L;
 
   /**
@@ -40,9 +39,9 @@ public class QrtzJob implements Serializable {
   /**
    * 任务名称(和任务组组成唯一值)
    *
+   * @see String
    * @author 一源团队--花和尚
    * @date 2023-07-28
-   * @see String
    */
   @TableField(condition = CustomSqlCondition.LIKE)
   private String jobName;
@@ -50,9 +49,9 @@ public class QrtzJob implements Serializable {
   /**
    * 任务组（和名称组合唯一值）
    *
+   * @see String
    * @author 一源团队--花和尚
    * @date 2023-07-28
-   * @see String
    */
   @TableField(condition = CustomSqlCondition.LIKE)
   private String jobGroup;
@@ -60,9 +59,9 @@ public class QrtzJob implements Serializable {
   /**
    * 任务执行类
    *
+   * @see String
    * @author 一源团队--花和尚
    * @date 2023-07-28
-   * @see String
    */
   @TableField(condition = CustomSqlCondition.LIKE)
   private String jobClassName;
@@ -70,9 +69,9 @@ public class QrtzJob implements Serializable {
   /**
    * 任务执行时间表达式
    *
+   * @see String
    * @author 一源团队--花和尚
    * @date 2023-07-28
-   * @see String
    */
   @TableField(condition = CustomSqlCondition.LIKE)
   private String jobCronExpression;
@@ -80,9 +79,9 @@ public class QrtzJob implements Serializable {
   /**
    * 任务描述备注
    *
+   * @see String
    * @author 一源团队--花和尚
    * @date 2023-07-28
-   * @see String
    */
   @TableField(condition = CustomSqlCondition.LIKE)
   private String jobDesc;
@@ -90,35 +89,35 @@ public class QrtzJob implements Serializable {
   /**
    * 任务状态#0=暂停|1=执行中|2=已结束
    *
+   * @see Integer
    * @author 一源团队--花和尚
    * @date 2023-07-28
-   * @see Integer
    */
-  private QrtzJobJobStatusEnum jobStatus;
+  private SysQrtzJobStatusEnum jobStatus;
 
   /**
    * 任务开始执行时间
    *
+   * @see Date
    * @author 一源团队--花和尚
    * @date 2023-07-28
-   * @see Date
    */
   private Date startTime;
   /**
    * 任务开始执行时间(查询开始时间)
    *
+   * @see Date
    * @author 一源团队--花和尚
    * @date 2023-07-28
-   * @see Date
    */
   @TableField(value = "start_time", condition = CustomSqlCondition.START_EQUAL, select = false)
   private Date startTimeStart;
   /**
    * 任务开始执行时间(查询结束时间)
    *
+   * @see Date
    * @author 一源团队--花和尚
    * @date 2023-07-28
-   * @see Date
    */
   @TableField(value = "start_time", condition = CustomSqlCondition.END_EQUAL, select = false)
   private Date startTimeEnd;
@@ -126,26 +125,26 @@ public class QrtzJob implements Serializable {
   /**
    * 任务结束执行时间
    *
+   * @see Date
    * @author 一源团队--花和尚
    * @date 2023-07-28
-   * @see Date
    */
   private Date endTime;
   /**
    * 任务结束执行时间(查询开始时间)
    *
+   * @see Date
    * @author 一源团队--花和尚
    * @date 2023-07-28
-   * @see Date
    */
   @TableField(value = "end_time", condition = CustomSqlCondition.START_EQUAL, select = false)
   private Date endTimeStart;
   /**
    * 任务结束执行时间(查询结束时间)
    *
+   * @see Date
    * @author 一源团队--花和尚
    * @date 2023-07-28
-   * @see Date
    */
   @TableField(value = "end_time", condition = CustomSqlCondition.END_EQUAL, select = false)
   private Date endTimeEnd;
@@ -153,27 +152,27 @@ public class QrtzJob implements Serializable {
   /**
    * 修改时间
    *
+   * @see Date
    * @author 一源团队--花和尚
    * @date 2023-07-28
-   * @see Date
    */
   @TableField(fill = FieldFill.INSERT_UPDATE)
   private Date updateTime;
   /**
    * 修改时间(查询开始时间)
    *
+   * @see Date
    * @author 一源团队--花和尚
    * @date 2023-07-28
-   * @see Date
    */
   @TableField(value = "update_time", condition = CustomSqlCondition.START_EQUAL, select = false)
   private Date updateTimeStart;
   /**
    * 修改时间(查询结束时间)
    *
+   * @see Date
    * @author 一源团队--花和尚
    * @date 2023-07-28
-   * @see Date
    */
   @TableField(value = "update_time", condition = CustomSqlCondition.END_EQUAL, select = false)
   private Date updateTimeEnd;
@@ -181,27 +180,27 @@ public class QrtzJob implements Serializable {
   /**
    * 创建时间
    *
+   * @see Date
    * @author 一源团队--花和尚
    * @date 2023-07-28
-   * @see Date
    */
   @TableField(fill = FieldFill.INSERT)
   private Date createTime;
   /**
    * 创建时间(查询开始时间)
    *
+   * @see Date
    * @author 一源团队--花和尚
    * @date 2023-07-28
-   * @see Date
    */
   @TableField(value = "create_time", condition = CustomSqlCondition.START_EQUAL, select = false)
   private Date createTimeStart;
   /**
    * 创建时间(查询结束时间)
    *
+   * @see Date
    * @author 一源团队--花和尚
    * @date 2023-07-28
-   * @see Date
    */
   @TableField(value = "create_time", condition = CustomSqlCondition.END_EQUAL, select = false)
   private Date createTimeEnd;
@@ -209,9 +208,9 @@ public class QrtzJob implements Serializable {
   /**
    * 创建人
    *
+   * @see String
    * @author 一源团队--花和尚
    * @date 2023-07-28
-   * @see String
    */
   @TableField(condition = CustomSqlCondition.LIKE)
   private String createUser;
@@ -219,9 +218,9 @@ public class QrtzJob implements Serializable {
   /**
    * 修改人
    *
+   * @see String
    * @author 一源团队--花和尚
    * @date 2023-07-28
-   * @see String
    */
   @TableField(condition = CustomSqlCondition.LIKE)
   private String updateUser;

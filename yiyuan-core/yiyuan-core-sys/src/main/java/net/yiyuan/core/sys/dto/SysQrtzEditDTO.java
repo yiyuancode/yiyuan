@@ -1,21 +1,29 @@
-package net.yiyuan.core.qrtz.dto;
+package net.yiyuan.core.sys.dto;
 
 import lombok.Data;
-import net.yiyuan.core.qrtz.enums.QrtzJobJobStatusEnum;
+import net.yiyuan.core.sys.enums.SysQrtzJobStatusEnum;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 定时任务管理新增接口请求入参实体
+ * 定时任务修改接口请求入参实体
  *
  * @author 一源团队--花和尚
  * @date 2023-07-28
  */
 @Data
-public class QrtzJobAddDTO implements Serializable {
+public class SysQrtzEditDTO implements Serializable {
+
+  /**
+   * 主键ID
+   *
+   * @author 一源团队--花和尚
+   * @date 2023-07-28
+   */
+  @NotBlank(message = "主键ID不能为空")
+  private String id;
 
   /**
    * 任务名称(和任务组组成唯一值)
@@ -23,7 +31,6 @@ public class QrtzJobAddDTO implements Serializable {
    * @author 一源团队--花和尚
    * @date 2023-07-28
    */
-  @NotBlank(message = "任务名称(和任务组组成唯一值)不能为空")
   private String jobName;
 
   /**
@@ -32,7 +39,6 @@ public class QrtzJobAddDTO implements Serializable {
    * @author 一源团队--花和尚
    * @date 2023-07-28
    */
-  @NotBlank(message = "任务组（和名称组合唯一值）不能为空")
   private String jobGroup;
 
   /**
@@ -41,7 +47,6 @@ public class QrtzJobAddDTO implements Serializable {
    * @author 一源团队--花和尚
    * @date 2023-07-28
    */
-  @NotBlank(message = "任务执行类不能为空")
   private String jobClassName;
 
   /**
@@ -50,7 +55,6 @@ public class QrtzJobAddDTO implements Serializable {
    * @author 一源团队--花和尚
    * @date 2023-07-28
    */
-  @NotBlank(message = "任务执行时间表达式不能为空")
   private String jobCronExpression;
 
   /**
@@ -59,7 +63,6 @@ public class QrtzJobAddDTO implements Serializable {
    * @author 一源团队--花和尚
    * @date 2023-07-28
    */
-  @NotBlank(message = "任务描述备注不能为空")
   private String jobDesc;
 
   /**
@@ -69,8 +72,7 @@ public class QrtzJobAddDTO implements Serializable {
    * @author 一源团队--花和尚
    * @date 2023-07-28
    */
-  @NotNull(message = "任务状态#0=暂停|1=执行中|2=已结束不能为空")
-  private QrtzJobJobStatusEnum jobStatus;
+  private SysQrtzJobStatusEnum jobStatus;
 
   /**
    * 任务开始执行时间
@@ -79,7 +81,6 @@ public class QrtzJobAddDTO implements Serializable {
    * @author 一源团队--花和尚
    * @date 2023-07-28
    */
-  @NotNull(message = "任务开始执行时间不能为空")
   private Date startTime;
 
   /**
@@ -89,6 +90,5 @@ public class QrtzJobAddDTO implements Serializable {
    * @author 一源团队--花和尚
    * @date 2023-07-28
    */
-  @NotNull(message = "任务结束执行时间不能为空")
   private Date endTime;
 }

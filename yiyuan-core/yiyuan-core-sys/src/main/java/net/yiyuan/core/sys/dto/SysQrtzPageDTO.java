@@ -1,21 +1,40 @@
-package net.yiyuan.core.qrtz.vo;
+package net.yiyuan.core.sys.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
-import net.yiyuan.core.qrtz.enums.QrtzJobJobStatusEnum;
+import net.yiyuan.core.sys.enums.SysQrtzJobStatusEnum;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 定时任务管理查询请求响应参数实体
+ * 定时任务分页接口请求入参实体
  *
  * @author 一源团队--花和尚
  * @date 2023-07-28
  */
 @Data
-public class QrtzJobQueryVO implements Serializable {
+public class SysQrtzPageDTO implements Serializable {
+  /**
+   * 分页条数
+   *
+   * @mock 10
+   * @author 一源团队--花和尚
+   * @date 2023-07-28
+   */
+  @NotNull(message = "分页条数不能为空")
+  private Integer pageSize;
+  /**
+   * 分页页数
+   *
+   * @mock 1
+   * @author 一源团队--花和尚
+   * @date 2023-07-28
+   */
+  @NotNull(message = "分页页数不能为空")
+  private Integer pageNum;
 
   /**
    * 主键ID
@@ -71,47 +90,91 @@ public class QrtzJobQueryVO implements Serializable {
    * @author 一源团队--花和尚
    * @date 2023-07-28
    */
-  private QrtzJobJobStatusEnum jobStatus;
+  private SysQrtzJobStatusEnum jobStatus;
 
   /**
-   * 任务开始执行时间
+   * 任务开始执行时间(查询开始时间)
    *
+   * @see Date
    * @author 一源团队--花和尚
    * @date 2023-07-28
    */
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-  private Date startTime;
-
+  private Date startTimeStart;
   /**
-   * 任务结束执行时间
+   * 任务开始执行时间(查询结束时间)
    *
+   * @see Date
    * @author 一源团队--花和尚
    * @date 2023-07-28
    */
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-  private Date endTime;
+  private Date startTimeEnd;
 
   /**
-   * 修改时间
+   * 任务结束执行时间(查询开始时间)
    *
+   * @see Date
    * @author 一源团队--花和尚
    * @date 2023-07-28
    */
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-  private Date updateTime;
-
+  private Date endTimeStart;
   /**
-   * 创建时间
+   * 任务结束执行时间(查询结束时间)
    *
+   * @see Date
    * @author 一源团队--花和尚
    * @date 2023-07-28
    */
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-  private Date createTime;
+  private Date endTimeEnd;
+
+  /**
+   * 修改时间(查询开始时间)
+   *
+   * @see Date
+   * @author 一源团队--花和尚
+   * @date 2023-07-28
+   */
+  @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+  private Date updateTimeStart;
+  /**
+   * 修改时间(查询结束时间)
+   *
+   * @see Date
+   * @author 一源团队--花和尚
+   * @date 2023-07-28
+   */
+  @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+  private Date updateTimeEnd;
+
+  /**
+   * 创建时间(查询开始时间)
+   *
+   * @see Date
+   * @author 一源团队--花和尚
+   * @date 2023-07-28
+   */
+  @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+  private Date createTimeStart;
+  /**
+   * 创建时间(查询结束时间)
+   *
+   * @see Date
+   * @author 一源团队--花和尚
+   * @date 2023-07-28
+   */
+  @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+  private Date createTimeEnd;
 
   /**
    * 创建人

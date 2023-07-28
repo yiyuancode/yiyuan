@@ -15,7 +15,7 @@
     <modules>
         <module>yiyuan-core-auth</module>
         <module>yiyuan-core-sys</module>
-        <module>yiyuan-core-qrtz</module>
+
     </modules>
     <!-- core 模块中。例如，配置管理、日志管理、缓存管理、权限管理,等多个业务模块所共享和复用-->
     <artifactId>yiyuan-core</artifactId>

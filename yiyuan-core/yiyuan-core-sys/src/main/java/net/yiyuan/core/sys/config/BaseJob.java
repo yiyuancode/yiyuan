@@ -1,4 +1,4 @@
-package net.yiyuan.core.qrtz.config;
+package net.yiyuan.core.sys.config;
 
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
