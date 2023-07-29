@@ -79,7 +79,6 @@ public class SysQrtzAddDTO implements Serializable {
    * @author 一源团队--花和尚
    * @date 2023-07-28
    */
-  @NotNull(message = "任务开始执行时间不能为空")
   private Date startTime;
 
   /**
@@ -89,6 +88,5 @@ public class SysQrtzAddDTO implements Serializable {
    * @author 一源团队--花和尚
    * @date 2023-07-28
    */
-  @NotNull(message = "任务结束执行时间不能为空")
   private Date endTime;
 }

@@ -186,7 +186,7 @@ public class SysQrtzServiceImpl extends JoinServiceImpl<SysQrtzMapper, SysQrtz>
     BeanUtilsPlus.copy(request, po);
     // 构建Job信息
     JobDetail jobDetail =
-        JobBuilder.newJob(JobUtil.getClass(request.getJobName()).getClass())
+        JobBuilder.newJob(JobUtil.getClass(request.getJobClassName()).getClass())
             .withIdentity(request.getJobName(), request.getJobGroup())
             .build();
 
