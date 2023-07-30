@@ -83,8 +83,8 @@ public class SysHostController {
       orRole = "admin")
   @GetMapping(value = "/sys/host/details/{id}")
   @ResponseBody
-  public CommonResult<SysHostQueryVO> details(
-      @PathVariable("id") @NotBlank String id) throws Exception {
+  public CommonResult<SysHostQueryVO> details(@PathVariable("id") @NotBlank String id)
+      throws Exception {
     return CommonResult.success(sysHostService.details(id), "查询主机记录详情成功");
   }
 
@@ -102,8 +102,8 @@ public class SysHostController {
       orRole = "admin")
   @PostMapping(value = "/sys/host/delete")
   @ResponseBody
-  public CommonResult<String> delete(@RequestParam(name = "ids") @Validated({NotBlank.class}) String ids)
-      throws Exception {
+  public CommonResult<String> delete(
+      @RequestParam(name = "ids") @Validated({NotBlank.class}) String ids) throws Exception {
     if (sysHostService.delete(ids)) {
       return CommonResult.success(null, "删除主机记录成功");
     } else {

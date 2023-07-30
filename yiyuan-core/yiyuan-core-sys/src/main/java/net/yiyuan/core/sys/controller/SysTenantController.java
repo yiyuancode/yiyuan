@@ -83,8 +83,8 @@ public class SysTenantController {
       orRole = "admin")
   @GetMapping(value = "/sys/tenant/details/{id}")
   @ResponseBody
-  public CommonResult<SysTenantQueryVO> details(
-      @PathVariable("id") @NotBlank String id) throws Exception {
+  public CommonResult<SysTenantQueryVO> details(@PathVariable("id") @NotBlank String id)
+      throws Exception {
     return CommonResult.success(sysTenantService.details(id), "查询租户详情成功");
   }
 
@@ -102,8 +102,8 @@ public class SysTenantController {
       orRole = "admin")
   @PostMapping(value = "/sys/tenant/delete")
   @ResponseBody
-  public CommonResult<String> delete(@RequestParam(name = "ids") @Validated({NotBlank.class}) String ids)
-      throws Exception {
+  public CommonResult<String> delete(
+      @RequestParam(name = "ids") @Validated({NotBlank.class}) String ids) throws Exception {
     if (sysTenantService.delete(ids)) {
       return CommonResult.success(null, "删除租户成功");
     } else {

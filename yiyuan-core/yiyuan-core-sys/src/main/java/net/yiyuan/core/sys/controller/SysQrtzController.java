@@ -84,8 +84,8 @@ public class SysQrtzController {
       orRole = "admin")
   @GetMapping(value = "/sys/qrtz/details/{id}")
   @ResponseBody
-  public CommonResult<SysQrtzQueryVO> details(
-      @PathVariable("id") @NotBlank String id) throws Exception {
+  public CommonResult<SysQrtzQueryVO> details(@PathVariable("id") @NotBlank String id)
+      throws Exception {
     return CommonResult.success(sysQrtzService.details(id), "查询定时任务详情成功");
   }
 
@@ -103,8 +103,8 @@ public class SysQrtzController {
       orRole = "admin")
   @PostMapping(value = "/sys/qrtz/delete")
   @ResponseBody
-  public CommonResult<String> delete(@RequestParam(name = "ids") @Validated({NotBlank.class}) String ids)
-      throws Exception {
+  public CommonResult<String> delete(
+      @RequestParam(name = "ids") @Validated({NotBlank.class}) String ids) throws Exception {
     if (sysQrtzService.delete(ids)) {
       return CommonResult.success(null, "删除定时任务成功");
     } else {
@@ -166,12 +166,12 @@ public class SysQrtzController {
    */
   @Description("定时任务/定时任务管理/重启定时任务")
   @SaCheckPermission(
-          value = {"qrtz:job:restar"},
-          orRole = "admin")
+      value = {"qrtz:job:restar"},
+      orRole = "admin")
   @PostMapping(value = "/qrtz/job/restar")
   @ResponseBody
-  public CommonResult<String> restar(@RequestParam(name = "ids") @Validated({NotEmpty.class})  String ids)
-          throws Exception {
+  public CommonResult<String> restar(
+      @RequestParam(name = "ids") @Validated({NotEmpty.class}) String ids) throws Exception {
     if (sysQrtzService.restar(ids)) {
       return CommonResult.success(null, "重启定时任务成功");
     } else {
@@ -189,12 +189,12 @@ public class SysQrtzController {
    */
   @Description("定时任务/定时任务管理/暂停定时任务")
   @SaCheckPermission(
-          value = {"qrtz:job:stop"},
-          orRole = "admin")
+      value = {"qrtz:job:stop"},
+      orRole = "admin")
   @PostMapping(value = "/qrtz/job/stop")
   @ResponseBody
-  public CommonResult<String> stop(@RequestParam(name = "ids") @Validated({NotEmpty.class}) String ids)
-          throws Exception {
+  public CommonResult<String> stop(
+      @RequestParam(name = "ids") @Validated({NotEmpty.class}) String ids) throws Exception {
     if (sysQrtzService.stop(ids)) {
       return CommonResult.success(null, "重启定时任务成功");
     } else {

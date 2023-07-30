@@ -1,6 +1,5 @@
 package net.yiyuan.core.sys.utils;
 
-
 import net.yiyuan.core.sys.config.BaseJob;
 
 public class JobUtil {

@@ -1,10 +1,12 @@
 package net.yiyuan.admin.job;
 
+import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
-
 import net.yiyuan.core.sys.config.BaseJob;
 import net.yiyuan.core.sys.dto.SysHostListDTO;
+import net.yiyuan.core.sys.dto.SysHostMonitorAddDTO;
 import net.yiyuan.core.sys.enums.SysHostIsMonitorEnabledEnum;
+import net.yiyuan.core.sys.service.SysHostMonitorService;
 import net.yiyuan.core.sys.service.SysHostService;
 import net.yiyuan.core.sys.vo.SysHostQueryVO;
 import net.yiyuan.plugins.ssh.utils.SshUtil;
@@ -27,12 +29,13 @@ import java.util.List;
 @Slf4j
 public class HostMonitorJob implements BaseJob {
   private final String HOST_MONITOR_SCRIPT =
-      "echo '{\"cpu_usage\":'$(top -bn1 | grep \"Cpu(s)\" | awk '{print $2}')', \"memory_usage\":'$(free -m | awk '/Mem/{printf \"{\\\"usage_percent\\\":%.2f, \\\"used\\\":%d, \\\"total\\\":%d}\", $3/$2*100,$3,$2}')', \"disk_usage\":'$(df -h | awk '$NF==\"/\"{printf \"{\\\"usage_percent\\\":%d, \\\"used\\\":\\\"%s\\\", \\\"total\\\":\\\"%s\\\"}\", $5,$3,$2}')', \"network_usage\":'$(ifconfig eth0 | awk '/RX p/{printf \"%d\", $5}')', \"process_count\":'$(ps -ef | wc -l)'}'";
+      "echo '{\"cpuUsage\":'$(top -bn1 | grep \"Cpu(s)\" | awk '{print $2}')', \"memoryUsage\":'$(free -m | awk '/Mem/{printf \"{\\\"usagePercent\\\":%.2f, \\\"used\\\":%d, \\\"total\\\":%d}\", $3/$2*100,$3,$2}')', \"diskUsage\":'$(df -h | awk '$NF==\"/\"{printf \"{\\\"usagePercent\\\":%d, \\\"used\\\":\\\"%s\\\", \\\"total\\\":\\\"%s\\\"}\", $5,$3,$2}')', \"networkUsage\":'$(ifconfig eth0 | awk '/RX p/{printf \"%d\", $5}')', \"processCount\":'$(ps -ef | wc -l)'}'";
   @Resource SysHostService sysHostService;
+  @Resource SysHostMonitorService sysHostMonitorService;
 
   @Override
   public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-    log.warn("主机监控任务 执行时间: {}", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+    log.warn("主机监控任务222 执行时间: {}", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
     try {
       SysHostListDTO sysHost = new SysHostListDTO();
       sysHost.setIsMonitorEnabled(SysHostIsMonitorEnabledEnum.OPEN);
@@ -47,7 +50,30 @@ public class HostMonitorJob implements BaseJob {
                       item.getSshUsername(),
                       item.getSshPassword(),
                       HOST_MONITOR_SCRIPT);
-              log.warn("主机监控任务 执行结果: {}", scriptResp);
+              log.warn("主机监控任务22 执行结果: {}", scriptResp);
+
+              JSONObject jsonObject = JSONObject.parseObject(scriptResp);
+
+              SysHostMonitorAddDTO sysHostMonitorAddDTO = new SysHostMonitorAddDTO();
+              sysHostMonitorAddDTO.setCpuUsage(jsonObject.getFloat("cpuUsage"));
+              //设置内存数据
+              JSONObject memoryUsage = jsonObject.getJSONObject("memoryUsage");
+              sysHostMonitorAddDTO.setMemoryTotal(memoryUsage.getFloat("total"));
+              sysHostMonitorAddDTO.setMemoryUsage(memoryUsage.getFloat("usagePercent"));
+              sysHostMonitorAddDTO.setMemoryUsed(memoryUsage.getFloat("used"));
+              // 设置磁盘数据
+              JSONObject diskUsage = jsonObject.getJSONObject("diskUsage");
+              sysHostMonitorAddDTO.setDiskUsage(diskUsage.getFloat("usagePercent"));
+              sysHostMonitorAddDTO.setDiskTotal(
+                  new Float(diskUsage.getString("total").replace("G", "")));
+              sysHostMonitorAddDTO.setDiskUsed(
+                  new Float(diskUsage.getString("used").replace("G", "")));
+              sysHostMonitorAddDTO.setNetworkUsage(jsonObject.getFloat("networkUsage"));
+              sysHostMonitorAddDTO.setProcessCount(jsonObject.getInteger("processCount"));
+              // 设置主机表id
+              sysHostMonitorAddDTO.setHostId(item.getId());
+
+              sysHostMonitorService.add(sysHostMonitorAddDTO);
             } catch (Exception e) {
               e.printStackTrace();
             }
