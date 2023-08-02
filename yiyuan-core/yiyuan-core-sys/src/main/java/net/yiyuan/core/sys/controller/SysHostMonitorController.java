@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotBlank;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 服务器监控采集管理
@@ -42,9 +41,9 @@ public class SysHostMonitorController {
    */
   @Description("系统管理/服务器监控采集管理/查询服务器监控采集")
   @SaCheckPermission(
-      value = {"sys:monitor:query"},
+      value = {"sys:hostMonitor:query"},
       orRole = "admin")
-  @GetMapping(value = "/sys/monitor/list")
+  @GetMapping(value = "/sys/hostMonitor/list")
   @ResponseBody
   public CommonResult<List<SysHostMonitorQueryVO>> list(SysHostMonitorListDTO request)
       throws Exception {
@@ -61,9 +60,9 @@ public class SysHostMonitorController {
    */
   @Description("系统管理/服务器监控采集管理/查询服务器监控采集")
   @SaCheckPermission(
-      value = {"sys:monitor:query"},
+      value = {"sys:hostMonitor:query"},
       orRole = "admin")
-  @GetMapping(value = "/sys/monitor/page")
+  @GetMapping(value = "/sys/hostMonitor/page")
   @ResponseBody
   public CommonResult<Page<SysHostMonitorQueryVO>> page(SysHostMonitorPageDTO request)
       throws Exception {
@@ -80,9 +79,9 @@ public class SysHostMonitorController {
    */
   @Description("系统管理/服务器监控采集管理/查询服务器监控采集")
   @SaCheckPermission(
-      value = {"sys:monitor:query"},
+      value = {"sys:hostMonitor:query"},
       orRole = "admin")
-  @GetMapping(value = "/sys/monitor/details/{id}")
+  @GetMapping(value = "/sys/hostMonitor/details/{id}")
   @ResponseBody
   public CommonResult<SysHostMonitorQueryVO> details(@PathVariable("id") @NotBlank String id)
       throws Exception {
@@ -99,9 +98,9 @@ public class SysHostMonitorController {
    */
   @Description("系统管理/服务器监控采集管理/删除服务器监控采集")
   @SaCheckPermission(
-      value = {"sys:monitor:delete"},
+      value = {"sys:hostMonitor:delete"},
       orRole = "admin")
-  @PostMapping(value = "/sys/monitor/delete")
+  @PostMapping(value = "/sys/hostMonitor/delete")
   @ResponseBody
   public CommonResult<String> delete(
       @RequestParam(name = "ids") @Validated({NotBlank.class}) String ids) throws Exception {
@@ -121,9 +120,9 @@ public class SysHostMonitorController {
    */
   @Description("系统管理/服务器监控采集管理/编辑服务器监控采集")
   @SaCheckPermission(
-      value = {"sys:monitor:edit"},
+      value = {"sys:hostMonitor:edit"},
       orRole = "admin")
-  @PostMapping(value = "/sys/monitor/edit")
+  @PostMapping(value = "/sys/hostMonitor/edit")
   @ResponseBody
   public CommonResult<String> edit(@RequestBody @Validated SysHostMonitorEditDTO request)
       throws Exception {
@@ -144,9 +143,9 @@ public class SysHostMonitorController {
    */
   @Description("系统管理/服务器监控采集管理/新增服务器监控采集")
   @SaCheckPermission(
-      value = {"sys:monitor:add"},
+      value = {"sys:hostMonitor:add"},
       orRole = "admin")
-  @PostMapping(value = "/sys/monitor/add")
+  @PostMapping(value = "/sys/hostMonitor/add")
   @ResponseBody
   public CommonResult<String> add(@RequestBody @Validated SysHostMonitorAddDTO request)
       throws Exception {
@@ -167,12 +166,12 @@ public class SysHostMonitorController {
    */
   @Description("系统管理/服务器监控采集管理/服务器监控统计查询")
   @SaCheckPermission(
-      value = {"sys:monitor:queryCount"},
+      value = {"sys:hostMonitor:queryCount"},
       orRole = "admin")
-  @GetMapping(value = "/sys/monitor/queryCount")
+  @GetMapping(value = "/sys/hostMonitor/queryCount")
   @ResponseBody
-  public CommonResult<List<SysHostMonitorQueryCountVO>> queryCount(@Validated SysHostMonitorQueryCountDTO request)
-      throws Exception {
+  public CommonResult<List<SysHostMonitorQueryCountVO>> queryCount(
+      @Validated SysHostMonitorQueryCountDTO request) throws Exception {
 
     return CommonResult.success(sysHostMonitorService.queryCount(request), "查询服务器监控采集列表成功");
   }

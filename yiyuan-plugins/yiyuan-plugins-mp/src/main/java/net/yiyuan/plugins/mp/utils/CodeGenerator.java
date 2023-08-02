@@ -43,7 +43,7 @@ public class CodeGenerator {
   private static String MYSQL_PASSWORD = "123456";
 
   private static String SSH_URL = "43.154.183.115";
-  private static int SSH_PORT = 22;
+  private static int SSH_PORT = 60035;
   private static String SSH_USERNAME = "root";
   private static String SSH_PASSWORD = "ABC123#123CBd";
   private static String SSH_COMMAND_FY = "fy ";

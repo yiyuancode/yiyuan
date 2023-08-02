@@ -18,7 +18,6 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 服务器监控采集管理Service层接口实现
@@ -164,7 +163,8 @@ public class SysHostMonitorServiceImpl extends JoinServiceImpl<SysHostMonitorMap
   }
 
   @Override
-  public List<SysHostMonitorQueryCountVO> queryCount(SysHostMonitorQueryCountDTO request) throws Exception {
+  public List<SysHostMonitorQueryCountVO> queryCount(SysHostMonitorQueryCountDTO request)
+      throws Exception {
     QueryWrapper<SysHostMonitor> lambdaQueryWrapper = new QueryWrapper();
     lambdaQueryWrapper.eq("host_id", request.getHostId());
     lambdaQueryWrapper.ge("create_time", request.getCreateTimeStart());

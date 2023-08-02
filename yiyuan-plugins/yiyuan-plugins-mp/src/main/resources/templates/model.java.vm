@@ -51,9 +51,9 @@ private static final long serialVersionUID=1L;
     #end
     #if("$!field.comment" != "")
         #if(${springdoc})
-        @Schema(description = "${field.comment}" )
+        @Schema(description = "${field.comment}")
         #elseif(${swagger})
-        @ApiModelProperty("${field.comment}" )
+        @ApiModelProperty("${field.comment}")
         #else
         #end
     #end
@@ -67,21 +67,21 @@ private static final long serialVersionUID=1L;
             ##        @TableId("${field.annotationColumnName}")
         #end
 
-    /**
-     * ${field.comment}
-     * @date ${date}
-     */
-    @TableId(value = "${field.propertyName}" , type = IdType.ASSIGN_UUID)
+##    /**
+##     * ${field.comment}
+##     * @date ${date}
+##     */
+    @TableId(value = "${field.propertyName}", type = IdType.ASSIGN_UUID)
         ## 普通字段
     #elseif(${field.fill})
         ## -----   存在字段填充设置   -----
         #if(${field.convert})
-        @TableField(value = "${field.annotationColumnName}" , fill = FieldFill.${field.fill})
+        @TableField(value = "${field.annotationColumnName}", fill = FieldFill.${field.fill})
         #else
         @TableField(fill = FieldFill.${field.fill})
         #end
     #elseif(${field.convert})
-    @TableField("${field.annotationColumnName}" )
+    @TableField("${field.annotationColumnName}")
     #end
     ## 乐观锁注解
     #if(${field.versionField})
@@ -165,7 +165,7 @@ private static final long serialVersionUID=1L;
          * @author  ${author}
          * @date ${date}
          */
-        @TableField(value = "${field.name}" , condition = CustomSqlCondition.START_EQUAL, select = false)
+        @TableField(value = "${field.name}", condition = CustomSqlCondition.START_EQUAL, select = false)
         private ${field.propertyType} ${field.propertyName}Start;
         /**
          * ${field.comment}(查询结束时间)
@@ -173,10 +173,15 @@ private static final long serialVersionUID=1L;
          * @author  ${author}
          * @date ${date}
          */
-        @TableField(value = "${field.name}" , condition = CustomSqlCondition.END_EQUAL, select = false)
+        @TableField(value = "${field.name}", condition = CustomSqlCondition.END_EQUAL, select = false)
         private ${field.propertyType} ${field.propertyName}End;
         #else
-
+        /**
+         * ${field.comment}
+         * @see ${field.propertyType}
+         * @author  ${author}
+         * @date ${date}
+         */
             #if(${field.propertyName.equals("createUser")})
             @TableField(fill = FieldFill.INSERT)
             #elseif(${field.propertyName.equals("updateUser")})

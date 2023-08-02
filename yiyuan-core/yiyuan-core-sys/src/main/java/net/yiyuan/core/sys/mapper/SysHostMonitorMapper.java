@@ -9,7 +9,6 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * 服务器监控采集管理 Mapper接口
@@ -41,5 +40,6 @@ public interface SysHostMonitorMapper extends JoinBaseMapper<SysHostMonitor> {
           + "FROM sys_host_monitor ${ew.customSqlSegment}\n"
           + "GROUP BY time\n"
           + "ORDER BY time DESC ")
-  List<SysHostMonitorQueryCountVO> queryCount(@Param(Constants.WRAPPER) Wrapper wrapper) throws Exception;
+  List<SysHostMonitorQueryCountVO> queryCount(@Param(Constants.WRAPPER) Wrapper wrapper)
+      throws Exception;
 }
