@@ -80,8 +80,8 @@ public class AuthAdminController {
       orRole = "admin")
   @GetMapping(value = "/auth/admin/details/{id}")
   @ResponseBody
-  public CommonResult<AuthAdminQueryVO> details(
-      @PathVariable("id") @NotBlank String id) throws Exception {
+  public CommonResult<AuthAdminQueryVO> details(@PathVariable("id") @NotBlank String id)
+      throws Exception {
     return CommonResult.success(authAdminService.details(id), "查询用户详情成功");
   }
 
@@ -99,8 +99,8 @@ public class AuthAdminController {
       orRole = "admin")
   @PostMapping(value = "/auth/admin/delete")
   @ResponseBody
-  public CommonResult<String> delete(@RequestParam(name = "ids") @Validated({NotBlank.class}) String ids)
-      throws Exception {
+  public CommonResult<String> delete(
+      @RequestParam(name = "ids") @Validated({NotBlank.class}) String ids) throws Exception {
     if (authAdminService.delete(ids)) {
       return CommonResult.success(null, "删除用户成功");
     } else {
@@ -175,5 +175,24 @@ public class AuthAdminController {
     } else {
       return CommonResult.failed("分配角色失败");
     }
+  }
+
+  /**
+   * 在线用户
+   *
+   * @param request 分配角色请求实体
+   * @return {@link CommonResult}
+   * @author 一源团队--花和尚
+   * @date 2023-06-24
+   */
+  @Description("权限管理/用户管理/在线用户")
+  @SaCheckPermission(
+      value = {"auth:admin:online"},
+      orRole = "admin")
+  @GetMapping(value = "/auth/admin/online")
+  @ResponseBody
+  public CommonResult<Page<AuthAdminQueryVO>> online(@Validated AuthAdminPageDTO request)
+      throws Exception {
+    return CommonResult.success(authAdminService.online(request), "分页查询用户成功");
   }
 }

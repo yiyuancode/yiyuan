@@ -127,4 +127,13 @@ public interface AuthAdminService extends JoinIService<AuthAdmin> {
    * @date 2023-07-27
    */
   AuthAdminQueryVO detailsJoinRoleAndPermission(String id) throws Exception;
+
+  /**
+   * 查询在线用户列表
+   *
+   * @return {@link Page<AuthAdminQueryVO>}
+   * @author 一源团队--花和尚
+   * @date 2023-07-27
+   */
+  Page<AuthAdminQueryVO> online(AuthAdminPageDTO request) throws Exception;
 }

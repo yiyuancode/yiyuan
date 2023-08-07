@@ -1,5 +1,7 @@
 package net.yiyuan.core.auth.service.impl;
 
+import cn.dev33.satoken.session.SaSession;
+import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.lang.tree.Tree;
 import cn.hutool.core.lang.tree.TreeNodeConfig;
 import cn.hutool.core.lang.tree.TreeUtil;
@@ -10,6 +12,7 @@ import icu.mhb.mybatisplus.plugln.base.service.impl.JoinServiceImpl;
 import icu.mhb.mybatisplus.plugln.core.JoinLambdaWrapper;
 import lombok.extern.slf4j.Slf4j;
 import net.yiyuan.common.utils.BeanUtilsPlus;
+import net.yiyuan.common.utils.StringUtilsPlus;
 import net.yiyuan.core.auth.dto.*;
 import net.yiyuan.core.auth.mapper.AuthAdminMapper;
 import net.yiyuan.core.auth.model.AuthAdmin;
@@ -303,6 +306,41 @@ public class AuthAdminServiceImpl extends JoinServiceImpl<AuthAdminMapper, AuthA
     voResult.setMenuTreeList(treeNodes);
     voResult.setRoleList(roleList);
     return voResult;
+  }
+
+  @Override
+  public Page<AuthAdminQueryVO> online(AuthAdminPageDTO request) throws Exception {
+// 分页查询数据
+    List<String> sessionIdList = StpUtil.searchSessionId("", 0, 10, false);
+    log.info("sessionIdList{}", sessionIdList);
+    for (String sessionId: sessionIdList) {
+      SaSession session = StpUtil.getSessionBySessionId(sessionId);
+//      sessionList.add(session);
+    }
+    // 查询 value 包括 1000 的所有 token，结果集从第 0 条开始，返回 10 条
+    List<String> tokenList =
+        StpUtil.searchTokenValue(
+            "", request.getPageSize() * (request.getPageNum() - 1), request.getPageSize(), true);
+    List<String> loginIdList = new ArrayList<>();
+    log.info("tokenList{}", tokenList);
+    tokenList.forEach(
+        (item) -> {
+          String[] split = item.split(":");
+          String loginId = (String) StpUtil.getLoginIdByToken(split[split.length - 1]);
+          if (StringUtilsPlus.isNotEmpty(loginId)) {
+            loginIdList.add(loginId);
+          }
+        });
+
+    JoinLambdaWrapper<AuthAdmin> wrapper = new JoinLambdaWrapper(AuthAdmin.class);
+    wrapper.in(AuthAdmin::getId, loginIdList);
+    Page<AuthAdminQueryVO> voPage =
+        joinPage(
+            new Page<>(request.getPageNum(), request.getPageSize()),
+            wrapper,
+            AuthAdminQueryVO.class);
+
+    return voPage;
   }
 
   public List<Map<String, Object>> convertPermissionList(List<String> permissions) {

@@ -1,6 +1,7 @@
 package net.yiyuan.plugins.satoken.exception;
 
 import cn.dev33.satoken.exception.*;
+import lombok.extern.slf4j.Slf4j;
 import net.yiyuan.common.exception.BusinessException;
 import net.yiyuan.common.model.vo.CommonResult;
 import org.springframework.validation.BindException;
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
  * @author 一源团队-花和尚
  * @date 2023/06/23
  */
+@Slf4j
 @RestControllerAdvice
 public class GlobalException {
 
@@ -199,6 +201,8 @@ public class GlobalException {
   //    }
   @ExceptionHandler(BindException.class)
   public CommonResult handleBindException(BindException e) {
+    e.printStackTrace();
+    log.error("异常{}", e.getMessage());
     List<ObjectError> errors = e.getAllErrors();
     StringBuilder errorMessage = new StringBuilder();
     for (ObjectError error : errors) {
