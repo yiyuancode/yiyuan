@@ -239,6 +239,7 @@ public class SysMenuServiceImpl extends JoinServiceImpl<SysMenuMapper, SysMenu>
                   sysMenuQuery.setSort(0);
                   sysMenuQuery.setRouteComponent("/layouts/BlankView.vue");
                   sysMenuQuery.setRouteName(btnPermAarry[0]);
+                  sysMenuQuery.setRoutePath(sysMenuQuery.getPermission().replace(":", "/"));
                   this.save(sysMenuQuery);
                   moudelDetails = new SysMenuQueryVO();
                   BeanUtilsPlus.copy(sysMenuQuery, moudelDetails);
@@ -262,6 +263,7 @@ public class SysMenuServiceImpl extends JoinServiceImpl<SysMenuMapper, SysMenu>
                   sysMenuQuery.setRouteComponent(
                       "/pages/" + btnPermAarry[0] + "/" + btnPermAarry[1]);
                   sysMenuQuery.setRouteName(btnPermAarry[1]);
+                  sysMenuQuery.setRoutePath(sysMenuQuery.getPermission().replace(":", "/"));
                   this.save(sysMenuQuery);
                   childMoudelDetails = new SysMenuQueryVO();
                   BeanUtilsPlus.copy(sysMenuQuery, childMoudelDetails);

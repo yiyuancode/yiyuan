@@ -166,9 +166,9 @@ public class SysQrtzController {
    */
   @Description("定时任务/定时任务管理/重启定时任务")
   @SaCheckPermission(
-      value = {"qrtz:job:restar"},
+      value = {"sys:qrtz:restar"},
       orRole = "admin")
-  @PostMapping(value = "/qrtz/job/restar")
+  @PostMapping(value = "/sys/qrtz/restar")
   @ResponseBody
   public CommonResult<String> restar(
       @RequestParam(name = "ids") @Validated({NotEmpty.class}) String ids) throws Exception {
@@ -189,9 +189,9 @@ public class SysQrtzController {
    */
   @Description("定时任务/定时任务管理/暂停定时任务")
   @SaCheckPermission(
-      value = {"qrtz:job:stop"},
+      value = {"sys:qrtz:stop"},
       orRole = "admin")
-  @PostMapping(value = "/qrtz/job/stop")
+  @PostMapping(value = "/sys/qrtz/stop")
   @ResponseBody
   public CommonResult<String> stop(
       @RequestParam(name = "ids") @Validated({NotEmpty.class}) String ids) throws Exception {
