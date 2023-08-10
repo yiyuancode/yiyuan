@@ -309,6 +309,7 @@ public class AuthAdminServiceImpl extends JoinServiceImpl<AuthAdminMapper, AuthA
               tree.putExtra("isCache", treeNode.getIsCache());
               tree.putExtra("type", treeNode.getType());
               tree.putExtra("openType", treeNode.getOpenType());
+              tree.putExtra("routePath", treeNode.getRoutePath());
             });
 
     voResult.setPermissionsList(permissionsList);
@@ -405,6 +406,4 @@ public class AuthAdminServiceImpl extends JoinServiceImpl<AuthAdminMapper, AuthA
         .end();
     return wrapper;
   }
-
-
 }
