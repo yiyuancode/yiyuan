@@ -7,3 +7,5 @@ logstash:
 logging:
   level:
     root: info
+tlog:
+  enable-invoke-time-print: true
