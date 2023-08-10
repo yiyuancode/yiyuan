@@ -11,7 +11,9 @@ import net.yiyuan.core.auth.model.AuthRole;
 import net.yiyuan.core.auth.model.AuthRoleMenu;
 import net.yiyuan.core.auth.service.AuthRoleMenuService;
 import net.yiyuan.core.auth.service.AuthRoleService;
+import net.yiyuan.core.auth.vo.AuthAdminQueryVO;
 import net.yiyuan.core.auth.vo.AuthRoleQueryVO;
+import net.yiyuan.core.sys.model.SysMenu;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -46,6 +48,7 @@ public class AuthRoleServiceImpl extends JoinServiceImpl<AuthRoleMapper, AuthRol
     AuthRole po = new AuthRole();
     BeanUtilsPlus.copy(request, po);
     JoinLambdaWrapper<AuthRole> wrapper = new JoinLambdaWrapper<>(po);
+    joinMenuList(wrapper);
     List<AuthRoleQueryVO> voList = joinList(wrapper, AuthRoleQueryVO.class);
 
     return voList;
@@ -64,6 +67,7 @@ public class AuthRoleServiceImpl extends JoinServiceImpl<AuthRoleMapper, AuthRol
     AuthRole po = new AuthRole();
     BeanUtilsPlus.copy(request, po);
     JoinLambdaWrapper<AuthRole> wrapper = new JoinLambdaWrapper<>(po);
+    joinMenuList(wrapper);
     Page<AuthRoleQueryVO> voPage =
         joinPage(
             new Page<>(request.getPageNum(), request.getPageSize()),
@@ -182,5 +186,14 @@ public class AuthRoleServiceImpl extends JoinServiceImpl<AuthRoleMapper, AuthRol
     // 在全量增加现在的
     authRoleMenuService.saveBatch(addList);
     return true;
+  }
+
+  public void joinMenuList(JoinLambdaWrapper<AuthRole> wrapper) {
+    wrapper
+        .leftJoin(AuthRoleMenu.class, AuthRoleMenu::getRoleId, AuthRole::getId)
+        .end()
+        .leftJoin(SysMenu.class, SysMenu::getId, AuthRoleMenu::getMenuId)
+        .manyToManySelect(AuthAdminQueryVO::getMenuList, SysMenu.class)
+        .end();
   }
 }

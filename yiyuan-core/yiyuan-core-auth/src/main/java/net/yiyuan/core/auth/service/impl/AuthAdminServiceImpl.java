@@ -62,6 +62,14 @@ public class AuthAdminServiceImpl extends JoinServiceImpl<AuthAdminMapper, AuthA
     AuthAdmin po = new AuthAdmin();
     BeanUtilsPlus.copy(request, po);
     JoinLambdaWrapper<AuthAdmin> wrapper = new JoinLambdaWrapper<>(po);
+    // 主表-中间表-主表关联查询模式，必须加end结束
+    wrapper
+        .leftJoin(AuthAdminRole.class, AuthAdminRole::getUserId, AuthAdmin::getId)
+        .end()
+        .leftJoin(AuthRole.class, AuthRole::getId, AuthAdminRole::getRoleId)
+        .manyToManySelect(AuthAdminQueryVO::getRoleList, AuthRole.class)
+        .end();
+
     List<AuthAdminQueryVO> voList = joinList(wrapper, AuthAdminQueryVO.class);
 
     return voList;
@@ -80,6 +88,7 @@ public class AuthAdminServiceImpl extends JoinServiceImpl<AuthAdminMapper, AuthA
     AuthAdmin po = new AuthAdmin();
     BeanUtilsPlus.copy(request, po);
     JoinLambdaWrapper<AuthAdmin> wrapper = new JoinLambdaWrapper<>(po);
+    joinRoleList(wrapper);
     Page<AuthAdminQueryVO> voPage =
         joinPage(
             new Page<>(request.getPageNum(), request.getPageSize()),
@@ -310,12 +319,12 @@ public class AuthAdminServiceImpl extends JoinServiceImpl<AuthAdminMapper, AuthA
 
   @Override
   public Page<AuthAdminQueryVO> online(AuthAdminPageDTO request) throws Exception {
-// 分页查询数据
+    // 分页查询数据
     List<String> sessionIdList = StpUtil.searchSessionId("", 0, 10, false);
     log.info("sessionIdList{}", sessionIdList);
-    for (String sessionId: sessionIdList) {
+    for (String sessionId : sessionIdList) {
       SaSession session = StpUtil.getSessionBySessionId(sessionId);
-//      sessionList.add(session);
+      //      sessionList.add(session);
     }
     // 查询 value 包括 1000 的所有 token，结果集从第 0 条开始，返回 10 条
     List<String> tokenList =
@@ -386,4 +395,16 @@ public class AuthAdminServiceImpl extends JoinServiceImpl<AuthAdminMapper, AuthA
     // 打印菜单的层级结构
     return result;
   }
+
+  public JoinLambdaWrapper<AuthAdmin> joinRoleList(JoinLambdaWrapper<AuthAdmin> wrapper) {
+    wrapper
+        .leftJoin(AuthAdminRole.class, AuthAdminRole::getUserId, AuthAdmin::getId)
+        .end()
+        .leftJoin(AuthRole.class, AuthRole::getId, AuthAdminRole::getRoleId)
+        .manyToManySelect(AuthAdminQueryVO::getRoleList, AuthRole.class)
+        .end();
+    return wrapper;
+  }
+
+
 }

@@ -60,36 +60,8 @@
     <appender name="GLC" class="top.gotoeasy.framework.glc.logback.appender.GlcHttpJsonAppender">
         <glcApiUrl>http://106.54.87.159:5000/glc/v1/log/add</glcApiUrl>
         <system>yiyuan-admin</system>
-        <!--        <encoder charset="UTF-8" class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">-->
-        <!--            <providers>-->
-        <!--                <provider class="com.yomahub.tlog.logstash.logback.TLogLogstashLogbackProvider"/>-->
-        <!--                &lt;!&ndash;格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符&ndash;&gt;-->
-        <!--                <pattern>-->
-        <!--                    <pattern>-->
-        <!--                        {-->
-        <!--                        "level": "%level",-->
-        <!--                        "thread": "%thread",-->
-        <!--                        "class": "%logger{40}",-->
-        <!--                        "message": "%message",-->
-        <!--                        "stack_trace": "%exception{10}",-->
-        <!--                        "client_time": "%d{yyyy-MM-dd HH:mm:ss.SSS}"-->
-        <!--                        }-->
-        <!--                    </pattern>-->
-        <!--                </pattern>-->
-        <!--            </providers>-->
-        <!--        </encoder>-->
+
         <layout>
-            <!--            <pattern><![CDATA[%p %m %n]]></pattern>-->
-            <!--            <pattern>-->
-            <!--                {-->
-            <!--                "level": "%level",-->
-            <!--                "thread": "%thread",-->
-            <!--                "class": "%logger{40}",-->
-            <!--                "message": "%message",-->
-            <!--                "stack_trace": "%exception{10}",-->
-            <!--                "client_time": "%d{yyyy-MM-dd HH:mm:ss.SSS}"-->
-            <!--                }-->
-            <!--            </pattern>-->
 
             <pattern>%d{yyyy-MM-dd HH:mm:ss} %logger{50} - %msg%n</pattern>
         </layout>
@@ -98,6 +70,6 @@
         <appender-ref ref="STDOUT"/>
         <!--        <appender-ref ref="ASYNC_FILE"/>-->
         <appender-ref ref="LOGSTASH"/>
-        <appender-ref ref="GLC"/>
+<!--        <appender-ref ref="GLC"/>-->
     </root>
 </configuration>

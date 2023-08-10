@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import net.yiyuan.core.auth.enums.AuthAdminPlatformEnum;
 import net.yiyuan.core.auth.model.AuthRole;
+import net.yiyuan.core.sys.model.SysMenu;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
@@ -160,7 +161,13 @@ public class AuthAdminQueryVO implements Serializable {
    * @date 2023-07-27
    */
   private List<AuthRole> roleList;
-
+  /**
+   * 菜单数据
+   *
+   * @author 一源团队--花和尚
+   * @date 2023-07-27
+   */
+  private List<SysMenu> menuList;
   /**
    * 对应菜单权限信息
    *

@@ -11,6 +11,7 @@ import cn.dev33.satoken.strategy.SaStrategy;
 import cn.dev33.satoken.util.SaFoxUtil;
 import cn.dev33.satoken.util.SaResult;
 import cn.hutool.core.util.StrUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,6 +25,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @author 一源团队-花和尚
  * @date 2023/06/23
  */
+@Slf4j
 @Configuration
 public class SaTokenConfigure implements WebMvcConfigurer {
 
@@ -79,26 +81,12 @@ public class SaTokenConfigure implements WebMvcConfigurer {
         // 指定 所有拦截路由
         .addInclude("/**")
         // 前置函数：在每次认证函数之前执行
-        .setBeforeAuth(
-            r -> {
-              System.out.println("---------- 进入Sa-Token前置处理1：setBeforeAuth -----------");
-              // ---------- 设置一些安全响应头 ----------
-              //                    SaHolder.getResponse()
-              //                            // 服务器名称
-              //                            .setServer("sa-server")
-              //                            // 是否可以在iframe显示视图： DENY=不可以 | SAMEORIGIN=同域下可以 |
-              // ALLOW-FROM
-              //   uri=指定域名下可以
-              //                            .setHeader("X-Frame-Options", "SAMEORIGIN")
-              //                            // 是否启用浏览器默认XSS防护： 0=禁用 | 1=启用 | 1; mode=block 启用,
-              // 并在检查到XSS攻击时，停止渲染页面
-              //                            .setHeader("X-XSS-Protection", "1; mode=block")
-              //                            // 禁用浏览器内容嗅探
-              //                            .setHeader("X-Content-Type-Options", "nosniff");
-            })
+        .setBeforeAuth(r -> {})
+
         // 认证函数: 每次请求执行,只要不发生异常就会自己放行, 如果发生意外进入setError回调
         .setAuth(
             obj -> {
+
               // 功能说明: 使用 .html , .css 或者 .js 结尾的任意路由都将跳过, 不会进入 check 方法,放行
               String url = SaHolder.getRequest().getUrl();
               boolean match = SaRouter.isMatch("druid", url);
@@ -115,8 +103,7 @@ public class SaTokenConfigure implements WebMvcConfigurer {
                         String platform = request.getHeader("platform");
                         String tenantId = request.getHeader("tenantId");
 
-                        System.out.println(
-                            "---------- 进入Sa-Token全局认证2：setAuth -----------" + platform);
+                        log.info("---------- 头部信息：平台信息{}  租户信息{} -----------", platform, tenantId);
                         String requestUrl = request.getUrl();
                         if (!requestUrl.contains(".html")
                             && !requestUrl.contains(".css")
@@ -130,7 +117,7 @@ public class SaTokenConfigure implements WebMvcConfigurer {
                             throw new Error("缺少租户ID");
                           }
                         } else {
-                          System.out.println("---------- 进入Sa-Token全局认证3：setAuth");
+
                         }
                       });
 
@@ -140,8 +127,17 @@ public class SaTokenConfigure implements WebMvcConfigurer {
         // 异常处理函数：每次认证函数发生异常时执行此函数
         .setError(
             e -> {
-              System.out.println("---------- 进入Sa-Token异常处理3 -----------");
+              log.error("Sa-Token鉴权异常");
               return SaResult.error(e.getMessage());
-            });
+            }); // 前置函数：在每次认证函数之前执行（BeforeAuth 不受 includeList 与 excludeList 的限制，所有请求都会进入）
+    //        .setBeforeAuth(
+    //            r -> {
+    //              // ---------- 设置一些安全响应头 ----------
+    //              SaHolder.getResponse()
+    ////                  // 服务器名称
+    ////                  .setServer("sa-server")
+    //                  // 是否可以在iframe显示视图： DENY=不可以 | SAMEORIGIN=同域下可以 | ALLOW-FROM uri=指定域名下可以
+    //                  .setHeader("TRACEID", TLogContext.getTraceId());
+    //            });
   }
 }
