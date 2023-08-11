@@ -193,7 +193,7 @@ public class AuthRoleServiceImpl extends JoinServiceImpl<AuthRoleMapper, AuthRol
         .leftJoin(AuthRoleMenu.class, AuthRoleMenu::getRoleId, AuthRole::getId)
         .end()
         .leftJoin(SysMenu.class, SysMenu::getId, AuthRoleMenu::getMenuId)
-        .manyToManySelect(AuthAdminQueryVO::getMenuList, SysMenu.class)
+        .manyToManySelect(AuthRoleQueryVO::getMenuList, SysMenu.class)
         .end();
   }
 }

@@ -2,10 +2,12 @@ package net.yiyuan.core.auth.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import net.yiyuan.core.sys.model.SysMenu;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 角色查询请求响应参数实体
@@ -107,4 +109,12 @@ public class AuthRoleQueryVO implements Serializable {
    * @date 2023-07-27
    */
   private String updateUser;
+
+  /**
+   * 菜单数据
+   *
+   * @author 一源团队--花和尚
+   * @date 2023-07-27
+   */
+  private List<SysMenu> menuList;
 }
