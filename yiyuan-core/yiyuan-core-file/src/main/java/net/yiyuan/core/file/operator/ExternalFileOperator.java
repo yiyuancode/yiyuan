@@ -11,40 +11,36 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
-
 @Slf4j
 public class ExternalFileOperator extends AbstractFileOperator {
 
-    @Override
-    public void init(Map<String, String> params) {
-    }
+  @Override
+  public void init(Map<String, String> params) {}
 
-    @Override
-    public ObjectResponse uploadFile(UploadRequestParam requestParam, InputStream inputStream) {
-        throw new UnsupportedOperationException();
-    }
+  @Override
+  public ObjectResponse uploadFile(UploadRequestParam requestParam, InputStream inputStream) {
+    throw new UnsupportedOperationException();
+  }
 
-    @Override
-    public void getFileAsStream(String storePath, Consumer<InputStream> streamConsumer) {
-        try (InputStream stream = new FileInputStream(storePath)) {
-            streamConsumer.accept(stream);
-        } catch (Exception e) {
-            throw new FileOperatorException("文件下载异常", e);
-        }
+  @Override
+  public void getFileAsStream(String storePath, Consumer<InputStream> streamConsumer) {
+    try (InputStream stream = new FileInputStream(storePath)) {
+      streamConsumer.accept(stream);
+    } catch (Exception e) {
+      throw new FileOperatorException("文件下载异常", e);
     }
+  }
 
-    @Override
-    public ObjectResponse copyFile(String storePath, UploadRequestParam targetParam) {
-        throw new UnsupportedOperationException();
-    }
+  @Override
+  public ObjectResponse copyFile(String storePath, UploadRequestParam targetParam) {
+    throw new UnsupportedOperationException();
+  }
 
-    @Override
-    public void deleteFile(String storePath) {
+  @Override
+  public void deleteFile(String storePath) {}
 
-    }
-
-    @Override
-    public String getFileDownloadUrl(String storePath, int duration, TimeUnit unit) {
-        throw new UnsupportedOperationException();
-    }
+  @Override
+  public String getFileDownloadUrl(String storePath, int duration, TimeUnit unit) {
+    throw new UnsupportedOperationException();
+  }
 }

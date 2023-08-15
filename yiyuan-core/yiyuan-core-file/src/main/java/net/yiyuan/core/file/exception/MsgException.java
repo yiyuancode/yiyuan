@@ -8,15 +8,15 @@ package net.yiyuan.core.file.exception;
  */
 public class MsgException extends Exception {
 
-    public MsgException(String msg) {
-        super(msg);
-    }
+  public MsgException(String msg) {
+    super(msg);
+  }
 
-    public MsgException(Throwable t) {
-        super(t);
-    }
+  public MsgException(Throwable t) {
+    super(t);
+  }
 
-    public MsgException(String msg, Throwable t) {
-        super(msg, t);
-    }
+  public MsgException(String msg, Throwable t) {
+    super(msg, t);
+  }
 }

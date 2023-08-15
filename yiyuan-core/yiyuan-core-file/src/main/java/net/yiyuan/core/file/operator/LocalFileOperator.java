@@ -25,10 +25,10 @@ import java.util.function.Consumer;
 @Slf4j
 public class LocalFileOperator extends AbstractFileOperator {
 
-  /** 文件操作根路径 例："D:/file"，"/"等 */
-  private Path rootPath;
   /** 缓冲大小 500KB */
   private static final int BUFFER_SIZE = 500 * 1024;
+  /** 文件操作根路径 例："D:/file"，"/"等 */
+  private Path rootPath;
 
   @Override
   public void init(Map<String, String> params) {
