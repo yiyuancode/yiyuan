@@ -1,6 +1,6 @@
 spring:
   config:
-    import: classpath:prod/application-db.yml,classpath:prod/application-mp.yml,classpath:prod/application-redis.yml,classpath:prod/application-satoken.yml
+    import: classpath:dev/application-db.yml,classpath:dev/application-mp.yml,classpath:dev/application-redis.yml,classpath:dev/application-satoken.yml,classpath:dev/application-jobs.yml,classpath:dev/application-file.yml
 
 logstash:
   host: 106.54.87.159
