@@ -109,7 +109,7 @@ public class FileInfo implements Serializable {
      */
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    @TableField(value = "created_time", condition = CustomSqlCondition.GET_EQUAL, select = false)
+    @TableField(value = "created_time", condition = CustomSqlCondition.START_EQUAL, select = false)
     private Date timeGte;
     /**
      * 入库时间(查询结束时间)
@@ -118,7 +118,7 @@ public class FileInfo implements Serializable {
      * @date 2023-07-15
      * @see Date
      */
-    @TableField(value = "created_time", condition = CustomSqlCondition.LT_EQUAL, select = false)
+    @TableField(value = "created_time", condition = CustomSqlCondition.END_EQUAL, select = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date timeLt;
@@ -165,7 +165,7 @@ public class FileInfo implements Serializable {
      */
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    @TableField(value = "created_time", condition = CustomSqlCondition.GET_EQUAL, select = false)
+    @TableField(value = "created_time", condition = CustomSqlCondition.START_EQUAL, select = false)
     private Date createTimeGte;
     /**
      * 创建时间(查询结束时间)
@@ -174,7 +174,7 @@ public class FileInfo implements Serializable {
      * @date 2023-07-15
      * @see Date
      */
-    @TableField(value = "created_time", condition = CustomSqlCondition.LT_EQUAL, select = false)
+    @TableField(value = "created_time", condition = CustomSqlCondition.END_EQUAL, select = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTimeLt;
@@ -201,7 +201,7 @@ public class FileInfo implements Serializable {
      */
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    @TableField(value = "created_time", condition = CustomSqlCondition.GET_EQUAL, select = false)
+    @TableField(value = "created_time", condition = CustomSqlCondition.START_EQUAL, select = false)
     private Date updateTimeGte;
     /**
      * 创建时间(查询结束时间)
@@ -210,7 +210,7 @@ public class FileInfo implements Serializable {
      * @date 2023-07-15
      * @see Date
      */
-    @TableField(value = "created_time", condition = CustomSqlCondition.LT_EQUAL, select = false)
+    @TableField(value = "created_time", condition = CustomSqlCondition.END_EQUAL, select = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date updateTimeLt;

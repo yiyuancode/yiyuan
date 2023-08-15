@@ -5,20 +5,16 @@
     <parent>
         <artifactId>yiyuan-core</artifactId>
         <groupId>net.yiyuan</groupId>
-        <version>1.0-SNAPSHOT</version>
+        <version>${revision}</version>
     </parent>
-    <packaging>pom</packaging>
+
     <version>${revision}</version>
-    <modules>
-        <module>yiyuan-core-file-minio</module>
-    </modules>
+
+
     <modelVersion>4.0.0</modelVersion>
     <artifactId>yiyuan-core-file</artifactId>
 
-    <properties>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
-    </properties>
+
     <dependencies>
         <!-- Apache Tika -->
         <dependency>
