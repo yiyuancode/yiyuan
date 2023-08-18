@@ -70,6 +70,6 @@
         <appender-ref ref="STDOUT"/>
         <!--        <appender-ref ref="ASYNC_FILE"/>-->
         <appender-ref ref="LOGSTASH"/>
-<!--        <appender-ref ref="GLC"/>-->
+        <!--        <appender-ref ref="GLC"/>-->
     </root>
 </configuration>

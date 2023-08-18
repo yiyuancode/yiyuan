@@ -1,0 +1,43 @@
+package ${parentPck}.enums;
+
+import com.baomidou.mybatisplus.annotation.EnumValue;
+import com.baomidou.mybatisplus.annotation.IEnum;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Getter;
+
+/**
+ * $!{tableComment.replaceAll("表", "管理")}-${columnComment}枚举类
+ *
+ * @author  ${author}
+ * @date ${date}
+ *
+ */
+@Getter  // 没有引入lombok依赖包的，可以自己实现get方法
+@JsonFormat(shape = JsonFormat.Shape.OBJECT)  // 实现场景2，只需要加上这个注解
+public enum ${className} implements IEnum<Integer> {
+
+    #foreach($columnsItem in ${tableColumns})
+            /**
+             * ${columnsItem.columnComment}
+             *
+             * @see ${className}
+             * @author  ${author}
+             * @date ${date}
+             */
+        ${columnsItem.filed}( ${columnsItem.code},"${columnsItem.desc}")#if(!$foreach.last),#end#if($foreach.last);#end
+
+    #end
+
+    ${className}(int value,String desc){
+        this.value=value;
+        this.desc=desc;
+        }
+@EnumValue
+private final int value;
+private final String desc;
+
+@Override
+public Integer getValue(){
+        return this.value;
+        }
+        }

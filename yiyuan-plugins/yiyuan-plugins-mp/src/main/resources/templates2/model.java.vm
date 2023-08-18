@@ -1,0 +1,94 @@
+package ${parentPack}.model;
+import ${parentPack}.enums.*;
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import lombok.Data;
+import net.yiyuan.common.constatnt.CustomSqlCondition;
+
+import java.io.Serializable;
+import java.util.Date;
+
+/**
+ *  $!{tableComment.replaceAll("表", "")}实体
+ *
+ * @author  ${author}
+ * @date ${date}
+ *
+ */
+@Data
+public class ${className} implements Serializable{
+private static final long serialVersionUID=1L;
+
+#foreach($columnsItem in ${dtoTableColumns})
+
+    #if(${columnsItem.keyFlag.equals("true")})
+    /**
+     * ${columnsItem.columnComment}
+     *
+     * @author ${author}
+     * @date ${date}
+     */
+    @TableId(value = "id", type = IdType.ASSIGN_UUID)
+    private ${columnsItem.propertyType} ${columnsItem.columnName};
+    #else
+
+        #if(${columnsItem.propertyType.equals("Date")})
+        /**
+         * ${columnsItem.columnComment}
+         *
+         * @author ${author}
+         * @date ${date}
+         */
+            #if(${columnsItem.columnName.equals("updateTime")})
+            @TableField(fill = FieldFill.INSERT_UPDATE)
+            #elseif(${columnsItem.columnName.equals("createTime")})
+            @TableField(fill = FieldFill.INSERT)
+            #end
+
+        private ${columnsItem.propertyType} ${columnsItem.columnName};
+        /**
+         * ${columnsItem.columnComment}(查询开始时间)
+         *
+         * @author ${author}
+         * @date ${date}
+         */
+        @TableField(value = "${columnsItem.column} ", condition = CustomSqlCondition.START_EQUAL, select = false)
+        private ${columnsItem.propertyType} ${columnsItem.columnName}Start;
+        /**
+         * ${columnsItem.columnComment}(查询结束时间)
+         *
+         * @author ${author}
+         * @date ${date}
+         */
+        @TableField(value = "${columnsItem.column}", condition = CustomSqlCondition.END_EQUAL, select = false)
+        private ${columnsItem.propertyType} ${columnsItem.columnName}End;
+        #else
+
+
+        /**
+         * ${columnsItem.columnComment}
+         *
+         * @author ${author}
+         * @date ${date}
+         */
+            #if(${columnsItem.columnName.equals("updateUser")})
+            @TableField(fill = FieldFill.INSERT_UPDATE)
+            #elseif(${columnsItem.columnName.equals("createUser")})
+            @TableField(fill = FieldFill.INSERT)
+            #elseif(${columnsItem.columnName.equals("tenantId")})
+            @TableField(condition = CustomSqlCondition.EQUAL)
+            #else
+            @TableField(condition = CustomSqlCondition.LIKE)
+            #end
+        private ${columnsItem.propertyType} ${columnsItem.columnName};
+        #end
+    #end
+
+#end
+
+
+
+
+}

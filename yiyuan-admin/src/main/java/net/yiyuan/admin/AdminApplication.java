@@ -14,9 +14,11 @@ import java.net.UnknownHostException;
 @SpringBootApplication(scanBasePackages = {"net.yiyuan"})
 @Slf4j
 public class AdminApplication {
-  //进行日志增强，自动判断日志框架
+  // 进行日志增强，自动判断日志框架
   static {
-    AspectLogEnhance.enhance();}
+    AspectLogEnhance.enhance();
+  }
+
   public static void main(String[] args) throws UnknownHostException {
     // 启动类
     ConfigurableApplicationContext application =
@@ -28,7 +30,7 @@ public class AdminApplication {
   static void info(ConfigurableApplicationContext application) throws UnknownHostException {
     log.info(
         "\n----------------------------------------------------------\n\t"
-            + "admin模块启动完成，欢迎访问  \thttps://www.yicode.net\n\t"
+            + "平台端启动完成，欢迎访问  \thttps://www.yicode.net\n\t"
             + "----------------------------------------------------------");
   }
 }

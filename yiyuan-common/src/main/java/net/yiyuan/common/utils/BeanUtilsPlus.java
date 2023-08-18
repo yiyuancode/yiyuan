@@ -14,6 +14,18 @@ public class BeanUtilsPlus {
         CopyOptions.create().setIgnoreNullValue(true).setIgnoreError(true));
   }
 
+  public static <T> T copyByClass(Object sourceObject, Class<T> targetType) {
+    try {
+      T target = targetType.getDeclaredConstructor().newInstance();
+      BeanUtil.copyProperties(
+          sourceObject, target, CopyOptions.create().setIgnoreNullValue(true).setIgnoreError(true));
+      return target;
+    } catch (Exception e) {
+      e.printStackTrace();
+      return null;
+    }
+  }
+
   public static List copyToList(Collection sourceObject, Class cl) {
     List list =
         BeanUtil.copyToList(

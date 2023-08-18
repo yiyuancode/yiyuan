@@ -17,7 +17,7 @@ public class DbrgMetaObjectHandler implements MetaObjectHandler {
 
   @Override
   public void insertFill(MetaObject metaObject) {
-    try{
+    try {
       boolean isLogin = StpUtil.isLogin();
       // 1、自动设置创建人信息,当外部接口调用时，用户可能为空
       if (isLogin) {
@@ -29,20 +29,19 @@ public class DbrgMetaObjectHandler implements MetaObjectHandler {
       this.setFieldValByName(CREATE_TIME_FIELD_NAME, new Date(), metaObject);
       // 4、自动设置更新时间
       this.setFieldValByName(UPDATE_TIME_FIELD_NAME, new Date(), metaObject);
-    }catch (Exception e){
-      if(e instanceof SaTokenException){
+    } catch (Exception e) {
+      if (e instanceof SaTokenException) {
         // 2、自动设置创建时间
         this.setFieldValByName(CREATE_TIME_FIELD_NAME, new Date(), metaObject);
         // 4、自动设置更新时间
         this.setFieldValByName(UPDATE_TIME_FIELD_NAME, new Date(), metaObject);
       }
     }
-
   }
 
   @Override
   public void updateFill(MetaObject metaObject) {
-    try{
+    try {
       boolean isLogin = StpUtil.isLogin();
       // 1、自动设置更新人信息,当外部接口调用时，用户可能为空
       if (isLogin) {
@@ -51,12 +50,11 @@ public class DbrgMetaObjectHandler implements MetaObjectHandler {
       }
       // 2、自动设置更新时间
       this.setFieldValByName(UPDATE_TIME_FIELD_NAME, new Date(), metaObject);
-    }catch (Exception e){
-      if(e instanceof SaTokenException){
+    } catch (Exception e) {
+      if (e instanceof SaTokenException) {
         // 2、自动设置更新时间
         this.setFieldValByName(UPDATE_TIME_FIELD_NAME, new Date(), metaObject);
       }
     }
-
   }
 }

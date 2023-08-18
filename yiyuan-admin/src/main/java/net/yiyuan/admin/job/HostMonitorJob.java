@@ -2,14 +2,14 @@ package net.yiyuan.admin.job;
 
 import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
-import net.yiyuan.core.sys.config.BaseJob;
-import net.yiyuan.core.sys.dto.SysHostListDTO;
-import net.yiyuan.core.sys.dto.SysHostMonitorAddDTO;
-import net.yiyuan.core.sys.enums.SysHostIsMonitorEnabledEnum;
-import net.yiyuan.core.sys.service.SysHostMonitorService;
-import net.yiyuan.core.sys.service.SysHostService;
-import net.yiyuan.core.sys.vo.SysHostQueryVO;
+import net.yiyuan.cofig.BaseJob;
+import net.yiyuan.dto.SysHostListDTO;
+import net.yiyuan.dto.SysHostMonitorAddDTO;
+import net.yiyuan.enums.SysHostIsMonitorEnabledEnum;
 import net.yiyuan.plugins.ssh.utils.SshUtil;
+import net.yiyuan.service.SysHostMonitorService;
+import net.yiyuan.service.SysHostService;
+import net.yiyuan.vo.SysHostQueryVO;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.springframework.stereotype.Component;
@@ -56,7 +56,7 @@ public class HostMonitorJob implements BaseJob {
 
               SysHostMonitorAddDTO sysHostMonitorAddDTO = new SysHostMonitorAddDTO();
               sysHostMonitorAddDTO.setCpuUsage(jsonObject.getFloat("cpuUsage"));
-              //设置内存数据
+              // 设置内存数据
               JSONObject memoryUsage = jsonObject.getJSONObject("memoryUsage");
               sysHostMonitorAddDTO.setMemoryTotal(memoryUsage.getFloat("total"));
               sysHostMonitorAddDTO.setMemoryUsage(memoryUsage.getFloat("usagePercent"));

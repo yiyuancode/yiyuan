@@ -1,0 +1,162 @@
+package ${parentPack}.controller;
+
+import cn.dev33.satoken.annotation.SaCheckLogin;
+import cn.dev33.satoken.annotation.SaCheckPermission;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import lombok.extern.slf4j.Slf4j;
+import ${parentPack}.common.model.vo.CommonResult;
+import ${parentPack}.dto.${className}AddDTO;
+import ${parentPack}.dto.${className}EditDTO;
+import ${parentPack}.dto.${className}ListDTO;
+import ${parentPack}.dto.${className}PageDTO;
+import ${parentPack}.model.${className};
+import ${parentPack}.vo.${className}QueryVO;
+
+import ${parentPack}.service.${className}Service;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Description;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.constraints.NotBlank;
+import java.util.List;
+
+
+#set($firstName=$className.substring(0,1).toLowerCase()+$className.substring(1))
+/**
+ * $!{tableComment.replaceAll("表", "管理")}
+ *
+ * @author  ${author}
+ * @date ${date}
+ * @folder ${moudleNameZh}/$!{tableComment.replaceAll("表", "管理")}
+ */
+@SaCheckLogin
+@Slf4j
+@RestController
+public class ${className}Controller {
+    @Autowired
+    private ${className}Service  ${firstName}Service;
+
+    /**
+     * $!{tableComment.replaceAll("表", "")}列表(全部)
+     *
+     * @param request $!{tableComment.replaceAll("表", "")}实体
+     * @return {@link CommonResult<List<${className}QueryVO>>}
+     * @author  ${author}
+     * @date ${date}
+     */
+    @Description("${moudleNameZh}/$!{tableComment.replaceAll("表", "管理")}/查询$!{tableComment.replaceAll("表", "")}")
+    @SaCheckPermission(
+            value = {"${pm0}:${pm1}:query"},
+            orRole = "admin")
+    @GetMapping(value = "/${pm0}/${pm1}/list")
+    @ResponseBody
+    public CommonResult<List<${className}QueryVO>> list(${className}ListDTO request) throws Exception {
+        return CommonResult.success(${firstName}Service.list(request), "查询$!{tableComment.replaceAll("表", "")}列表成功");
+    }
+
+    /**
+     * $!{tableComment.replaceAll("表", "")}列表(分页)
+     *
+     * @param request $!{tableComment.replaceAll("表", "")}实体
+     * @return {@link CommonResult<Page<${className}QueryVO>>}
+     * @author  ${author}
+     * @date ${date}
+     */
+    @Description("${moudleNameZh}/$!{tableComment.replaceAll("表", "管理")}/查询$!{tableComment.replaceAll("表", "")}")
+    @SaCheckPermission(
+            value = {"${pm0}:${pm1}:query"},
+            orRole = "admin")
+    @GetMapping(value = "/${pm0}/${pm1}/page")
+    @ResponseBody
+    public CommonResult<Page<${className}QueryVO>> page(${className}PageDTO request) throws Exception {
+        return CommonResult.success(${firstName}Service.page(request), "分页查询$!{tableComment.replaceAll("表", "")}成功");
+    }
+
+    /**
+     * $!{tableComment.replaceAll("表", "")}详情
+     *
+     * @param id $!{tableComment.replaceAll("表", "")}id
+     * @return {@link CommonResult<${className}QueryVO>}
+     * @author  ${author}
+     * @date ${date}
+     */
+    @Description("${moudleNameZh}/$!{tableComment.replaceAll("表", "管理")}/查询$!{tableComment.replaceAll("表", "")}")
+    @SaCheckPermission(
+            value = {"${pm0}:${pm1}:query"},
+            orRole = "admin")
+    @GetMapping(value = "/${pm0}/${pm1}/details/{id}")
+    @ResponseBody
+    public CommonResult<${className}QueryVO> details(@PathVariable("id") @NotBlank String id)
+            throws Exception {
+        return CommonResult.success(${firstName}Service.details(id), "查询$!{tableComment.replaceAll("表", "")}详情成功");
+    }
+
+    /**
+     * 删除$!{tableComment.replaceAll("表", "")}(支持批量)
+     *
+     * @param ids $!{tableComment.replaceAll("表", "")}id(多个逗号分割)
+     * @return {@link CommonResult<String>}
+     * @author  ${author}
+     * @date ${date}
+     */
+    @Description("${moudleNameZh}/$!{tableComment.replaceAll("表", "管理")}/删除$!{tableComment.replaceAll("表", "")}")
+    @SaCheckPermission(
+            value = {"${pm0}:${pm1}:delete"},
+            orRole = "admin")
+    @PostMapping(value = "/${pm0}/${pm1}/delete")
+    @ResponseBody
+    public CommonResult<String> delete(
+            @RequestParam(name = "ids") @Validated({NotBlank.class}) String ids) throws Exception {
+        if (${firstName}Service.delete(ids)) {
+            return CommonResult.success(null, "删除$!{tableComment.replaceAll("表", "")}成功");
+        } else {
+            return CommonResult.failed("删除$!{tableComment.replaceAll("表", "")}失败");
+        }
+    }
+
+    /**
+     * 编辑$!{tableComment.replaceAll("表", "")}
+     *
+     * @param request $!{tableComment.replaceAll("表", "")}实体
+     * @return {@link CommonResult<String>}
+     * @author  ${author}
+     * @date ${date}
+     */
+    @Description("${moudleNameZh}/$!{tableComment.replaceAll("表", "管理")}/编辑$!{tableComment.replaceAll("表", "")}")
+    @SaCheckPermission(
+            value = {"${pm0}:${pm1}:edit"},
+            orRole = "admin")
+    @PostMapping(value = "/${pm0}/${pm1}/edit")
+    @ResponseBody
+    public CommonResult<String> edit(@RequestBody @Validated ${className}EditDTO request)
+            throws Exception {
+        if (${firstName}Service.edit(request)) {
+            return CommonResult.success(null, "修改$!{tableComment.replaceAll("表", "")}成功");
+        } else {
+            return CommonResult.failed("修改$!{tableComment.replaceAll("表", "")}失败");
+        }
+    }
+
+    /**
+     * 新增$!{tableComment.replaceAll("表", "")}
+     *
+     * @param request $!{tableComment.replaceAll("表", "")}实体
+     * @return {@link CommonResult<String>}
+     * @author  ${author}
+     * @date ${date}
+     */
+    @Description("${moudleNameZh}/$!{tableComment.replaceAll("表", "管理")}/新增$!{tableComment.replaceAll("表", "")}")
+    @SaCheckPermission(
+            value = {"${pm0}:${pm1}:add"},
+            orRole = "admin")
+    @PostMapping(value = "/${pm0}/${pm1}/add")
+    @ResponseBody
+    public CommonResult<String> add(@RequestBody @Validated ${className}AddDTO request) throws Exception {
+        if (${firstName}Service.add(request)) {
+            return CommonResult.success(null, "新增$!{tableComment.replaceAll("表", "")}成功");
+        } else {
+            return CommonResult.failed("新增$!{tableComment.replaceAll("表", "")}失败");
+        }
+    }
+}

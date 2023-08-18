@@ -15,6 +15,7 @@
         <module>yiyuan-plugins-mp</module>
         <module>yiyuan-plugins-satoken</module>
         <module>yiyuan-plugins-ssh</module>
+        <module>yiyuan-plugins-redis</module>
     </modules>
     <!--4:使用dependencyManagement管理,引入该模块必须使用dependencyManagement引入-->
     <!--    <dependencyManagement>-->

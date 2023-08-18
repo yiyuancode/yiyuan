@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 /**
  * 登录管理
  *
- * @author 一源团队--花和尚
+ * @author ${author}
  * @date 2023-07-27
  * @module 登录管理
  * @folder 登录管理
@@ -33,7 +33,7 @@ public class AdminLoginController {
    *
    * @param request
    * @return {@link CommonResult<String>}
-   * @author 一源团队--花和尚
+   * @author ${author}
    * @date 2023-07-27
    */
   @SaIgnore
@@ -48,7 +48,7 @@ public class AdminLoginController {
    * 获取用户信息
    *
    * @return {@link CommonResult<LoginGetUserInfoVo>}
-   * @author 一源团队--花和尚
+   * @author ${author}
    * @date 2023-07-27
    */
   @Description("登录管理/获取用户信息")

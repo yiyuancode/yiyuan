@@ -54,9 +54,9 @@ public class ${className}AddDTO implements Serializable {
             ##必填项并且默认值是null的
             #if((${columnsItem.isNullable.equals("1")}||!${columnsItem.defaultValue.equals("NULL")}))
                 #if(${columnsItem.propertyType.equals("String")})
-                @NotBlank(message = "${columnsItem.columnComment}不能为空" )
+                @NotBlank(message = "${columnsItem.columnComment}不能为空")
                 #elseif(!${columnsItem.propertyType.equals("String")})
-                @NotNull(message = "${columnsItem.columnComment}不能为空" )
+                @NotNull(message = "${columnsItem.columnComment}不能为空")
                 #end
 
 

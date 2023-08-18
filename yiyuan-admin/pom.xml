@@ -18,28 +18,37 @@
             <artifactId>hutool-all</artifactId>
             <version>5.7.10</version>
         </dependency>
-        <!--系统管理模块,引入依赖接口才会被加载-->
-        <!--系统管理模块,引入依赖接口才会被加载-->
         <dependency>
             <groupId>net.yiyuan</groupId>
-            <artifactId>yiyuan-core-sys</artifactId>
+            <artifactId>yiyuan-controller</artifactId>
             <version>${revision}</version>
         </dependency>
-        <!--权限管理模块，引入依赖接口才会被加载-->
         <dependency>
             <groupId>net.yiyuan</groupId>
-            <artifactId>yiyuan-core-auth</artifactId>
+            <artifactId>yiyuan-job</artifactId>
             <version>${revision}</version>
         </dependency>
-
+        <dependency>
+            <groupId>net.yiyuan</groupId>
+            <artifactId>yiyuan-plugins-ssh</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <!--系统管理模块,引入依赖接口才会被加载-->
         <dependency>
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
             <version>3.7.0</version>
         </dependency>
+
+        <!--        <dependency>-->
+        <!--            <groupId>net.yiyuan</groupId>-->
+        <!--            <artifactId>yiyuan-core-file</artifactId>-->
+        <!--            <version>${revision}</version>-->
+        <!--        </dependency>-->
+
         <dependency>
             <groupId>net.yiyuan</groupId>
-            <artifactId>yiyuan-core-file</artifactId>
+            <artifactId>yiyuan-plugins-redis</artifactId>
             <version>${revision}</version>
         </dependency>
     </dependencies>

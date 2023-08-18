@@ -1,0 +1,162 @@
+package ${parentPack}.service.impl;
+
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import icu.mhb.mybatisplus.plugln.base.service.impl.JoinServiceImpl;
+import icu.mhb.mybatisplus.plugln.core.JoinLambdaWrapper;
+import lombok.extern.slf4j.Slf4j;
+import ${parentPack}.common.utils.BeanUtilsPlus;
+import ${parentPack}.dto.${className}AddDTO;
+import ${parentPack}.dto.${className}EditDTO;
+import ${parentPack}.dto.${className}ListDTO;
+import ${parentPack}.dto.${className}PageDTO;
+import ${parentPack}.model.${className};
+import ${parentPack}.vo.${className}QueryVO;
+import ${parentPack}.mapper.${className}Mapper;
+
+import  ${parentPack}.service.${className}Service;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.Arrays;
+import java.util.List;
+#set($firstName=$className.substring(0,1).toLowerCase()+$className.substring(1))
+/**
+ * $!{tableComment.replaceAll("表", "")}Service层接口实现
+ *
+ * @author  ${author}
+ * @date ${date}
+ */
+@Slf4j
+@Service
+public class ${className}ServiceImpl extends JoinServiceImpl
+        <${className}Mapper, ${className}>
+        implements ${className}Service {
+    @Resource
+    private ${className}Mapper ${firstName}Mapper;
+
+
+    /**
+     * $!{tableComment.replaceAll("表", "")}列表(全部)
+     *
+     * @param request $!{tableComment.replaceAll("表", "")}实体
+     * @return {@link List< ${className}QueryVO >}
+     * @author  ${author}
+     * @date ${date}
+     */
+    @Override
+    public List
+            <${className}QueryVO> list(${className}ListDTO request) throws Exception {
+
+        ${className} po = new ${className}();
+        BeanUtilsPlus.copy(request, po);
+        JoinLambdaWrapper
+                <${className}> wrapper = new JoinLambdaWrapper<>(po);
+        List
+                <${className}QueryVO> voList = joinList(wrapper, ${className}QueryVO.class);
+
+        return voList;
+    }
+
+    /**
+     * $!{tableComment.replaceAll("表", "")}列表(分页)
+     *
+     * @param request $!{tableComment.replaceAll("表", "")}实体
+     * @return {@link Page< ${className}QueryVO >}
+     * @author  ${author}
+     * @date ${date}
+     */
+    @Override
+    public Page
+            <${className}QueryVO> page(${className}PageDTO request) throws Exception {
+        ${className} po = new ${className}();
+        BeanUtilsPlus.copy(request, po);
+        JoinLambdaWrapper
+                <${className}> wrapper = new JoinLambdaWrapper<>(po);
+        Page
+                <${className}QueryVO> voPage =
+                joinPage(
+                        new Page<>(request.getPageNum(), request.getPageSize()), wrapper, ${className}QueryVO.class);
+        return voPage;
+    }
+
+    /**
+     * $!{tableComment.replaceAll("表", "")}详情
+     *
+     * @param id $!{tableComment.replaceAll("表", "")}id
+     * @return {@link ${className}QueryVO}
+     * @author  ${author}
+     * @date ${date}
+     */
+    @Override
+    public ${className}QueryVO details(String id) throws Exception {
+        ${className} po = new ${className}();
+        po.setId(id);
+        JoinLambdaWrapper
+                <${className}> wrapper = new JoinLambdaWrapper<>(po);
+            ${className}QueryVO voBean = joinGetOne(wrapper, ${className}QueryVO.class);
+        return voBean;
+    }
+
+    /**
+     * $!{tableComment.replaceAll("表", "")}详情
+     *
+     * @param request $!{tableComment.replaceAll("表", "")}实体
+     * @return {@link ${className}}
+     * @author  ${author}
+     * @date ${date}
+     */
+    @Override
+    public ${className}QueryVO details(${className} request) throws Exception {
+
+        JoinLambdaWrapper
+                <${className}> wrapper = new JoinLambdaWrapper<>(request);
+            ${className}QueryVO voBean = joinGetOne(wrapper, ${className}QueryVO.class);
+        return voBean;
+    }
+
+    /**
+     * 删除$!{tableComment.replaceAll("表", "")}(支持批量)
+     *
+     * @param ids $!{tableComment.replaceAll("表", "")}id(多个逗号分割)
+     * @return {@link boolean}
+     * @author  ${author}
+     * @date ${date}
+     */
+    @Override
+    public boolean delete(String ids) throws Exception {
+        return removeByIds(Arrays.asList(ids.split(",")));
+    }
+
+
+    /**
+     * 编辑$!{tableComment.replaceAll("表", "")}
+     *
+     * @param request $!{tableComment.replaceAll("表", "")}实体
+     * @return {@link boolean}
+     * @author  ${author}
+     * @date ${date}
+     */
+    @Override
+    public boolean edit(${className}EditDTO request) throws Exception {
+        ${className} po = new ${className}();
+        BeanUtilsPlus.copy(request, po);
+        JoinLambdaWrapper
+                <${className}> wrapper = new JoinLambdaWrapper<>(po);
+        return updateById(po);
+    }
+
+    /**
+     * 新增$!{tableComment.replaceAll("表", "")}
+     *
+     * @param request $!{tableComment.replaceAll("表", "")}实体
+     * @return {@link boolean}
+     * @author  ${author}
+     * @date ${date}
+     */
+    @Override
+    public boolean add(${className}AddDTO request) throws Exception {
+        ${className} po = new ${className}();
+        BeanUtilsPlus.copy(request, po);
+        return save(po);
+    }
+}

@@ -1,0 +1,17 @@
+############## mybatis-plus 配置  ##############
+mybatis-plus:
+  mapper-locations: classpath:/mapper/**/*.xml
+  global-config:
+    db-config:
+      id-type: auto
+      #避免前端传null或者空字符串进行查询条件的拼接
+      select-strategy: not_empty
+      #避免插入和新增空字符串和null
+      update-strategy: not_empty
+      insert-strategy: not_empty
+  configuration:
+    auto-mapping-behavior: partial
+    map-underscore-to-camel-case: true
+    #log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    log-impl: net.yiyuan.plugins.mp.config.SqlLogImpl
+    default-enum-type-handler: com.baomidou.mybatisplus.core.handlers.MybatisEnumTypeHandler

@@ -33,7 +33,7 @@ public class ${className}PageDTO implements Serializable {
      * @author ${author}
      * @date ${date}
      */
-    @NotNull(message = "分页条数不能为空" )
+    @NotNull(message = "分页条数不能为空")
     private Integer pageSize;
     /**
      * 分页页数
@@ -42,7 +42,7 @@ public class ${className}PageDTO implements Serializable {
      * @author ${author}
      * @date ${date}
      */
-    @NotNull(message = "分页页数不能为空" )
+    @NotNull(message = "分页页数不能为空")
     private Integer pageNum;
     #foreach($columnsItem in ${dtoTableColumns})
 
@@ -55,8 +55,8 @@ public class ${className}PageDTO implements Serializable {
              * @author ${author}
              * @date ${date}
              */
-            @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss" )
-            @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss" , timezone = "GMT+8" )
+            @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+            @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
             private Date ${columnsItem.columnName}Start;
             /**
              * ${columnsItem.columnComment}(查询结束时间)
@@ -65,8 +65,8 @@ public class ${className}PageDTO implements Serializable {
              * @author ${author}
              * @date ${date}
              */
-            @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss" )
-            @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss" , timezone = "GMT+8" )
+            @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+            @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
             private Date ${columnsItem.columnName}End;
 
         #elseif(!${columnsItem.propertyType.equals("Date")})

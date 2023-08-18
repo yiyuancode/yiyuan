@@ -1,0 +1,13 @@
+package ${parentPack}.mapper;
+
+import icu.mhb.mybatisplus.plugln.base.mapper.JoinBaseMapper;
+import ${parentPack}.model.${className};
+
+/**
+ * $!{tableComment.replaceAll("表", "")} Mapper接口
+ *
+ * @author  ${author}
+ * @date 2023-07-27
+ */
+public interface ${className}Mapper extends JoinBaseMapper<${className}> {
+}

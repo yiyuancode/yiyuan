@@ -67,10 +67,10 @@ private static final long serialVersionUID=1L;
             ##        @TableId("${field.annotationColumnName}")
         #end
 
-##    /**
-##     * ${field.comment}
-##     * @date ${date}
-##     */
+        ##    /**
+        ##     * ${field.comment}
+        ##     * @date ${date}
+        ##     */
     @TableId(value = "${field.propertyName}", type = IdType.ASSIGN_UUID)
         ## 普通字段
     #elseif(${field.fill})

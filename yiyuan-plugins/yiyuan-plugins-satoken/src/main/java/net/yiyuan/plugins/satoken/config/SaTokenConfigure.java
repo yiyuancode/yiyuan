@@ -8,9 +8,7 @@ import cn.dev33.satoken.jwt.StpLogicJwtForSimple;
 import cn.dev33.satoken.router.SaRouter;
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.strategy.SaStrategy;
-import cn.dev33.satoken.util.SaFoxUtil;
 import cn.dev33.satoken.util.SaResult;
-import cn.hutool.core.util.StrUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -100,22 +98,24 @@ public class SaTokenConfigure implements WebMvcConfigurer {
                       () -> {
                         SaRequest request = SaHolder.getRequest();
                         // platform 平台区分 0 平台  1 租户 2 c端
-                        String platform = request.getHeader("platform");
-                        String tenantId = request.getHeader("tenantId");
-
-                        log.info("---------- 头部信息：平台信息{}  租户信息{} -----------", platform, tenantId);
+                        //                        String platform = request.getHeader("platform");
+                        //                        String tenantId = request.getHeader("tenantId");
+                        //
+                        //                        log.info("---------- 头部信息：平台信息{}  租户信息{}
+                        // -----------", platform, tenantId);
                         String requestUrl = request.getUrl();
                         if (!requestUrl.contains(".html")
                             && !requestUrl.contains(".css")
                             && !requestUrl.contains(".js")
                             && !requestUrl.contains("swagger")
                             && !requestUrl.contains("api-docs")) {
-                          if (StrUtil.isEmpty(platform)) {
-                            throw new Error("缺少平台类型");
-                          }
-                          if (SaFoxUtil.equals("1", platform) && SaFoxUtil.isEmpty(tenantId)) {
-                            throw new Error("缺少租户ID");
-                          }
+                          //                          if (StrUtil.isEmpty(platform)) {
+                          //                            throw new Error("缺少平台类型");
+                          //                          }
+                          //                          if (SaFoxUtil.equals("1", platform) &&
+                          // SaFoxUtil.isEmpty(tenantId)) {
+                          //                            throw new Error("缺少租户ID");
+                          //                          }
                         } else {
 
                         }
@@ -129,15 +129,6 @@ public class SaTokenConfigure implements WebMvcConfigurer {
             e -> {
               log.error("Sa-Token鉴权异常");
               return SaResult.error(e.getMessage());
-            }); // 前置函数：在每次认证函数之前执行（BeforeAuth 不受 includeList 与 excludeList 的限制，所有请求都会进入）
-    //        .setBeforeAuth(
-    //            r -> {
-    //              // ---------- 设置一些安全响应头 ----------
-    //              SaHolder.getResponse()
-    ////                  // 服务器名称
-    ////                  .setServer("sa-server")
-    //                  // 是否可以在iframe显示视图： DENY=不可以 | SAMEORIGIN=同域下可以 | ALLOW-FROM uri=指定域名下可以
-    //                  .setHeader("TRACEID", TLogContext.getTraceId());
-    //            });
+            });
   }
 }

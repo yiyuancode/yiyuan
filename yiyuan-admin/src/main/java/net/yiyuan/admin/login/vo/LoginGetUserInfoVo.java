@@ -2,7 +2,7 @@ package net.yiyuan.admin.login.vo;
 
 import cn.hutool.core.lang.tree.Tree;
 import lombok.Data;
-import net.yiyuan.core.auth.model.AuthRole;
+import net.yiyuan.model.AuthRole;
 
 import java.util.List;
 import java.util.Map;
@@ -18,7 +18,7 @@ public class LoginGetUserInfoVo {
   /**
    * 用户名
    *
-   * @author 一源团队--花和尚
+   * @author ${author}
    * @date 2023-06-24
    * @see String
    */
@@ -27,7 +27,7 @@ public class LoginGetUserInfoVo {
   /**
    * 对应角色信息
    *
-   * @author 一源团队--花和尚
+   * @author ${author}
    * @date 2023-07-27
    */
   private List<AuthRole> roleList;
@@ -35,7 +35,7 @@ public class LoginGetUserInfoVo {
   /**
    * 对应菜单权限信息
    *
-   * @author 一源团队--花和尚
+   * @author ${author}
    * @date 2023-07-27
    */
   private List<Tree<String>> menuTreeList;
@@ -43,7 +43,7 @@ public class LoginGetUserInfoVo {
   /**
    * antd前端所需权限表达式集合
    *
-   * @author 一源团队--花和尚
+   * @author ${author}
    * @date 2023-07-27
    */
   private List<Map<String, Object>> permissionsList;

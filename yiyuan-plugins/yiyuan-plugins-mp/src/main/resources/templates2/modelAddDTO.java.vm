@@ -1,0 +1,69 @@
+package ${parentPack}.dto;
+import ${parentPack}.model.*;
+import ${parentPack}.enums.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+import lombok.*;
+import net.yiyuan.common.*;
+
+import javax.validation.constraints.NotEmpty;
+import java.io.Serializable;
+import java.util.Date;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
+/**
+ *  $!{tableComment.replaceAll("表", "")}新增接口请求入参实体
+ *
+ * @author  ${author}
+ * @date ${date}
+ *
+ */
+@Data
+public class ${className}AddDTO implements Serializable {
+
+    #foreach($columnsItem in ${dtoTableColumns})
+
+        #if(!${columnsItem.keyFlag.equals("true")}&&!${columnsItem.columnName.equals(
+            "createTime")}&&!${columnsItem.columnName.equals("updateTime")}&&!${columnsItem.columnName.equals(
+            "createUser")}&&!${columnsItem.columnName.equals("updateUser")})
+            #if(!${columnsItem.defaultValue.equals("NULL")})
+                /**
+                 * ${columnsItem.columnComment}
+                 *
+                 * @mock ${columnsItem.defaultValue}
+                 * @author ${author}
+                 * @date ${date}
+                 */
+                ##            #elseif(true)
+
+            #else
+                /**
+                 * ${columnsItem.columnComment}
+                 *
+                 * @author ${author}
+                 * @date ${date}
+                 */
+            #end
+
+            ##必填项并且默认值是null的
+            #if((${columnsItem.isNullable.equals("1")}||!${columnsItem.defaultValue.equals("NULL")}))
+                #if(${columnsItem.propertyType.equals("String")})
+                @NotBlank(message = "${columnsItem.columnComment}不能为空")
+                #elseif(!${columnsItem.propertyType.equals("String")})
+                @NotNull(message = "${columnsItem.columnComment}不能为空")
+                #end
+
+
+            #end
+
+        private ${columnsItem.propertyType} ${columnsItem.columnName};
+
+        #end
+
+
+
+
+    #end
+
+}

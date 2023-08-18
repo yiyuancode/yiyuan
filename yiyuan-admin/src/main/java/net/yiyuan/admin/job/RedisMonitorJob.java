@@ -2,16 +2,16 @@ package net.yiyuan.admin.job;
 
 import cn.hutool.core.bean.BeanUtil;
 import lombok.extern.slf4j.Slf4j;
+import net.yiyuan.cofig.BaseJob;
 import net.yiyuan.common.utils.BeanUtilsPlus;
 import net.yiyuan.common.utils.StringUtilsPlus;
-import net.yiyuan.core.sys.config.BaseJob;
-import net.yiyuan.core.sys.dto.SysRedisEditDTO;
-import net.yiyuan.core.sys.dto.SysRedisListDTO;
-import net.yiyuan.core.sys.dto.SysRedisMonitorAddDTO;
-import net.yiyuan.core.sys.enums.SysRedisIsMonitorEnabledEnum;
-import net.yiyuan.core.sys.service.SysRedisMonitorService;
-import net.yiyuan.core.sys.service.SysRedisService;
-import net.yiyuan.core.sys.vo.SysRedisQueryVO;
+import net.yiyuan.dto.SysRedisEditDTO;
+import net.yiyuan.dto.SysRedisListDTO;
+import net.yiyuan.dto.SysRedisMonitorAddDTO;
+import net.yiyuan.enums.SysRedisIsMonitorEnabledEnum;
+import net.yiyuan.service.SysRedisMonitorService;
+import net.yiyuan.service.SysRedisService;
+import net.yiyuan.vo.SysRedisQueryVO;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.springframework.stereotype.Component;
@@ -38,50 +38,12 @@ public class RedisMonitorJob implements BaseJob {
   @Resource SysRedisService sysRedisService;
   @Resource SysRedisMonitorService sysRedisMonitorService;
 
-  @Override
-  public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-    log.warn("Redis监控任务 执行时间: {}", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
-    try {
-      // 查询开启监控redis服务
-      SysRedisListDTO sysRedisListDTO = new SysRedisListDTO();
-      sysRedisListDTO.setIsMonitorEnabled(SysRedisIsMonitorEnabledEnum.OPEN);
-      List<SysRedisQueryVO> redisQueryVOList = sysRedisService.list(sysRedisListDTO);
-      for (SysRedisQueryVO item : redisQueryVOList) {
-        // "106.54.87.159", 50006
-        // 创建 Jedis 实例并连接到 Redis
-        Jedis jedis = new Jedis(item.getHost(), item.getPort());
-        if (StringUtilsPlus.isNotEmpty(item.getPassword())) {
-          jedis.auth(item.getPassword());
-        }
-        // 执行 info 命令获取 Redis 指标信息
-        String info = jedis.info();
-        SysRedisEditDTO modelDto = getModelDto(info);
-        SysRedisEditDTO keyCount = getKeyCount(info);
-        BeanUtilsPlus.copy(keyCount, modelDto);
-        modelDto.setId(item.getId());
-        // 更新redis最新数据
-        sysRedisService.edit(modelDto);
-
-        // 拆入reidis监控记录表
-        SysRedisMonitorAddDTO sysRedisMonitorAddDTO = new SysRedisMonitorAddDTO();
-        BeanUtilsPlus.copy(modelDto, sysRedisMonitorAddDTO);
-        sysRedisMonitorAddDTO.setRedisId(modelDto.getId());
-        sysRedisMonitorService.add(sysRedisMonitorAddDTO);
-        // 关闭 Jedis 连接
-        jedis.close();
-      }
-
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-  }
-
   /**
    * 解析reids的info信息获取所有key总和以及过期key总和,因为key的格式和前面的信息数据格式不一致所以单独解析
    *
    * @param info redis的info字符串
    * @return {@link SysRedisEditDTO}
-   * @author 一源团队--花和尚
+   * @author ${author}
    * @date 2023-07-27
    */
   private static SysRedisEditDTO getKeyCount(String info) {
@@ -113,7 +75,7 @@ public class RedisMonitorJob implements BaseJob {
    *
    * @param info redis的info字符串
    * @return {@link Map<String, Integer>}
-   * @author 一源团队--花和尚
+   * @author ${author}
    * @date 2023-07-27
    */
   private static SysRedisEditDTO getModelDto(String info) {
@@ -202,5 +164,43 @@ public class RedisMonitorJob implements BaseJob {
   private static String formatMemory(Number memory) {
     float memoryInMb = (float) memory / (1024 * 1024 * 1024);
     return formatNumber(memoryInMb);
+  }
+
+  @Override
+  public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
+    log.warn("Redis监控任务 执行时间: {}", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+    try {
+      // 查询开启监控redis服务
+      SysRedisListDTO sysRedisListDTO = new SysRedisListDTO();
+      sysRedisListDTO.setIsMonitorEnabled(SysRedisIsMonitorEnabledEnum.OPEN);
+      List<SysRedisQueryVO> redisQueryVOList = sysRedisService.list(sysRedisListDTO);
+      for (SysRedisQueryVO item : redisQueryVOList) {
+        // "106.54.87.159", 50006
+        // 创建 Jedis 实例并连接到 Redis
+        Jedis jedis = new Jedis(item.getHost(), item.getPort());
+        if (StringUtilsPlus.isNotEmpty(item.getPassword())) {
+          jedis.auth(item.getPassword());
+        }
+        // 执行 info 命令获取 Redis 指标信息
+        String info = jedis.info();
+        SysRedisEditDTO modelDto = getModelDto(info);
+        SysRedisEditDTO keyCount = getKeyCount(info);
+        BeanUtilsPlus.copy(keyCount, modelDto);
+        modelDto.setId(item.getId());
+        // 更新redis最新数据
+        sysRedisService.edit(modelDto);
+
+        // 拆入reidis监控记录表
+        SysRedisMonitorAddDTO sysRedisMonitorAddDTO = new SysRedisMonitorAddDTO();
+        BeanUtilsPlus.copy(modelDto, sysRedisMonitorAddDTO);
+        sysRedisMonitorAddDTO.setRedisId(modelDto.getId());
+        sysRedisMonitorService.add(sysRedisMonitorAddDTO);
+        // 关闭 Jedis 连接
+        jedis.close();
+      }
+
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 }

@@ -1,0 +1,63 @@
+package ${parentPack}.dto;
+import ${parentPack}.model.*;
+import ${parentPack}.enums.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+import lombok.*;
+import net.yiyuan.common.*;
+
+import javax.validation.constraints.NotEmpty;
+import java.io.Serializable;
+import java.util.Date;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
+/**
+ *  $!{tableComment.replaceAll("表", "")}修改接口请求入参实体
+ *
+ * @author  ${author}
+ * @date ${date}
+ *
+ */
+@Data
+public class ${className}EditDTO implements Serializable {
+
+    #foreach($columnsItem in ${dtoTableColumns})
+
+        #if(${columnsItem.keyFlag.equals("true")})
+            /**
+             * ${columnsItem.columnComment}
+             *
+             * @author ${author}
+             * @date ${date}
+             */
+            @NotBlank(message = "${columnsItem.columnComment}不能为空")
+            private ${columnsItem.propertyType} ${columnsItem.columnName};
+        #elseif(!${columnsItem.columnName.equals("createTime")}&&!${columnsItem.columnName.equals(
+            "updateTime")}&&!${columnsItem.columnName.equals("createUser")}&&!${columnsItem.columnName.equals(
+            "updateUser")})
+            #if(!${columnsItem.defaultValue.equals("NULL")})
+                /**
+                 * ${columnsItem.columnComment}
+                 *
+                 * @mock ${columnsItem.defaultValue}
+                 * @author ${author}
+                 * @date ${date}
+                 */
+                ##            #elseif(true)
+
+            #else
+                /**
+                 * ${columnsItem.columnComment}
+                 *
+                 * @author ${author}
+                 * @date ${date}
+                 */
+            #end
+            private ${columnsItem.propertyType} ${columnsItem.columnName};
+        #end
+
+
+    #end
+
+}

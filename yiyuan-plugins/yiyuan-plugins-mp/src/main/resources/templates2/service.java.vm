@@ -1,0 +1,95 @@
+package ${parentPack}.service;
+
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import icu.mhb.mybatisplus.plugln.base.service.JoinIService;
+import ${parentPack}.dto.${className}AddDTO;
+import ${parentPack}.dto.${className}EditDTO;
+import ${parentPack}.dto.${className}ListDTO;
+import ${parentPack}.dto.${className}PageDTO;
+import ${parentPack}.model.${className};
+import ${parentPack}.vo.${className}QueryVO;
+
+import java.util.List;
+
+/**
+ * $!{tableComment.replaceAll("表", "")}Service层接口
+ *
+ * @author  ${author}
+ * @date ${date}
+ */
+public interface ${className}Service extends JoinIService
+        <${className}> {
+
+    /**
+     * $!{tableComment.replaceAll("表", "")}列表(全部)
+     *
+     * @param request $!{tableComment.replaceAll("表", "")}实体
+     * @return {@link List< ${className}QueryVO >}
+     * @author  ${author}
+     * @date ${date}
+     */
+    List
+            <${className}QueryVO> list(${className}ListDTO request) throws Exception;
+
+    /**
+     * $!{tableComment.replaceAll("表", "")}列表(分页)
+     *
+     * @param request $!{tableComment.replaceAll("表", "")}实体
+     * @return {@link Page< ${className}QueryVO >}
+     * @author  ${author}
+     * @date ${date}
+     */
+    Page
+            <${className}QueryVO> page(${className}PageDTO request) throws Exception;
+
+    /**
+     * $!{tableComment.replaceAll("表", "")}详情
+     *
+     * @param id $!{tableComment.replaceAll("表", "")}id
+     * @return {@link ${className}QueryVO}
+     * @author  ${author}
+     * @date ${date}
+     */
+        ${className}QueryVO details(String id) throws Exception;
+
+    /**
+     * $!{tableComment.replaceAll("表", "")}详情
+     *
+     * @param request $!{tableComment.replaceAll("表", "")}实体
+     * @return {@link ${className}}
+     * @author  ${author}
+     * @date ${date}
+     */
+        ${className}QueryVO details(${className} request) throws Exception;
+
+    /**
+     * 删除$!{tableComment.replaceAll("表", "")}(支持批量)
+     *
+     * @param ids $!{tableComment.replaceAll("表", "")}id(多个逗号分割)
+     * @return {@link boolean}
+     * @author  ${author}
+     * @date ${date}
+     */
+    boolean delete(String ids) throws Exception;
+
+
+    /**
+     * 编辑$!{tableComment.replaceAll("表", "")}
+     *
+     * @param request $!{tableComment.replaceAll("表", "")}实体
+     * @return {@link boolean}
+     * @author  ${author}
+     * @date ${date}
+     */
+    boolean edit(${className}EditDTO request) throws Exception;
+
+    /**
+     * 新增$!{tableComment.replaceAll("表", "")}
+     *
+     * @param request $!{tableComment.replaceAll("表", "")}实体
+     * @return {@link boolean}
+     * @author  ${author}
+     * @date ${date}
+     */
+    boolean add(${className}AddDTO request) throws Exception;
+}

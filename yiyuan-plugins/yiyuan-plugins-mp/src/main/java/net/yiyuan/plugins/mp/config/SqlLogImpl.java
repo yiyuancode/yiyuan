@@ -10,9 +10,54 @@ import java.util.concurrent.ConcurrentHashMap;
 @Slf4j
 public class SqlLogImpl implements Log {
 
+  private static final String BATCH_D = ";_;";
+  private static final int PRE_SQL_LEN = 7;
+  private static final int TIME_LEN = 13;
+  private static Map<Long, String> sqlMap = new ConcurrentHashMap<>();
   private Boolean openParseSql = true;
+  private Map<String, Integer> typeMap =
+      new HashMap<String, Integer>() {
+        private static final long serialVersionUID = -5772881989251971824L;
+
+        {
+          // (String) (Timestamp) (LocalDateTime) (Integer) (BigDecimal) (Float) (Double)
+          // (Boolean)(Long)(byte[])(byte)
+          put("String", 1);
+          put("Timestamp", 1);
+          put("LocalDateTime", 1);
+          put("BigDecimal", 1);
+          put("Integer", 0);
+          put("Float", 0);
+          put("Double", 0);
+          put("Boolean", 0);
+          put("Long", 0);
+          put("byte[]", 0);
+          put("byte", 0);
+        }
+      };
 
   public SqlLogImpl(String arg) {}
+
+  private static void printSql(
+      long beginTime,
+      long execTime,
+      long total,
+      String table,
+      String type,
+      String prepareSql,
+      String params,
+      String realSql) {
+    log.info(
+        "\n------------------------\nbegin  : {}\nprepare: {}\nparams : {}\nsql    : {}\nexec   : {}\ntotal  : {}\ntable  : {}\ntype   : {}\n------------------------\n",
+        new Date(beginTime),
+        prepareSql,
+        params,
+        realSql,
+        execTime,
+        total,
+        table,
+        type);
+  }
 
   @Override
   public boolean isDebugEnabled() {
@@ -55,8 +100,6 @@ public class SqlLogImpl implements Log {
       }
     }
   }
-
-  private static Map<Long, String> sqlMap = new ConcurrentHashMap<>();
 
   @Override
   public void debug(String s) {
@@ -103,10 +146,6 @@ public class SqlLogImpl implements Log {
     // 不打印解析多租户的sql
     //    log.warn("sql_not_match:{}", s);
   }
-
-  private static final String BATCH_D = ";_;";
-  private static final int PRE_SQL_LEN = 7;
-  private static final int TIME_LEN = 13;
 
   private void dealRetentionSql(Long threadId) {
     if (sqlMap.size() < 1) {
@@ -207,27 +246,6 @@ public class SqlLogImpl implements Log {
     return tmpSql;
   }
 
-  private static void printSql(
-      long beginTime,
-      long execTime,
-      long total,
-      String table,
-      String type,
-      String prepareSql,
-      String params,
-      String realSql) {
-    log.info(
-        "\n------------------------\nbegin  : {}\nprepare: {}\nparams : {}\nsql    : {}\nexec   : {}\ntotal  : {}\ntable  : {}\ntype   : {}\n------------------------\n",
-        new Date(beginTime),
-        prepareSql,
-        params,
-        realSql,
-        execTime,
-        total,
-        table,
-        type);
-  }
-
   private List<String> parseParams(String params) {
     List<String> paramsArr = new ArrayList<>();
     int len = params.length();
@@ -257,27 +275,6 @@ public class SqlLogImpl implements Log {
     }
     return paramsArr;
   }
-
-  private Map<String, Integer> typeMap =
-      new HashMap<String, Integer>() {
-        private static final long serialVersionUID = -5772881989251971824L;
-
-        {
-          // (String) (Timestamp) (LocalDateTime) (Integer) (BigDecimal) (Float) (Double)
-          // (Boolean)(Long)(byte[])(byte)
-          put("String", 1);
-          put("Timestamp", 1);
-          put("LocalDateTime", 1);
-          put("BigDecimal", 1);
-          put("Integer", 0);
-          put("Float", 0);
-          put("Double", 0);
-          put("Boolean", 0);
-          put("Long", 0);
-          put("byte[]", 0);
-          put("byte", 0);
-        }
-      };
 
   private String parseTable(String type, String sql) {
     sql = sql.toLowerCase();
