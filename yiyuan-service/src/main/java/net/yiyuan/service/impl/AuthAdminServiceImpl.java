@@ -338,7 +338,7 @@ public class AuthAdminServiceImpl extends JoinServiceImpl<AuthAdminMapper, AuthA
     po.setUserId(userId);
     JoinLambdaWrapper<AuthAdminRole> wrapper = new JoinLambdaWrapper<>(po);
     wrapper.notDefaultSelectAll();
-    wrapper.leftJoin(AuthRole.class, AuthRole::getId, AuthAdminRole::getRoleId).selectAll().end();
+    wrapper.innerJoin(AuthRole.class, AuthRole::getId, AuthAdminRole::getRoleId).selectAll().end();
     List<AuthRole> sysMenuList = authAdminRoleService.joinList(wrapper, AuthRole.class);
     return sysMenuList;
   }
