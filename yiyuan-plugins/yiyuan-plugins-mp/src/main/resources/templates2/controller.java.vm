@@ -47,7 +47,7 @@ public class ${className}Controller {
      */
     @Description("${moudleNameZh}/$!{tableComment.replaceAll("表", "管理")}/查询$!{tableComment.replaceAll("表", "")}")
     @SaCheckPermission(
-            value = {"${pm0}:${pm1}:query"},
+            value = {"${pm0}:${pm1}:query" },
             orRole = "admin")
     @GetMapping(value = "/${pm0}/${pm1}/list")
     @ResponseBody
@@ -65,7 +65,7 @@ public class ${className}Controller {
      */
     @Description("${moudleNameZh}/$!{tableComment.replaceAll("表", "管理")}/查询$!{tableComment.replaceAll("表", "")}")
     @SaCheckPermission(
-            value = {"${pm0}:${pm1}:query"},
+            value = {"${pm0}:${pm1}:query" },
             orRole = "admin")
     @GetMapping(value = "/${pm0}/${pm1}/page")
     @ResponseBody
@@ -83,7 +83,7 @@ public class ${className}Controller {
      */
     @Description("${moudleNameZh}/$!{tableComment.replaceAll("表", "管理")}/查询$!{tableComment.replaceAll("表", "")}")
     @SaCheckPermission(
-            value = {"${pm0}:${pm1}:query"},
+            value = {"${pm0}:${pm1}:query" },
             orRole = "admin")
     @GetMapping(value = "/${pm0}/${pm1}/details/{id}")
     @ResponseBody
@@ -102,7 +102,7 @@ public class ${className}Controller {
      */
     @Description("${moudleNameZh}/$!{tableComment.replaceAll("表", "管理")}/删除$!{tableComment.replaceAll("表", "")}")
     @SaCheckPermission(
-            value = {"${pm0}:${pm1}:delete"},
+            value = {"${pm0}:${pm1}:delete" },
             orRole = "admin")
     @PostMapping(value = "/${pm0}/${pm1}/delete")
     @ResponseBody
@@ -125,7 +125,7 @@ public class ${className}Controller {
      */
     @Description("${moudleNameZh}/$!{tableComment.replaceAll("表", "管理")}/编辑$!{tableComment.replaceAll("表", "")}")
     @SaCheckPermission(
-            value = {"${pm0}:${pm1}:edit"},
+            value = {"${pm0}:${pm1}:edit" },
             orRole = "admin")
     @PostMapping(value = "/${pm0}/${pm1}/edit")
     @ResponseBody
@@ -148,7 +148,7 @@ public class ${className}Controller {
      */
     @Description("${moudleNameZh}/$!{tableComment.replaceAll("表", "管理")}/新增$!{tableComment.replaceAll("表", "")}")
     @SaCheckPermission(
-            value = {"${pm0}:${pm1}:add"},
+            value = {"${pm0}:${pm1}:add" },
             orRole = "admin")
     @PostMapping(value = "/${pm0}/${pm1}/add")
     @ResponseBody

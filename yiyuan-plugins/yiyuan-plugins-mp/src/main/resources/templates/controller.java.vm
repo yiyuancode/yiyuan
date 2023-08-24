@@ -68,7 +68,7 @@ private ${table.serviceName} ${serviceImplName};
  * @date ${date}
  */
 @Description("$!{cfg.apiMoudel}/$!{modeZhName}/查询$!{modeZhKongName}")
-@SaCheckPermission(value = {"${package.ModuleName}:${modeName}:query"}, orRole = "admin")
+@SaCheckPermission(value = {"${package.ModuleName}:${modeName}:query" }, orRole = "admin")
     ##@ApiOperation(value = "$!{table.comment.replaceAll("表", "")}列表(全部)" )
 @GetMapping(value = "/${package.ModuleName}/${modeName}/list")
 @ResponseBody
@@ -86,7 +86,7 @@ public CommonResult<List<${table.entityName}QueryVO>>list( ${table.entityName}Li
  * @date ${date}
  */
 @Description("$!{cfg.apiMoudel}/$!{modeZhName}/查询$!{modeZhKongName}")
-@SaCheckPermission(value = {"${package.ModuleName}:${modeName}:query"}, orRole = "admin")
+@SaCheckPermission(value = {"${package.ModuleName}:${modeName}:query" }, orRole = "admin")
 @GetMapping(value = "/${package.ModuleName}/${modeName}/page")
 @ResponseBody
 public CommonResult<Page<${table.entityName}QueryVO>>page(
@@ -105,7 +105,7 @@ public CommonResult<Page<${table.entityName}QueryVO>>page(
  * @date ${date}
  */
 @Description("$!{cfg.apiMoudel}/$!{modeZhName}/查询$!{modeZhKongName}")
-@SaCheckPermission(value = {"${package.ModuleName}:${modeName}:query"}, orRole = "admin")
+@SaCheckPermission(value = {"${package.ModuleName}:${modeName}:query" }, orRole = "admin")
 @GetMapping(value = "/${package.ModuleName}/${modeName}/details/{id}")
 @ResponseBody
 public CommonResult<${table.entityName}QueryVO> details(@PathVariable("id") @NotBlank String id)throws Exception{
@@ -122,7 +122,7 @@ public CommonResult<${table.entityName}QueryVO> details(@PathVariable("id") @Not
  * @date ${date}
  */
 @Description("$!{cfg.apiMoudel}/$!{modeZhName}/删除$!{modeZhKongName}")
-@SaCheckPermission(value = {"${package.ModuleName}:${modeName}:delete"}, orRole = "admin")
+@SaCheckPermission(value = {"${package.ModuleName}:${modeName}:delete" }, orRole = "admin")
 @PostMapping(value = "/${package.ModuleName}/${modeName}/delete")
 @ResponseBody
 public CommonResult<String> delete(@RequestParam(name = "ids") @Validated({NotBlank.class}) String ids)throws Exception{
@@ -141,7 +141,7 @@ public CommonResult<String> delete(@RequestParam(name = "ids") @Validated({NotBl
  * @date ${date}
  */
 @Description("$!{cfg.apiMoudel}/$!{modeZhName}/编辑$!{modeZhKongName}")
-@SaCheckPermission(value = {"${package.ModuleName}:${modeName}:edit"}, orRole = "admin")
+@SaCheckPermission(value = {"${package.ModuleName}:${modeName}:edit" }, orRole = "admin")
 @PostMapping(value = "/${package.ModuleName}/${modeName}/edit")
 @ResponseBody
 public CommonResult<String> edit(@RequestBody @Validated   ${table.entityName}EditDTO request)throws Exception{
@@ -162,7 +162,7 @@ public CommonResult<String> edit(@RequestBody @Validated   ${table.entityName}Ed
  * @date ${date}
  */
 @Description("$!{cfg.apiMoudel}/$!{modeZhName}/新增$!{modeZhKongName}")
-@SaCheckPermission(value = {"${package.ModuleName}:${modeName}:add"}, orRole = "admin")
+@SaCheckPermission(value = {"${package.ModuleName}:${modeName}:add" }, orRole = "admin")
 @PostMapping(value = "/${package.ModuleName}/${modeName}/add")
 @ResponseBody
 public CommonResult<String> add(@RequestBody @Validated  ${table.entityName}AddDTO request)throws Exception{

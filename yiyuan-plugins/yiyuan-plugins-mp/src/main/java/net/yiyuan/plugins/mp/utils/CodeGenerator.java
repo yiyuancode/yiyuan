@@ -216,6 +216,7 @@ public class CodeGenerator {
     mysqlToJavaTypeMap.put("blob", "byte[]");
     mysqlToJavaTypeMap.put("mediumblob", "byte[]");
     mysqlToJavaTypeMap.put("longblob", "byte[]");
+    mysqlToJavaTypeMap.put("geometry", "String");
 
     //    String tableName = "user";
     Connection conn = DriverManager.getConnection(MYSQL_URL, MYSQL_USERNAME, MYSQL_PASSWORD);
@@ -388,7 +389,10 @@ public class CodeGenerator {
       dtoContext.put("parentPck", pc.getParent());
       dtoContext.put("moudleNameZh", MOUDLE_NAME_ZH);
       dtoContext.put("pm0", tableName.split("_")[0]);
-      dtoContext.put("pm1", tableName.split("_")[1]);
+      dtoContext.put(
+          "pm1",
+          StringUtilsPlus.convertToCamelCaseAndUncapitalize(
+              tableName.substring(tableName.indexOf("_") + 1)));
       log.info("模板参数{}", dtoContext);
 
       createModelByVelocity(dtoContext);

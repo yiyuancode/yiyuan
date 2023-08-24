@@ -9,7 +9,7 @@ import net.yiyuan.common.constatnt.CustomSqlCondition;
 
 import java.io.Serializable;
 import java.util.Date;
-
+import java.math.BigDecimal;
 /**
  *  $!{tableComment.replaceAll("表", "")}实体
  *

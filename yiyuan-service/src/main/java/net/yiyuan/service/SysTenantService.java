@@ -15,7 +15,7 @@ import java.util.List;
  * 租户Service层接口
  *
  * @author 一源团队-花和尚
- * @date 2023-08-17
+ * @date 2023-08-24
  */
 public interface SysTenantService extends JoinIService<SysTenant> {
 
@@ -25,7 +25,7 @@ public interface SysTenantService extends JoinIService<SysTenant> {
    * @param request 租户实体
    * @return {@link List< SysTenantQueryVO >}
    * @author 一源团队-花和尚
-   * @date 2023-08-17
+   * @date 2023-08-24
    */
   List<SysTenantQueryVO> list(SysTenantListDTO request) throws Exception;
 
@@ -35,7 +35,7 @@ public interface SysTenantService extends JoinIService<SysTenant> {
    * @param request 租户实体
    * @return {@link Page< SysTenantQueryVO >}
    * @author 一源团队-花和尚
-   * @date 2023-08-17
+   * @date 2023-08-24
    */
   Page<SysTenantQueryVO> page(SysTenantPageDTO request) throws Exception;
 
@@ -45,7 +45,7 @@ public interface SysTenantService extends JoinIService<SysTenant> {
    * @param id 租户id
    * @return {@link SysTenantQueryVO}
    * @author 一源团队-花和尚
-   * @date 2023-08-17
+   * @date 2023-08-24
    */
   SysTenantQueryVO details(String id) throws Exception;
 
@@ -55,7 +55,7 @@ public interface SysTenantService extends JoinIService<SysTenant> {
    * @param request 租户实体
    * @return {@link SysTenant}
    * @author 一源团队-花和尚
-   * @date 2023-08-17
+   * @date 2023-08-24
    */
   SysTenantQueryVO details(SysTenant request) throws Exception;
 
@@ -65,7 +65,7 @@ public interface SysTenantService extends JoinIService<SysTenant> {
    * @param ids 租户id(多个逗号分割)
    * @return {@link boolean}
    * @author 一源团队-花和尚
-   * @date 2023-08-17
+   * @date 2023-08-24
    */
   boolean delete(String ids) throws Exception;
 
@@ -75,7 +75,7 @@ public interface SysTenantService extends JoinIService<SysTenant> {
    * @param request 租户实体
    * @return {@link boolean}
    * @author 一源团队-花和尚
-   * @date 2023-08-17
+   * @date 2023-08-24
    */
   boolean edit(SysTenantEditDTO request) throws Exception;
 
@@ -85,7 +85,7 @@ public interface SysTenantService extends JoinIService<SysTenant> {
    * @param request 租户实体
    * @return {@link boolean}
    * @author 一源团队-花和尚
-   * @date 2023-08-17
+   * @date 2023-08-24
    */
   boolean add(SysTenantAddDTO request) throws Exception;
 }

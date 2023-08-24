@@ -270,6 +270,16 @@ public class StringUtilsPlus {
   }
 
   /**
+   * 将带下划线的字符串转换为驼峰形式 如 hello_world -> HelloWorld,HELLO_WORLD -> HelloWorld,并且将首字母小写
+   *
+   * @param name
+   * @return
+   */
+  public static String convertToCamelCaseAndUncapitalize(String name) {
+    return uncapitalize(convertToCamelCase(name));
+  }
+
+  /**
    * 字符串数据处理
    *
    * @param value

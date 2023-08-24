@@ -23,7 +23,7 @@ import java.util.List;
  * 租户管理
  *
  * @author 一源团队-花和尚
- * @date 2023-08-17
+ * @date 2023-08-24
  * @folder 系统管理/租户管理
  */
 @SaCheckLogin
@@ -38,7 +38,7 @@ public class SysTenantController {
    * @param request 租户实体
    * @return {@link CommonResult<List<SysTenantQueryVO>>}
    * @author 一源团队-花和尚
-   * @date 2023-08-17
+   * @date 2023-08-24
    */
   @Description("系统管理/租户管理/查询租户")
   @SaCheckPermission(
@@ -56,7 +56,7 @@ public class SysTenantController {
    * @param request 租户实体
    * @return {@link CommonResult<Page<SysTenantQueryVO>>}
    * @author 一源团队-花和尚
-   * @date 2023-08-17
+   * @date 2023-08-24
    */
   @Description("系统管理/租户管理/查询租户")
   @SaCheckPermission(
@@ -74,7 +74,7 @@ public class SysTenantController {
    * @param id 租户id
    * @return {@link CommonResult<SysTenantQueryVO>}
    * @author 一源团队-花和尚
-   * @date 2023-08-17
+   * @date 2023-08-24
    */
   @Description("系统管理/租户管理/查询租户")
   @SaCheckPermission(
@@ -93,7 +93,7 @@ public class SysTenantController {
    * @param ids 租户id(多个逗号分割)
    * @return {@link CommonResult<String>}
    * @author 一源团队-花和尚
-   * @date 2023-08-17
+   * @date 2023-08-24
    */
   @Description("系统管理/租户管理/删除租户")
   @SaCheckPermission(
@@ -116,7 +116,7 @@ public class SysTenantController {
    * @param request 租户实体
    * @return {@link CommonResult<String>}
    * @author 一源团队-花和尚
-   * @date 2023-08-17
+   * @date 2023-08-24
    */
   @Description("系统管理/租户管理/编辑租户")
   @SaCheckPermission(
@@ -139,7 +139,7 @@ public class SysTenantController {
    * @param request 租户实体
    * @return {@link CommonResult<String>}
    * @author 一源团队-花和尚
-   * @date 2023-08-17
+   * @date 2023-08-24
    */
   @Description("系统管理/租户管理/新增租户")
   @SaCheckPermission(
