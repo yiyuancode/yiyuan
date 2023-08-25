@@ -3,14 +3,15 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-            <artifactId>yiyuan</artifactId>
-            <groupId>net.yiyuan</groupId>
-            <version>${revision}</version>
+        <artifactId>yiyuan</artifactId>
+        <groupId>net.yiyuan</groupId>
+        <version>${revision}</version>
     </parent>
     <packaging>pom</packaging>
     <version>${revision}</version>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>yiyuan-core-file</artifactId>
+
+    <artifactId>yiyuan-file</artifactId>
 
     <dependencies>
         <!-- Apache Tika -->
