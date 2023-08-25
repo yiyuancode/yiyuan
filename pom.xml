@@ -33,6 +33,7 @@
 
         <module>yiyuan-job</module>
         <module>yiyuan-tenant</module>
+        <module>yiyuan-file</module>
 
     </modules>
     <!--5:新增项目所有插件依赖版本号-->
