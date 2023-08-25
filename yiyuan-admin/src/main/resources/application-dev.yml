@@ -1,12 +1,13 @@
 spring:
   config:
     import: classpath:dev/application-db.yml,classpath:dev/application-mp.yml,classpath:dev/application-redis.yml,classpath:dev/application-satoken.yml,classpath:dev/application-jobs.yml,classpath:dev/application-file.yml
-
+#elk配置
 logstash:
   host: 106.54.87.159
 logging:
   level:
     root: info
-  # 不配默认为false
+
+# tlog日志配置不配默认为false
 tlog:
   enable-invoke-time-print: true
