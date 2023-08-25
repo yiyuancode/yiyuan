@@ -29,6 +29,7 @@ import java.util.*;
 public class CodeGenerator {
   private static String DEFAULT_OUT_PUT_DIR = System.getProperty("user.dir");
   private static String DEFAULT_SRC = "\\src\\main\\java";
+  private static String DEFAULT_JS_SRC = "\\src";
   private static String MOUDLE_NAME_ZH = "";
 
   private static String DEFAULT_PARENT_PACK = "";
@@ -224,11 +225,16 @@ public class CodeGenerator {
     DatabaseMetaData metaData = conn.getMetaData();
     DatabaseMetaData metaData2 = conn.getMetaData();
 
+    // 定义dto字段的信息
+    VelocityContext routerAndI18nContext = new VelocityContext();
+    List<Map<String, Object>> routerAndI18nMapList = new ArrayList<>();
+
     for (String tableName : inputTableName) {
+      Map<String, Object> routerAndI18nMap = new HashMap<>();
       // 定义生成基本增删改查的DTO
       VelocityContext dtoContext = new VelocityContext();
       // 定义dto字段的信息
-      List<Map<String, String>> dtoTableColumns = new ArrayList<>();
+      List<Map<String, Object>> dtoTableColumns = new ArrayList<>();
 
       ResultSet tables = metaData.getTables(null, null, tableName, new String[] {"TABLE"});
       String tableComment = "";
@@ -293,13 +299,27 @@ public class CodeGenerator {
         System.out.println("字段类型：" + columnType);
         System.out.println("字段类型columnName：" + StrUtil.toCamelCase(columnName).toUpperCase());
         // 将所有字段全部封装到
-        Map<String, String> dtoColumnMap = new HashMap<>();
+        Map<String, Object> dtoColumnMap = new HashMap<>();
         dtoColumnMap.put(
             "columnName",
             StringUtilsPlus.uncapitalize(StringUtilsPlus.convertToCamelCase(columnName)));
         dtoColumnMap.put("column", columnName);
         dtoColumnMap.put("columnType", columnType);
         dtoColumnMap.put("columnComment", columnComment);
+        if (columnComment.contains("#")) {
+          String[] eumsCodeArr = columnComment.split("#")[1].split("\\|");
+          List<Map<String, Object>> eumsCodeList = new ArrayList<>();
+          for (String eumsCode : eumsCodeArr) {
+            Map<String, Object> eumsCodeMap = new HashMap<>();
+
+            eumsCodeMap.put("value", eumsCode.split("=")[0]);
+            eumsCodeMap.put("label", eumsCode.split("=")[1]);
+            eumsCodeList.add(eumsCodeMap);
+          }
+
+          // 方便vm转成数组
+          dtoColumnMap.put("eumsCodeList", eumsCodeList);
+        }
         if (StringUtilsPlus.isEmpty(defaultValue)) {
           dtoColumnMap.put("defaultValue", "NULL");
         } else {
@@ -393,7 +413,20 @@ public class CodeGenerator {
           "pm1",
           StringUtilsPlus.convertToCamelCaseAndUncapitalize(
               tableName.substring(tableName.indexOf("_") + 1)));
+      dtoContext.put(
+          "pm1_2",
+          StringUtilsPlus.convertToCamelCase(tableName.substring(tableName.indexOf("_") + 1)));
       log.info("模板参数{}", dtoContext);
+
+      routerAndI18nMap.put("pm0", dtoContext.get("pm0"));
+      routerAndI18nMap.put("pm1", dtoContext.get("pm1"));
+      routerAndI18nMap.put("pm1_2", dtoContext.get("pm1_2"));
+      routerAndI18nMap.put("tableComment", dtoContext.get("tableComment"));
+      routerAndI18nMapList.add(routerAndI18nMap);
+
+      createJsConfigByVelocity(dtoContext);
+      createJsApiByVelocity(dtoContext);
+      createJsVueByVelocity(dtoContext);
 
       createModelByVelocity(dtoContext);
       createAddDtoByVelocity(dtoContext);
@@ -401,13 +434,200 @@ public class CodeGenerator {
       createPageDtoByVelocity(dtoContext);
       createEditDtoByVelocity(dtoContext);
       createQueryVOByVelocity(dtoContext);
-
       createServiceByVelocity(dtoContext);
       createServiceImplByVelocity(dtoContext);
       createMapperByVelocity(dtoContext);
       createMapperXmlByVelocity(dtoContext);
       createControllerByVelocity(dtoContext);
     }
+    routerAndI18nContext.put("routerAndI18nMapList", routerAndI18nMapList);
+    routerAndI18nContext.put("routerAndI18nRoot", routerAndI18nMapList.get(0).get("pm0"));
+    routerAndI18nContext.put("moudleNameZh", MOUDLE_NAME_ZH);
+    createJsRouterAndI18nMapByVelocity(routerAndI18nContext);
+  }
+
+  /**
+   * 根据用户输入的表获取每张表所有字段信息
+   *
+   * @param
+   * @author ${author}
+   * @date 2023-07-11
+   */
+  public static void createJsRouterAndI18nMapByVelocity(VelocityContext context) throws Exception {
+    VelocityEngine velocityEngine = new VelocityEngine();
+    Properties prop = new Properties();
+    prop.put(
+        "file.resource.loader.class",
+        "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
+    velocityEngine.init(prop);
+
+    String srcModelPath =
+        DEFAULT_OUT_PUT_DIR + "/src/yiyuan-vue" + DEFAULT_JS_SRC + "/router/modules/";
+
+    File voFolder = new File(srcModelPath);
+    if (!voFolder.exists()) {
+      // 如果文件夹不存在则创建它
+      voFolder.mkdirs();
+    }
+
+    String filePath = srcModelPath + context.get("routerAndI18nRoot") + ".js";
+    File file = new File(filePath);
+    if (!file.exists()) {
+      // 如果文件不存在则创建它
+      file.createNewFile();
+    }
+
+    Template template = velocityEngine.getTemplate("templates2\\router.js.vm", "UTF-8");
+    FileWriter writer = new FileWriter(filePath);
+    template.merge(context, writer);
+    writer.flush();
+    writer.close();
+  }
+
+  /**
+   * 根据用户输入的表获取每张表所有字段信息
+   *
+   * @param
+   * @author ${author}
+   * @date 2023-07-11
+   */
+  public static void createJsApiByVelocity(VelocityContext context) throws Exception {
+    VelocityEngine velocityEngine = new VelocityEngine();
+    Properties prop = new Properties();
+    prop.put(
+        "file.resource.loader.class",
+        "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
+    velocityEngine.init(prop);
+    log.info(
+        "dtoTableColumns:{}", ((List<Map<String, String>>) context.get("dtoTableColumns")).size());
+    String srcModelPath =
+        DEFAULT_OUT_PUT_DIR
+            + "/src/yiyuan-vue"
+            + DEFAULT_JS_SRC
+            + "/api/"
+            + context.get("pm0")
+            //            + "/"
+            //            + context.get("pm1")
+            //            + "/"
+            //            + DEFAULT_MODULENAME
+            + "/";
+    File voFolder = new File(srcModelPath);
+    if (!voFolder.exists()) {
+      // 如果文件夹不存在则创建它
+      voFolder.mkdirs();
+    }
+
+    String filePath = srcModelPath + context.get("pm1") + ".js";
+    File file = new File(filePath);
+    if (!file.exists()) {
+      // 如果文件不存在则创建它
+      file.createNewFile();
+    }
+
+    Template template = velocityEngine.getTemplate("templates2\\api.js.vm", "UTF-8");
+    FileWriter writer = new FileWriter(filePath);
+    template.merge(context, writer);
+    writer.flush();
+    writer.close();
+  }
+  /**
+   * 根据用户输入的表获取每张表所有字段信息
+   *
+   * @param
+   * @author ${author}
+   * @date 2023-07-11
+   */
+  public static void createJsConfigByVelocity(VelocityContext context) throws Exception {
+    VelocityEngine velocityEngine = new VelocityEngine();
+    Properties prop = new Properties();
+    prop.put(
+        "file.resource.loader.class",
+        "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
+    velocityEngine.init(prop);
+    log.info(
+        "dtoTableColumns:{}", ((List<Map<String, String>>) context.get("dtoTableColumns")).size());
+    // String srcModelPath = DEFAULT_OUT_PUT_DIR + "/src/js" + "/";
+
+    String srcModelPath =
+        DEFAULT_OUT_PUT_DIR
+            + "/src/yiyuan-vue"
+            + DEFAULT_JS_SRC
+            + "/pages/"
+            + context.get("pm0")
+            + "/"
+            + context.get("pm1")
+            //            + "/"
+            //            + DEFAULT_MODULENAME
+            + "/";
+
+    File voFolder = new File(srcModelPath);
+    if (!voFolder.exists()) {
+      // 如果文件夹不存在则创建它
+      voFolder.mkdirs();
+    }
+
+    String filePath = srcModelPath + "pageConfig.js";
+    File file = new File(filePath);
+    if (!file.exists()) {
+      // 如果文件不存在则创建它
+      file.createNewFile();
+    }
+
+    Template template = velocityEngine.getTemplate("templates2\\config.js.vm", "UTF-8");
+    FileWriter writer = new FileWriter(filePath);
+    template.merge(context, writer);
+    writer.flush();
+    writer.close();
+  }
+
+  /**
+   * 根据用户输入的表获取每张表所有字段信息
+   *
+   * @param
+   * @author ${author}
+   * @date 2023-07-11
+   */
+  public static void createJsVueByVelocity(VelocityContext context) throws Exception {
+    VelocityEngine velocityEngine = new VelocityEngine();
+    Properties prop = new Properties();
+    prop.put(
+        "file.resource.loader.class",
+        "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
+    velocityEngine.init(prop);
+    log.info(
+        "dtoTableColumns:{}", ((List<Map<String, String>>) context.get("dtoTableColumns")).size());
+    // String srcModelPath = DEFAULT_OUT_PUT_DIR + "/src/js" + "/";
+
+    String srcModelPath =
+        DEFAULT_OUT_PUT_DIR
+            + "/src/yiyuan-vue"
+            + DEFAULT_JS_SRC
+            + "/pages/"
+            + context.get("pm0")
+            + "/"
+            + context.get("pm1")
+            //            + "/"
+            //            + DEFAULT_MODULENAME
+            + "/";
+
+    File voFolder = new File(srcModelPath);
+    if (!voFolder.exists()) {
+      // 如果文件夹不存在则创建它
+      voFolder.mkdirs();
+    }
+
+    String filePath = srcModelPath + "index.vue";
+    File file = new File(filePath);
+    if (!file.exists()) {
+      // 如果文件不存在则创建它
+      file.createNewFile();
+    }
+
+    Template template = velocityEngine.getTemplate("templates2\\index.vue.vm", "UTF-8");
+    FileWriter writer = new FileWriter(filePath);
+    template.merge(context, writer);
+    writer.flush();
+    writer.close();
   }
 
   /**

@@ -1,0 +1,33 @@
+#set($arrow="component:() => import(")
+#set($arrowRight=")")
+const routerMap = {
+${routerAndI18nRoot}: {
+    name: "${moudleNameZh}",
+        ${arrow} '@/layouts/BlankView'${arrowRight},
+},
+#foreach($routerAndI18nMap in ${routerAndI18nMapList})
+    ${routerAndI18nMap.pm1}: {
+    name: "${routerAndI18nMap.tableComment.replaceAll("表", "管理")}",
+        ${arrow} '@/pages/${routerAndI18nMap.pm0}/${routerAndI18nMap.pm1}/index'${arrowRight},
+},
+#end
+}
+
+
+const i18nMap = {
+${routerAndI18nRoot}: {
+    name: "${moudleNameZh}",
+
+    #foreach($routerAndI18nMap in ${routerAndI18nMapList})
+        ${routerAndI18nMap.pm1}:
+        {
+            name: "${routerAndI18nMap.tableComment.replaceAll("表", "管理")}"
+        }
+    ,
+    #end
+}
+}
+export default {
+    i18nMap,
+    routerMap
+};

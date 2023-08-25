@@ -1,0 +1,127 @@
+/**
+ * ${tableComment.replaceAll("表", "")}页面组件配置配置
+ *
+ * @author  ${author}
+ * @date ${date}
+ */
+import * as ${pm1} from "@/api/sys/${pm1}";
+## import _ from "lodash";
+
+const columns = [
+    #foreach($columnsItem in ${dtoTableColumns})
+        {
+            #if(${columnsItem.propertyType.contains("Enum")})
+                title: '${columnsItem.columnComment.split("#")[0]}',
+            #else
+                title: '${columnsItem.columnComment}',
+            #end
+            dataIndex: '${columnsItem.columnName}',
+            key: '${columnsItem.columnName}',
+            #if(${columnsItem.propertyType.equals("String")})
+
+                ##必填项并且默认值是null的
+                #if((${columnsItem.isNullable.equals("1")}||!${columnsItem.defaultValue.equals("NULL")}))
+                    rules: [{required: true, message: '请输入${columnsItem.columnComment}', trigger: 'blur'},],
+                #end
+            #end
+            #if(${columnsItem.propertyType.equals("Date")})
+                ##必填项并且默认值是null的
+                searchObj: {
+                    formType: "rangePicker"
+                },
+                props: {
+                    showTime: true,
+                    style: {width: '100%'}
+                },
+                formType: "datePicker",
+                rules: function () {
+                    return [
+                        {required: true, message: '请选择${columnsItem.columnComment}', trigger: 'change'},
+                        ## {validator: validateStartTime.bind(this), trigger: 'change'}
+                    ]
+                },
+            #end
+            #if(${columnsItem.propertyType.contains("Enum")})
+                //值类型
+                valType: "object",
+                searchObj: {
+                    formType: "select",
+                    options: [
+
+                        #foreach($columnsItem2 in ${columnsItem.eumsCodeList})
+                            {
+
+                                label: '${columnsItem2.label}',
+                                value:${columnsItem2.value},
+
+                            },
+                        #end
+
+                    ]
+                },
+                formType: "radioGroup",
+                props: {
+                    options: [
+
+                        #foreach($columnsItem2 in ${columnsItem.eumsCodeList})
+                            {
+
+                                label: '${columnsItem2.label}',
+                                value:${columnsItem2.value},
+
+                            },
+                        #end
+
+                    ],
+                    style:
+                        {
+                            width: '100%'
+                        }
+                },
+                ##必填项并且默认值是null的
+                #if((${columnsItem.isNullable.equals("1")}||!${columnsItem.defaultValue.equals("NULL")}))
+                    rules: [
+                        {required: true, message: '请选择${columnsItem.columnComment.split("#")[0]}', trigger: 'change'},
+                    ],
+                    #if(!${columnsItem.defaultValue.equals("NULL")})
+                        defaultValue: ${columnsItem.defaultValue},
+                    #end
+
+                #end
+                formSort: 1,
+
+            #end
+            #if(${columnsItem.keyFlag.equals("true")}||${columnsItem.columnName.equals(
+                "createTime")}||${columnsItem.columnName.equals("updateTime")}||${columnsItem.columnName.equals(
+                "createUser")}||${columnsItem.columnName.equals("updateUser")})
+                noEdit: true,
+                noAdd: true,
+                #if(${columnsItem.columnName.equals(
+                    "createUser")}||${columnsItem.columnName.equals("updateUser")}||${columnsItem.columnName.equals(
+                    "updateTime")})
+                    noSearch: true,
+                #end
+            #end
+
+        },
+
+    #end
+
+]
+
+
+// 模块配置
+const moduleConfig = {
+    module: ${pm1},
+    moduleAdd: "add${pm1_2}",
+    moduleEdit: "edit${pm1_2}",
+    moduleDelete: "delete${pm1_2}",
+    moduleGetList: "get${pm1_2}PageList",
+    moduleGetDetail: "get${pm1_2}Detail",
+    moduleName: "${tableComment.replaceAll("表", "")}",
+}
+
+export {
+    columns,
+    moduleConfig,
+};

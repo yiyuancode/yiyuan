@@ -88,4 +88,13 @@ public interface SysMenuService extends JoinIService<SysMenu> {
    * @date 2023-08-17
    */
   boolean add(SysMenuAddDTO request) throws Exception;
+
+  /**
+   * 自动生成菜单
+   *
+   * @return {@link boolean}
+   * @author 一源团队-花和尚
+   * @date 2023-08-17
+   */
+  boolean autoScanMenu() throws Exception;
 }

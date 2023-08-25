@@ -154,4 +154,24 @@ public class SysMenuController {
       return CommonResult.failed("新增菜单失败");
     }
   }
+
+  /**
+   * 自动生成菜单
+   *
+   * @return {@link CommonResult<String>}
+   * @author 一源团队-花和尚
+   * @date 2023-08-17
+   */
+  @SaCheckPermission(
+      value = {"sys:menu:autoScanMenu"},
+      orRole = "admin")
+  @PostMapping(value = "/sys/menu/autoScanMenu")
+  @ResponseBody
+  public CommonResult<String> autoScanMenu() throws Exception {
+    if (sysMenuService.autoScanMenu()) {
+      return CommonResult.success(null, "自动生成菜单成功");
+    } else {
+      return CommonResult.failed("自动生成菜单失败");
+    }
+  }
 }

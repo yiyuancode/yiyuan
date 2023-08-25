@@ -1,23 +1,31 @@
 package net.yiyuan.service.impl;
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
+import cn.hutool.core.lang.ClassScanner;
+import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import icu.mhb.mybatisplus.plugln.base.service.impl.JoinServiceImpl;
 import icu.mhb.mybatisplus.plugln.core.JoinLambdaWrapper;
 import lombok.extern.slf4j.Slf4j;
 import net.yiyuan.common.utils.BeanUtilsPlus;
+import net.yiyuan.common.utils.StringUtilsPlus;
 import net.yiyuan.dto.SysMenuAddDTO;
 import net.yiyuan.dto.SysMenuEditDTO;
 import net.yiyuan.dto.SysMenuListDTO;
 import net.yiyuan.dto.SysMenuPageDTO;
+import net.yiyuan.enums.*;
 import net.yiyuan.mapper.SysMenuMapper;
 import net.yiyuan.model.SysMenu;
 import net.yiyuan.service.SysMenuService;
 import net.yiyuan.vo.SysMenuQueryVO;
+import org.springframework.context.annotation.Description;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.Arrays;
-import java.util.List;
+import java.lang.reflect.Method;
+import java.util.*;
+
 /**
  * 菜单Service层接口实现
  *
@@ -143,5 +151,143 @@ public class SysMenuServiceImpl extends JoinServiceImpl<SysMenuMapper, SysMenu>
     SysMenu po = new SysMenu();
     BeanUtilsPlus.copy(request, po);
     return save(po);
+  }
+
+  /**
+   * 自动生成菜单
+   *
+   * @return {@link boolean}
+   * @author 一源团队--花和尚
+   * @date 2023-07-27
+   */
+  @Override
+  public boolean autoScanMenu() throws Exception {
+
+    String[] packageNames = {"net.yiyuan.controller"};
+    Class<RestController> annotationClass = RestController.class;
+
+    // 扫描指定包下标注了指定注解的类和方法
+    Set<Class<?>> classes = new HashSet<>();
+    for (String packageName : packageNames) {
+      classes.addAll(ClassScanner.scanPackageByAnnotation(packageName, annotationClass));
+    }
+    //    Set<Class<?>> classes = ClassScanner.scanAllPackage();
+    log.info("ClassUtil.classes", classes.size());
+    // 定义存储菜单的列表
+
+    // 遍历所有标注了 @SaCheckPermission 注解的类和方法
+    for (Class<?> clazz : classes) {
+      List<SysMenu> menuList = new ArrayList<>();
+
+      log.info("classes", clazz);
+      Method[] methods = clazz.getDeclaredMethods();
+      for (Method method : methods) {
+        SaCheckPermission permission = method.getAnnotation(SaCheckPermission.class);
+        if (permission != null) {
+          // 获取权限表达式
+          String[] permissions = permission.value();
+
+          // 从注解中获取中文注释作为菜单名称
+          String menuName2 = "";
+          Description annotation = method.getAnnotation(Description.class);
+          if (!ObjectUtil.isEmpty(annotation)) {
+            String menuName = annotation.value();
+
+            try {
+              String btnPerm = permissions[0];
+              String[] btnPermAarry = permissions[0].split(":");
+              String[] menuNameAarry = menuName.split("/");
+              SysMenuQueryVO moudelDetails = new SysMenuQueryVO();
+              SysMenuQueryVO childMoudelDetails = new SysMenuQueryVO();
+              // 查询大模块目录是否存在
+              SysMenu sysMenuQuery = new SysMenu();
+              sysMenuQuery.setPermission(btnPermAarry[0]);
+
+              JoinLambdaWrapper<SysMenu> wrapper = new JoinLambdaWrapper<>(sysMenuQuery);
+              wrapper.eq(SysMenu::getPermission, sysMenuQuery.getPermission());
+              moudelDetails = joinGetOne(wrapper, SysMenuQueryVO.class);
+
+              if (StringUtilsPlus.isNull(moudelDetails)) {
+                sysMenuQuery.setName(menuNameAarry[0]);
+                sysMenuQuery.setType(SysMenuTypeEnum.CATALOGUE);
+                sysMenuQuery.setParentId("0");
+                sysMenuQuery.setIsFrame(SysMenuIsFrameEnum.NO);
+                sysMenuQuery.setIsAffix(SysMenuIsAffixEnum.CLOSE);
+                sysMenuQuery.setStatus(SysMenuStatusEnum.NORMAL);
+                sysMenuQuery.setIsAlwaysShow(SysMenuIsAlwaysShowEnum.OPEN);
+                sysMenuQuery.setOpenType(SysMenuOpenTypeEnum.CURRENT_WINDOW);
+                sysMenuQuery.setSort(0);
+                sysMenuQuery.setRouteComponent("/layouts/BlankView.vue");
+                sysMenuQuery.setRouteName(btnPermAarry[0]);
+                sysMenuQuery.setRoutePath(sysMenuQuery.getPermission().replace(":", "/"));
+                this.save(sysMenuQuery);
+                moudelDetails = new SysMenuQueryVO();
+                BeanUtilsPlus.copy(sysMenuQuery, moudelDetails);
+              }
+              // 查询二级菜单是否存在
+              sysMenuQuery = new SysMenu();
+              sysMenuQuery.setPermission(btnPermAarry[0] + ":" + btnPermAarry[1]);
+
+              wrapper = new JoinLambdaWrapper<>(sysMenuQuery);
+              wrapper.eq(SysMenu::getPermission, sysMenuQuery.getPermission());
+              childMoudelDetails = joinGetOne(wrapper, SysMenuQueryVO.class);
+
+              if (StringUtilsPlus.isNull(childMoudelDetails)) {
+                sysMenuQuery.setName(menuNameAarry[1]);
+                sysMenuQuery.setType(SysMenuTypeEnum.MENU);
+                sysMenuQuery.setParentId(moudelDetails.getId());
+
+                sysMenuQuery.setIsFrame(SysMenuIsFrameEnum.NO);
+                sysMenuQuery.setIsAffix(SysMenuIsAffixEnum.CLOSE);
+                sysMenuQuery.setStatus(SysMenuStatusEnum.NORMAL);
+                sysMenuQuery.setIsAlwaysShow(SysMenuIsAlwaysShowEnum.OPEN);
+                sysMenuQuery.setOpenType(SysMenuOpenTypeEnum.CURRENT_WINDOW);
+
+                sysMenuQuery.setSort(0);
+                sysMenuQuery.setRouteComponent("/pages/" + btnPermAarry[0] + "/" + btnPermAarry[1]);
+                sysMenuQuery.setRouteName(btnPermAarry[1]);
+                sysMenuQuery.setRoutePath(sysMenuQuery.getPermission().replace(":", "/"));
+                this.save(sysMenuQuery);
+                childMoudelDetails = new SysMenuQueryVO();
+                BeanUtilsPlus.copy(sysMenuQuery, childMoudelDetails);
+              }
+
+              // 查询按钮表达式是否存在
+              sysMenuQuery = new SysMenu();
+              sysMenuQuery.setPermission(btnPerm);
+
+              wrapper = new JoinLambdaWrapper<>(sysMenuQuery);
+              wrapper.eq(SysMenu::getPermission, sysMenuQuery.getPermission());
+              SysMenuQueryVO btnDetails = joinGetOne(wrapper, SysMenuQueryVO.class);
+
+              if (StringUtilsPlus.isNull(btnDetails)) {
+                sysMenuQuery.setName(menuNameAarry[2]);
+                sysMenuQuery.setType(SysMenuTypeEnum.BUTTON);
+                sysMenuQuery.setParentId(childMoudelDetails.getId());
+                sysMenuQuery.setIsFrame(SysMenuIsFrameEnum.NO);
+                sysMenuQuery.setIsAffix(SysMenuIsAffixEnum.CLOSE);
+                sysMenuQuery.setStatus(SysMenuStatusEnum.NORMAL);
+                sysMenuQuery.setIsAlwaysShow(SysMenuIsAlwaysShowEnum.OPEN);
+                sysMenuQuery.setOpenType(SysMenuOpenTypeEnum.CURRENT_WINDOW);
+
+                sysMenuQuery.setSort(0);
+                sysMenuQuery.setRouteComponent(null);
+                sysMenuQuery.setRouteName(null);
+                this.save(sysMenuQuery);
+                btnDetails = new SysMenuQueryVO();
+                BeanUtilsPlus.copy(sysMenuQuery, btnDetails);
+              }
+
+            } catch (Exception e) {
+
+              e.printStackTrace();
+              throw new Error("自动生成菜单异常");
+            }
+          }
+        }
+      }
+    }
+
+    return true;
   }
 }
