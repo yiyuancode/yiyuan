@@ -13,30 +13,27 @@ import lombok.Getter;
 @Getter
 public enum FileInfoStateEnum {
 
-    /**
-     * 类型#0=临时|2=储存成功
-     *
-     * @author 一源团队--小林同学
-     * @date 2023-07-15
-     * @see FileInfoStateEnum
-     */
-    TEMPORARY(0, "临时"),
-    /**
-     * 类型#0=临时|2=储存成功
-     *
-     * @author 一源团队--小林同学
-     * @date 2023-07-15
-     * @see FileInfoStateEnum
-     */
-    STORE_SUCCESSFUL(2, "储存成功");
+  /**
+   * 类型#0=临时|2=储存成功
+   *
+   * @author 一源团队--小林同学
+   * @date 2023-07-15
+   * @see FileInfoStateEnum
+   */
+  TEMPORARY(0, "临时"),
+  /**
+   * 类型#0=临时|2=储存成功
+   *
+   * @author 一源团队--小林同学
+   * @date 2023-07-15
+   * @see FileInfoStateEnum
+   */
+  STORE_SUCCESSFUL(2, "储存成功");
 
-    FileInfoStateEnum(int code, String desc) {
-        this.code = code;
-        this.desc = desc;
-    }
-
-    @EnumValue
-    private final int code;
-    @JsonValue
-    private final String desc;
+  @EnumValue private final int code;
+  @JsonValue private final String desc;
+  FileInfoStateEnum(int code, String desc) {
+    this.code = code;
+    this.desc = desc;
+  }
 }

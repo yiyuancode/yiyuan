@@ -1,6 +1,5 @@
 package net.yiyuan.exception;
 
-
 /**
  * 文件操作运行时异常
  *
@@ -9,11 +8,11 @@ package net.yiyuan.exception;
  */
 public class FileOperatorException extends RunMsgException {
 
-    public FileOperatorException(String msg) {
-        super(msg);
-    }
+  public FileOperatorException(String msg) {
+    super(msg);
+  }
 
-    public FileOperatorException(String msg, Exception e) {
-        super(msg, e);
-    }
+  public FileOperatorException(String msg, Exception e) {
+    super(msg, e);
+  }
 }

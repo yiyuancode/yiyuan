@@ -27,24 +27,24 @@ import java.util.*;
  */
 @Slf4j
 public class CodeGenerator {
-  private static String DEFAULT_OUT_PUT_DIR = System.getProperty("user.dir");
-  private static String DEFAULT_SRC = "\\src\\main\\java";
-  private static String DEFAULT_JS_SRC = "\\src";
-  private static String MOUDLE_NAME_ZH = "";
+  public static String DEFAULT_OUT_PUT_DIR = System.getProperty("user.dir");
+  public static String DEFAULT_SRC = "\\src\\main\\java";
+  public static String DEFAULT_JS_SRC = "\\src";
+  public static String MOUDLE_NAME_ZH = "";
 
-  private static String DEFAULT_PARENT_PACK = "";
-  //  private static String DEFAULT_MODULENAME = "";
-  private static String AUTHOR = "";
-  private static String MYSQL_URL =
+  public static String DEFAULT_PARENT_PACK = "";
+  //  public static String DEFAULT_MODULENAME = "";
+  public static String AUTHOR = "";
+  public static String MYSQL_URL =
       "jdbc:mysql://106.54.87.159:23306/admin_dev?serverTimezone=Asia/Shanghai&nullCatalogMeansCurrent=true";
-  private static String MYSQL_USERNAME = "root";
-  private static String MYSQL_PASSWORD = "123456";
+  public static String MYSQL_USERNAME = "root";
+  public static String MYSQL_PASSWORD = "123456";
 
-  private static String SSH_URL = "43.154.183.115";
-  private static int SSH_PORT = 60035;
-  private static String SSH_USERNAME = "root";
-  private static String SSH_PASSWORD = "ABC123#123CBd";
-  private static String SSH_COMMAND_FY = "fy ";
+  public static String SSH_URL = "43.154.183.115";
+  public static int SSH_PORT = 60035;
+  public static String SSH_USERNAME = "root";
+  public static String SSH_PASSWORD = "ABC123#123CBd";
+  public static String SSH_COMMAND_FY = "fy ";
 
   /** 读取控制台内容 */
   public static String scanner(String tip) {
@@ -63,123 +63,11 @@ public class CodeGenerator {
 
   public static void main(String[] args) throws Exception {
     DEFAULT_PARENT_PACK = scanner("根包名,例如:net.yiyuan");
-    //    DEFAULT_MODULENAME = scanner("模块名,例如：sys");
     MOUDLE_NAME_ZH = scanner("一级菜单名称,例如：系统管理");
     AUTHOR = scanner("作者名称");
     String inputTableName[] = scanner("表名，多个英文逗号分割").split(",");
-    //    // 代码生成器
-    //    AutoGenerator mpg = new AutoGenerator();
-    //    DEFAULT_MODULENAME = scanner("模块名");
-    //
-    //    // 全局配置
-    //    //    GlobalConfig gc = new GlobalConfig();
-    //    //    String projectPath = System.getProperty("user.dir");
-    //    //    gc.setOutputDir(projectPath + "/src/main/java");
-    //    //    gc.setAuthor("jobob");
-    //    //    gc.setOpen(false);
-    //    //    // gc.setSwagger2(true); 实体属性 Swagger2 注解
-    //    //    mpg.setGlobalConfig(gc);
-    //
-    //    // 全局配置
-    //    GlobalConfig gc = new GlobalConfig();
-    //    String projectPath = System.getProperty("user.dir");
-    //    gc.setOutputDir(DEFAULT_OUT_PUT_DIR);
-    //    gc.setFileOverride(true);
-    //
-
-    //    // gc.setAuthor(DEFAULT_PARENT_PACK + "." + DEFAULT_MODULENAME);
-
-    //    gc.setAuthor(AUTHOR);
-    //    gc.setOpen(false); // 当代码生成完成之后是否打开代码所在的文件夹
-    //    // gc.setSwagger2(true); // 默认false
-    //    gc.setServiceName("%sService");
-    //    gc.setMapperName("%sMapper");
-    //    gc.setControllerName("%sController");
-    //    // 时间类型
-    //    gc.setDateType(DateType.ONLY_DATE);
-    //    gc.setIdType(IdType.ASSIGN_UUID);
-    //    mpg.setGlobalConfig(gc);
-    //    InjectionConfig cfg =
-    //        new InjectionConfig() {
-    //          // 自定义属性注入:abc
-    //          // 在.ftl(或者是.vm)模板中，通过${cfg.abc}获取属性
-    //          @Override
-    //          public void initMap() {
-    //            Map<String, Object> map = new HashMap<>();
-    //            map.put("apiParent", DEFAULT_PARENT_PACK);
-    //            map.put("apiMoudel", scanner("apiFox接口一级模块名称 * 例如系统管理"));
-    //            //            map.put("apiFolder", scanner("apiFox接口一级/二级级模块名称* 例如 系统管理/菜单管理"));
-    //            this.setMap(map);
-    //          }
-    //        };
-    //    cfg.setFileCreate(
-    //        (configBuilder, fileType, filePath) -> {
-    //          // 如果是Entity则直接返回true表示写文件
-    //          if (fileType == FileType.ENTITY) {
-    //            return true;
-    //          }
-    //          // 否则先判断文件是否存在
-    //          File file = new File(filePath);
-    //          boolean exist = file.exists();
-    //          if (!exist) {
-    //            file.getParentFile().mkdirs();
-    //          }
-    //          // 文件不存在或者全局配置的fileOverride为true才写文件!exist ||
-    //          // configBuilder.getGlobalConfig().isFileOverride()
-    //          return !exist;
-    //        });
-    //    mpg.setCfg(cfg);
-    //    // 数据源配置
-    //    DataSourceConfig dsc = new DataSourceConfig();
-    //    dsc.setUrl(MYSQL_URL);
-    //    // dsc.setSchemaName("public");
-    //    dsc.setDriverName("com.mysql.cj.jdbc.Driver");
-    //    dsc.setUsername(MYSQL_USERNAME);
-    //    dsc.setPassword(MYSQL_PASSWORD);
-    //    mpg.setDataSource(dsc);
-    //    // 包配置
     PackageConfig pc = new PackageConfig();
-    //
-    //    //    pc.setModuleName(DEFAULT_MODULENAME);
-    //    pc.setModuleName(null);
-    //    // pc.setParent(DEFAULT_PARENT_PACK); // controller entity  service  service.impl
-    //    pc.setParent(null);
-    //    // pc.setController("controller");
-    //    pc.setController("net.yiyuan.web.controller." + DEFAULT_MODULENAME);
-    //
-    //    pc.setEntity("model");
-    //    pc.setMapper("net.yiyuan.service." + DEFAULT_MODULENAME + ".mapper");
-    //    pc.setService("net.yiyuan.service." + DEFAULT_MODULENAME);
-    //    pc.setServiceImpl("net.yiyuan.service." + DEFAULT_MODULENAME + ".impl");
-    //    pc.setXml("net.yiyuan.service." + DEFAULT_MODULENAME + ".mapper.xml");
-    //    mpg.setPackageInfo(pc);
-    //    // 配置模板
-    //    TemplateConfig templateConfig = new TemplateConfig();
-    //    // 配置自定义输出模板
-    //    // 指定自定义模板路径，注意不要带上.ftl/.vm, 会根据使用的模板引擎自动识别
-    //    templateConfig.setService("templates/service.vm");
-    //    templateConfig.setServiceImpl("templates/service.impl.vm");
-    //    templateConfig.setController("templates/controller.java.vm");
-    //    templateConfig.setEntity("templates/model.java.vm");
-    //    templateConfig.setMapper("templates/mapper.java.vm");
-    //    //        templateConfig.setXml(null);
-    //    mpg.setTemplate(templateConfig);
-    //    // 策略配置
-    //    StrategyConfig strategy = new StrategyConfig();
-    //    // 设置字段和表名的是否把下划线完成驼峰命名规则
-    //    strategy.setNaming(NamingStrategy.underline_to_camel);
-    //    strategy.setColumnNaming(NamingStrategy.underline_to_camel);
-    //    strategy.setEntityLombokModel(true); // 是否启动lombok
-    //    strategy.setRestControllerStyle(true); // 是否生成resetController
-    //    String inputTableName[] = scanner("表名，多个英文逗号分割").split(",");
-    //    strategy.setInclude(inputTableName);
-    //    // 不开启Controller层的驼峰转连字符
-    //    strategy.setControllerMappingHyphenStyle(true);
-    //    mpg.setStrategy(strategy);
-    //    mpg.execute();
     getTableFiled(inputTableName, pc);
-    // mkdirBaseModel(inputTableName, DEFAULT_OUT_PUT_DIR, DEFAULT_PARENT_PACK, DEFAULT_MODULENAME);
-    //		JoinGenerator.jonin(DEFAULT_MODULENAME);
   }
 
   /**

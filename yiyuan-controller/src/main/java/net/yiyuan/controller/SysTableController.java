@@ -5,10 +5,7 @@ import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import net.yiyuan.common.model.vo.CommonResult;
-import net.yiyuan.dto.SysTableAddDTO;
-import net.yiyuan.dto.SysTableEditDTO;
-import net.yiyuan.dto.SysTableListDTO;
-import net.yiyuan.dto.SysTablePageDTO;
+import net.yiyuan.dto.*;
 import net.yiyuan.service.SysTableService;
 import net.yiyuan.vo.SysTableQueryVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +13,7 @@ import org.springframework.context.annotation.Description;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
 
@@ -153,5 +151,43 @@ public class SysTableController {
     } else {
       return CommonResult.failed("新增数据库失败");
     }
+  }
+
+  /**
+   * 刷新数据库
+   *
+   * @return {@link CommonResult<String>}
+   * @author 一源团队-花和尚
+   * @date 2023-08-25
+   */
+  @Description("系统管理/数据库管理/刷新数据库")
+  @SaCheckPermission(
+      value = {"sys:table:refresh"},
+      orRole = "admin")
+  @PostMapping(value = "/sys/table/refresh")
+  @ResponseBody
+  public CommonResult<String> refresh() throws Exception {
+    if (sysTableService.refresh()) {
+      return CommonResult.success(null, "刷新数据库成功");
+    } else {
+      return CommonResult.failed("刷新数据库失败");
+    }
+  }
+
+  /**
+   * 生成代码
+   *
+   * @return {@link CommonResult<String>}
+   * @author 一源团队-花和尚
+   * @date 2023-08-25
+   */
+  @Description("系统管理/数据库管理/刷新数据库")
+  @SaCheckPermission(
+      value = {"sys:table:refresh"},
+      orRole = "admin")
+  @PostMapping(value = "/sys/table/generateCode")
+  public void generateCode(HttpServletResponse servletResponse, SysTableGenerateCodeDTO request)
+      throws Exception {
+    sysTableService.generateCode(servletResponse, request);
   }
 }

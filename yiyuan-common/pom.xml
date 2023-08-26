@@ -22,15 +22,20 @@
     <!--    <packaging>pom</packaging>-->
     <dependencies>
         <!--hutool-->
-        <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-core</artifactId>
-        </dependency>
         <!--        <dependency>-->
         <!--            <groupId>cn.hutool</groupId>-->
-        <!--            <artifactId>hutool-all</artifactId>-->
-        <!--            <version>5.7.14</version>-->
+        <!--            <artifactId>hutool-core</artifactId>-->
         <!--        </dependency>-->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-compress</artifactId>
+            <version>1.21</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>5.7.14</version>
+        </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>

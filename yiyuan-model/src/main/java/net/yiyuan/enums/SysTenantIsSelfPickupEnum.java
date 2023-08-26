@@ -34,6 +34,7 @@ public enum SysTenantIsSelfPickupEnum implements IEnum<Integer> {
 
   @EnumValue private final int value;
   private final String desc;
+
   SysTenantIsSelfPickupEnum(int value, String desc) {
     this.value = value;
     this.desc = desc;

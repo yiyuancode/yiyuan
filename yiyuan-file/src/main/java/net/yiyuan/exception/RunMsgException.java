@@ -8,11 +8,11 @@ package net.yiyuan.exception;
  */
 public class RunMsgException extends RuntimeException {
 
-    public RunMsgException(String msg) {
-        super(msg);
-    }
+  public RunMsgException(String msg) {
+    super(msg);
+  }
 
-    public RunMsgException(String msg, Throwable t) {
-        super(msg, t);
-    }
+  public RunMsgException(String msg, Throwable t) {
+    super(msg, t);
+  }
 }
