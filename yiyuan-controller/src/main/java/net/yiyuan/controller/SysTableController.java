@@ -183,10 +183,11 @@ public class SysTableController {
    */
   @Description("系统管理/数据库管理/刷新数据库")
   @SaCheckPermission(
-      value = {"sys:table:refresh"},
+      value = {"sys:table:generateCode"},
       orRole = "admin")
   @PostMapping(value = "/sys/table/generateCode")
-  public void generateCode(HttpServletResponse servletResponse, SysTableGenerateCodeDTO request)
+  public void generateCode(
+      HttpServletResponse servletResponse, @RequestBody SysTableGenerateCodeDTO request)
       throws Exception {
     sysTableService.generateCode(servletResponse, request);
   }

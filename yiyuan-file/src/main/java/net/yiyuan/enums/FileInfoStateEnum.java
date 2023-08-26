@@ -32,6 +32,7 @@ public enum FileInfoStateEnum {
 
   @EnumValue private final int code;
   @JsonValue private final String desc;
+
   FileInfoStateEnum(int code, String desc) {
     this.code = code;
     this.desc = desc;

@@ -20,6 +20,7 @@ public class HuaWeiFileOperator extends AbstractFileOperator {
 
   /** 文件不存在的状态码 */
   private static final int FILE_NOT_FOUND = 404;
+
   private ObsClient obsClient;
 
   @Override

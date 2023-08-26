@@ -100,6 +100,11 @@ const columns = [
                     "createUser")}||${columnsItem.columnName.equals("updateUser")}||${columnsItem.columnName.equals(
                     "updateTime")})
                     noSearch: true,
+                    #if(${columnsItem.columnName.equals(
+                        "createUser")}||${columnsItem.columnName.equals("updateUser")})
+                        noShow: true,
+                    #end
+
                 #end
             #end
 

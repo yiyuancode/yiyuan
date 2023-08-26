@@ -23,6 +23,7 @@ public class MinIoFileOperator extends AbstractFileOperator {
   private static final String NO_SUCH_KEY = "NoSuchKey";
   /** 不存在桶的返回值 */
   private static final String NO_SUCH_BUCKET = "NoSuchBucket";
+
   private MinioClient minioClient;
 
   @Override
