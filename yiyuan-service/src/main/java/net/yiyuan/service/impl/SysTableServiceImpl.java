@@ -1,5 +1,6 @@
 package net.yiyuan.service.impl;
 
+import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.ZipUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.generator.config.PackageConfig;
@@ -210,5 +211,7 @@ public class SysTableServiceImpl extends JoinServiceImpl<SysTableMapper, SysTabl
     CodeGenerator.getTableFiled(tableNameList, pc);
     File zip = ZipUtil.zip(CodeGenerator.DEFAULT_OUT_PUT_DIR + "/src");
     ZipFileUtils.downloadZipFiles(servletResponse, zip);
+    FileUtil.del(zip);
+    FileUtil.del(CodeGenerator.DEFAULT_OUT_PUT_DIR + "/src");
   }
 }
