@@ -17,8 +17,8 @@ const columns = [
             #end
             dataIndex: '${columnsItem.columnName}',
             key: '${columnsItem.columnName}',
+            width: 160,
             #if(${columnsItem.propertyType.equals("String")})
-
                 ##必填项并且默认值是null的
                 #if((${columnsItem.isNullable.equals("1")}||!${columnsItem.defaultValue.equals("NULL")}))
                     rules: [{required: true, message: '请输入${columnsItem.columnComment}', trigger: 'blur'},],
@@ -47,7 +47,6 @@ const columns = [
                 searchObj: {
                     formType: "select",
                     options: [
-
                         #foreach($columnsItem2 in ${columnsItem.eumsCodeList})
                             {
 
@@ -56,22 +55,17 @@ const columns = [
 
                             },
                         #end
-
                     ]
                 },
                 formType: "radioGroup",
                 props: {
                     options: [
-
                         #foreach($columnsItem2 in ${columnsItem.eumsCodeList})
                             {
-
                                 label: '${columnsItem2.label}',
                                 value:${columnsItem2.value},
-
                             },
                         #end
-
                     ],
                     style:
                         {
@@ -86,10 +80,8 @@ const columns = [
                     #if(!${columnsItem.defaultValue.equals("NULL")})
                         defaultValue: ${columnsItem.defaultValue},
                     #end
-
                 #end
                 formSort: 1,
-
             #end
             #if(${columnsItem.keyFlag.equals("true")}||${columnsItem.columnName.equals(
                 "createTime")}||${columnsItem.columnName.equals("updateTime")}||${columnsItem.columnName.equals(
@@ -104,7 +96,6 @@ const columns = [
                         "createUser")}||${columnsItem.columnName.equals("updateUser")})
                         noShow: true,
                     #end
-
                 #end
             #end
 
