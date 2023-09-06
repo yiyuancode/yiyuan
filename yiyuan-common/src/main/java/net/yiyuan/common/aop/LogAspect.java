@@ -32,7 +32,7 @@ public class LogAspect {
   //  private Logger logger = LoggerFactory.getLogger(getClass().getName());
   private ObjectError error;
 
-  @Pointcut("execution(public * net.yiyuan.core.*.controller.*.*(..))")
+  @Pointcut("execution(public * net.yiyuan.controller.*.*(..))")
   public void webLog() {}
 
   @Before("webLog()")

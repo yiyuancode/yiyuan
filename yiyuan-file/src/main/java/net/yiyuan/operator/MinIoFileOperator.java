@@ -54,7 +54,11 @@ public class MinIoFileOperator extends AbstractFileOperator {
     }
     // 参数组织
     PutObjectArgs objectArgs =
-        PutObjectArgs.builder().bucket(bucketName).object(requestParam.getKey()).stream(
+        PutObjectArgs.builder()
+            .bucket(bucketName)
+            // 增加mino上传后缀拼接
+            .object(requestParam.getKey() + requestParam.getExtName())
+            .stream(
                 inputStream,
                 requestParam.getSize() == null ? -1 : requestParam.getSize(),
                 requestParam.getPartSize() == null

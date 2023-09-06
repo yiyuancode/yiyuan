@@ -105,7 +105,8 @@ public interface FileInfoService extends JoinIService<FileInfo> {
    * @author 一源团队--小林同学
    * @date 2023-07-15
    */
-  String uploadAsTemp(MultipartFile file);
+  String uploadAsTemp(MultipartFile file) throws Exception;
+
   /**
    * 文件下载
    *

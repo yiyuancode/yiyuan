@@ -6,6 +6,7 @@ VOLUME /tmp
 #ADD mall-tiny-docker-file-0.0.1-SNAPSHOT.jar /mall-tiny-docker-file.jar
 # 将当前目录下的jar包复制到docker容器的/目录下
 ADD yiyuan-admin-1.0-SNAPSHOT.jar /yiyuan-admin-1.0-SNAPSHOT.jar
+ADD yiyuan-admin-1.0-SNAPSHOT.jar /yiyuan-admin-1.0-SNAPSHOT.jar
 ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","-Dspring.profiles.active=prod","/yiyuan-admin-1.0-SNAPSHOT.jar"]
 ##thymeleaf-master表示生成镜像的名称，（注意后面有个点.,而且镜像名最好不要有什么特殊符号） #docker build -t lys .
 #这里我项目用的8082端口，这里我也映射8082端口，加上--name xxx是为了给容器取别名，方便docker命令操作

@@ -14,7 +14,6 @@ import net.yiyuan.pojo.dto.ObjectResponse;
 import net.yiyuan.pojo.dto.UploadRequestParam;
 import net.yiyuan.service.FileInfoService;
 import net.yiyuan.utils.FileUtils;
-import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -172,7 +171,7 @@ public class FileInfoServiceImpl extends JoinServiceImpl<FileInfoMapper, FileInf
    * @date 2023-07-15
    */
   @Override
-  public String uploadAsTemp(MultipartFile file) {
+  public String uploadAsTemp(MultipartFile file) throws Exception {
     String name = file.getOriginalFilename();
     if (StringUtils.isBlank(name)) {
       throw CustomUnifiedException.aom("文件上传-获取文件名称为空");
@@ -191,17 +190,23 @@ public class FileInfoServiceImpl extends JoinServiceImpl<FileInfoMapper, FileInf
     }
 
     String mimeType = "";
-    try (InputStream is = file.getInputStream()) {
-      // 文件有效的类型检测
-      mimeType = FileUtils.detectMimeType(is, name);
-      if (!checkMimeType(mimeType)) {
-        throw CustomUnifiedException.msg("文件上传-非法文件格式");
-      }
-    } catch (Exception e) {
-      throw CustomUnifiedException.msg("上传文件流读取异常", e);
-    }
 
-    String suffix = FilenameUtils.getExtension(name);
+    InputStream is = file.getInputStream();
+    mimeType = FileUtils.detectMimeType(is, name);
+    //    try (InputStream is = file.getInputStream()) {
+    //      // 文件有效的类型检测
+    //      mimeType = FileUtils.detectMimeType(is, name);
+    //      if (!checkMimeType(mimeType)) {
+    //        throw CustomUnifiedException.msg("文件上传-非法文件格式");
+    //      }
+    //    } catch (Exception e) {
+    //      throw CustomUnifiedException.msg("上传文件流读取异常", e);
+    //    }
+
+    //    String suffix = FilenameUtils.getExtension(name);
+    String suffix =
+        file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
+
     String key = UUID.randomUUID().toString();
     // 获取激活当前的文件操作器
     FileOperatorInter operatorInter = fileOperatorContext.active();
@@ -240,8 +245,9 @@ public class FileInfoServiceImpl extends JoinServiceImpl<FileInfoMapper, FileInf
     fileinfo.setState(FileInfoStateEnum.TEMPORARY);
     fileinfo.setTime(Timestamp.valueOf(LocalDateTime.now()));
     save(fileinfo);
-    return key;
+    return key + suffix;
   }
+
   /**
    * 流式下载文件
    *

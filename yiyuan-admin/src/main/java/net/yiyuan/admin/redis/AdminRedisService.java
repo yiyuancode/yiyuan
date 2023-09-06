@@ -20,6 +20,9 @@ public class AdminRedisService {
   private String REDIS_KEY_ADMIN_USER_ROLE = "admin:user:role";
   private Long REDIS_EXPIRE_ADMIN_USER_ROLE = 0L;
 
+  private String REDIS_KEY_ADMIN_FONT_TTF = "admin:font:ttf";
+  private Long REDIS_EXPIRE_ADMIN_FONT_TTF = 0L;
+
   public List<String> GET_ADMIN_USER_PERMISSION(String userId) {
     String key = REDIS_DATABASE_OMS + ":" + REDIS_KEY_ADMIN_USER_PERMISSION + ":" + userId;
     log.info("key: {}", key);
@@ -61,6 +64,29 @@ public class AdminRedisService {
 
   public boolean DEL_ADMIN_USER_ROLE(String userId) {
     String key = REDIS_DATABASE_OMS + ":" + REDIS_KEY_ADMIN_USER_ROLE + ":" + userId;
+    log.info("key: {}", key);
+    Boolean del = redisService.del(key);
+    return del;
+  }
+
+  public String GET_ADMIN_FONT_TTF(String ttfId) {
+    String key = REDIS_DATABASE_OMS + ":" + REDIS_KEY_ADMIN_FONT_TTF + ":" + ttfId;
+    log.info("key: {}", key);
+    return (String) redisService.get(key);
+  }
+
+  public void SET_ADMIN_FONT_TTF(String ttfId, String data) {
+    String key = REDIS_DATABASE_OMS + ":" + REDIS_KEY_ADMIN_FONT_TTF + ":" + ttfId;
+
+    if (REDIS_EXPIRE_ADMIN_FONT_TTF == 0) {
+      redisService.set(key, data);
+    } else {
+      redisService.set(key, data, REDIS_EXPIRE_ADMIN_FONT_TTF);
+    }
+  }
+
+  public boolean DEL_ADMIN_FONT_TTF(String userId) {
+    String key = REDIS_DATABASE_OMS + ":" + REDIS_KEY_ADMIN_FONT_TTF + ":" + userId;
     log.info("key: {}", key);
     Boolean del = redisService.del(key);
     return del;
