@@ -14,6 +14,7 @@ import net.yiyuan.pojo.dto.ObjectResponse;
 import net.yiyuan.pojo.dto.UploadRequestParam;
 import net.yiyuan.service.FileInfoService;
 import net.yiyuan.utils.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -204,10 +205,9 @@ public class FileInfoServiceImpl extends JoinServiceImpl<FileInfoMapper, FileInf
     //    }
 
     //    String suffix = FilenameUtils.getExtension(name);
-    String suffix =
-        file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
 
-    String key = UUID.randomUUID().toString();
+    String suffix = FilenameUtils.getExtension(name);
+    String key = UUID.randomUUID().toString()+suffix;
     // 获取激活当前的文件操作器
     FileOperatorInter operatorInter = fileOperatorContext.active();
     FileOperatorTypeEnum typeEnum =
