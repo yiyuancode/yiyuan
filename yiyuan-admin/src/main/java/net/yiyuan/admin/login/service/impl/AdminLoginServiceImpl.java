@@ -79,6 +79,7 @@ public class AdminLoginServiceImpl extends JoinServiceImpl<SysTenantMapper, SysT
     AccountLoginVo voResult = new AccountLoginVo();
     voResult.setToken(tokenValue);
 
+
     // 查询所有角色
     JoinLambdaWrapper<AuthAdminRole> wrapperRole = new JoinLambdaWrapper<>(AuthAdminRole.class);
     wrapperRole.eq(AuthAdminRole::getUserId, adminQueryVO.getId());
