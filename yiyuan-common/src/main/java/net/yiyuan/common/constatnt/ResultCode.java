@@ -54,6 +54,15 @@ public enum ResultCode implements IErrorCode {
   UNBOUND_MENU(500, "未绑定菜单"),
 
   /**
+   * 商户相关错误：20001-29999
+   *
+   * @author 一源团队-花和尚
+   * @date 2023/06/24
+   * @see ResultCode
+   */
+  //  SYS_TENANT_NAME_DUPLICATE(500, "商户名称重复"),
+  //  SYS_TENANT_E_DUPLICATE(500, "商户名称重复"),
+  /**
    * 定时任务相关：600-699
    *
    * @author 一源团队-花和尚

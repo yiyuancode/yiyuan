@@ -50,10 +50,8 @@ public class LogAspect {
     log.info("请求地址: {} {}", request.getRequestURL().toString(), request.getMethod());
     log.info("类名方法: {}.{}", signature.getDeclaringTypeName(), name);
     log.info("远程地址: {}", request.getRemoteAddr());
-
     // 打印请求参数
     Object[] args = joinPoint.getArgs();
-
     Object[] arguments = new Object[args.length];
     for (int i = 0; i < args.length; i++) {
       if (args[i] instanceof ServletRequest
@@ -63,13 +61,13 @@ public class LogAspect {
       }
       arguments[i] = args[i];
     }
-
     // 当某些字段太敏感，或者是太长时，就不显示
     String[] excludeProperties = {"password", "file"};
     SimplePropertyPreFilter filters = new SimplePropertyPreFilter();
     for (String str : excludeProperties) {
       filters.getExcludes().add(str);
     }
+
     log.info("请求的参数: {}", JSON.toJSONString(arguments, filters));
   }
 

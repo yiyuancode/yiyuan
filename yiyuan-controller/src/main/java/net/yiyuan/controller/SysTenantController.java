@@ -5,10 +5,7 @@ import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import net.yiyuan.common.model.vo.CommonResult;
-import net.yiyuan.dto.SysTenantAddDTO;
-import net.yiyuan.dto.SysTenantEditDTO;
-import net.yiyuan.dto.SysTenantListDTO;
-import net.yiyuan.dto.SysTenantPageDTO;
+import net.yiyuan.dto.*;
 import net.yiyuan.service.SysTenantService;
 import net.yiyuan.vo.SysTenantQueryVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +17,11 @@ import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 /**
- * 租户管理
+ * 商户管理
  *
  * @author 一源团队-花和尚
- * @date 2023-08-24
- * @folder 系统管理/租户管理
+ * @date 2023-09-08
+ * @folder sys/商户管理
  */
 @SaCheckLogin
 @Slf4j
@@ -33,50 +30,50 @@ public class SysTenantController {
   @Autowired private SysTenantService sysTenantService;
 
   /**
-   * 租户列表(全部)
+   * 商户列表(全部)
    *
-   * @param request 租户实体
+   * @param request 商户实体
    * @return {@link CommonResult<List<SysTenantQueryVO>>}
    * @author 一源团队-花和尚
-   * @date 2023-08-24
+   * @date 2023-09-08
    */
-  @Description("系统管理/租户管理/查询租户")
+  @Description("sys/商户管理/查询商户")
   @SaCheckPermission(
       value = {"sys:tenant:query"},
       orRole = "admin")
   @GetMapping(value = "/sys/tenant/list")
   @ResponseBody
   public CommonResult<List<SysTenantQueryVO>> list(SysTenantListDTO request) throws Exception {
-    return CommonResult.success(sysTenantService.list(request), "查询租户列表成功");
+    return CommonResult.success(sysTenantService.list(request), "查询商户列表成功");
   }
 
   /**
-   * 租户列表(分页)
+   * 商户列表(分页)
    *
-   * @param request 租户实体
+   * @param request 商户实体
    * @return {@link CommonResult<Page<SysTenantQueryVO>>}
    * @author 一源团队-花和尚
-   * @date 2023-08-24
+   * @date 2023-09-08
    */
-  @Description("系统管理/租户管理/查询租户")
+  @Description("sys/商户管理/查询商户")
   @SaCheckPermission(
       value = {"sys:tenant:query"},
       orRole = "admin")
   @GetMapping(value = "/sys/tenant/page")
   @ResponseBody
   public CommonResult<Page<SysTenantQueryVO>> page(SysTenantPageDTO request) throws Exception {
-    return CommonResult.success(sysTenantService.page(request), "分页查询租户成功");
+    return CommonResult.success(sysTenantService.page(request), "分页查询商户成功");
   }
 
   /**
-   * 租户详情
+   * 商户详情
    *
-   * @param id 租户id
+   * @param id 商户id
    * @return {@link CommonResult<SysTenantQueryVO>}
    * @author 一源团队-花和尚
-   * @date 2023-08-24
+   * @date 2023-09-08
    */
-  @Description("系统管理/租户管理/查询租户")
+  @Description("sys/商户管理/查询商户")
   @SaCheckPermission(
       value = {"sys:tenant:query"},
       orRole = "admin")
@@ -84,18 +81,18 @@ public class SysTenantController {
   @ResponseBody
   public CommonResult<SysTenantQueryVO> details(@PathVariable("id") @NotBlank String id)
       throws Exception {
-    return CommonResult.success(sysTenantService.details(id), "查询租户详情成功");
+    return CommonResult.success(sysTenantService.details(id), "查询商户详情成功");
   }
 
   /**
-   * 删除租户(支持批量)
+   * 删除商户(支持批量)
    *
-   * @param ids 租户id(多个逗号分割)
+   * @param ids 商户id(多个逗号分割)
    * @return {@link CommonResult<String>}
    * @author 一源团队-花和尚
-   * @date 2023-08-24
+   * @date 2023-09-08
    */
-  @Description("系统管理/租户管理/删除租户")
+  @Description("sys/商户管理/删除商户")
   @SaCheckPermission(
       value = {"sys:tenant:delete"},
       orRole = "admin")
@@ -104,21 +101,21 @@ public class SysTenantController {
   public CommonResult<String> delete(
       @RequestParam(name = "ids") @Validated({NotBlank.class}) String ids) throws Exception {
     if (sysTenantService.delete(ids)) {
-      return CommonResult.success(null, "删除租户成功");
+      return CommonResult.success(null, "删除商户成功");
     } else {
-      return CommonResult.failed("删除租户失败");
+      return CommonResult.failed("删除商户失败");
     }
   }
 
   /**
-   * 编辑租户
+   * 编辑商户
    *
-   * @param request 租户实体
+   * @param request 商户实体
    * @return {@link CommonResult<String>}
    * @author 一源团队-花和尚
-   * @date 2023-08-24
+   * @date 2023-09-08
    */
-  @Description("系统管理/租户管理/编辑租户")
+  @Description("sys/商户管理/编辑商户")
   @SaCheckPermission(
       value = {"sys:tenant:edit"},
       orRole = "admin")
@@ -127,32 +124,51 @@ public class SysTenantController {
   public CommonResult<String> edit(@RequestBody @Validated SysTenantEditDTO request)
       throws Exception {
     if (sysTenantService.edit(request)) {
-      return CommonResult.success(null, "修改租户成功");
+      return CommonResult.success(null, "修改商户成功");
     } else {
-      return CommonResult.failed("修改租户失败");
+      return CommonResult.failed("修改商户失败");
     }
   }
 
   /**
-   * 新增租户
+   * 商户入驻申请
    *
-   * @param request 租户实体
+   * @param request 商户入驻申请请求实体
    * @return {@link CommonResult<String>}
    * @author 一源团队-花和尚
-   * @date 2023-08-24
+   * @date 2023-09-08
    */
-  @Description("系统管理/租户管理/新增租户")
-  @SaCheckPermission(
-      value = {"sys:tenant:add"},
-      orRole = "admin")
-  @PostMapping(value = "/sys/tenant/add")
+  @PostMapping(value = "/sys/tenant/apply")
   @ResponseBody
-  public CommonResult<String> add(@RequestBody @Validated SysTenantAddDTO request)
+  public CommonResult<String> apply(@RequestBody @Validated SysTenantApplyDTO request)
       throws Exception {
-    if (sysTenantService.add(request)) {
-      return CommonResult.success(null, "新增租户成功");
+    if (sysTenantService.apply(request)) {
+      return CommonResult.success(null, "商户入驻申请成功");
     } else {
-      return CommonResult.failed("新增租户失败");
+      return CommonResult.failed("商户入驻申请失败");
+    }
+  }
+
+  /**
+   * 商户入驻审核
+   *
+   * @param request 商户入驻审核请求实体
+   * @return {@link CommonResult<String>}
+   * @author 一源团队-花和尚
+   * @date 2023-09-08
+   */
+  @Description("sys/商户管理/商户入驻审核")
+  @SaCheckPermission(
+      value = {"sys:tenant:process"},
+      orRole = "admin")
+  @PostMapping(value = "/sys/tenant/process")
+  @ResponseBody
+  public CommonResult<String> process(@RequestBody @Validated SysTenantProcessDTO request)
+      throws Exception {
+    if (sysTenantService.process(request)) {
+      return CommonResult.success(null, "商户入驻审核成功");
+    } else {
+      return CommonResult.failed("商户入驻审核失败");
     }
   }
 }
