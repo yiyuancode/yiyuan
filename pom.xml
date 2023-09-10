@@ -34,6 +34,7 @@
         <module>yiyuan-job</module>
         <module>yiyuan-tenant</module>
         <module>yiyuan-file</module>
+        <module>yiyuan-SMS</module>
         <!--        <module>yiyuan-file</module>-->
 
     </modules>

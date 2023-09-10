@@ -23,11 +23,13 @@ public class AdminRedisService {
   private String REDIS_KEY_ADMIN_FONT_TTF = "admin:font:ttf";
   private Long REDIS_EXPIRE_ADMIN_FONT_TTF = 0L;
 
+  private String REDIS_KEY_SMS_PERMISSION = "sms:permission";
   public List<String> GET_ADMIN_USER_PERMISSION(String userId) {
     String key = REDIS_DATABASE_OMS + ":" + REDIS_KEY_ADMIN_USER_PERMISSION + ":" + userId;
     log.info("key: {}", key);
     return (List<String>) redisService.get(key);
   }
+
 
   public void SET_ADMIN_USER_PERMISSION(String userId, List<String> data) {
     String key = REDIS_DATABASE_OMS + ":" + REDIS_KEY_ADMIN_USER_PERMISSION + ":" + userId;
@@ -38,6 +40,34 @@ public class AdminRedisService {
       redisService.set(key, data, REDIS_EXPIRE_ADMIN_USER_PERMISSION);
     }
   }
+
+  /**
+   * 获取短信验证码对比
+   * @param codeId
+   * @return
+   */
+  public String GET_SMS_PERMISSION(String codeId){
+    String key = REDIS_DATABASE_OMS + ":" + REDIS_KEY_SMS_PERMISSION + ":" + codeId;
+    log.info("key: {}", key);
+    return (String) redisService.get(key);
+  }
+
+  /**
+   * 将验证码设置到redis中
+   * @param codeId
+   * @param code
+   */
+  public void SET_SMS_PERMISSION(String codeId, String code) {
+    String key = REDIS_DATABASE_OMS + ":" + REDIS_KEY_SMS_PERMISSION + ":" + codeId;
+
+    if (REDIS_EXPIRE_ADMIN_USER_PERMISSION == 0) {
+      redisService.set(key, codeId);
+    } else {
+      redisService.set(key, codeId, REDIS_EXPIRE_ADMIN_USER_PERMISSION);
+    }
+  }
+
+
 
   public boolean DEL_ADMIN_USER_PERMISSION(String userId) {
     String key = REDIS_DATABASE_OMS + ":" + REDIS_KEY_ADMIN_USER_ROLE + ":" + userId;

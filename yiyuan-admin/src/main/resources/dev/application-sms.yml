@@ -1,0 +1,11 @@
+sms:
+  config:
+    aliyun:
+      ### 阿里云的apiKey
+      appKey: LTAI5t8A1zJF5HwSUThj62CS
+      ### 阿里云apiSecret
+      appSecret: AO7U4CZmsyYHe3OD6vXj9I3VP2Op9X
+      ### 签名
+      signName: 小林程序猿
+      ### 模板code
+      templateCode: SMS_463196083
