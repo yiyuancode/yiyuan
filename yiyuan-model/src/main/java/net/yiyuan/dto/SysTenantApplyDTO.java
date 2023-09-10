@@ -1,30 +1,20 @@
-package net.yiyuan.vo;
+package net.yiyuan.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
-import net.yiyuan.enums.SysTenantIsDelEnum;
 import net.yiyuan.enums.SysTenantStatusEnum;
-import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.Date;
 
 /**
- * 商户查询请求响应参数实体
+ * 发起商户入驻申请请求入参实体
  *
  * @author 一源团队-花和尚
  * @date 2023-09-08
  */
 @Data
-public class SysTenantQueryVO implements Serializable {
-
-  /**
-   * 商户id
-   *
-   * @author 一源团队-花和尚
-   * @date 2023-09-08
-   */
-  private String id;
+public class SysTenantApplyDTO implements Serializable {
 
   /**
    * 归属区域
@@ -32,6 +22,7 @@ public class SysTenantQueryVO implements Serializable {
    * @author 一源团队-花和尚
    * @date 2023-09-08
    */
+  @NotBlank(message = "归属区域不能为空")
   private String spmShopCityId;
 
   /**
@@ -40,6 +31,7 @@ public class SysTenantQueryVO implements Serializable {
    * @author 一源团队-花和尚
    * @date 2023-09-08
    */
+  @NotBlank(message = "商户名称不能为空")
   private String name;
 
   /**
@@ -48,6 +40,7 @@ public class SysTenantQueryVO implements Serializable {
    * @author 一源团队-花和尚
    * @date 2023-09-08
    */
+  @NotBlank(message = "法人名称不能为空")
   private String legalPersonName;
 
   /**
@@ -56,6 +49,7 @@ public class SysTenantQueryVO implements Serializable {
    * @author 一源团队-花和尚
    * @date 2023-09-08
    */
+  @NotBlank(message = "联系邮箱不能为空")
   private String email;
 
   /**
@@ -64,6 +58,7 @@ public class SysTenantQueryVO implements Serializable {
    * @author 一源团队-花和尚
    * @date 2023-09-08
    */
+  @NotNull(message = "联系手机不能为空")
   private String phone;
 
   /**
@@ -72,6 +67,7 @@ public class SysTenantQueryVO implements Serializable {
    * @author 一源团队-花和尚
    * @date 2023-09-08
    */
+  @NotBlank(message = "详细地址不能为空")
   private String detailedAddress;
 
   /**
@@ -80,6 +76,7 @@ public class SysTenantQueryVO implements Serializable {
    * @author 一源团队-花和尚
    * @date 2023-09-08
    */
+  @NotBlank(message = "统一社会信用代码不能为空")
   private String socialCreditCode;
 
   /**
@@ -88,6 +85,7 @@ public class SysTenantQueryVO implements Serializable {
    * @author 一源团队-花和尚
    * @date 2023-09-08
    */
+  @NotBlank(message = "营业执照电子版不能为空")
   private String businessLicenseImage;
 
   /**
@@ -96,6 +94,7 @@ public class SysTenantQueryVO implements Serializable {
    * @author 一源团队-花和尚
    * @date 2023-09-08
    */
+  @NotBlank(message = "法人身份证正面不能为空")
   private String legalPersonIdFrontImage;
 
   /**
@@ -104,6 +103,7 @@ public class SysTenantQueryVO implements Serializable {
    * @author 一源团队-花和尚
    * @date 2023-09-08
    */
+  @NotBlank(message = "法人身份证反面不能为空")
   private String legalPersonIdBackImage;
 
   /**
@@ -112,14 +112,17 @@ public class SysTenantQueryVO implements Serializable {
    * @author 一源团队-花和尚
    * @date 2023-09-08
    */
+  @NotBlank(message = "申请备注不能为空")
   private String remark;
 
   /**
-   * 入驻状态#0=待审核|1=通过|2=被驳回
+   * 入驻状态#0=待审核|1=通过|2=被驳回不能为空
    *
+   * @mock 0
    * @author 一源团队-花和尚
    * @date 2023-09-08
    */
+  @NotNull(message = "入驻状态#0=待审核|1=通过|2=被驳回不能为空")
   private SysTenantStatusEnum status;
 
   /**
@@ -129,48 +132,4 @@ public class SysTenantQueryVO implements Serializable {
    * @date 2023-09-08
    */
   private Integer sort;
-
-  /**
-   * 逻辑删除标记#0=未删除|1=已删除
-   *
-   * @author 一源团队-花和尚
-   * @date 2023-09-08
-   */
-  private SysTenantIsDelEnum isDel;
-
-  /**
-   * 创建时间
-   *
-   * @author 一源团队-花和尚
-   * @date 2023-09-08
-   */
-  @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-  private Date createTime;
-
-  /**
-   * 更新时间
-   *
-   * @author 一源团队-花和尚
-   * @date 2023-09-08
-   */
-  @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-  private Date updateTime;
-
-  /**
-   * 创建人
-   *
-   * @author 一源团队-花和尚
-   * @date 2023-09-08
-   */
-  private String createUser;
-
-  /**
-   * 修改人
-   *
-   * @author 一源团队-花和尚
-   * @date 2023-09-08
-   */
-  private String updateUser;
 }

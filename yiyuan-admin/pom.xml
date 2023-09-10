@@ -50,6 +50,8 @@
             <artifactId>yiyuan-plugins-redis</artifactId>
             <version>${revision}</version>
         </dependency>
+
+
     </dependencies>
 
     <build>
