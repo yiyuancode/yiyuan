@@ -168,7 +168,7 @@ public class SysAreaController {
   @SaCheckPermission(
       value = {"sys:area:query"},
       orRole = "admin")
-  @GetMapping(value = "/spm/area/getAreaTreeById")
+  @GetMapping(value = "/sys/area/getAreaTreeById")
   @ResponseBody
   public CommonResult getCityTreeById(String id) throws Exception {
     return CommonResult.success(sysAreaService.getAreaTreeById(id), "根据id查询城市区域树结构");
@@ -184,7 +184,7 @@ public class SysAreaController {
   @SaCheckPermission(
       value = {"sys:area:query"},
       orRole = "admin")
-  @GetMapping(value = "/spm/area/getAreaTree")
+  @GetMapping(value = "/sys/area/getAreaTree")
   @ResponseBody
   public CommonResult getCityTree() throws Exception {
     return CommonResult.success(sysAreaService.getAreaTree(), "查询城市区域树结构");
