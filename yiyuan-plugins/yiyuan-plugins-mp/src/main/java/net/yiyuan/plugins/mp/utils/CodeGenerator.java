@@ -277,6 +277,16 @@ public class CodeGenerator {
           context.put("tableColumns", tableColumns);
           context.put("parentPck", pc.getParent());
           //          context.put("moduleName", DEFAULT_MODULENAME);
+
+          context.put("pm0", tableName.split("_")[0]);
+          context.put("pm0_2", StringUtilsPlus.convertToCamelCase((String) dtoContext.get("pm0")));
+          context.put(
+              "pm1",
+              StringUtilsPlus.convertToCamelCaseAndUncapitalize(
+                  tableName.substring(tableName.indexOf("_") + 1)));
+          context.put(
+              "pm1_2",
+              StringUtilsPlus.convertToCamelCase(tableName.substring(tableName.indexOf("_") + 1)));
           // 生成枚举文件
           createEnumsByVelocity(context);
 
@@ -287,6 +297,8 @@ public class CodeGenerator {
         }
         dtoTableColumns.add(dtoColumnMap);
       }
+
+      dtoContext.put("revision", "${revision}");
       dtoContext.put("author", AUTHOR);
       dtoContext.put("date", StringUtilsPlus.formatDateTime(LocalDateTime.now(), "yyyy-MM-dd"));
       dtoContext.put("dtoTableColumns", dtoTableColumns);
@@ -297,6 +309,7 @@ public class CodeGenerator {
       dtoContext.put("parentPck", pc.getParent());
       dtoContext.put("moudleNameZh", MOUDLE_NAME_ZH);
       dtoContext.put("pm0", tableName.split("_")[0]);
+      dtoContext.put("pm0_2", StringUtilsPlus.convertToCamelCase((String) dtoContext.get("pm0")));
       dtoContext.put(
           "pm1",
           StringUtilsPlus.convertToCamelCaseAndUncapitalize(
@@ -312,6 +325,8 @@ public class CodeGenerator {
       routerAndI18nMap.put("tableComment", dtoContext.get("tableComment"));
       routerAndI18nMapList.add(routerAndI18nMap);
 
+      createJsRouterIndexJsByVelocity(dtoContext);
+      createJsRouterJsByVelocity(dtoContext);
       createJsConfigByVelocity(dtoContext);
       createJsApiByVelocity(dtoContext);
       createJsVueByVelocity(dtoContext);
@@ -327,11 +342,14 @@ public class CodeGenerator {
       createMapperByVelocity(dtoContext);
       createMapperXmlByVelocity(dtoContext);
       createControllerByVelocity(dtoContext);
+
+      createApiPomByVelocity(dtoContext);
+      createServicePomByVelocity(dtoContext);
+      createParentPomByVelocity(dtoContext);
     }
     routerAndI18nContext.put("routerAndI18nMapList", routerAndI18nMapList);
     routerAndI18nContext.put("routerAndI18nRoot", routerAndI18nMapList.get(0).get("pm0"));
     routerAndI18nContext.put("moudleNameZh", MOUDLE_NAME_ZH);
-    createJsRouterAndI18nMapByVelocity(routerAndI18nContext);
   }
 
   /**
@@ -341,7 +359,7 @@ public class CodeGenerator {
    * @author ${author}
    * @date 2023-07-11
    */
-  public static void createJsRouterAndI18nMapByVelocity(VelocityContext context) throws Exception {
+  public static void createJsRouterJsByVelocity(VelocityContext context) throws Exception {
     VelocityEngine velocityEngine = new VelocityEngine();
     Properties prop = new Properties();
     prop.put(
@@ -350,7 +368,12 @@ public class CodeGenerator {
     velocityEngine.init(prop);
 
     String srcModelPath =
-        DEFAULT_OUT_PUT_DIR + "/src/yiyuan-vue" + DEFAULT_JS_SRC + "/router/modules/";
+        DEFAULT_OUT_PUT_DIR
+            + "/src/yiyuan-vue"
+            + DEFAULT_JS_SRC
+            + "/router/modules/"
+            + context.get("pm0")
+            + "/modules/";
 
     File voFolder = new File(srcModelPath);
     if (!voFolder.exists()) {
@@ -358,7 +381,9 @@ public class CodeGenerator {
       voFolder.mkdirs();
     }
 
-    String filePath = srcModelPath + context.get("routerAndI18nRoot") + ".js";
+    //    String filePath = srcModelPath + context.get("routerAndI18nRoot") + ".js";
+
+    String filePath = srcModelPath + context.get("pm1") + ".js";
     File file = new File(filePath);
     if (!file.exists()) {
       // 如果文件不存在则创建它
@@ -366,6 +391,51 @@ public class CodeGenerator {
     }
 
     Template template = velocityEngine.getTemplate("templates2\\router.js.vm", "UTF-8");
+    FileWriter writer = new FileWriter(filePath);
+    template.merge(context, writer);
+    writer.flush();
+    writer.close();
+  }
+
+  /**
+   * 根据用户输入的表获取每张表所有字段信息
+   *
+   * @param
+   * @author ${author}
+   * @date 2023-07-11
+   */
+  public static void createJsRouterIndexJsByVelocity(VelocityContext context) throws Exception {
+    VelocityEngine velocityEngine = new VelocityEngine();
+    Properties prop = new Properties();
+    prop.put(
+        "file.resource.loader.class",
+        "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
+    velocityEngine.init(prop);
+
+    String srcModelPath =
+        DEFAULT_OUT_PUT_DIR
+            + "/src/yiyuan-vue"
+            + DEFAULT_JS_SRC
+            + "/router/modules/"
+            + context.get("pm0")
+            + "/";
+
+    File voFolder = new File(srcModelPath);
+    if (!voFolder.exists()) {
+      // 如果文件夹不存在则创建它
+      voFolder.mkdirs();
+    }
+
+    //    String filePath = srcModelPath + context.get("routerAndI18nRoot") + ".js";
+
+    String filePath = srcModelPath + "index.js";
+    File file = new File(filePath);
+    if (!file.exists()) {
+      // 如果文件不存在则创建它
+      file.createNewFile();
+    }
+
+    Template template = velocityEngine.getTemplate("templates2\\routerIndex.js.vm", "UTF-8");
     FileWriter writer = new FileWriter(filePath);
     template.merge(context, writer);
     writer.flush();
@@ -394,10 +464,6 @@ public class CodeGenerator {
             + DEFAULT_JS_SRC
             + "/api/"
             + context.get("pm0")
-            //            + "/"
-            //            + context.get("pm1")
-            //            + "/"
-            //            + DEFAULT_MODULENAME
             + "/";
     File voFolder = new File(srcModelPath);
     if (!voFolder.exists()) {
@@ -536,7 +602,13 @@ public class CodeGenerator {
         "dtoTableColumns:{}", ((List<Map<String, String>>) context.get("dtoTableColumns")).size());
     String srcModelPath =
         DEFAULT_OUT_PUT_DIR
-            + "/src/yiyuan-controller"
+            + "/src/"
+            + "yiyuan-"
+            + context.get("pm0")
+            + "/"
+            + "yiyuan-"
+            + context.get("pm0")
+            + "-api"
             + DEFAULT_SRC
             + "/"
             + StringUtilsPlus.convertPackageNameToPath(DEFAULT_PARENT_PACK)
@@ -582,7 +654,13 @@ public class CodeGenerator {
         "dtoTableColumns:{}", ((List<Map<String, String>>) context.get("dtoTableColumns")).size());
     String srcModelPath =
         DEFAULT_OUT_PUT_DIR
-            + "/src/yiyuan-mapper"
+            + "/src/"
+            + "yiyuan-"
+            + context.get("pm0")
+            + "/"
+            + "yiyuan-"
+            + context.get("pm0")
+            + "-service"
             + DEFAULT_SRC
             + "/"
             + StringUtilsPlus.convertPackageNameToPath(DEFAULT_PARENT_PACK)
@@ -628,7 +706,13 @@ public class CodeGenerator {
         "dtoTableColumns:{}", ((List<Map<String, String>>) context.get("dtoTableColumns")).size());
     String srcModelPath =
         DEFAULT_OUT_PUT_DIR
-            + "/src/yiyuan-mapper"
+            + "/src/"
+            + "yiyuan-"
+            + context.get("pm0")
+            + "/"
+            + "yiyuan-"
+            + context.get("pm0")
+            + "-service"
             + DEFAULT_SRC
             + "/"
             + StringUtilsPlus.convertPackageNameToPath(DEFAULT_PARENT_PACK)
@@ -674,7 +758,13 @@ public class CodeGenerator {
         "dtoTableColumns:{}", ((List<Map<String, String>>) context.get("dtoTableColumns")).size());
     String srcModelPath =
         DEFAULT_OUT_PUT_DIR
-            + "/src/yiyuan-service"
+            + "/src/"
+            + "yiyuan-"
+            + context.get("pm0")
+            + "/"
+            + "yiyuan-"
+            + context.get("pm0")
+            + "-service"
             + DEFAULT_SRC
             + "/"
             + StringUtilsPlus.convertPackageNameToPath(DEFAULT_PARENT_PACK)
@@ -720,7 +810,13 @@ public class CodeGenerator {
         "dtoTableColumns:{}", ((List<Map<String, String>>) context.get("dtoTableColumns")).size());
     String srcModelPath =
         DEFAULT_OUT_PUT_DIR
-            + "/src/yiyuan-service"
+            + "/src/"
+            + "yiyuan-"
+            + context.get("pm0")
+            + "/"
+            + "yiyuan-"
+            + context.get("pm0")
+            + "-service"
             + DEFAULT_SRC
             + "/"
             + StringUtilsPlus.convertPackageNameToPath(DEFAULT_PARENT_PACK)
@@ -764,7 +860,13 @@ public class CodeGenerator {
     velocityEngine.init(prop);
     String srcModelPath =
         DEFAULT_OUT_PUT_DIR
-            + "/src/yiyuan-model"
+            + "/src/"
+            + "yiyuan-"
+            + context.get("pm0")
+            + "/"
+            + "yiyuan-"
+            + context.get("pm0")
+            + "-service"
             + DEFAULT_SRC
             + "/"
             + StringUtilsPlus.convertPackageNameToPath(DEFAULT_PARENT_PACK)
@@ -810,7 +912,13 @@ public class CodeGenerator {
         "dtoTableColumns:{}", ((List<Map<String, String>>) context.get("dtoTableColumns")).size());
     String srcModelPath =
         DEFAULT_OUT_PUT_DIR
-            + "/src/yiyuan-model"
+            + "/src/"
+            + "yiyuan-"
+            + context.get("pm0")
+            + "/"
+            + "yiyuan-"
+            + context.get("pm0")
+            + "-service"
             + DEFAULT_SRC
             + "/"
             + StringUtilsPlus.convertPackageNameToPath(DEFAULT_PARENT_PACK)
@@ -855,7 +963,13 @@ public class CodeGenerator {
         "dtoTableColumns:{}", ((List<Map<String, String>>) context.get("dtoTableColumns")).size());
     String srcModelPath =
         DEFAULT_OUT_PUT_DIR
-            + "/src/yiyuan-model"
+            + "/src/"
+            + "yiyuan-"
+            + context.get("pm0")
+            + "/"
+            + "yiyuan-"
+            + context.get("pm0")
+            + "-service"
             + DEFAULT_SRC
             + "/"
             + StringUtilsPlus.convertPackageNameToPath(DEFAULT_PARENT_PACK)
@@ -901,7 +1015,13 @@ public class CodeGenerator {
         "dtoTableColumns:{}", ((List<Map<String, String>>) context.get("dtoTableColumns")).size());
     String srcModelPath =
         DEFAULT_OUT_PUT_DIR
-            + "/src/yiyuan-model"
+            + "/src/"
+            + "yiyuan-"
+            + context.get("pm0")
+            + "/"
+            + "yiyuan-"
+            + context.get("pm0")
+            + "-service"
             + DEFAULT_SRC
             + "/"
             + StringUtilsPlus.convertPackageNameToPath(DEFAULT_PARENT_PACK)
@@ -947,7 +1067,13 @@ public class CodeGenerator {
         "dtoTableColumns:{}", ((List<Map<String, String>>) context.get("dtoTableColumns")).size());
     String srcModelPath =
         DEFAULT_OUT_PUT_DIR
-            + "/src/yiyuan-model"
+            + "/src/"
+            + "yiyuan-"
+            + context.get("pm0")
+            + "/"
+            + "yiyuan-"
+            + context.get("pm0")
+            + "-service"
             + DEFAULT_SRC
             + "/"
             + StringUtilsPlus.convertPackageNameToPath(DEFAULT_PARENT_PACK)
@@ -993,7 +1119,13 @@ public class CodeGenerator {
         "dtoTableColumns:{}", ((List<Map<String, String>>) context.get("dtoTableColumns")).size());
     String srcModelPath =
         DEFAULT_OUT_PUT_DIR
-            + "/src/yiyuan-model"
+            + "/src/"
+            + "yiyuan-"
+            + context.get("pm0")
+            + "/"
+            + "yiyuan-"
+            + context.get("pm0")
+            + "-service"
             + DEFAULT_SRC
             + "/"
             + StringUtilsPlus.convertPackageNameToPath(DEFAULT_PARENT_PACK)
@@ -1039,7 +1171,13 @@ public class CodeGenerator {
         "dtoTableColumns:{}", ((List<Map<String, String>>) context.get("dtoTableColumns")).size());
     String srcModelPath =
         DEFAULT_OUT_PUT_DIR
-            + "/src/yiyuan-model"
+            + "/src/"
+            + "yiyuan-"
+            + context.get("pm0")
+            + "/"
+            + "yiyuan-"
+            + context.get("pm0")
+            + "-service"
             + DEFAULT_SRC
             + "/"
             + StringUtilsPlus.convertPackageNameToPath(DEFAULT_PARENT_PACK)
@@ -1061,6 +1199,135 @@ public class CodeGenerator {
     }
 
     Template template = velocityEngine.getTemplate("templates2\\modelQueryVO.java.vm", "UTF-8");
+    FileWriter writer = new FileWriter(filePath);
+    template.merge(context, writer);
+    writer.flush();
+    writer.close();
+  }
+
+  /**
+   * 根据用户输入的表获取每张表所有字段信息
+   *
+   * @param
+   * @author ${author}
+   * @date 2023-07-11
+   */
+  public static void createApiPomByVelocity(VelocityContext context) throws Exception {
+    VelocityEngine velocityEngine = new VelocityEngine();
+    Properties prop = new Properties();
+    prop.put(
+        "file.resource.loader.class",
+        "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
+    velocityEngine.init(prop);
+    log.info(
+        "dtoTableColumns:{}", ((List<Map<String, String>>) context.get("dtoTableColumns")).size());
+    String srcModelPath =
+        DEFAULT_OUT_PUT_DIR
+            + "/src/"
+            + "yiyuan-"
+            + context.get("pm0")
+            + "/"
+            + "yiyuan-"
+            + context.get("pm0")
+            + "-api"
+            + "/";
+    File voFolder = new File(srcModelPath);
+    if (!voFolder.exists()) {
+      // 如果文件夹不存在则创建它
+      voFolder.mkdirs();
+    }
+
+    String filePath = srcModelPath + "pom.xml";
+    File file = new File(filePath);
+    if (!file.exists()) {
+      // 如果文件不存在则创建它
+      file.createNewFile();
+    }
+
+    Template template = velocityEngine.getTemplate("templates2\\api.pom.vm", "UTF-8");
+    FileWriter writer = new FileWriter(filePath);
+    template.merge(context, writer);
+    writer.flush();
+    writer.close();
+  }
+
+  /**
+   * 根据用户输入的表获取每张表所有字段信息
+   *
+   * @param
+   * @author ${author}
+   * @date 2023-07-11
+   */
+  public static void createServicePomByVelocity(VelocityContext context) throws Exception {
+    VelocityEngine velocityEngine = new VelocityEngine();
+    Properties prop = new Properties();
+    prop.put(
+        "file.resource.loader.class",
+        "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
+    velocityEngine.init(prop);
+    log.info(
+        "dtoTableColumns:{}", ((List<Map<String, String>>) context.get("dtoTableColumns")).size());
+    String srcModelPath =
+        DEFAULT_OUT_PUT_DIR
+            + "/src/"
+            + "yiyuan-"
+            + context.get("pm0")
+            + "/"
+            + "yiyuan-"
+            + context.get("pm0")
+            + "-service"
+            + "/";
+    File voFolder = new File(srcModelPath);
+    if (!voFolder.exists()) {
+      // 如果文件夹不存在则创建它
+      voFolder.mkdirs();
+    }
+
+    String filePath = srcModelPath + "pom.xml";
+    File file = new File(filePath);
+    if (!file.exists()) {
+      // 如果文件不存在则创建它
+      file.createNewFile();
+    }
+
+    Template template = velocityEngine.getTemplate("templates2\\service.pom.vm", "UTF-8");
+    FileWriter writer = new FileWriter(filePath);
+    template.merge(context, writer);
+    writer.flush();
+    writer.close();
+  }
+
+  /**
+   * 根据用户输入的表获取每张表所有字段信息
+   *
+   * @param
+   * @author ${author}
+   * @date 2023-07-11
+   */
+  public static void createParentPomByVelocity(VelocityContext context) throws Exception {
+    VelocityEngine velocityEngine = new VelocityEngine();
+    Properties prop = new Properties();
+    prop.put(
+        "file.resource.loader.class",
+        "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
+    velocityEngine.init(prop);
+    log.info(
+        "dtoTableColumns:{}", ((List<Map<String, String>>) context.get("dtoTableColumns")).size());
+    String srcModelPath = DEFAULT_OUT_PUT_DIR + "/src/" + "yiyuan-" + context.get("pm0") + "/";
+    File voFolder = new File(srcModelPath);
+    if (!voFolder.exists()) {
+      // 如果文件夹不存在则创建它
+      voFolder.mkdirs();
+    }
+
+    String filePath = srcModelPath + "pom.xml";
+    File file = new File(filePath);
+    if (!file.exists()) {
+      // 如果文件不存在则创建它
+      file.createNewFile();
+    }
+
+    Template template = velocityEngine.getTemplate("templates2\\parent.pom.vm", "UTF-8");
     FileWriter writer = new FileWriter(filePath);
     template.merge(context, writer);
     writer.flush();

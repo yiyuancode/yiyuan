@@ -4,7 +4,9 @@ import org.apache.commons.lang3.text.StrBuilder;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 /** 字符串工具类 */
@@ -376,5 +378,48 @@ public class StringUtilsPlus {
       return null;
     }
     return str.toLowerCase();
+  }
+
+  /**
+   * 解析行政区划id或者code值
+   *
+   * @param locationCodes 行政区划id
+   * @return 转换为大写的字符串
+   */
+  public static List<String> parseCodeToIds(String locationCodes) {
+    String a = "";
+    if (locationCodes.length() < 5) {
+      a = locationCodes.substring(0, locationCodes.length());
+    } else {
+      a = locationCodes.substring(0, 6);
+    }
+
+    List<String> result = new ArrayList<>();
+
+    int index = 0;
+    while (index < a.length()) {
+      int endIndex = Math.min(index + 2, a.length());
+      String code = a.substring(index, endIndex);
+      result.add(code);
+      index += 2;
+    }
+    if (locationCodes.length() > 5) {
+      String b = locationCodes.substring(6);
+      index = 0;
+      while (index < b.length()) {
+        int endIndex = Math.min(index + 3, b.length());
+        String code = b.substring(index, endIndex);
+        result.add(code);
+        index += 3;
+      }
+    }
+
+    List<String> result2 = new ArrayList<>();
+    StringBuilder sb = new StringBuilder();
+    for (String code : result) {
+      sb.append(code);
+      result2.add(sb.toString());
+    }
+    return result2;
   }
 }

@@ -1,0 +1,48 @@
+import {getRouterMerger} from '@/utils/routerAutoMerger.js'
+const modulesFiles = require.context('./modules', true, /\.js$/);
+const {modulesI18nMap, modulesRouterMap} = getRouterMerger(modulesFiles);
+
+
+#set($arrow="component:() => import(")
+#set($arrowRight=")")
+#set($jiegou="...")
+const routerMap = {
+
+${pm0}: {
+    name: "${pm0}",
+        ${arrow} '@/layouts/BlankView'${arrowRight}
+},
+    ${jiegou}modulesRouterMap
+
+}
+const i18nMap = {
+    CN: {
+${pm0}: {
+    name: '${moudleNameZh}'
+        ,
+                ${jiegou}modulesI18nMap.CN
+},
+},
+US: {
+    ${pm0}:
+    {
+        name: '${pm0_2} Management',
+                    ${jiegou}modulesI18nMap.US
+    }
+,
+},
+HK: {
+    ${pm0}:
+    {
+        name: '${moudleNameZh}',
+                    ${jiegou}modulesI18nMap.HK
+    }
+,
+}
+}
+export default {
+    i18nMap,
+    routerMap
+};
+
+
