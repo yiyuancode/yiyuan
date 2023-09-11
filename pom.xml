@@ -26,14 +26,15 @@
         <module>yiyuan-app</module>
         <!--        <module>yiyuan-tenant</module>-->
 
-        <module>yiyuan-service</module>
-        <module>yiyuan-model</module>
-        <module>yiyuan-mapper</module>
-        <module>yiyuan-controller</module>
+        <!--        <module>yiyuan-service</module>-->
+        <!--        <module>yiyuan-model</module>-->
+        <!--        <module>yiyuan-mapper</module>-->
+        <!--        <module>yiyuan-controller</module>-->
 
         <module>yiyuan-job</module>
         <module>yiyuan-tenant</module>
         <module>yiyuan-file</module>
+        <module>yiyuan-sys</module>
         <module>yiyuan-SMS</module>
         <!--        <module>yiyuan-file</module>-->
 

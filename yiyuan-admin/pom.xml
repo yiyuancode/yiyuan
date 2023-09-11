@@ -20,7 +20,7 @@
         </dependency>
         <dependency>
             <groupId>net.yiyuan</groupId>
-            <artifactId>yiyuan-controller</artifactId>
+            <artifactId>yiyuan-sys-api</artifactId>
             <version>${revision}</version>
         </dependency>
         <dependency>
@@ -33,6 +33,8 @@
             <artifactId>yiyuan-plugins-ssh</artifactId>
             <version>${revision}</version>
         </dependency>
+        <!---->
+
         <!--系统管理模块,引入依赖接口才会被加载-->
         <dependency>
             <groupId>redis.clients</groupId>
@@ -50,7 +52,11 @@
             <artifactId>yiyuan-plugins-redis</artifactId>
             <version>${revision}</version>
         </dependency>
-
+        <dependency>
+            <groupId>net.yiyuan</groupId>
+            <artifactId>yiyuan-SMS</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
 
     </dependencies>
 

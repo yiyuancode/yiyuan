@@ -1,6 +1,9 @@
 package net.yiyuan.controller;
 
 
+
+import cn.dev33.satoken.annotation.SaIgnore;
+import com.aliyuncs.exceptions.ClientException;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import net.yiyuan.common.model.vo.CommonResult;
@@ -16,7 +19,6 @@ import javax.annotation.Resource;
 @Api(tags = "用户发送信息相关API")
 @Slf4j
 @RestController
-@RequestMapping("/api")
 public class SendMessageController {
 
   @Resource
@@ -28,8 +30,9 @@ public class SendMessageController {
    * @param phone 手机号码
    */
   @Description("获取短信验证码")
-  @GetMapping(value = "/aliyun/verify/sms")
-  public CommonResult<String> verifySms(@RequestParam(name = "phone") String phone) {
+  @SaIgnore
+  @GetMapping(value = "/api/aliyun/verify/sms")
+  public CommonResult<String> verifySms(@RequestParam(name = "phone") String phone) throws ClientException {
 
     return aliyunSmsService.verifySms(phone);
   }
@@ -42,7 +45,8 @@ public class SendMessageController {
    * @return
    */
   @Description("校验验证码")
-  @GetMapping(value = "/aliyun/verify/check")
+  @SaIgnore
+  @GetMapping(value = "/api/aliyun/verify/check")
   public CommonResult<String> checkSmsCode(
           @RequestParam(name = "codeId") String codeId,
           @RequestParam(name = "code") String code

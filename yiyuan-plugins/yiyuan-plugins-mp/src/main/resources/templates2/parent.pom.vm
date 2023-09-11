@@ -9,7 +9,12 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <version>${revision}</version>
-    <artifactId>yiyuan-job</artifactId>
+    <artifactId>yiyuan-${pm0}</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>yiyuan-${pm0}-api</module>
+        <module>yiyuan-${pm0}-service</module>
+    </modules>
 
     <dependencies>
         <dependency>
@@ -17,26 +22,9 @@
             <artifactId>yiyuan-plugins-satoken</artifactId>
             <version>${revision}</version>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-        <dependency>
-            <groupId>net.yiyuan</groupId>
-            <artifactId>yiyuan-sys-service</artifactId>
-            <version>${revision}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-quartz</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>druid-spring-boot-starter
-            </artifactId>
-        </dependency>
     </dependencies>
-
 </project>
