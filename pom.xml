@@ -35,6 +35,7 @@
         <module>yiyuan-tenant</module>
         <module>yiyuan-file</module>
         <module>yiyuan-sys</module>
+        <module>yiyuan-SMS</module>
         <!--        <module>yiyuan-file</module>-->
 
     </modules>
