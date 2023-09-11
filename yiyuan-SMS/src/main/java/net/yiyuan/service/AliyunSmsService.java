@@ -9,10 +9,11 @@ import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.http.MethodType;
 import com.aliyuncs.profile.DefaultProfile;
 import lombok.extern.slf4j.Slf4j;
-import net.yiyuan.admin.redis.AdminRedisService;
+import net.yiyuan.common.exception.BusinessException;
 import net.yiyuan.common.model.vo.CommonResult;
 import net.yiyuan.pojo.SmsCode;
 import net.yiyuan.pojo.SmsCodeCache;
+import net.yiyuan.redis.SmsRedisService;
 import net.yiyuan.utils.CheckUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -40,13 +41,14 @@ public class AliyunSmsService {
     private String appSecure;
 
     @Resource
-    private AdminRedisService adminRedisService;
+    private SmsRedisService smsRedisService;
+
     /**
      * 获取短信验证码
      *
      * @param phone 手机号码
      */
-    public CommonResult<String> verifySms(String phone) {
+    public CommonResult<String> verifySms(String phone) throws ClientException {
         log.info("发送短信验证码，phone={}", phone);
         // 校验手机格式
         if (!CheckUtil.checkPhoneNumber(phone)) {
@@ -58,7 +60,7 @@ public class AliyunSmsService {
         CommonResult<?> sendResult = doSingleTplSms(smsCode);
         if (200 == sendResult.getCode()) {
             log.info("短信发送成功，phone={}", phone);
-            return CommonResult.success(smsCode.getCodeId(), "短信发送成功");
+            return CommonResult.success(smsCode.getPhone(), "短信发送成功");
         }
         log.error("短信发送失败，phone={}", phone);
         return CommonResult.failed("短信发送失败");
@@ -68,23 +70,24 @@ public class AliyunSmsService {
     /**
      * 短信验证码校验
      *
-     * @param codeId 验证码ID
+     * @param phone 验证码ID
      * @param code   6位随机数验证码
      * @return
      */
-    public boolean checkSmsCode(String codeId, String code) {
+    public boolean checkSmsCode(String phone, String code) {
 
-        if (StringUtils.isBlank(codeId) || StringUtils.isBlank(code)) {
+        if (StringUtils.isBlank(phone) || StringUtils.isBlank(code)) {
             return false;
         }
-        String scode = adminRedisService.GET_SMS_PERMISSION(codeId);
+        String scode = smsRedisService.GET_SMS_PERMISSION(phone);
 
 
         return code.equals(scode);
     }
 
 
-    public CommonResult<?> doSingleTplSms(SmsCode smsCode) {
+    public CommonResult<?> doSingleTplSms(SmsCode smsCode) throws ClientException {
+
         log.info("阿里云短信发送接口：param -> {}", JSON.toJSONString(smsCode));
         DefaultProfile profile = DefaultProfile.getProfile("ap-northeast-1",appKey,appSecure);
         IAcsClient client = new DefaultAcsClient(profile);
@@ -98,20 +101,18 @@ public class AliyunSmsService {
         request.putQueryParameter("SignName",signName);
         request.putQueryParameter("TemplateCode",templateCode);
         request.putQueryParameter("TemplateParam","{\"code\":\""+smsCode.getCode()+"\"}");
-        try {
+
             CommonResponse response = client.getCommonResponse(request);
             String string = response.getData().toString();
             Map map = JSON.parseObject(string, Map.class);
 
             if ("OK".equalsIgnoreCase((String) map.get("Code"))) {
 
-                adminRedisService.SET_SMS_PERMISSION(smsCode.getCodeId(),smsCode.getCode());
-                return CommonResult.success(smsCode.getCodeId(), "短信发送成功");
+                smsRedisService.SET_SMS_PERMISSION(smsCode.getPhone(),smsCode.getCode());
+                return CommonResult.success(smsCode.getPhone(), "短信发送成功");
             }
             System.out.println(response.getData());
-        } catch (ClientException e) {
-            log.error("阿里云短信调用异常【发送调用】", e);
-        }
+
 
         log.warn("阿里云短信发送失败");
         return CommonResult.failed("短信发送失败");
@@ -124,9 +125,9 @@ public class AliyunSmsService {
      * @return 验证码
      */
     public SmsCode buildSmsCode(String phone) {
-        SmsCodeCache smsCodeCache = SmsCodeCache.getInstance();
-        if (smsCodeCache.get(phone) != null) {
-            smsCodeCache.remove(phone);
+
+        if (smsRedisService.GET_SMS_PERMISSION(phone) != null) {
+            throw new BusinessException("请勿重复发送短信");
         }
         return new SmsCode(phone, fix);
     }
