@@ -1,7 +1,6 @@
 package net.yiyuan.dto;
 
 import lombok.Data;
-import net.yiyuan.enums.SysTenantStatusEnum;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -114,22 +113,4 @@ public class SysTenantApplyDTO implements Serializable {
    */
   @NotBlank(message = "申请备注不能为空")
   private String remark;
-
-  /**
-   * 入驻状态#0=待审核|1=通过|2=被驳回不能为空
-   *
-   * @mock 0
-   * @author 一源团队-花和尚
-   * @date 2023-09-08
-   */
-  @NotNull(message = "入驻状态#0=待审核|1=通过|2=被驳回不能为空")
-  private SysTenantStatusEnum status;
-
-  /**
-   * 排序
-   *
-   * @author 一源团队-花和尚
-   * @date 2023-09-08
-   */
-  private Integer sort;
 }
