@@ -1,6 +1,5 @@
 package net.yiyuan.service.impl;
 
-import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import icu.mhb.mybatisplus.plugln.base.service.impl.JoinServiceImpl;
 import icu.mhb.mybatisplus.plugln.core.JoinLambdaWrapper;
@@ -168,24 +167,29 @@ public class SysAreaServiceImpl extends JoinServiceImpl<SysAreaMapper, SysArea>
   }
 
   @Override
-  public Object getAreaTree(String pid) throws Exception {
+  public List<SysAreaQueryVO> getAreaTree(String pid) throws Exception {
 
     //    sysRedisUtilService.DEL_SYS_AREA_GETAREATREE();
 
-    Object redisResult = sysRedisUtilService.GET_SYS_AREA_GETAREATREE();
-    if (StringUtilsPlus.isNull(redisResult)) {
-      JoinLambdaWrapper<SysArea> wrapper = new JoinLambdaWrapper<>(SysArea.class);
-      List<SysAreaQueryVO> sysAreas = null;
-      wrapper.le(SysArea::getLevel, SysAreaLevelEnum.THIRD_LEVEL_CLASSIFICATION.getValue());
-      sysAreas = sysAreaMapper.joinSelectList(wrapper, SysAreaQueryVO.class);
-      sysAreas = TreeUtil.buildTreeByTwoLayersFor(sysAreas, "id", "pid", "child", "0");
-      sysRedisUtilService.SET_SYS_AREA_GETAREATREE(JSONObject.toJSONString(sysAreas));
-      log.info("redis缓存没有数据第一次缓存");
-    } else {
-      log.info("redis缓存已经有数据了");
-    }
-
-    return redisResult;
+    //    Object redisResult = sysRedisUtilService.GET_SYS_AREA_GETAREATREE();
+    //    if (StringUtilsPlus.isNull(redisResult)) {
+    //      JoinLambdaWrapper<SysArea> wrapper = new JoinLambdaWrapper<>(SysArea.class);
+    //      List<SysAreaQueryVO> sysAreas = null;
+    //      wrapper.le(SysArea::getLevel, SysAreaLevelEnum.THIRD_LEVEL_CLASSIFICATION.getValue());
+    //      sysAreas = sysAreaMapper.joinSelectList(wrapper, SysAreaQueryVO.class);
+    //      sysAreas = TreeUtil.buildTreeByTwoLayersFor(sysAreas, "id", "pid", "child", "0");
+    //      sysRedisUtilService.SET_SYS_AREA_GETAREATREE(JSONObject.toJSONString(sysAreas));
+    //      log.info("redis缓存没有数据第一次缓存");
+    //    } else {
+    //      log.info("redis缓存已经有数据了");
+    //    }
+    JoinLambdaWrapper<SysArea> wrapper = new JoinLambdaWrapper<>(SysArea.class);
+    wrapper.le(SysArea::getLevel, SysAreaLevelEnum.THIRD_LEVEL_CLASSIFICATION.getValue());
+    List<SysAreaQueryVO> spmShopCities =
+        sysAreaMapper.joinSelectList(wrapper, SysAreaQueryVO.class);
+    List<SysAreaQueryVO> sysAreas =
+        TreeUtil.buildTreeByTwoLayersFor(spmShopCities, "id", "pid", "child", "0");
+    return sysAreas;
 
     //    if (StringUtilsPlus.isEmpty(pid)) {
     //      wrapper.le(SysArea::getLevel, SysAreaLevelEnum.FIRST_LEVEL_CLASSIFICATION.getValue());

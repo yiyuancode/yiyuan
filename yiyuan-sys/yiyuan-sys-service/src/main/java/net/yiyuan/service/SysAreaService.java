@@ -107,5 +107,5 @@ public interface SysAreaService extends JoinIService<SysArea> {
    * @author 一源团队-花和尚
    * @date 2023-09-09
    */
-  Object getAreaTree(String pid) throws Exception;
+  List<SysAreaQueryVO> getAreaTree(String pid) throws Exception;
 }

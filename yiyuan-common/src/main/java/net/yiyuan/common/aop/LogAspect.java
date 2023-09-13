@@ -4,9 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SimplePropertyPreFilter;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
-import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
@@ -71,21 +69,21 @@ public class LogAspect {
     log.info("请求的参数: {}", JSON.toJSONString(arguments, filters));
   }
 
-  @Around("webLog()")
-  public Object doAround(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
-    long startTime = System.currentTimeMillis();
-    Object result = proceedingJoinPoint.proceed();
-
-    // 当某些字段太敏感，或者是太长时，就不显示
-    String[] excludeProperties = {"password", "file"};
-    SimplePropertyPreFilter filters = new SimplePropertyPreFilter();
-    for (String str : excludeProperties) {
-      filters.getExcludes().add(str);
-    }
-    log.info("返回的结果: {}", JSON.toJSONString(result, filters));
-    log.info("=== 结束时，总耗时：{} ms ===", System.currentTimeMillis() - startTime);
-    return result;
-  }
+  //  @Around("webLog()")
+  //  public Object doAround(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
+  //    long startTime = System.currentTimeMillis();
+  //    Object result = proceedingJoinPoint.proceed();
+  //
+  //    // 当某些字段太敏感，或者是太长时，就不显示
+  //    String[] excludeProperties = {"password", "file"};
+  //    SimplePropertyPreFilter filters = new SimplePropertyPreFilter();
+  //    for (String str : excludeProperties) {
+  //      filters.getExcludes().add(str);
+  //    }
+  //    //    log.info("返回的结果: {}", JSON.toJSONString(result, filters));
+  //    log.info("=== 结束时，总耗时：{} ms ===", System.currentTimeMillis() - startTime);
+  //    return result;
+  //  }
 
   /**
    * 使用 Nginx 进行反向代理，这个方法主要是用来获取远程 IP
