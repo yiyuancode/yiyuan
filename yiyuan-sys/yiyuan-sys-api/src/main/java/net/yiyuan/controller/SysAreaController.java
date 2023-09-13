@@ -2,6 +2,7 @@ package net.yiyuan.controller;
 
 import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.annotation.SaCheckPermission;
+import cn.dev33.satoken.annotation.SaIgnore;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import net.yiyuan.common.model.vo.CommonResult;
@@ -165,9 +166,10 @@ public class SysAreaController {
    * @date 2023-09-09
    */
   @Description("系统管理/区域管理/查询区域")
-  @SaCheckPermission(
-      value = {"sys:area:query"},
-      orRole = "admin")
+  //  @SaCheckPermission(
+  //      value = {"sys:area:query"},
+  //      orRole = "admin")
+  @SaIgnore
   @GetMapping(value = "/sys/area/getAreaTreeById")
   @ResponseBody
   public CommonResult getCityTreeById(String id) throws Exception {
@@ -181,9 +183,10 @@ public class SysAreaController {
    * @date 2023-09-09
    */
   @Description("系统管理/区域管理/查询区域")
-  @SaCheckPermission(
-      value = {"sys:area:query"},
-      orRole = "admin")
+  //  @SaCheckPermission(
+  //      value = {"sys:area:query"},
+  //      orRole = "admin")
+  @SaIgnore
   @GetMapping(value = "/sys/area/getAreaTree")
   @ResponseBody
   public CommonResult getCityTree(String pid) throws Exception {
