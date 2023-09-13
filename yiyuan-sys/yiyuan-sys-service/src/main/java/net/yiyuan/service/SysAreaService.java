@@ -98,7 +98,7 @@ public interface SysAreaService extends JoinIService<SysArea> {
    * @author 一源团队-花和尚
    * @date 2023-09-09
    */
-  List<Map<String, Object>> getAreaTreeById(String id) throws Exception;
+  List<SysAreaQueryVO> getAreaTreeById(String id) throws Exception;
 
   /**
    * 查询所有层级
@@ -107,5 +107,5 @@ public interface SysAreaService extends JoinIService<SysArea> {
    * @author 一源团队-花和尚
    * @date 2023-09-09
    */
-  List<Map<String, Object>> getAreaTree() throws Exception;
+  Object getAreaTree() throws Exception;
 }

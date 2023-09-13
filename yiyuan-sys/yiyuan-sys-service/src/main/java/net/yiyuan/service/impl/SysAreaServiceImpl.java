@@ -1,12 +1,13 @@
 package net.yiyuan.service.impl;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import icu.mhb.mybatisplus.plugln.base.service.impl.JoinServiceImpl;
 import icu.mhb.mybatisplus.plugln.core.JoinLambdaWrapper;
 import lombok.extern.slf4j.Slf4j;
 import net.yiyuan.common.utils.BeanUtilsPlus;
 import net.yiyuan.common.utils.StringUtilsPlus;
-import net.yiyuan.common.utils.TreeUtils;
+import net.yiyuan.common.utils.TreeUtil;
 import net.yiyuan.dto.SysAreaAddDTO;
 import net.yiyuan.dto.SysAreaEditDTO;
 import net.yiyuan.dto.SysAreaListDTO;
@@ -14,6 +15,7 @@ import net.yiyuan.dto.SysAreaPageDTO;
 import net.yiyuan.enums.SysAreaLevelEnum;
 import net.yiyuan.mapper.SysAreaMapper;
 import net.yiyuan.model.SysArea;
+import net.yiyuan.redis.SysRedisUtilService;
 import net.yiyuan.service.SysAreaService;
 import net.yiyuan.vo.SysAreaQueryVO;
 import org.springframework.stereotype.Service;
@@ -21,7 +23,6 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 区域Service层接口实现
@@ -34,7 +35,7 @@ import java.util.Map;
 public class SysAreaServiceImpl extends JoinServiceImpl<SysAreaMapper, SysArea>
     implements SysAreaService {
   @Resource private SysAreaMapper sysAreaMapper;
-
+  @Resource private SysRedisUtilService sysRedisUtilService;
   /**
    * 区域列表(全部)
    *
@@ -151,26 +152,36 @@ public class SysAreaServiceImpl extends JoinServiceImpl<SysAreaMapper, SysArea>
   }
 
   @Override
-  public List<Map<String, Object>> getAreaTreeById(String id) throws Exception {
+  public List<SysAreaQueryVO> getAreaTreeById(String id) throws Exception {
     List<String> ids = StringUtilsPlus.parseCodeToIds(id);
     log.info("解析区域id值{}", ids);
     JoinLambdaWrapper<SysArea> wrapper = new JoinLambdaWrapper<>(SysArea.class);
     wrapper.in(SysArea::getId, ids);
-    List<SysArea> spmShopCities = sysAreaMapper.joinSelectList(wrapper, SysArea.class);
+    List<SysAreaQueryVO> spmShopCities =
+        sysAreaMapper.joinSelectList(wrapper, SysAreaQueryVO.class);
     log.info("解析区域id值list查询值{}", spmShopCities);
-    List<Map<String, Object>> maps =
-        TreeUtils.convertListToTree(spmShopCities, "0", "id", "pid", "child");
 
-    return maps;
+    List<SysAreaQueryVO> sysAreas =
+        TreeUtil.buildTreeByTwoLayersFor(spmShopCities, "id", "pid", "child", "0");
+
+    return sysAreas;
   }
 
   @Override
-  public List<Map<String, Object>> getAreaTree() throws Exception {
+  public Object getAreaTree() throws Exception {
     JoinLambdaWrapper<SysArea> wrapper = new JoinLambdaWrapper<>(SysArea.class);
     wrapper.le(SysArea::getLevel, SysAreaLevelEnum.THIRD_LEVEL_CLASSIFICATION.getValue());
-    List<SysArea> spmShopCities = sysAreaMapper.joinSelectList(wrapper, SysArea.class);
-    List<Map<String, Object>> maps =
-        TreeUtils.convertListToTree(spmShopCities, "0", "id", "pid", "child");
-    return maps;
+
+    Object sysAreas = sysRedisUtilService.GET_SYS_AREA_GETAREATREE();
+    ObjectMapper ob = new ObjectMapper();
+    if (StringUtilsPlus.isNull(sysAreas)) {
+      List<SysAreaQueryVO> spmShopCities =
+          sysAreaMapper.joinSelectList(wrapper, SysAreaQueryVO.class);
+      List<SysAreaQueryVO> sysAreaQueryVOS =
+          TreeUtil.buildTreeByTwoLayersFor(spmShopCities, "id", "pid", "child", "0");
+      sysRedisUtilService.SET_SYS_AREA_GETAREATREE(ob.writeValueAsString(sysAreaQueryVOS));
+      ;
+    }
+    return sysAreas;
   }
 }

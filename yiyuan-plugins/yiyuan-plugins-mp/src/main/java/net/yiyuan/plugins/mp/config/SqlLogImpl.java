@@ -48,7 +48,7 @@ public class SqlLogImpl implements Log {
       String params,
       String realSql) {
     log.info(
-        "\n------------------------\nbegin  : {}\nprepare: {}\nparams : {}\nsql    : {}\nexec   : {}\ntotal  : {}\ntable  : {}\ntype   : {}\n------------------------\n",
+        "\n------------------------\nbegin  : {}\nprepare: {}\nparams : {}\nsql    : {}\nexec   : {}ms\ntotal  : {}\ntable  : {}\ntype   : {}\n------------------------\n",
         new Date(beginTime),
         prepareSql,
         params,

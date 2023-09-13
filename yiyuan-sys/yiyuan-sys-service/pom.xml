@@ -17,5 +17,10 @@
             <artifactId>yiyuan-plugins-mp</artifactId>
             <version>${revision}</version>
         </dependency>
+        <dependency>
+            <groupId>net.yiyuan</groupId>
+            <artifactId>yiyuan-plugins-redis</artifactId>
+            <version>${revision}</version>
+        </dependency>
     </dependencies>
 </project>
