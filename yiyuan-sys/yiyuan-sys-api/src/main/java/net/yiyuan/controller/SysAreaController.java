@@ -186,7 +186,7 @@ public class SysAreaController {
       orRole = "admin")
   @GetMapping(value = "/sys/area/getAreaTree")
   @ResponseBody
-  public CommonResult getCityTree() throws Exception {
-    return CommonResult.success(sysAreaService.getAreaTree(), "查询城市区域树结构");
+  public CommonResult getCityTree(String pid) throws Exception {
+    return CommonResult.success(sysAreaService.getAreaTree(pid), "查询城市区域树结构");
   }
 }

@@ -12,7 +12,7 @@ public class SysRedisUtilService {
   @Autowired private RedisService redisService;
 
   private String REDIS_DATABASE_OMS = "1";
-  private String REDIS_KEY_SYS_AREA_GETAREATREE = "sys:area:getareatree2";
+  private String REDIS_KEY_SYS_AREA_GETAREATREE = "sys:area:getareatree";
   private Long REDIS_EXPIRE_SYS_AREA_GETAREATREE = 0L;
 
   public Object GET_SYS_AREA_GETAREATREE() {
@@ -21,7 +21,7 @@ public class SysRedisUtilService {
     return redisService.get(key);
   }
 
-  public void SET_SYS_AREA_GETAREATREE(String data) {
+  public void SET_SYS_AREA_GETAREATREE(Object data) {
     String key = REDIS_DATABASE_OMS + ":" + REDIS_KEY_SYS_AREA_GETAREATREE;
 
     if (REDIS_EXPIRE_SYS_AREA_GETAREATREE == 0) {
@@ -29,5 +29,12 @@ public class SysRedisUtilService {
     } else {
       redisService.set(key, data, REDIS_EXPIRE_SYS_AREA_GETAREATREE);
     }
+  }
+
+  public boolean DEL_SYS_AREA_GETAREATREE() {
+    String key = REDIS_DATABASE_OMS + ":" + REDIS_KEY_SYS_AREA_GETAREATREE;
+    log.info("key: {}", key);
+    Boolean del = redisService.del(key);
+    return del;
   }
 }
