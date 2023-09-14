@@ -9,8 +9,10 @@ import net.yiyuan.common.exception.BusinessException;
 import net.yiyuan.common.utils.BeanUtilsPlus;
 import net.yiyuan.dto.*;
 import net.yiyuan.mapper.AuthAdminMapper;
+import net.yiyuan.mapper.SysAreaMapper;
 import net.yiyuan.mapper.SysTenantMapper;
 import net.yiyuan.model.AuthAdmin;
+import net.yiyuan.model.SysArea;
 import net.yiyuan.model.SysTenant;
 import net.yiyuan.service.SysTenantService;
 import net.yiyuan.vo.SysTenantQueryVO;
@@ -19,6 +21,9 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 /**
  * 商户Service层接口实现
  *
@@ -31,6 +36,7 @@ public class SysTenantServiceImpl extends JoinServiceImpl<SysTenantMapper, SysTe
     implements SysTenantService {
   @Resource private SysTenantMapper sysTenantMapper;
   @Resource private AuthAdminMapper authAdminMapper;
+  @Resource private SysAreaMapper sysAreaMapper;
 
   /**
    * 商户列表(全部)
@@ -69,6 +75,7 @@ public class SysTenantServiceImpl extends JoinServiceImpl<SysTenantMapper, SysTe
             new Page<>(request.getPageNum(), request.getPageSize()),
             wrapper,
             SysTenantQueryVO.class);
+    setSpmShopCityIdZh(voPage.getRecords());
     return voPage;
   }
 
@@ -212,5 +219,36 @@ public class SysTenantServiceImpl extends JoinServiceImpl<SysTenantMapper, SysTe
     authAdminPO.setTenantId(sysTenantQueryVO.getId());
     authAdminMapper.insert(authAdminPO);
     return true;
+  }
+
+  public void setSpmShopCityIdZh(List<SysTenantQueryVO> list) {
+    // 提取id字段并分割成逗号并且去重解析为整数数组
+    List<String> sysAreaIdList =
+        list.stream()
+            .map(SysTenantQueryVO::getSpmShopCityId)
+            .flatMap(ids -> Arrays.stream(ids.split(",")))
+            .map(String::toString)
+            .distinct()
+            .collect(Collectors.toList());
+    JoinLambdaWrapper<SysArea> wrapper = new JoinLambdaWrapper<>(SysArea.class);
+    wrapper.in(SysArea::getId, sysAreaIdList);
+    wrapper.select(SysArea::getName, SysArea::getId);
+    List<SysArea> sysAreaList = sysAreaMapper.joinSelectList(wrapper, SysArea.class);
+    // 使用流操作将List转换为Map,便于根据id直接获取,避免再次循环
+    Map<String, SysArea> map =
+        sysAreaList.stream().collect(Collectors.toMap(SysArea::getId, obj -> obj));
+    // 使用流操作设置每个对象的字段值
+    list.stream()
+        .forEach(
+            obj -> {
+              String[] cityArray = obj.getSpmShopCityId().split(",");
+              String spmShopCityIdZh =
+                  Arrays.asList(cityArray).stream()
+                      .map(String::toString)
+                      .map(map::get)
+                      .map(SysArea::getName)
+                      .collect(Collectors.joining(","));
+              obj.setSpmShopCityIdZh(spmShopCityIdZh);
+            });
   }
 }

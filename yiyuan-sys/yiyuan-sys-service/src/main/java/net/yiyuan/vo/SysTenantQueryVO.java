@@ -173,4 +173,12 @@ public class SysTenantQueryVO implements Serializable {
    * @date 2023-09-08
    */
   private String updateUser;
+
+  /**
+   * 归属区域中文
+   *
+   * @author 一源团队-花和尚
+   * @date 2023-09-08
+   */
+  private String spmShopCityIdZh;
 }
