@@ -119,4 +119,12 @@ public class SysAreaQueryVO implements Serializable {
    * @date 2023-09-11
    */
   private List<SysAreaQueryVO> child;
+
+  /**
+   * 修改人
+   *
+   * @author 一源团队-花和尚
+   * @date 2023-09-11
+   */
+  private Boolean isLeaf = false;
 }

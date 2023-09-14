@@ -39,7 +39,7 @@ public class FileInfoController {
    * @author 一源团队--小林同学
    * @date 2023-07-15
    */
-  @Description("文件管理//查询")
+  @Description("文件管理/文件管理/查询")
   @SaCheckPermission(
       value = {"file:info:query"},
       orRole = "admin")
@@ -57,7 +57,7 @@ public class FileInfoController {
    * @author 一源团队--小林同学
    * @date 2023-07-15
    */
-  @Description("文件管理//查询")
+  @Description("文件管理/文件管理/查询")
   @SaCheckPermission(
       value = {"file:info:query"},
       orRole = "admin")
@@ -79,7 +79,7 @@ public class FileInfoController {
    * @author 一源团队--小林同学
    * @date 2023-07-15
    */
-  @Description("文件管理//查询")
+  @Description("文件管理/文件管理/查询")
   @SaCheckPermission(
       value = {"file:info:query"},
       orRole = "admin")
@@ -98,7 +98,7 @@ public class FileInfoController {
    * @author 一源团队--小林同学
    * @date 2023-07-15
    */
-  @Description("文件管理//删除")
+  @Description("文件管理/文件管理/删除")
   @SaCheckPermission(
       value = {"file:info:delete"},
       orRole = "admin")
@@ -121,7 +121,7 @@ public class FileInfoController {
    * @author 一源团队--小林同学
    * @date 2023-07-15
    */
-  @Description("文件管理//编辑")
+  @Description("文件管理/文件管理/编辑")
   @SaCheckPermission(
       value = {"file:info:edit"},
       orRole = "admin")
@@ -143,7 +143,7 @@ public class FileInfoController {
    * @author 一源团队--小林同学
    * @date 2023-07-15
    */
-  @Description("文件管理//新增")
+  @Description("文件管理/文件管理/新增")
   @SaCheckPermission(
       value = {"file:info:add"},
       orRole = "admin")
@@ -164,7 +164,7 @@ public class FileInfoController {
    * @return fid
    */
   @SaIgnore
-  @Description("文件管理//文件上传")
+  @Description("文件管理/文件管理/文件上传")
   @RequestMapping(value = "/file/upload", method = RequestMethod.POST)
   public CommonResult<String> upload(MultipartFile file) {
     if (file == null) {
@@ -185,7 +185,7 @@ public class FileInfoController {
    *
    * @param fid 文件主键
    */
-  @Description("文件管理//文件下载")
+  @Description("文件管理/文件管理/文件下载")
   @GetMapping("/file/download/{fid}")
   public void download(
       HttpServletRequest request, HttpServletResponse response, @PathVariable("fid") String fid)

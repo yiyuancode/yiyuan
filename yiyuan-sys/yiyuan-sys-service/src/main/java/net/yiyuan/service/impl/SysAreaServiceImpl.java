@@ -152,54 +152,60 @@ public class SysAreaServiceImpl extends JoinServiceImpl<SysAreaMapper, SysArea>
 
   @Override
   public List<SysAreaQueryVO> getAreaTreeById(String id) throws Exception {
+    //    JoinLambdaWrapper<SysArea> wrapper = new JoinLambdaWrapper<>(SysArea.class);
+    //    wrapper.likeRight(SysArea::getId, id);
+    //    List<SysAreaQueryVO> spmShopCities =
+    //        sysAreaMapper.joinSelectList(wrapper, SysAreaQueryVO.class);
+    //
+    //    spmShopCities.forEach(
+    //        (item) -> {
+    //          if (item.getLevel().equals(SysAreaLevelEnum.FIVE_LEVEL_CLASSIFICATION)) {
+    //            item.setIsLeaf(true);
+    //          } else {
+    //            item.setIsLeaf(false);
+    //          }
+    //        });
+    //    List<SysAreaQueryVO> sysAreas =
+    //        TreeUtil.buildTreeByTwoLayersFor(spmShopCities, "id", "pid", "child", "0");
     List<String> ids = StringUtilsPlus.parseCodeToIds(id);
-    log.info("解析区域id值{}", ids);
+
     JoinLambdaWrapper<SysArea> wrapper = new JoinLambdaWrapper<>(SysArea.class);
     wrapper.in(SysArea::getId, ids);
     List<SysAreaQueryVO> spmShopCities =
         sysAreaMapper.joinSelectList(wrapper, SysAreaQueryVO.class);
-    log.info("解析区域id值list查询值{}", spmShopCities);
+
+    spmShopCities.forEach(
+        (item) -> {
+          if (item.getLevel().equals(SysAreaLevelEnum.FIVE_LEVEL_CLASSIFICATION)) {
+            item.setIsLeaf(true);
+          } else {
+            item.setIsLeaf(false);
+          }
+        });
 
     List<SysAreaQueryVO> sysAreas =
         TreeUtil.buildTreeByTwoLayersFor(spmShopCities, "id", "pid", "child", "0");
-
     return sysAreas;
   }
 
   @Override
   public List<SysAreaQueryVO> getAreaTree(String pid) throws Exception {
-
-    //    sysRedisUtilService.DEL_SYS_AREA_GETAREATREE();
-
-    //    Object redisResult = sysRedisUtilService.GET_SYS_AREA_GETAREATREE();
-    //    if (StringUtilsPlus.isNull(redisResult)) {
-    //      JoinLambdaWrapper<SysArea> wrapper = new JoinLambdaWrapper<>(SysArea.class);
-    //      List<SysAreaQueryVO> sysAreas = null;
-    //      wrapper.le(SysArea::getLevel, SysAreaLevelEnum.THIRD_LEVEL_CLASSIFICATION.getValue());
-    //      sysAreas = sysAreaMapper.joinSelectList(wrapper, SysAreaQueryVO.class);
-    //      sysAreas = TreeUtil.buildTreeByTwoLayersFor(sysAreas, "id", "pid", "child", "0");
-    //      sysRedisUtilService.SET_SYS_AREA_GETAREATREE(JSONObject.toJSONString(sysAreas));
-    //      log.info("redis缓存没有数据第一次缓存");
-    //    } else {
-    //      log.info("redis缓存已经有数据了");
-    //    }
     JoinLambdaWrapper<SysArea> wrapper = new JoinLambdaWrapper<>(SysArea.class);
-    wrapper.le(SysArea::getLevel, SysAreaLevelEnum.THIRD_LEVEL_CLASSIFICATION.getValue());
+    if (StringUtilsPlus.isEmpty(pid)) {
+      wrapper.eq(SysArea::getPid, "0");
+    } else {
+      wrapper.eq(SysArea::getPid, pid);
+    }
     List<SysAreaQueryVO> spmShopCities =
         sysAreaMapper.joinSelectList(wrapper, SysAreaQueryVO.class);
-    List<SysAreaQueryVO> sysAreas =
-        TreeUtil.buildTreeByTwoLayersFor(spmShopCities, "id", "pid", "child", "0");
-    return sysAreas;
 
-    //    if (StringUtilsPlus.isEmpty(pid)) {
-    //      wrapper.le(SysArea::getLevel, SysAreaLevelEnum.FIRST_LEVEL_CLASSIFICATION.getValue());
-    //      sysAreas = sysAreaMapper.joinSelectList(wrapper, SysArea.class);
-    //      return sysAreas;
-    //    } else {
-    //      wrapper.eq(SysArea::getPid, pid);
-    //      wrapper.le(SysArea::getLevel, SysAreaLevelEnum.THIRD_LEVEL_CLASSIFICATION.getValue());
-    //      sysAreas = sysAreaMapper.joinSelectList(wrapper, SysArea.class);
-    //      return sysAreas;
-    //    }
+    List<String> areaIdList = StringUtilsPlus.parseCodeToIds(pid);
+    if (areaIdList.size() == SysAreaLevelEnum.FOURTH_LEVEL_CLASSIFICATION.getValue()) {
+      spmShopCities.forEach(
+          (item) -> {
+            item.setIsLeaf(true);
+          });
+    }
+    return spmShopCities;
   }
 }

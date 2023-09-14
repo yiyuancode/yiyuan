@@ -387,6 +387,9 @@ public class StringUtilsPlus {
    * @return 转换为大写的字符串
    */
   public static List<String> parseCodeToIds(String locationCodes) {
+    if (StringUtilsPlus.isEmpty(locationCodes)) {
+      return new ArrayList<>();
+    }
     String a = "";
     if (locationCodes.length() < 5) {
       a = locationCodes.substring(0, locationCodes.length());
