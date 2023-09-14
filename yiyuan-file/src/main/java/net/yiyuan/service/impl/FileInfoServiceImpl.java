@@ -245,7 +245,7 @@ public class FileInfoServiceImpl extends JoinServiceImpl<FileInfoMapper, FileInf
     fileinfo.setState(FileInfoStateEnum.TEMPORARY);
     fileinfo.setTime(Timestamp.valueOf(LocalDateTime.now()));
     save(fileinfo);
-    return key + suffix;
+    return key;
   }
 
   /**
