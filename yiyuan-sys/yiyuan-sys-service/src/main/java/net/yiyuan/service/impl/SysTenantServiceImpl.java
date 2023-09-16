@@ -1,5 +1,6 @@
 package net.yiyuan.service.impl;
 
+import cn.dev33.satoken.fun.SaParamRetFunction;
 import cn.dev33.satoken.util.SaFoxUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import icu.mhb.mybatisplus.plugln.base.service.impl.JoinServiceImpl;
@@ -75,6 +76,7 @@ public class SysTenantServiceImpl extends JoinServiceImpl<SysTenantMapper, SysTe
             new Page<>(request.getPageNum(), request.getPageSize()),
             wrapper,
             SysTenantQueryVO.class);
+
     setSpmShopCityIdZh(voPage.getRecords());
     return voPage;
   }
@@ -237,6 +239,7 @@ public class SysTenantServiceImpl extends JoinServiceImpl<SysTenantMapper, SysTe
     // 使用流操作将List转换为Map,便于根据id直接获取,避免再次循环
     Map<String, SysArea> map =
         sysAreaList.stream().collect(Collectors.toMap(SysArea::getId, obj -> obj));
+
     // 使用流操作设置每个对象的字段值
     list.stream()
         .forEach(

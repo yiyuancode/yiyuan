@@ -1,16 +1,11 @@
 package net.yiyuan.controller;
-
-
-
 import cn.dev33.satoken.annotation.SaIgnore;
-import com.aliyuncs.exceptions.ClientException;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import net.yiyuan.common.model.vo.CommonResult;
-import net.yiyuan.service.AliyunSmsService;
+import net.yiyuan.service.ActiveEmailAndSmsService;
 import org.springframework.context.annotation.Description;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
@@ -22,19 +17,19 @@ import javax.annotation.Resource;
 public class SendMessageController {
 
   @Resource
-  private AliyunSmsService aliyunSmsService;
+  private ActiveEmailAndSmsService activeEmailAndSmsService;
 
   /**
    * 获取短信验证码
    *
-   * @param phone 手机号码
+   * @param phoneOrEmail 手机号码
    */
   @Description("获取短信验证码")
   @SaIgnore
   @GetMapping(value = "/api/aliyun/verify/sms")
-  public CommonResult<String> verifySms(@RequestParam(name = "phone") String phone) throws ClientException {
+  public CommonResult<String> verifySms(@RequestParam(name = "phoneOrEmail") String phoneOrEmail) throws Exception {
 
-    return aliyunSmsService.verifySms(phone);
+    return activeEmailAndSmsService.verifySms(phoneOrEmail);
   }
 
 
@@ -51,7 +46,7 @@ public class SendMessageController {
           @RequestParam(name = "codeId") String codeId,
           @RequestParam(name = "code") String code
           ) {
-    boolean b = aliyunSmsService.checkSmsCode(codeId, code);
+    boolean b = activeEmailAndSmsService.checkSmsCode(codeId, code);
       if (b){
         return CommonResult.success(null, "验证成功");
       }

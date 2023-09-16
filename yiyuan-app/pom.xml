@@ -8,6 +8,7 @@
         <version>${revision}</version>
     </parent>
     <version>${revision}</version>
+    <packaging>pom</packaging>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>yiyuan-app</artifactId>
