@@ -36,6 +36,7 @@
         <module>yiyuan-file</module>
         <module>yiyuan-sys</module>
         <module>yiyuan-SMS</module>
+        <module>yiyuan-spm</module>
         <!--        <module>yiyuan-file</module>-->
 
     </modules>

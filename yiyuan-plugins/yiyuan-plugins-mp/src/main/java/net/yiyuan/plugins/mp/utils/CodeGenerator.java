@@ -118,6 +118,7 @@ public class CodeGenerator {
     List<Map<String, Object>> routerAndI18nMapList = new ArrayList<>();
 
     for (String tableName : inputTableName) {
+      int hasKeyFlag = 0;
       Map<String, Object> routerAndI18nMap = new HashMap<>();
       // 定义生成基本增删改查的DTO
       VelocityContext dtoContext = new VelocityContext();
@@ -225,6 +226,7 @@ public class CodeGenerator {
         // 设置主键
         if (columnName.equals(columnNamePrimary)) {
           dtoColumnMap.put("keyFlag", "true");
+          hasKeyFlag = 1;
         } else {
           dtoColumnMap.put("keyFlag", "false");
         }
@@ -276,6 +278,7 @@ public class CodeGenerator {
 
           context.put("tableColumns", tableColumns);
           context.put("parentPck", pc.getParent());
+          context.put("parentPack", DEFAULT_PARENT_PACK);
           //          context.put("moduleName", DEFAULT_MODULENAME);
 
           context.put("pm0", tableName.split("_")[0]);
@@ -332,20 +335,24 @@ public class CodeGenerator {
       createJsVueByVelocity(dtoContext);
 
       createModelByVelocity(dtoContext);
-      createAddDtoByVelocity(dtoContext);
-      createListDtoByVelocity(dtoContext);
-      createPageDtoByVelocity(dtoContext);
-      createEditDtoByVelocity(dtoContext);
-      createQueryVOByVelocity(dtoContext);
-      createServiceByVelocity(dtoContext);
-      createServiceImplByVelocity(dtoContext);
+
       createMapperByVelocity(dtoContext);
       createMapperXmlByVelocity(dtoContext);
-      createControllerByVelocity(dtoContext);
+      // 没有主键 表示中间表，不创建控制器等
+      if (hasKeyFlag == 1) {
+        createControllerByVelocity(dtoContext);
+        createServiceByVelocity(dtoContext);
+        createServiceImplByVelocity(dtoContext);
+        createAddDtoByVelocity(dtoContext);
+        createListDtoByVelocity(dtoContext);
+        createPageDtoByVelocity(dtoContext);
+        createEditDtoByVelocity(dtoContext);
+        createQueryVOByVelocity(dtoContext);
 
-      createApiPomByVelocity(dtoContext);
-      createServicePomByVelocity(dtoContext);
-      createParentPomByVelocity(dtoContext);
+        createApiPomByVelocity(dtoContext);
+        createServicePomByVelocity(dtoContext);
+        createParentPomByVelocity(dtoContext);
+      }
     }
     routerAndI18nContext.put("routerAndI18nMapList", routerAndI18nMapList);
     routerAndI18nContext.put("routerAndI18nRoot", routerAndI18nMapList.get(0).get("pm0"));

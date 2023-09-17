@@ -55,7 +55,13 @@
         <dependency>
             <groupId>net.yiyuan</groupId>
             <artifactId>yiyuan-SMS</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${revision}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>net.yiyuan</groupId>
+            <artifactId>yiyuan-spm-api</artifactId>
+            <version>${revision}</version>
         </dependency>
 
     </dependencies>
@@ -74,14 +80,7 @@
                         </exclude>
                     </excludes>
                 </configuration>
-                <!--                <executions>-->
-                <!--                    <execution>-->
-                <!--                        <goals>-->
-                <!--                            &lt;!&ndash;可以把依赖的包都打包到生成的Jar包中&ndash;&gt;-->
-                <!--                            <goal>repackage</goal>-->
-                <!--                        </goals>-->
-                <!--                    </execution>-->
-                <!--                </executions>-->
+
             </plugin>
             <!-- 编译插件 -->
             <plugin>

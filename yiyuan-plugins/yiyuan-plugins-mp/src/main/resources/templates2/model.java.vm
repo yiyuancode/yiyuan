@@ -78,9 +78,9 @@ private static final long serialVersionUID=1L;
             #elseif(${columnsItem.columnName.equals("createUser")})
             @TableField(fill = FieldFill.INSERT)
             #elseif(${columnsItem.columnName.equals("tenantId")})
-            @TableField(condition = CustomSqlCondition.EQUAL)
+                ##            @TableField(condition = CustomSqlCondition.EQUAL)
             #else
-            @TableField(condition = CustomSqlCondition.LIKE)
+                ##            @TableField(condition = CustomSqlCondition.LIKE)
             #end
         private ${columnsItem.propertyType} ${columnsItem.columnName};
         #end
