@@ -9,9 +9,15 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <version>${revision}</version>
+
     <artifactId>yiyuan-${pm0}-api</artifactId>
 
     <dependencies>
+        <dependency>
+            <groupId>net.yiyuan</groupId>
+            <artifactId>yiyuan-plugins-satoken</artifactId>
+            <version>${revision}</version>
+        </dependency>
         <dependency>
             <groupId>net.yiyuan</groupId>
             <artifactId>yiyuan-${pm0}-service</artifactId>

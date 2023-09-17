@@ -3,31 +3,18 @@
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>yiyuan</artifactId>
+        <artifactId>yiyuan-spm</artifactId>
         <groupId>net.yiyuan</groupId>
         <version>${revision}</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <version>${revision}</version>
-    <artifactId>yiyuan-spm</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>yiyuan-spm-api</module>
-        <module>yiyuan-spm-service</module>
-        <module>yiyuan-spm-app-api</module>
-        <module>yiyuan-spm-app-service</module>
-        <module>yiyuan-spm-mapper</module>
-    </modules>
+    <artifactId>yiyuan-spm-mapper</artifactId>
 
     <dependencies>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
         <dependency>
             <groupId>net.yiyuan</groupId>
-            <artifactId>yiyuan-plugins-satoken</artifactId>
+            <artifactId>yiyuan-plugins-mp</artifactId>
             <version>${revision}</version>
         </dependency>
     </dependencies>

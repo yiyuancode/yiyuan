@@ -14,17 +14,21 @@
     <modules>
         <module>yiyuan-${pm0}-api</module>
         <module>yiyuan-${pm0}-service</module>
+        <module>yiyuan-${pm0}-app-api</module>
+        <module>yiyuan-${pm0}-app-service</module>
+        <module>yiyuan-${pm0}-mapper</module>
     </modules>
 
     <dependencies>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
         <dependency>
             <groupId>net.yiyuan</groupId>
             <artifactId>yiyuan-plugins-satoken</artifactId>
             <version>${revision}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
     </dependencies>
 </project>

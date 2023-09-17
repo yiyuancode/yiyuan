@@ -338,6 +338,7 @@ public class CodeGenerator {
 
       createMapperByVelocity(dtoContext);
       createMapperXmlByVelocity(dtoContext);
+      createMaperPomByVelocity(dtoContext);
       // 没有主键 表示中间表，不创建控制器等
       if (hasKeyFlag == 1) {
         createControllerByVelocity(dtoContext);
@@ -348,6 +349,12 @@ public class CodeGenerator {
         createPageDtoByVelocity(dtoContext);
         createEditDtoByVelocity(dtoContext);
         createQueryVOByVelocity(dtoContext);
+
+        createAppServiceByVelocity(dtoContext);
+        createAppServiceImplByVelocity(dtoContext);
+        createAppServicePomByVelocity(dtoContext);
+        createAppApiPomByVelocity(dtoContext);
+        createAppControllerByVelocity(dtoContext);
 
         createApiPomByVelocity(dtoContext);
         createServicePomByVelocity(dtoContext);
@@ -667,7 +674,7 @@ public class CodeGenerator {
             + "/"
             + "yiyuan-"
             + context.get("pm0")
-            + "-service"
+            + "-mapper"
             + DEFAULT_SRC
             + "/"
             + StringUtilsPlus.convertPackageNameToPath(DEFAULT_PARENT_PACK)
@@ -702,6 +709,52 @@ public class CodeGenerator {
    * @author ${author}
    * @date 2023-07-11
    */
+  public static void createMaperPomByVelocity(VelocityContext context) throws Exception {
+    VelocityEngine velocityEngine = new VelocityEngine();
+    Properties prop = new Properties();
+    prop.put(
+        "file.resource.loader.class",
+        "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
+    velocityEngine.init(prop);
+    log.info(
+        "dtoTableColumns:{}", ((List<Map<String, String>>) context.get("dtoTableColumns")).size());
+    String srcModelPath =
+        DEFAULT_OUT_PUT_DIR
+            + "/src/"
+            + "yiyuan-"
+            + context.get("pm0")
+            + "/"
+            + "yiyuan-"
+            + context.get("pm0")
+            + "-mapper"
+            + "/";
+    File voFolder = new File(srcModelPath);
+    if (!voFolder.exists()) {
+      // 如果文件夹不存在则创建它
+      voFolder.mkdirs();
+    }
+
+    String filePath = srcModelPath + "pom.xml";
+    File file = new File(filePath);
+    if (!file.exists()) {
+      // 如果文件不存在则创建它
+      file.createNewFile();
+    }
+
+    Template template = velocityEngine.getTemplate("templates2\\mapper.pom.vm", "UTF-8");
+    FileWriter writer = new FileWriter(filePath);
+    template.merge(context, writer);
+    writer.flush();
+    writer.close();
+  }
+
+  /**
+   * 根据用户输入的表获取每张表所有字段信息
+   *
+   * @param
+   * @author ${author}
+   * @date 2023-07-11
+   */
   public static void createMapperXmlByVelocity(VelocityContext context) throws Exception {
     VelocityEngine velocityEngine = new VelocityEngine();
     Properties prop = new Properties();
@@ -719,7 +772,7 @@ public class CodeGenerator {
             + "/"
             + "yiyuan-"
             + context.get("pm0")
-            + "-service"
+            + "-mapper"
             + DEFAULT_SRC
             + "/"
             + StringUtilsPlus.convertPackageNameToPath(DEFAULT_PARENT_PACK)
@@ -873,7 +926,7 @@ public class CodeGenerator {
             + "/"
             + "yiyuan-"
             + context.get("pm0")
-            + "-service"
+            + "-mapper"
             + DEFAULT_SRC
             + "/"
             + StringUtilsPlus.convertPackageNameToPath(DEFAULT_PARENT_PACK)
@@ -925,7 +978,7 @@ public class CodeGenerator {
             + "/"
             + "yiyuan-"
             + context.get("pm0")
-            + "-service"
+            + "-mapper"
             + DEFAULT_SRC
             + "/"
             + StringUtilsPlus.convertPackageNameToPath(DEFAULT_PARENT_PACK)
@@ -1335,6 +1388,295 @@ public class CodeGenerator {
     }
 
     Template template = velocityEngine.getTemplate("templates2\\parent.pom.vm", "UTF-8");
+    FileWriter writer = new FileWriter(filePath);
+    template.merge(context, writer);
+    writer.flush();
+    writer.close();
+  }
+
+  /**
+   * 根据用户输入的表获取每张表所有字段信息
+   *
+   * @param
+   * @author ${author}
+   * @date 2023-07-11
+   */
+  public static void createAppServiceByVelocity(VelocityContext context) throws Exception {
+    VelocityEngine velocityEngine = new VelocityEngine();
+    Properties prop = new Properties();
+    prop.put(
+        "file.resource.loader.class",
+        "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
+    velocityEngine.init(prop);
+    log.info(
+        "dtoTableColumns:{}", ((List<Map<String, String>>) context.get("dtoTableColumns")).size());
+
+    String srcModelPathVo =
+        DEFAULT_OUT_PUT_DIR
+            + "/src/"
+            + "yiyuan-"
+            + context.get("pm0")
+            + "/"
+            + "yiyuan-"
+            + context.get("pm0")
+            + "-app-service"
+            + DEFAULT_SRC
+            + "/"
+            + StringUtilsPlus.convertPackageNameToPath(DEFAULT_PARENT_PACK)
+            + "/vo"
+            + "/";
+
+    String srcModelPathDto =
+        DEFAULT_OUT_PUT_DIR
+            + "/src/"
+            + "yiyuan-"
+            + context.get("pm0")
+            + "/"
+            + "yiyuan-"
+            + context.get("pm0")
+            + "-app-service"
+            + DEFAULT_SRC
+            + "/"
+            + StringUtilsPlus.convertPackageNameToPath(DEFAULT_PARENT_PACK)
+            + "/dto"
+            + "/";
+    File voFolder2 = new File(srcModelPathVo);
+    if (!voFolder2.exists()) {
+      // 如果文件夹不存在则创建它
+      voFolder2.mkdirs();
+    }
+    File dtoFolder = new File(srcModelPathDto);
+    if (!dtoFolder.exists()) {
+      // 如果文件夹不存在则创建它
+      dtoFolder.mkdirs();
+    }
+
+    String srcModelPath =
+        DEFAULT_OUT_PUT_DIR
+            + "/src/"
+            + "yiyuan-"
+            + context.get("pm0")
+            + "/"
+            + "yiyuan-"
+            + context.get("pm0")
+            + "-app-service"
+            + DEFAULT_SRC
+            + "/"
+            + StringUtilsPlus.convertPackageNameToPath(DEFAULT_PARENT_PACK)
+            + "/service"
+            //            + "/"
+            //            + DEFAULT_MODULENAME
+            + "/";
+    File voFolder = new File(srcModelPath);
+    if (!voFolder.exists()) {
+      // 如果文件夹不存在则创建它
+      voFolder.mkdirs();
+    }
+
+    String filePath = srcModelPath + context.get("className") + "AppService.java";
+    File file = new File(filePath);
+    if (!file.exists()) {
+      // 如果文件不存在则创建它
+      file.createNewFile();
+    }
+
+    Template template = velocityEngine.getTemplate("templates2\\serviceApp.java.vm", "UTF-8");
+    FileWriter writer = new FileWriter(filePath);
+    template.merge(context, writer);
+    writer.flush();
+    writer.close();
+  }
+
+  /**
+   * 根据用户输入的表获取每张表所有字段信息
+   *
+   * @param
+   * @author ${author}
+   * @date 2023-07-11
+   */
+  public static void createAppServiceImplByVelocity(VelocityContext context) throws Exception {
+    VelocityEngine velocityEngine = new VelocityEngine();
+    Properties prop = new Properties();
+    prop.put(
+        "file.resource.loader.class",
+        "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
+    velocityEngine.init(prop);
+    log.info(
+        "dtoTableColumns:{}", ((List<Map<String, String>>) context.get("dtoTableColumns")).size());
+    String srcModelPath =
+        DEFAULT_OUT_PUT_DIR
+            + "/src/"
+            + "yiyuan-"
+            + context.get("pm0")
+            + "/"
+            + "yiyuan-"
+            + context.get("pm0")
+            + "-app-service"
+            + DEFAULT_SRC
+            + "/"
+            + StringUtilsPlus.convertPackageNameToPath(DEFAULT_PARENT_PACK)
+            + "/service"
+            //            + "/"
+            //            + DEFAULT_MODULENAME
+            + "/impl/";
+    File voFolder = new File(srcModelPath);
+    if (!voFolder.exists()) {
+      // 如果文件夹不存在则创建它
+      voFolder.mkdirs();
+    }
+
+    String filePath = srcModelPath + context.get("className") + "AppServiceImpl.java";
+    File file = new File(filePath);
+    if (!file.exists()) {
+      // 如果文件不存在则创建它
+      file.createNewFile();
+    }
+
+    Template template = velocityEngine.getTemplate("templates2\\serviceApp.impl.java.vm", "UTF-8");
+    FileWriter writer = new FileWriter(filePath);
+    template.merge(context, writer);
+    writer.flush();
+    writer.close();
+  }
+
+  /**
+   * 根据用户输入的表获取每张表所有字段信息
+   *
+   * @param
+   * @author ${author}
+   * @date 2023-07-11
+   */
+  public static void createAppServicePomByVelocity(VelocityContext context) throws Exception {
+    VelocityEngine velocityEngine = new VelocityEngine();
+    Properties prop = new Properties();
+    prop.put(
+        "file.resource.loader.class",
+        "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
+    velocityEngine.init(prop);
+    log.info(
+        "dtoTableColumns:{}", ((List<Map<String, String>>) context.get("dtoTableColumns")).size());
+    String srcModelPath =
+        DEFAULT_OUT_PUT_DIR
+            + "/src/"
+            + "yiyuan-"
+            + context.get("pm0")
+            + "/"
+            + "yiyuan-"
+            + context.get("pm0")
+            + "-app-service"
+            + "/";
+    File voFolder = new File(srcModelPath);
+    if (!voFolder.exists()) {
+      // 如果文件夹不存在则创建它
+      voFolder.mkdirs();
+    }
+
+    String filePath = srcModelPath + "pom.xml";
+    File file = new File(filePath);
+    if (!file.exists()) {
+      // 如果文件不存在则创建它
+      file.createNewFile();
+    }
+
+    Template template = velocityEngine.getTemplate("templates2\\serviceApp.pom.vm", "UTF-8");
+    FileWriter writer = new FileWriter(filePath);
+    template.merge(context, writer);
+    writer.flush();
+    writer.close();
+  }
+
+  /**
+   * 根据用户输入的表获取每张表所有字段信息
+   *
+   * @param
+   * @author ${author}
+   * @date 2023-07-11
+   */
+  public static void createAppControllerByVelocity(VelocityContext context) throws Exception {
+    VelocityEngine velocityEngine = new VelocityEngine();
+    Properties prop = new Properties();
+    prop.put(
+        "file.resource.loader.class",
+        "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
+    velocityEngine.init(prop);
+    log.info(
+        "dtoTableColumns:{}", ((List<Map<String, String>>) context.get("dtoTableColumns")).size());
+    String srcModelPath =
+        DEFAULT_OUT_PUT_DIR
+            + "/src/"
+            + "yiyuan-"
+            + context.get("pm0")
+            + "/"
+            + "yiyuan-"
+            + context.get("pm0")
+            + "-app-api"
+            + DEFAULT_SRC
+            + "/"
+            + StringUtilsPlus.convertPackageNameToPath(DEFAULT_PARENT_PACK)
+            + "/controller"
+            //            + "/"
+            //            + DEFAULT_MODULENAME
+            + "/";
+    File voFolder = new File(srcModelPath);
+    if (!voFolder.exists()) {
+      // 如果文件夹不存在则创建它
+      voFolder.mkdirs();
+    }
+
+    String filePath = srcModelPath + context.get("className") + "AppController.java";
+    File file = new File(filePath);
+    if (!file.exists()) {
+      // 如果文件不存在则创建它
+      file.createNewFile();
+    }
+
+    Template template = velocityEngine.getTemplate("templates2\\controllerApp.java.vm", "UTF-8");
+    FileWriter writer = new FileWriter(filePath);
+    template.merge(context, writer);
+    writer.flush();
+    writer.close();
+  }
+
+  /**
+   * 根据用户输入的表获取每张表所有字段信息
+   *
+   * @param
+   * @author ${author}
+   * @date 2023-07-11
+   */
+  public static void createAppApiPomByVelocity(VelocityContext context) throws Exception {
+    VelocityEngine velocityEngine = new VelocityEngine();
+    Properties prop = new Properties();
+    prop.put(
+        "file.resource.loader.class",
+        "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
+    velocityEngine.init(prop);
+    log.info(
+        "dtoTableColumns:{}", ((List<Map<String, String>>) context.get("dtoTableColumns")).size());
+    String srcModelPath =
+        DEFAULT_OUT_PUT_DIR
+            + "/src/"
+            + "yiyuan-"
+            + context.get("pm0")
+            + "/"
+            + "yiyuan-"
+            + context.get("pm0")
+            + "-app-api"
+            + "/";
+    File voFolder = new File(srcModelPath);
+    if (!voFolder.exists()) {
+      // 如果文件夹不存在则创建它
+      voFolder.mkdirs();
+    }
+
+    String filePath = srcModelPath + "pom.xml";
+    File file = new File(filePath);
+    if (!file.exists()) {
+      // 如果文件不存在则创建它
+      file.createNewFile();
+    }
+
+    Template template = velocityEngine.getTemplate("templates2\\apiApp.pom.vm", "UTF-8");
     FileWriter writer = new FileWriter(filePath);
     template.merge(context, writer);
     writer.flush();

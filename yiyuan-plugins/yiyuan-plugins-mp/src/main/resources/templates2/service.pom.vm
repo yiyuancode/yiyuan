@@ -11,5 +11,11 @@
     <version>${revision}</version>
     <artifactId>yiyuan-${pm0}-service</artifactId>
 
-
+    <dependencies>
+        <dependency>
+            <groupId>net.yiyuan</groupId>
+            <artifactId>yiyuan-${pm0}-mapper</artifactId>
+            <version>${revision}</version>
+        </dependency>
+    </dependencies>
 </project>
