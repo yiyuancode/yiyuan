@@ -16,6 +16,9 @@ public class SmsRedisService {
     private String REDIS_KEY_SMS_PERMISSION = "sms:permission";
 
     private Long REDIS_EXPIRE_ADMIN_USER_PERMISSION = 60L;
+
+    private String REDIS_KEY_EMAIL_PERMISSION = "email:permission";
+
     /**
      *
      * 获取短信验证码对比
@@ -41,6 +44,36 @@ public class SmsRedisService {
         } else {
             redisService.set(key, code, REDIS_EXPIRE_ADMIN_USER_PERMISSION);
         }
+    }
+
+
+    public String GET_EMAIL_PERMISSION(String email){
+        String key = REDIS_DATABASE_OMS + ":" + REDIS_KEY_EMAIL_PERMISSION + ":" + email;
+        log.info("key: {}", key);
+        return (String) redisService.get(key);
+    }
+
+
+    /**
+     * 将验证码设置到redis中
+     * @param email
+     * @param code
+     */
+    public void SET_EMAIL_PERMISSION(String email, String code) {
+        String key = REDIS_DATABASE_OMS + ":" + REDIS_KEY_EMAIL_PERMISSION + ":" + email;
+
+        if (REDIS_EXPIRE_ADMIN_USER_PERMISSION == 0) {
+            redisService.set(key, code);
+        } else {
+            redisService.set(key, code, REDIS_EXPIRE_ADMIN_USER_PERMISSION);
+        }
+    }
+
+    public boolean DEL_EMAIL_PERMISSION(String email) {
+        String key = REDIS_DATABASE_OMS + ":" + REDIS_KEY_EMAIL_PERMISSION + ":" + email;
+
+        return redisService.del(key);
+
     }
 
     /**
