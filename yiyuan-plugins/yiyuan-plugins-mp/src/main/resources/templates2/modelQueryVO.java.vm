@@ -1,4 +1,4 @@
-package ${parentPack}.dto;
+package ${parentPack}.vo;
 import ${parentPack}.model.*;
 import ${parentPack}.enums.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -40,8 +40,8 @@ public class ${className}QueryVO implements Serializable {
              * @author ${author}
              * @date ${date}
              */
-            @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-            @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+            @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss" )
+            @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8" )
             private ${columnsItem.propertyType} ${columnsItem.columnName};
         #end
 
