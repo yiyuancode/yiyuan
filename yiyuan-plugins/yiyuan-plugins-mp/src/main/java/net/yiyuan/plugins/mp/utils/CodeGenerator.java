@@ -383,7 +383,7 @@ public class CodeGenerator {
 
     String srcModelPath =
         DEFAULT_OUT_PUT_DIR
-            + "/src/yiyuan-vue"
+            + "/newCode/yiyuan-vue"
             + DEFAULT_JS_SRC
             + "/router/modules/"
             + context.get("pm0")
@@ -428,7 +428,7 @@ public class CodeGenerator {
 
     String srcModelPath =
         DEFAULT_OUT_PUT_DIR
-            + "/src/yiyuan-vue"
+            + "/newCode/yiyuan-vue"
             + DEFAULT_JS_SRC
             + "/router/modules/"
             + context.get("pm0")
@@ -474,7 +474,7 @@ public class CodeGenerator {
         "dtoTableColumns:{}", ((List<Map<String, String>>) context.get("dtoTableColumns")).size());
     String srcModelPath =
         DEFAULT_OUT_PUT_DIR
-            + "/src/yiyuan-vue"
+            + "/newCode/yiyuan-vue"
             + DEFAULT_JS_SRC
             + "/api/"
             + context.get("pm0")
@@ -518,7 +518,7 @@ public class CodeGenerator {
 
     String srcModelPath =
         DEFAULT_OUT_PUT_DIR
-            + "/src/yiyuan-vue"
+            + "/newCode/yiyuan-vue"
             + DEFAULT_JS_SRC
             + "/pages/"
             + context.get("pm0")
@@ -568,7 +568,7 @@ public class CodeGenerator {
 
     String srcModelPath =
         DEFAULT_OUT_PUT_DIR
-            + "/src/yiyuan-vue"
+            + "/newCode/yiyuan-vue"
             + DEFAULT_JS_SRC
             + "/pages/"
             + context.get("pm0")
@@ -616,7 +616,7 @@ public class CodeGenerator {
         "dtoTableColumns:{}", ((List<Map<String, String>>) context.get("dtoTableColumns")).size());
     String srcModelPath =
         DEFAULT_OUT_PUT_DIR
-            + "/src/"
+            + "/newCode/"
             + "yiyuan-"
             + context.get("pm0")
             + "/"
@@ -668,7 +668,7 @@ public class CodeGenerator {
         "dtoTableColumns:{}", ((List<Map<String, String>>) context.get("dtoTableColumns")).size());
     String srcModelPath =
         DEFAULT_OUT_PUT_DIR
-            + "/src/"
+            + "/newCode/"
             + "yiyuan-"
             + context.get("pm0")
             + "/"
@@ -720,7 +720,7 @@ public class CodeGenerator {
         "dtoTableColumns:{}", ((List<Map<String, String>>) context.get("dtoTableColumns")).size());
     String srcModelPath =
         DEFAULT_OUT_PUT_DIR
-            + "/src/"
+            + "/newCode/"
             + "yiyuan-"
             + context.get("pm0")
             + "/"
@@ -766,7 +766,7 @@ public class CodeGenerator {
         "dtoTableColumns:{}", ((List<Map<String, String>>) context.get("dtoTableColumns")).size());
     String srcModelPath =
         DEFAULT_OUT_PUT_DIR
-            + "/src/"
+            + "/newCode/"
             + "yiyuan-"
             + context.get("pm0")
             + "/"
@@ -818,7 +818,7 @@ public class CodeGenerator {
         "dtoTableColumns:{}", ((List<Map<String, String>>) context.get("dtoTableColumns")).size());
     String srcModelPath =
         DEFAULT_OUT_PUT_DIR
-            + "/src/"
+            + "/newCode/"
             + "yiyuan-"
             + context.get("pm0")
             + "/"
@@ -870,7 +870,7 @@ public class CodeGenerator {
         "dtoTableColumns:{}", ((List<Map<String, String>>) context.get("dtoTableColumns")).size());
     String srcModelPath =
         DEFAULT_OUT_PUT_DIR
-            + "/src/"
+            + "/newCode/"
             + "yiyuan-"
             + context.get("pm0")
             + "/"
@@ -920,7 +920,7 @@ public class CodeGenerator {
     velocityEngine.init(prop);
     String srcModelPath =
         DEFAULT_OUT_PUT_DIR
-            + "/src/"
+            + "/newCode/"
             + "yiyuan-"
             + context.get("pm0")
             + "/"
@@ -972,7 +972,7 @@ public class CodeGenerator {
         "dtoTableColumns:{}", ((List<Map<String, String>>) context.get("dtoTableColumns")).size());
     String srcModelPath =
         DEFAULT_OUT_PUT_DIR
-            + "/src/"
+            + "/newCode/"
             + "yiyuan-"
             + context.get("pm0")
             + "/"
@@ -1023,7 +1023,7 @@ public class CodeGenerator {
         "dtoTableColumns:{}", ((List<Map<String, String>>) context.get("dtoTableColumns")).size());
     String srcModelPath =
         DEFAULT_OUT_PUT_DIR
-            + "/src/"
+            + "/newCode/"
             + "yiyuan-"
             + context.get("pm0")
             + "/"
@@ -1075,7 +1075,7 @@ public class CodeGenerator {
         "dtoTableColumns:{}", ((List<Map<String, String>>) context.get("dtoTableColumns")).size());
     String srcModelPath =
         DEFAULT_OUT_PUT_DIR
-            + "/src/"
+            + "/newCode/"
             + "yiyuan-"
             + context.get("pm0")
             + "/"
@@ -1127,7 +1127,7 @@ public class CodeGenerator {
         "dtoTableColumns:{}", ((List<Map<String, String>>) context.get("dtoTableColumns")).size());
     String srcModelPath =
         DEFAULT_OUT_PUT_DIR
-            + "/src/"
+            + "/newCode/"
             + "yiyuan-"
             + context.get("pm0")
             + "/"
@@ -1179,7 +1179,7 @@ public class CodeGenerator {
         "dtoTableColumns:{}", ((List<Map<String, String>>) context.get("dtoTableColumns")).size());
     String srcModelPath =
         DEFAULT_OUT_PUT_DIR
-            + "/src/"
+            + "/newCode/"
             + "yiyuan-"
             + context.get("pm0")
             + "/"
@@ -1231,7 +1231,7 @@ public class CodeGenerator {
         "dtoTableColumns:{}", ((List<Map<String, String>>) context.get("dtoTableColumns")).size());
     String srcModelPath =
         DEFAULT_OUT_PUT_DIR
-            + "/src/"
+            + "/newCode/"
             + "yiyuan-"
             + context.get("pm0")
             + "/"
@@ -1283,7 +1283,7 @@ public class CodeGenerator {
         "dtoTableColumns:{}", ((List<Map<String, String>>) context.get("dtoTableColumns")).size());
     String srcModelPath =
         DEFAULT_OUT_PUT_DIR
-            + "/src/"
+            + "/newCode/"
             + "yiyuan-"
             + context.get("pm0")
             + "/"
@@ -1329,7 +1329,7 @@ public class CodeGenerator {
         "dtoTableColumns:{}", ((List<Map<String, String>>) context.get("dtoTableColumns")).size());
     String srcModelPath =
         DEFAULT_OUT_PUT_DIR
-            + "/src/"
+            + "/newCode/"
             + "yiyuan-"
             + context.get("pm0")
             + "/"
@@ -1373,7 +1373,7 @@ public class CodeGenerator {
     velocityEngine.init(prop);
     log.info(
         "dtoTableColumns:{}", ((List<Map<String, String>>) context.get("dtoTableColumns")).size());
-    String srcModelPath = DEFAULT_OUT_PUT_DIR + "/src/" + "yiyuan-" + context.get("pm0") + "/";
+    String srcModelPath = DEFAULT_OUT_PUT_DIR + "/newCode/" + "yiyuan-" + context.get("pm0") + "/";
     File voFolder = new File(srcModelPath);
     if (!voFolder.exists()) {
       // 如果文件夹不存在则创建它
@@ -1413,7 +1413,7 @@ public class CodeGenerator {
 
     String srcModelPathVo =
         DEFAULT_OUT_PUT_DIR
-            + "/src/"
+            + "/newCode/"
             + "yiyuan-"
             + context.get("pm0")
             + "/"
@@ -1428,7 +1428,7 @@ public class CodeGenerator {
 
     String srcModelPathDto =
         DEFAULT_OUT_PUT_DIR
-            + "/src/"
+            + "/newCode/"
             + "yiyuan-"
             + context.get("pm0")
             + "/"
@@ -1453,7 +1453,7 @@ public class CodeGenerator {
 
     String srcModelPath =
         DEFAULT_OUT_PUT_DIR
-            + "/src/"
+            + "/newCode/"
             + "yiyuan-"
             + context.get("pm0")
             + "/"
@@ -1505,7 +1505,7 @@ public class CodeGenerator {
         "dtoTableColumns:{}", ((List<Map<String, String>>) context.get("dtoTableColumns")).size());
     String srcModelPath =
         DEFAULT_OUT_PUT_DIR
-            + "/src/"
+            + "/newCode/"
             + "yiyuan-"
             + context.get("pm0")
             + "/"
@@ -1557,7 +1557,7 @@ public class CodeGenerator {
         "dtoTableColumns:{}", ((List<Map<String, String>>) context.get("dtoTableColumns")).size());
     String srcModelPath =
         DEFAULT_OUT_PUT_DIR
-            + "/src/"
+            + "/newCode/"
             + "yiyuan-"
             + context.get("pm0")
             + "/"
@@ -1603,7 +1603,7 @@ public class CodeGenerator {
         "dtoTableColumns:{}", ((List<Map<String, String>>) context.get("dtoTableColumns")).size());
     String srcModelPath =
         DEFAULT_OUT_PUT_DIR
-            + "/src/"
+            + "/newCode/"
             + "yiyuan-"
             + context.get("pm0")
             + "/"
@@ -1655,7 +1655,7 @@ public class CodeGenerator {
         "dtoTableColumns:{}", ((List<Map<String, String>>) context.get("dtoTableColumns")).size());
     String srcModelPath =
         DEFAULT_OUT_PUT_DIR
-            + "/src/"
+            + "/newCode/"
             + "yiyuan-"
             + context.get("pm0")
             + "/"
