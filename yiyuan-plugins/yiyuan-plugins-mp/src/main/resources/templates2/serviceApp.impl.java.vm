@@ -1,0 +1,33 @@
+package ${parentPack}.service.impl;
+
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import icu.mhb.mybatisplus.plugln.base.service.impl.JoinServiceImpl;
+import icu.mhb.mybatisplus.plugln.core.JoinLambdaWrapper;
+import lombok.extern.slf4j.Slf4j;
+import net.yiyuan.common.exception.*;
+import ${parentPack}.common.utils.BeanUtilsPlus;
+import ${parentPack}.model.${className};
+import ${parentPack}.mapper.${className}Mapper;
+
+import  ${parentPack}.service.${className}AppService;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.Arrays;
+import java.util.List;
+#set($firstName=$className.substring(0,1).toLowerCase()+$className.substring(1))
+/**
+ * $!{tableComment.replaceAll("表", "")}移动端Service层接口实现
+ *
+ * @author  ${author}
+ * @date ${date}
+ */
+@Slf4j
+@Service
+public class ${className}AppServiceImpl extends JoinServiceImpl
+        <${className}Mapper, ${className}>
+        implements ${className}AppService {
+    @Resource
+    private ${className}Mapper ${firstName}Mapper;
+
+}

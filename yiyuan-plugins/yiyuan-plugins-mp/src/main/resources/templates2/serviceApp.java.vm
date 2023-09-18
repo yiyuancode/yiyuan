@@ -1,0 +1,23 @@
+package ${parentPack}.service;
+
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import icu.mhb.mybatisplus.plugln.base.service.JoinIService;
+import ${parentPack}.dto.${className}AddDTO;
+import ${parentPack}.dto.${className}EditDTO;
+import ${parentPack}.dto.${className}ListDTO;
+import ${parentPack}.dto.${className}PageDTO;
+import ${parentPack}.model.${className};
+import ${parentPack}.vo.${className}QueryVO;
+
+import java.util.List;
+
+/**
+ * $!{tableComment.replaceAll("表", "")}移动端Service层接口
+ *
+ * @author  ${author}
+ * @date ${date}
+ */
+public interface ${className}AppService extends JoinIService<${className}> {
+
+
+}
