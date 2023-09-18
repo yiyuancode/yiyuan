@@ -1,26 +1,22 @@
-package net.yiyuan.model;
+package net.yiyuan.vo;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
-import net.yiyuan.common.constatnt.CustomSqlCondition;
 import net.yiyuan.enums.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
 /**
- * 用户实体
+ * 用户查询请求响应参数实体
  *
  * @author 小林同学
  * @date 2023-09-18
  */
 @Data
-public class UmUser implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class GetUmUserInfoVO implements Serializable {
 
     /**
      * 用户id
@@ -28,7 +24,6 @@ public class UmUser implements Serializable {
      * @author 小林同学
      * @date 2023-09-18
      */
-    @TableId(value = "id", type = IdType.ASSIGN_UUID)
     private String id;
 
     /**
@@ -39,13 +34,6 @@ public class UmUser implements Serializable {
      */
     private String account;
 
-    /**
-     * 密码
-     *
-     * @author 小林同学
-     * @date 2023-09-18
-     */
-    private String pwd;
 
     /**
      * 姓名
@@ -237,23 +225,9 @@ public class UmUser implements Serializable {
      * @author 小林同学
      * @date 2023-09-18
      */
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date promoterTime;
-    /**
-     * 分销员加入时间(查询开始时间)
-     *
-     * @author 小林同学
-     * @date 2023-09-18
-     */
-    @TableField(value = "promoter_time ", condition = CustomSqlCondition.START_EQUAL, select = false)
-    private Date promoterTimeStart;
-    /**
-     * 分销员加入时间(查询结束时间)
-     *
-     * @author 小林同学
-     * @date 2023-09-18
-     */
-    @TableField(value = "promoter_time", condition = CustomSqlCondition.END_EQUAL, select = false)
-    private Date promoterTimeEnd;
 
     /**
      * 上级推广员id
@@ -269,23 +243,9 @@ public class UmUser implements Serializable {
      * @author 小林同学
      * @date 2023-09-18
      */
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date promoteTime;
-    /**
-     * 绑定上级推广员时间(查询开始时间)
-     *
-     * @author 小林同学
-     * @date 2023-09-18
-     */
-    @TableField(value = "promote_time ", condition = CustomSqlCondition.START_EQUAL, select = false)
-    private Date promoteTimeStart;
-    /**
-     * 绑定上级推广员时间(查询结束时间)
-     *
-     * @author 小林同学
-     * @date 2023-09-18
-     */
-    @TableField(value = "promote_time", condition = CustomSqlCondition.END_EQUAL, select = false)
-    private Date promoteTimeEnd;
 
     /**
      * 下级人数
@@ -317,26 +277,9 @@ public class UmUser implements Serializable {
      * @author 小林同学
      * @date 2023-09-18
      */
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date lastLoginTime;
-    /**
-     * 最后一次登录时间(查询开始时间)
-     *
-     * @author 小林同学
-     * @date 2023-09-18
-     */
-    @TableField(
-            value = "last_login_time ",
-            condition = CustomSqlCondition.START_EQUAL,
-            select = false)
-    private Date lastLoginTimeStart;
-    /**
-     * 最后一次登录时间(查询结束时间)
-     *
-     * @author 小林同学
-     * @date 2023-09-18
-     */
-    @TableField(value = "last_login_time", condition = CustomSqlCondition.END_EQUAL, select = false)
-    private Date lastLoginTimeEnd;
 
     /**
      * 状态#1=正常|0=禁止
@@ -360,24 +303,9 @@ public class UmUser implements Serializable {
      * @author 小林同学
      * @date 2023-09-18
      */
-    @TableField(fill = FieldFill.INSERT)
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
-    /**
-     * 添加时间(查询开始时间)
-     *
-     * @author 小林同学
-     * @date 2023-09-18
-     */
-    @TableField(value = "create_time ", condition = CustomSqlCondition.START_EQUAL, select = false)
-    private Date createTimeStart;
-    /**
-     * 添加时间(查询结束时间)
-     *
-     * @author 小林同学
-     * @date 2023-09-18
-     */
-    @TableField(value = "create_time", condition = CustomSqlCondition.END_EQUAL, select = false)
-    private Date createTimeEnd;
 
     /**
      * 更新时间
@@ -385,24 +313,9 @@ public class UmUser implements Serializable {
      * @author 小林同学
      * @date 2023-09-18
      */
-    @TableField(fill = FieldFill.INSERT_UPDATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date updateTime;
-    /**
-     * 更新时间(查询开始时间)
-     *
-     * @author 小林同学
-     * @date 2023-09-18
-     */
-    @TableField(value = "update_time ", condition = CustomSqlCondition.START_EQUAL, select = false)
-    private Date updateTimeStart;
-    /**
-     * 更新时间(查询结束时间)
-     *
-     * @author 小林同学
-     * @date 2023-09-18
-     */
-    @TableField(value = "update_time", condition = CustomSqlCondition.END_EQUAL, select = false)
-    private Date updateTimeEnd;
 
     /**
      * 是否注销#0=未注销|1=已注销
@@ -418,26 +331,9 @@ public class UmUser implements Serializable {
      * @author 小林同学
      * @date 2023-09-18
      */
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date deactivateTime;
-    /**
-     * 注销时间(查询开始时间)
-     *
-     * @author 小林同学
-     * @date 2023-09-18
-     */
-    @TableField(
-            value = "deactivate_time ",
-            condition = CustomSqlCondition.START_EQUAL,
-            select = false)
-    private Date deactivateTimeStart;
-    /**
-     * 注销时间(查询结束时间)
-     *
-     * @author 小林同学
-     * @date 2023-09-18
-     */
-    @TableField(value = "deactivate_time", condition = CustomSqlCondition.END_EQUAL, select = false)
-    private Date deactivateTimeEnd;
 
     /**
      * 是否关联微信ios#0=否|1=是

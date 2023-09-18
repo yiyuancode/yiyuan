@@ -15,33 +15,34 @@ import lombok.Getter;
 @JsonFormat(shape = JsonFormat.Shape.OBJECT) // 实现场景2，只需要加上这个注解
 public enum UmUserIsWechatAndroidEnum implements IEnum<Integer> {
 
-  /**
-   * 是否关联微信android#0=否|1=是
-   *
-   * @author 小林同学
-   * @date 2023-09-18
-   * @see UmUserIsWechatAndroidEnum
-   */
-  NO(0, "否"),
-  /**
-   * 是否关联微信android#0=否|1=是
-   *
-   * @author 小林同学
-   * @date 2023-09-18
-   * @see UmUserIsWechatAndroidEnum
-   */
-  YES(1, "是");
+    /**
+     * 是否关联微信android#0=否|1=是
+     *
+     * @author 小林同学
+     * @date 2023-09-18
+     * @see UmUserIsWechatAndroidEnum
+     */
+    NO(0, "否"),
+    /**
+     * 是否关联微信android#0=否|1=是
+     *
+     * @author 小林同学
+     * @date 2023-09-18
+     * @see UmUserIsWechatAndroidEnum
+     */
+    YES(1, "是");
 
-  @EnumValue private final int value;
-  private final String desc;
+    @EnumValue
+    private final int value;
+    private final String desc;
 
-  UmUserIsWechatAndroidEnum(int value, String desc) {
-    this.value = value;
-    this.desc = desc;
-  }
+    UmUserIsWechatAndroidEnum(int value, String desc) {
+        this.value = value;
+        this.desc = desc;
+    }
 
-  @Override
-  public Integer getValue() {
-    return this.value;
-  }
+    @Override
+    public Integer getValue() {
+        return this.value;
+    }
 }
