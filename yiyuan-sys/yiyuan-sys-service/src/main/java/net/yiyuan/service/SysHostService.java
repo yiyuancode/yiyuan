@@ -12,80 +12,80 @@ import net.yiyuan.vo.SysHostQueryVO;
 import java.util.List;
 
 /**
- * 主机记录Service层接口
+ * 服务器Service层接口
  *
- * @author 一源团队-花和尚
- * @date 2023-08-17
+ * @author 一源-花和尚
+ * @date 2023-09-18
  */
 public interface SysHostService extends JoinIService<SysHost> {
 
   /**
-   * 主机记录列表(全部)
+   * 服务器列表(全部)
    *
-   * @param request 主机记录实体
+   * @param request 服务器实体
    * @return {@link List< SysHostQueryVO >}
-   * @author 一源团队-花和尚
-   * @date 2023-08-17
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   List<SysHostQueryVO> list(SysHostListDTO request) throws Exception;
 
   /**
-   * 主机记录列表(分页)
+   * 服务器列表(分页)
    *
-   * @param request 主机记录实体
+   * @param request 服务器实体
    * @return {@link Page< SysHostQueryVO >}
-   * @author 一源团队-花和尚
-   * @date 2023-08-17
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   Page<SysHostQueryVO> page(SysHostPageDTO request) throws Exception;
 
   /**
-   * 主机记录详情
+   * 服务器详情
    *
-   * @param id 主机记录id
+   * @param id 服务器id
    * @return {@link SysHostQueryVO}
-   * @author 一源团队-花和尚
-   * @date 2023-08-17
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   SysHostQueryVO details(String id) throws Exception;
 
   /**
-   * 主机记录详情
+   * 服务器详情
    *
-   * @param request 主机记录实体
+   * @param request 服务器实体
    * @return {@link SysHost}
-   * @author 一源团队-花和尚
-   * @date 2023-08-17
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   SysHostQueryVO details(SysHost request) throws Exception;
 
   /**
-   * 删除主机记录(支持批量)
+   * 删除服务器(支持批量)
    *
-   * @param ids 主机记录id(多个逗号分割)
+   * @param ids 服务器id(多个逗号分割)
    * @return {@link boolean}
-   * @author 一源团队-花和尚
-   * @date 2023-08-17
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   boolean delete(String ids) throws Exception;
 
   /**
-   * 编辑主机记录
+   * 编辑服务器
    *
-   * @param request 主机记录实体
+   * @param request 服务器实体
    * @return {@link boolean}
-   * @author 一源团队-花和尚
-   * @date 2023-08-17
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   boolean edit(SysHostEditDTO request) throws Exception;
 
   /**
-   * 新增主机记录
+   * 新增服务器
    *
-   * @param request 主机记录实体
+   * @param request 服务器实体
    * @return {@link boolean}
-   * @author 一源团队-花和尚
-   * @date 2023-08-17
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   boolean add(SysHostAddDTO request) throws Exception;
 }

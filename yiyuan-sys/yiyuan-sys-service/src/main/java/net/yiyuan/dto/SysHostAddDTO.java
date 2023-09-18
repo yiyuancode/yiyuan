@@ -8,10 +8,10 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
- * 主机记录新增接口请求入参实体
+ * 服务器新增接口请求入参实体
  *
- * @author 一源团队-花和尚
- * @date 2023-08-17
+ * @author 一源-花和尚
+ * @date 2023-09-18
  */
 @Data
 public class SysHostAddDTO implements Serializable {
@@ -19,8 +19,8 @@ public class SysHostAddDTO implements Serializable {
   /**
    * 主机名
    *
-   * @author 一源团队-花和尚
-   * @date 2023-08-17
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   @NotBlank(message = "主机名不能为空")
   private String hostName;
@@ -28,8 +28,8 @@ public class SysHostAddDTO implements Serializable {
   /**
    * IP地址
    *
-   * @author 一源团队-花和尚
-   * @date 2023-08-17
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   @NotBlank(message = "IP地址不能为空")
   private String host;
@@ -37,8 +37,8 @@ public class SysHostAddDTO implements Serializable {
   /**
    * SSH端口
    *
-   * @author 一源团队-花和尚
-   * @date 2023-08-17
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   @NotNull(message = "SSH端口不能为空")
   private Integer sshPort;
@@ -46,8 +46,8 @@ public class SysHostAddDTO implements Serializable {
   /**
    * SSH登录用户名
    *
-   * @author 一源团队-花和尚
-   * @date 2023-08-17
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   @NotBlank(message = "SSH登录用户名不能为空")
   private String sshUsername;
@@ -55,8 +55,8 @@ public class SysHostAddDTO implements Serializable {
   /**
    * SSH登录密码
    *
-   * @author 一源团队-花和尚
-   * @date 2023-08-17
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   @NotBlank(message = "SSH登录密码不能为空")
   private String sshPassword;
@@ -64,8 +64,8 @@ public class SysHostAddDTO implements Serializable {
   /**
    * 开启监控#0=开启|1=关闭|
    *
-   * @author 一源团队-花和尚
-   * @date 2023-08-17
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   @NotNull(message = "开启监控#0=开启|1=关闭|不能为空")
   private SysHostIsMonitorEnabledEnum isMonitorEnabled;
@@ -73,8 +73,8 @@ public class SysHostAddDTO implements Serializable {
   /**
    * 排序字段
    *
-   * @author 一源团队-花和尚
-   * @date 2023-08-17
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   private Integer sortBy;
 }

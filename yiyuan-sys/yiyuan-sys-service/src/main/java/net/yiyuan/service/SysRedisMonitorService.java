@@ -2,9 +2,11 @@ package net.yiyuan.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import icu.mhb.mybatisplus.plugln.base.service.JoinIService;
-import net.yiyuan.dto.*;
+import net.yiyuan.dto.SysRedisMonitorAddDTO;
+import net.yiyuan.dto.SysRedisMonitorEditDTO;
+import net.yiyuan.dto.SysRedisMonitorListDTO;
+import net.yiyuan.dto.SysRedisMonitorPageDTO;
 import net.yiyuan.model.SysRedisMonitor;
-import net.yiyuan.vo.SysRedisMonitorQueryCountVO;
 import net.yiyuan.vo.SysRedisMonitorQueryVO;
 
 import java.util.List;
@@ -12,8 +14,8 @@ import java.util.List;
 /**
  * Redis监控采集Service层接口
  *
- * @author 一源团队-花和尚
- * @date 2023-08-17
+ * @author 一源-花和尚
+ * @date 2023-09-18
  */
 public interface SysRedisMonitorService extends JoinIService<SysRedisMonitor> {
 
@@ -22,8 +24,8 @@ public interface SysRedisMonitorService extends JoinIService<SysRedisMonitor> {
    *
    * @param request Redis监控采集实体
    * @return {@link List< SysRedisMonitorQueryVO >}
-   * @author 一源团队-花和尚
-   * @date 2023-08-17
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   List<SysRedisMonitorQueryVO> list(SysRedisMonitorListDTO request) throws Exception;
 
@@ -32,8 +34,8 @@ public interface SysRedisMonitorService extends JoinIService<SysRedisMonitor> {
    *
    * @param request Redis监控采集实体
    * @return {@link Page< SysRedisMonitorQueryVO >}
-   * @author 一源团队-花和尚
-   * @date 2023-08-17
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   Page<SysRedisMonitorQueryVO> page(SysRedisMonitorPageDTO request) throws Exception;
 
@@ -42,8 +44,8 @@ public interface SysRedisMonitorService extends JoinIService<SysRedisMonitor> {
    *
    * @param id Redis监控采集id
    * @return {@link SysRedisMonitorQueryVO}
-   * @author 一源团队-花和尚
-   * @date 2023-08-17
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   SysRedisMonitorQueryVO details(String id) throws Exception;
 
@@ -52,8 +54,8 @@ public interface SysRedisMonitorService extends JoinIService<SysRedisMonitor> {
    *
    * @param request Redis监控采集实体
    * @return {@link SysRedisMonitor}
-   * @author 一源团队-花和尚
-   * @date 2023-08-17
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   SysRedisMonitorQueryVO details(SysRedisMonitor request) throws Exception;
 
@@ -62,8 +64,8 @@ public interface SysRedisMonitorService extends JoinIService<SysRedisMonitor> {
    *
    * @param ids Redis监控采集id(多个逗号分割)
    * @return {@link boolean}
-   * @author 一源团队-花和尚
-   * @date 2023-08-17
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   boolean delete(String ids) throws Exception;
 
@@ -72,8 +74,8 @@ public interface SysRedisMonitorService extends JoinIService<SysRedisMonitor> {
    *
    * @param request Redis监控采集实体
    * @return {@link boolean}
-   * @author 一源团队-花和尚
-   * @date 2023-08-17
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   boolean edit(SysRedisMonitorEditDTO request) throws Exception;
 
@@ -82,19 +84,8 @@ public interface SysRedisMonitorService extends JoinIService<SysRedisMonitor> {
    *
    * @param request Redis监控采集实体
    * @return {@link boolean}
-   * @author 一源团队-花和尚
-   * @date 2023-08-17
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   boolean add(SysRedisMonitorAddDTO request) throws Exception;
-
-  /**
-   * Redis监控统计查询
-   *
-   * @param request Redis监控统计查询实体
-   * @return {@link List<SysRedisMonitorQueryCountVO>}
-   * @author ${author}
-   * @date 2023-07-30
-   */
-  List<SysRedisMonitorQueryCountVO> queryCount(SysrRedisMonitorQueryCountDTO request)
-      throws Exception;
 }

@@ -14,8 +14,8 @@ import java.util.List;
 /**
  * 菜单Service层接口
  *
- * @author 一源团队-花和尚
- * @date 2023-08-17
+ * @author 一源-花和尚
+ * @date 2023-09-18
  */
 public interface SysMenuService extends JoinIService<SysMenu> {
 
@@ -24,8 +24,8 @@ public interface SysMenuService extends JoinIService<SysMenu> {
    *
    * @param request 菜单实体
    * @return {@link List< SysMenuQueryVO >}
-   * @author 一源团队-花和尚
-   * @date 2023-08-17
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   List<SysMenuQueryVO> list(SysMenuListDTO request) throws Exception;
 
@@ -34,8 +34,8 @@ public interface SysMenuService extends JoinIService<SysMenu> {
    *
    * @param request 菜单实体
    * @return {@link Page< SysMenuQueryVO >}
-   * @author 一源团队-花和尚
-   * @date 2023-08-17
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   Page<SysMenuQueryVO> page(SysMenuPageDTO request) throws Exception;
 
@@ -44,8 +44,8 @@ public interface SysMenuService extends JoinIService<SysMenu> {
    *
    * @param id 菜单id
    * @return {@link SysMenuQueryVO}
-   * @author 一源团队-花和尚
-   * @date 2023-08-17
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   SysMenuQueryVO details(String id) throws Exception;
 
@@ -54,8 +54,8 @@ public interface SysMenuService extends JoinIService<SysMenu> {
    *
    * @param request 菜单实体
    * @return {@link SysMenu}
-   * @author 一源团队-花和尚
-   * @date 2023-08-17
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   SysMenuQueryVO details(SysMenu request) throws Exception;
 
@@ -64,8 +64,8 @@ public interface SysMenuService extends JoinIService<SysMenu> {
    *
    * @param ids 菜单id(多个逗号分割)
    * @return {@link boolean}
-   * @author 一源团队-花和尚
-   * @date 2023-08-17
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   boolean delete(String ids) throws Exception;
 
@@ -74,8 +74,8 @@ public interface SysMenuService extends JoinIService<SysMenu> {
    *
    * @param request 菜单实体
    * @return {@link boolean}
-   * @author 一源团队-花和尚
-   * @date 2023-08-17
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   boolean edit(SysMenuEditDTO request) throws Exception;
 
@@ -84,17 +84,8 @@ public interface SysMenuService extends JoinIService<SysMenu> {
    *
    * @param request 菜单实体
    * @return {@link boolean}
-   * @author 一源团队-花和尚
-   * @date 2023-08-17
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   boolean add(SysMenuAddDTO request) throws Exception;
-
-  /**
-   * 自动生成菜单
-   *
-   * @return {@link boolean}
-   * @author 一源团队-花和尚
-   * @date 2023-08-17
-   */
-  boolean autoScanMenu() throws Exception;
 }

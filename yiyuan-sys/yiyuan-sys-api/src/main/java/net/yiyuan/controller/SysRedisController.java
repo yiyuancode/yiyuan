@@ -22,8 +22,8 @@ import java.util.List;
 /**
  * Redis记录管理
  *
- * @author 一源团队-花和尚
- * @date 2023-08-17
+ * @author 一源-花和尚
+ * @date 2023-09-18
  * @folder 系统管理/Redis记录管理
  */
 @SaCheckLogin
@@ -37,8 +37,8 @@ public class SysRedisController {
    *
    * @param request Redis记录实体
    * @return {@link CommonResult<List<SysRedisQueryVO>>}
-   * @author 一源团队-花和尚
-   * @date 2023-08-17
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   @Description("系统管理/Redis记录管理/查询Redis记录")
   @SaCheckPermission(
@@ -55,8 +55,8 @@ public class SysRedisController {
    *
    * @param request Redis记录实体
    * @return {@link CommonResult<Page<SysRedisQueryVO>>}
-   * @author 一源团队-花和尚
-   * @date 2023-08-17
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   @Description("系统管理/Redis记录管理/查询Redis记录")
   @SaCheckPermission(
@@ -73,8 +73,8 @@ public class SysRedisController {
    *
    * @param id Redis记录id
    * @return {@link CommonResult<SysRedisQueryVO>}
-   * @author 一源团队-花和尚
-   * @date 2023-08-17
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   @Description("系统管理/Redis记录管理/查询Redis记录")
   @SaCheckPermission(
@@ -92,8 +92,8 @@ public class SysRedisController {
    *
    * @param ids Redis记录id(多个逗号分割)
    * @return {@link CommonResult<String>}
-   * @author 一源团队-花和尚
-   * @date 2023-08-17
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   @Description("系统管理/Redis记录管理/删除Redis记录")
   @SaCheckPermission(
@@ -115,8 +115,8 @@ public class SysRedisController {
    *
    * @param request Redis记录实体
    * @return {@link CommonResult<String>}
-   * @author 一源团队-花和尚
-   * @date 2023-08-17
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   @Description("系统管理/Redis记录管理/编辑Redis记录")
   @SaCheckPermission(
@@ -138,8 +138,8 @@ public class SysRedisController {
    *
    * @param request Redis记录实体
    * @return {@link CommonResult<String>}
-   * @author 一源团队-花和尚
-   * @date 2023-08-17
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   @Description("系统管理/Redis记录管理/新增Redis记录")
   @SaCheckPermission(

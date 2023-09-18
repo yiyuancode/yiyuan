@@ -22,8 +22,8 @@ import java.util.List;
 /**
  * 菜单管理
  *
- * @author 一源团队-花和尚
- * @date 2023-08-17
+ * @author 一源-花和尚
+ * @date 2023-09-18
  * @folder 系统管理/菜单管理
  */
 @SaCheckLogin
@@ -37,8 +37,8 @@ public class SysMenuController {
    *
    * @param request 菜单实体
    * @return {@link CommonResult<List<SysMenuQueryVO>>}
-   * @author 一源团队-花和尚
-   * @date 2023-08-17
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   @Description("系统管理/菜单管理/查询菜单")
   @SaCheckPermission(
@@ -55,8 +55,8 @@ public class SysMenuController {
    *
    * @param request 菜单实体
    * @return {@link CommonResult<Page<SysMenuQueryVO>>}
-   * @author 一源团队-花和尚
-   * @date 2023-08-17
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   @Description("系统管理/菜单管理/查询菜单")
   @SaCheckPermission(
@@ -73,8 +73,8 @@ public class SysMenuController {
    *
    * @param id 菜单id
    * @return {@link CommonResult<SysMenuQueryVO>}
-   * @author 一源团队-花和尚
-   * @date 2023-08-17
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   @Description("系统管理/菜单管理/查询菜单")
   @SaCheckPermission(
@@ -92,8 +92,8 @@ public class SysMenuController {
    *
    * @param ids 菜单id(多个逗号分割)
    * @return {@link CommonResult<String>}
-   * @author 一源团队-花和尚
-   * @date 2023-08-17
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   @Description("系统管理/菜单管理/删除菜单")
   @SaCheckPermission(
@@ -115,8 +115,8 @@ public class SysMenuController {
    *
    * @param request 菜单实体
    * @return {@link CommonResult<String>}
-   * @author 一源团队-花和尚
-   * @date 2023-08-17
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   @Description("系统管理/菜单管理/编辑菜单")
   @SaCheckPermission(
@@ -138,8 +138,8 @@ public class SysMenuController {
    *
    * @param request 菜单实体
    * @return {@link CommonResult<String>}
-   * @author 一源团队-花和尚
-   * @date 2023-08-17
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   @Description("系统管理/菜单管理/新增菜单")
   @SaCheckPermission(
@@ -152,26 +152,6 @@ public class SysMenuController {
       return CommonResult.success(null, "新增菜单成功");
     } else {
       return CommonResult.failed("新增菜单失败");
-    }
-  }
-
-  /**
-   * 自动生成菜单
-   *
-   * @return {@link CommonResult<String>}
-   * @author 一源团队-花和尚
-   * @date 2023-08-17
-   */
-  @SaCheckPermission(
-      value = {"sys:menu:autoScanMenu"},
-      orRole = "admin")
-  @PostMapping(value = "/sys/menu/autoScanMenu")
-  @ResponseBody
-  public CommonResult<String> autoScanMenu() throws Exception {
-    if (sysMenuService.autoScanMenu()) {
-      return CommonResult.success(null, "自动生成菜单成功");
-    } else {
-      return CommonResult.failed("自动生成菜单失败");
     }
   }
 }

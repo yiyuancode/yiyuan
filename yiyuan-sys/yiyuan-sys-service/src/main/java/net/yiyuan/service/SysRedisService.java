@@ -14,8 +14,8 @@ import java.util.List;
 /**
  * Redis记录Service层接口
  *
- * @author 一源团队-花和尚
- * @date 2023-08-17
+ * @author 一源-花和尚
+ * @date 2023-09-18
  */
 public interface SysRedisService extends JoinIService<SysRedis> {
 
@@ -24,8 +24,8 @@ public interface SysRedisService extends JoinIService<SysRedis> {
    *
    * @param request Redis记录实体
    * @return {@link List< SysRedisQueryVO >}
-   * @author 一源团队-花和尚
-   * @date 2023-08-17
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   List<SysRedisQueryVO> list(SysRedisListDTO request) throws Exception;
 
@@ -34,8 +34,8 @@ public interface SysRedisService extends JoinIService<SysRedis> {
    *
    * @param request Redis记录实体
    * @return {@link Page< SysRedisQueryVO >}
-   * @author 一源团队-花和尚
-   * @date 2023-08-17
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   Page<SysRedisQueryVO> page(SysRedisPageDTO request) throws Exception;
 
@@ -44,8 +44,8 @@ public interface SysRedisService extends JoinIService<SysRedis> {
    *
    * @param id Redis记录id
    * @return {@link SysRedisQueryVO}
-   * @author 一源团队-花和尚
-   * @date 2023-08-17
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   SysRedisQueryVO details(String id) throws Exception;
 
@@ -54,8 +54,8 @@ public interface SysRedisService extends JoinIService<SysRedis> {
    *
    * @param request Redis记录实体
    * @return {@link SysRedis}
-   * @author 一源团队-花和尚
-   * @date 2023-08-17
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   SysRedisQueryVO details(SysRedis request) throws Exception;
 
@@ -64,8 +64,8 @@ public interface SysRedisService extends JoinIService<SysRedis> {
    *
    * @param ids Redis记录id(多个逗号分割)
    * @return {@link boolean}
-   * @author 一源团队-花和尚
-   * @date 2023-08-17
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   boolean delete(String ids) throws Exception;
 
@@ -74,8 +74,8 @@ public interface SysRedisService extends JoinIService<SysRedis> {
    *
    * @param request Redis记录实体
    * @return {@link boolean}
-   * @author 一源团队-花和尚
-   * @date 2023-08-17
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   boolean edit(SysRedisEditDTO request) throws Exception;
 
@@ -84,8 +84,8 @@ public interface SysRedisService extends JoinIService<SysRedis> {
    *
    * @param request Redis记录实体
    * @return {@link boolean}
-   * @author 一源团队-花和尚
-   * @date 2023-08-17
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   boolean add(SysRedisAddDTO request) throws Exception;
 }

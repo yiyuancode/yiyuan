@@ -100,7 +100,8 @@ public class MybatisPlusConfig extends JoinDefaultSqlInjector {
                 }
 
                 // 租户平台过来的数据全部需要拼接（mp的sql解析会根据表字段中有没有租户id字段来解析拼接，没有租户id的表，租户查询也不会拼接id）
-                return "sys_menu".equalsIgnoreCase(tableName);
+                //                return "sys_menu".equalsIgnoreCase(tableName);
+                return false;
               }
             }));
 

@@ -22,8 +22,8 @@ import java.util.List;
 /**
  * 定时任务管理
  *
- * @author 一源团队-花和尚
- * @date 2023-09-11
+ * @author 一源-花和尚
+ * @date 2023-09-18
  * @folder 系统管理/定时任务管理
  */
 @SaCheckLogin
@@ -37,8 +37,8 @@ public class SysQrtzController {
    *
    * @param request 定时任务实体
    * @return {@link CommonResult<List<SysQrtzQueryVO>>}
-   * @author 一源团队-花和尚
-   * @date 2023-09-11
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   @Description("系统管理/定时任务管理/查询定时任务")
   @SaCheckPermission(
@@ -55,8 +55,8 @@ public class SysQrtzController {
    *
    * @param request 定时任务实体
    * @return {@link CommonResult<Page<SysQrtzQueryVO>>}
-   * @author 一源团队-花和尚
-   * @date 2023-09-11
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   @Description("系统管理/定时任务管理/查询定时任务")
   @SaCheckPermission(
@@ -73,8 +73,8 @@ public class SysQrtzController {
    *
    * @param id 定时任务id
    * @return {@link CommonResult<SysQrtzQueryVO>}
-   * @author 一源团队-花和尚
-   * @date 2023-09-11
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   @Description("系统管理/定时任务管理/查询定时任务")
   @SaCheckPermission(
@@ -92,8 +92,8 @@ public class SysQrtzController {
    *
    * @param ids 定时任务id(多个逗号分割)
    * @return {@link CommonResult<String>}
-   * @author 一源团队-花和尚
-   * @date 2023-09-11
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   @Description("系统管理/定时任务管理/删除定时任务")
   @SaCheckPermission(
@@ -115,8 +115,8 @@ public class SysQrtzController {
    *
    * @param request 定时任务实体
    * @return {@link CommonResult<String>}
-   * @author 一源团队-花和尚
-   * @date 2023-09-11
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   @Description("系统管理/定时任务管理/编辑定时任务")
   @SaCheckPermission(
@@ -138,8 +138,8 @@ public class SysQrtzController {
    *
    * @param request 定时任务实体
    * @return {@link CommonResult<String>}
-   * @author 一源团队-花和尚
-   * @date 2023-09-11
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   @Description("系统管理/定时任务管理/新增定时任务")
   @SaCheckPermission(

@@ -14,8 +14,8 @@ import java.util.List;
 /**
  * 定时任务Service层接口
  *
- * @author 一源团队-花和尚
- * @date 2023-09-11
+ * @author 一源-花和尚
+ * @date 2023-09-18
  */
 public interface SysQrtzService extends JoinIService<SysQrtz> {
 
@@ -24,8 +24,8 @@ public interface SysQrtzService extends JoinIService<SysQrtz> {
    *
    * @param request 定时任务实体
    * @return {@link List< SysQrtzQueryVO >}
-   * @author 一源团队-花和尚
-   * @date 2023-09-11
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   List<SysQrtzQueryVO> list(SysQrtzListDTO request) throws Exception;
 
@@ -34,8 +34,8 @@ public interface SysQrtzService extends JoinIService<SysQrtz> {
    *
    * @param request 定时任务实体
    * @return {@link Page< SysQrtzQueryVO >}
-   * @author 一源团队-花和尚
-   * @date 2023-09-11
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   Page<SysQrtzQueryVO> page(SysQrtzPageDTO request) throws Exception;
 
@@ -44,8 +44,8 @@ public interface SysQrtzService extends JoinIService<SysQrtz> {
    *
    * @param id 定时任务id
    * @return {@link SysQrtzQueryVO}
-   * @author 一源团队-花和尚
-   * @date 2023-09-11
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   SysQrtzQueryVO details(String id) throws Exception;
 
@@ -54,8 +54,8 @@ public interface SysQrtzService extends JoinIService<SysQrtz> {
    *
    * @param request 定时任务实体
    * @return {@link SysQrtz}
-   * @author 一源团队-花和尚
-   * @date 2023-09-11
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   SysQrtzQueryVO details(SysQrtz request) throws Exception;
 
@@ -64,8 +64,8 @@ public interface SysQrtzService extends JoinIService<SysQrtz> {
    *
    * @param ids 定时任务id(多个逗号分割)
    * @return {@link boolean}
-   * @author 一源团队-花和尚
-   * @date 2023-09-11
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   boolean delete(String ids) throws Exception;
 
@@ -74,8 +74,8 @@ public interface SysQrtzService extends JoinIService<SysQrtz> {
    *
    * @param request 定时任务实体
    * @return {@link boolean}
-   * @author 一源团队-花和尚
-   * @date 2023-09-11
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   boolean edit(SysQrtzEditDTO request) throws Exception;
 
@@ -84,8 +84,8 @@ public interface SysQrtzService extends JoinIService<SysQrtz> {
    *
    * @param request 定时任务实体
    * @return {@link boolean}
-   * @author 一源团队-花和尚
-   * @date 2023-09-11
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   boolean add(SysQrtzAddDTO request) throws Exception;
 }

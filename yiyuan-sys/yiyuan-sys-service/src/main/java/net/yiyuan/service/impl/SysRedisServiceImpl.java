@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import icu.mhb.mybatisplus.plugln.base.service.impl.JoinServiceImpl;
 import icu.mhb.mybatisplus.plugln.core.JoinLambdaWrapper;
 import lombok.extern.slf4j.Slf4j;
+import net.yiyuan.common.exception.BusinessException;
 import net.yiyuan.common.utils.BeanUtilsPlus;
 import net.yiyuan.dto.SysRedisAddDTO;
 import net.yiyuan.dto.SysRedisEditDTO;
@@ -21,8 +22,8 @@ import java.util.List;
 /**
  * Redis记录Service层接口实现
  *
- * @author 一源团队-花和尚
- * @date 2023-08-17
+ * @author 一源-花和尚
+ * @date 2023-09-18
  */
 @Slf4j
 @Service
@@ -35,8 +36,8 @@ public class SysRedisServiceImpl extends JoinServiceImpl<SysRedisMapper, SysRedi
    *
    * @param request Redis记录实体
    * @return {@link List< SysRedisQueryVO >}
-   * @author 一源团队-花和尚
-   * @date 2023-08-17
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   @Override
   public List<SysRedisQueryVO> list(SysRedisListDTO request) throws Exception {
@@ -44,7 +45,7 @@ public class SysRedisServiceImpl extends JoinServiceImpl<SysRedisMapper, SysRedi
     SysRedis po = new SysRedis();
     BeanUtilsPlus.copy(request, po);
     JoinLambdaWrapper<SysRedis> wrapper = new JoinLambdaWrapper<>(po);
-    List<SysRedisQueryVO> voList = joinList(wrapper, SysRedisQueryVO.class);
+    List<SysRedisQueryVO> voList = sysRedisMapper.joinSelectList(wrapper, SysRedisQueryVO.class);
 
     return voList;
   }
@@ -54,8 +55,8 @@ public class SysRedisServiceImpl extends JoinServiceImpl<SysRedisMapper, SysRedi
    *
    * @param request Redis记录实体
    * @return {@link Page< SysRedisQueryVO >}
-   * @author 一源团队-花和尚
-   * @date 2023-08-17
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   @Override
   public Page<SysRedisQueryVO> page(SysRedisPageDTO request) throws Exception {
@@ -63,7 +64,7 @@ public class SysRedisServiceImpl extends JoinServiceImpl<SysRedisMapper, SysRedi
     BeanUtilsPlus.copy(request, po);
     JoinLambdaWrapper<SysRedis> wrapper = new JoinLambdaWrapper<>(po);
     Page<SysRedisQueryVO> voPage =
-        joinPage(
+        sysRedisMapper.joinSelectPage(
             new Page<>(request.getPageNum(), request.getPageSize()),
             wrapper,
             SysRedisQueryVO.class);
@@ -75,15 +76,15 @@ public class SysRedisServiceImpl extends JoinServiceImpl<SysRedisMapper, SysRedi
    *
    * @param id Redis记录id
    * @return {@link SysRedisQueryVO}
-   * @author 一源团队-花和尚
-   * @date 2023-08-17
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   @Override
   public SysRedisQueryVO details(String id) throws Exception {
     SysRedis po = new SysRedis();
     po.setId(id);
     JoinLambdaWrapper<SysRedis> wrapper = new JoinLambdaWrapper<>(po);
-    SysRedisQueryVO voBean = joinGetOne(wrapper, SysRedisQueryVO.class);
+    SysRedisQueryVO voBean = sysRedisMapper.joinSelectOne(wrapper, SysRedisQueryVO.class);
     return voBean;
   }
 
@@ -92,14 +93,13 @@ public class SysRedisServiceImpl extends JoinServiceImpl<SysRedisMapper, SysRedi
    *
    * @param request Redis记录实体
    * @return {@link SysRedis}
-   * @author 一源团队-花和尚
-   * @date 2023-08-17
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   @Override
   public SysRedisQueryVO details(SysRedis request) throws Exception {
-
     JoinLambdaWrapper<SysRedis> wrapper = new JoinLambdaWrapper<>(request);
-    SysRedisQueryVO voBean = joinGetOne(wrapper, SysRedisQueryVO.class);
+    SysRedisQueryVO voBean = sysRedisMapper.joinSelectOne(wrapper, SysRedisQueryVO.class);
     return voBean;
   }
 
@@ -108,12 +108,18 @@ public class SysRedisServiceImpl extends JoinServiceImpl<SysRedisMapper, SysRedi
    *
    * @param ids Redis记录id(多个逗号分割)
    * @return {@link boolean}
-   * @author 一源团队-花和尚
-   * @date 2023-08-17
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   @Override
   public boolean delete(String ids) throws Exception {
-    return removeByIds(Arrays.asList(ids.split(",")));
+    List<String> idList = Arrays.asList(ids.split(","));
+    int i = sysRedisMapper.deleteBatchIds(idList);
+    if (i == idList.size()) {
+      return true;
+    } else {
+      throw new BusinessException("批量删除异常");
+    }
   }
 
   /**
@@ -121,15 +127,19 @@ public class SysRedisServiceImpl extends JoinServiceImpl<SysRedisMapper, SysRedi
    *
    * @param request Redis记录实体
    * @return {@link boolean}
-   * @author 一源团队-花和尚
-   * @date 2023-08-17
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   @Override
   public boolean edit(SysRedisEditDTO request) throws Exception {
     SysRedis po = new SysRedis();
     BeanUtilsPlus.copy(request, po);
-    JoinLambdaWrapper<SysRedis> wrapper = new JoinLambdaWrapper<>(po);
-    return updateById(po);
+    int i = sysRedisMapper.updateById(po);
+    if (i != 0) {
+      return true;
+    } else {
+      throw new BusinessException("修改异常");
+    }
   }
 
   /**
@@ -137,13 +147,18 @@ public class SysRedisServiceImpl extends JoinServiceImpl<SysRedisMapper, SysRedi
    *
    * @param request Redis记录实体
    * @return {@link boolean}
-   * @author 一源团队-花和尚
-   * @date 2023-08-17
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   @Override
   public boolean add(SysRedisAddDTO request) throws Exception {
     SysRedis po = new SysRedis();
     BeanUtilsPlus.copy(request, po);
-    return save(po);
+    int i = sysRedisMapper.insert(po);
+    if (i != 0) {
+      return true;
+    } else {
+      throw new BusinessException("新增异常");
+    }
   }
 }

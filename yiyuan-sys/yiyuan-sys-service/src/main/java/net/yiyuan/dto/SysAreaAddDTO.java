@@ -10,10 +10,10 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
- * 区域新增接口请求入参实体
+ * 行政区域新增接口请求入参实体
  *
- * @author 一源团队-花和尚
- * @date 2023-09-11
+ * @author 一源-花和尚
+ * @date 2023-09-18
  */
 @Data
 public class SysAreaAddDTO implements Serializable {
@@ -21,9 +21,8 @@ public class SysAreaAddDTO implements Serializable {
   /**
    * 父级ID
    *
-   * @mock 0
-   * @author 一源团队-花和尚
-   * @date 2023-09-11
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   @NotBlank(message = "父级ID不能为空")
   private String pid;
@@ -31,8 +30,8 @@ public class SysAreaAddDTO implements Serializable {
   /**
    * 区域名称
    *
-   * @author 一源团队-花和尚
-   * @date 2023-09-11
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   @NotBlank(message = "区域名称不能为空")
   private String name;
@@ -41,8 +40,8 @@ public class SysAreaAddDTO implements Serializable {
    * 排序
    *
    * @mock 0
-   * @author 一源团队-花和尚
-   * @date 2023-09-11
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   @NotNull(message = "排序不能为空")
   private Integer sort;
@@ -51,8 +50,8 @@ public class SysAreaAddDTO implements Serializable {
    * 显示状态#0=不显示|1=显示
    *
    * @mock 1
-   * @author 一源团队-花和尚
-   * @date 2023-09-11
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   @NotNull(message = "显示状态#0=不显示|1=显示不能为空")
   private SysAreaIsShowEnum isShow;
@@ -61,8 +60,8 @@ public class SysAreaAddDTO implements Serializable {
    * 是否删除#0=未删除|1=已删除
    *
    * @mock 0
-   * @author 一源团队-花和尚
-   * @date 2023-09-11
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   @NotNull(message = "是否删除#0=未删除|1=已删除不能为空")
   private SysAreaIsDelEnum isDel;
@@ -70,8 +69,9 @@ public class SysAreaAddDTO implements Serializable {
   /**
    * 分类级别#1=一级分类|2=二级分类|3=三级分类|4=四级分类|5=五级分类
    *
-   * @author 一源团队-花和尚
-   * @date 2023-09-11
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
+  @NotNull(message = "分类级别#1=一级分类|2=二级分类|3=三级分类|4=四级分类|5=五级分类不能为空")
   private SysAreaLevelEnum level;
 }

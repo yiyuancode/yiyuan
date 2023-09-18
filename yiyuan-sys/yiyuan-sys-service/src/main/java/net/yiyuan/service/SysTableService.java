@@ -2,18 +2,20 @@ package net.yiyuan.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import icu.mhb.mybatisplus.plugln.base.service.JoinIService;
-import net.yiyuan.dto.*;
+import net.yiyuan.dto.SysTableAddDTO;
+import net.yiyuan.dto.SysTableEditDTO;
+import net.yiyuan.dto.SysTableListDTO;
+import net.yiyuan.dto.SysTablePageDTO;
 import net.yiyuan.model.SysTable;
 import net.yiyuan.vo.SysTableQueryVO;
 
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
  * 数据库Service层接口
  *
- * @author 一源团队-花和尚
- * @date 2023-08-25
+ * @author 一源-花和尚
+ * @date 2023-09-18
  */
 public interface SysTableService extends JoinIService<SysTable> {
 
@@ -22,8 +24,8 @@ public interface SysTableService extends JoinIService<SysTable> {
    *
    * @param request 数据库实体
    * @return {@link List< SysTableQueryVO >}
-   * @author 一源团队-花和尚
-   * @date 2023-08-25
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   List<SysTableQueryVO> list(SysTableListDTO request) throws Exception;
 
@@ -32,8 +34,8 @@ public interface SysTableService extends JoinIService<SysTable> {
    *
    * @param request 数据库实体
    * @return {@link Page< SysTableQueryVO >}
-   * @author 一源团队-花和尚
-   * @date 2023-08-25
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   Page<SysTableQueryVO> page(SysTablePageDTO request) throws Exception;
 
@@ -42,8 +44,8 @@ public interface SysTableService extends JoinIService<SysTable> {
    *
    * @param id 数据库id
    * @return {@link SysTableQueryVO}
-   * @author 一源团队-花和尚
-   * @date 2023-08-25
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   SysTableQueryVO details(String id) throws Exception;
 
@@ -52,8 +54,8 @@ public interface SysTableService extends JoinIService<SysTable> {
    *
    * @param request 数据库实体
    * @return {@link SysTable}
-   * @author 一源团队-花和尚
-   * @date 2023-08-25
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   SysTableQueryVO details(SysTable request) throws Exception;
 
@@ -62,8 +64,8 @@ public interface SysTableService extends JoinIService<SysTable> {
    *
    * @param ids 数据库id(多个逗号分割)
    * @return {@link boolean}
-   * @author 一源团队-花和尚
-   * @date 2023-08-25
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   boolean delete(String ids) throws Exception;
 
@@ -72,8 +74,8 @@ public interface SysTableService extends JoinIService<SysTable> {
    *
    * @param request 数据库实体
    * @return {@link boolean}
-   * @author 一源团队-花和尚
-   * @date 2023-08-25
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   boolean edit(SysTableEditDTO request) throws Exception;
 
@@ -82,27 +84,8 @@ public interface SysTableService extends JoinIService<SysTable> {
    *
    * @param request 数据库实体
    * @return {@link boolean}
-   * @author 一源团队-花和尚
-   * @date 2023-08-25
+   * @author 一源-花和尚
+   * @date 2023-09-18
    */
   boolean add(SysTableAddDTO request) throws Exception;
-
-  /**
-   * 刷新数据库
-   *
-   * @return {@link boolean}
-   * @author 一源团队-花和尚
-   * @date 2023-08-25
-   */
-  boolean refresh() throws Exception;
-
-  /**
-   * 生成代码
-   *
-   * @param request 生成代码实体
-   * @author 一源团队-花和尚
-   * @date 2023-08-25
-   */
-  void generateCode(HttpServletResponse servletResponse, SysTableGenerateCodeDTO request)
-      throws Exception;
 }
