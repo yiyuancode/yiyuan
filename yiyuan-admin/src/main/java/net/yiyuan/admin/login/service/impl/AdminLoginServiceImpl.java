@@ -53,8 +53,8 @@ public class AdminLoginServiceImpl extends JoinServiceImpl<SysTenantMapper, SysT
   @Override
   public AccountLoginVo accountLogin(AccountLoginDTO request) throws Exception {
     StpUtil.login(request.getUsername());
-    AccountLoginVo voBean = new AccountLoginVo();
-    voBean.setToken(StpUtil.getTokenValue());
+//    AccountLoginVo voBean = new AccountLoginVo();
+//    voBean.setToken(StpUtil.getTokenValue());
 
     SaRequest httpRequest = SaHolder.getRequest();
     // platform 平台区分 0 平台  1 租户 2 c端

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>yiyuan</artifactId>
+        <groupId>net.yiyuan</groupId>
+        <version>${revision}</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <version>${revision}</version>
+    <artifactId>yiyuan-um</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>yiyuan-um-api</module>
+        <module>yiyuan-um-service</module>
+        <module>yiyuan-um-app-api</module>
+        <module>yiyuan-um-app-service</module>
+        <module>yiyuan-um-mapper</module>
+    </modules>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>net.yiyuan</groupId>
+            <artifactId>yiyuan-plugins-satoken</artifactId>
+            <version>${revision}</version>
+        </dependency>
+    </dependencies>
+</project>
