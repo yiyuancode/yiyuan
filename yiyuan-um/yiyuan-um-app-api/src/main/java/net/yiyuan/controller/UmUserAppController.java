@@ -7,6 +7,7 @@ import net.yiyuan.common.model.vo.CommonResult;
 import net.yiyuan.dto.UmUserTokenDTO;
 import net.yiyuan.service.UmUserAppService;
 import net.yiyuan.vo.GetUmUserInfoVO;
+import net.yiyuan.vo.MyselfIndexVO;
 import net.yiyuan.vo.UmUserTokenVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -42,10 +43,24 @@ public class UmUserAppController {
      * @author ${author}
      * @date 2023-07-27
      */
-    @GetMapping(value = "/login/getUserInfo")
+    @GetMapping(value = "/login/getUserInfo/um")
     @ResponseBody
     public CommonResult<GetUmUserInfoVO> getUserInfo() throws Exception {
         return CommonResult.success(umUserAppService.getUmUserInfo(), "获取用户信息成功");
+    }
+
+    /**
+     * 获取我的个人页面参数
+     *
+     * @return
+     * @throws Exception
+     */
+    @GetMapping(value = "/login/finMyself")
+    @SaIgnore
+    @ResponseBody
+    public CommonResult<MyselfIndexVO> findMySelfIndexVO() throws Exception {
+
+        return CommonResult.success(umUserAppService.findMySelfIndexVO(), "我的详情查询成功");
     }
 
 }

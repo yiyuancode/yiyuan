@@ -10,13 +10,16 @@ import net.yiyuan.common.utils.StringUtilsPlus;
 import net.yiyuan.dto.UmUserTokenDTO;
 import net.yiyuan.enums.UmUserSexEnum;
 import net.yiyuan.enums.UmUserStatusEnum;
+import net.yiyuan.mapper.UmBrowseRecordMapper;
 import net.yiyuan.mapper.UmUserMapper;
+import net.yiyuan.mapper.UmUserMerchantCollectMapper;
+import net.yiyuan.model.UmBrowseRecord;
 import net.yiyuan.model.UmUser;
+import net.yiyuan.model.UmUserAddress;
+import net.yiyuan.model.UmUserMerchantCollect;
 import net.yiyuan.redis.SmsRedisService;
 import net.yiyuan.service.UmUserAppService;
-import net.yiyuan.vo.GetUmUserInfoVO;
-import net.yiyuan.vo.UmUserQueryVO;
-import net.yiyuan.vo.UmUserTokenVO;
+import net.yiyuan.vo.*;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -36,6 +39,10 @@ public class UmUserAppServiceImpl extends JoinServiceImpl<UmUserMapper, UmUser>
     private UmUserMapper umUserMapper;
     @Resource
     private SmsRedisService smsRedisService;
+    @Resource
+    private UmBrowseRecordMapper umBrowseRecordMapper;
+    @Resource
+    private UmUserMerchantCollectMapper umUserMerchantCollectMapper;
 
     /**
      * 用户登录
@@ -114,6 +121,41 @@ public class UmUserAppServiceImpl extends JoinServiceImpl<UmUserMapper, UmUser>
         umUser.setPwd("");
         BeanUtilsPlus.copy(umUser, getUmUserInfo);
         return getUmUserInfo;
+    }
+
+    @Override
+    public MyselfIndexVO findMySelfIndexVO() throws Exception {
+        TestVO testVO = new TestVO();
+        JoinLambdaWrapper<UmUser> umWrapper = new JoinLambdaWrapper<>(UmUser.class);
+        umWrapper.eq(UmUser::getId, "767dd335d2aa16f3efafd1cc86a938c1");
+        umWrapper.select(UmUser::getPhone);
+        //第一个参数
+        umWrapper.leftJoin(UmUserAddress.class, UmUserAddress::getUid, UmUser::getId).manyToManySelect(TestVO::getAddressList, UmUserAddress.class).end();
+        umWrapper.leftJoin(UmBrowseRecord.class, UmBrowseRecord::getUid, UmUser::getId).manyToManySelect(TestVO::getBrowseRecordList, UmBrowseRecord.class).end();
+
+        TestVO testVO1 = umUserMapper.joinSelectOne(umWrapper, TestVO.class);
+
+
+        // 获取用户信息
+        GetUmUserInfoVO umUserInfo = this.getUmUserInfo();
+        // 获取我的足迹
+        JoinLambdaWrapper<UmBrowseRecord> wrapper = new JoinLambdaWrapper<>(UmBrowseRecord.class);
+        wrapper.eq(UmBrowseRecord::getUid, umUserInfo.getId());
+        Long myTracks = umBrowseRecordMapper.selectCount(wrapper);
+        //获取我的收藏数量
+        JoinLambdaWrapper<UmUserMerchantCollect> umUserMerchantCollectJoinLambdaWrapper = new JoinLambdaWrapper<>(UmUserMerchantCollect.class);
+        umUserMerchantCollectJoinLambdaWrapper.eq(UmUserMerchantCollect::getUid, umUserInfo.getId());
+        Long myFavorite = umUserMerchantCollectMapper.selectCount(umUserMerchantCollectJoinLambdaWrapper);
+        // 卡卷待定。默认为0 目前
+        MyselfIndexVO myselfIndexVO = new MyselfIndexVO();
+        myselfIndexVO.setName(umUserInfo.getName());
+        myselfIndexVO.setHead(umUserInfo.getAvatar());
+        myselfIndexVO.setMyFavorite(myFavorite.toString());
+        myselfIndexVO.setIntegral(umUserInfo.getIntegral().toString());
+        myselfIndexVO.setMyTracks(myTracks.toString());
+        myselfIndexVO.setMyCars("0");
+
+        return myselfIndexVO;
     }
 
 
