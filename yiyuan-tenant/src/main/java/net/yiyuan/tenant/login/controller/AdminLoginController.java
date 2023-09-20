@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @SaCheckLogin
 @Slf4j
-@RestController
+//@RestController
 public class AdminLoginController {
   @Autowired private AdminLoginService adminLoginService;
 
