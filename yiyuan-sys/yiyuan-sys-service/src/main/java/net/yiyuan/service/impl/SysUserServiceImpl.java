@@ -5,16 +5,17 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import icu.mhb.mybatisplus.plugln.base.service.impl.JoinServiceImpl;
 import icu.mhb.mybatisplus.plugln.core.JoinLambdaWrapper;
 import lombok.extern.slf4j.Slf4j;
+import net.yiyuan.CenterJoinUtils;
 import net.yiyuan.common.constatnt.ResultCode;
 import net.yiyuan.common.exception.BusinessException;
 import net.yiyuan.common.utils.BeanUtilsPlus;
 import net.yiyuan.common.utils.StringUtilsPlus;
 import net.yiyuan.dto.*;
 import net.yiyuan.mapper.*;
-import net.yiyuan.model.SysRole;
-import net.yiyuan.model.SysUser;
-import net.yiyuan.model.SysUserRole;
+import net.yiyuan.model.*;
+import net.yiyuan.redis.SysUserRedisService;
 import net.yiyuan.service.SysUserService;
+import net.yiyuan.vo.SysRoleQueryVO;
 import net.yiyuan.vo.SysUserAdminAccoutLoginVO;
 import net.yiyuan.vo.SysUserQueryVO;
 import net.yiyuan.vo.SysUserTenantAccoutLoginVO;
@@ -24,8 +25,6 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * 管理端用户Service层接口实现
@@ -42,6 +41,10 @@ public class SysUserServiceImpl extends JoinServiceImpl<SysUserMapper, SysUser>
   @Resource private SysRoleMapper sysRoleMapper;
   @Resource private SysMenuMapper sysMenuMapper;
   @Resource private SysRoleMenuMapper sysRoleMenuMapper;
+  @Resource private SysUserRedisService sysUserRedisService;
+  private CenterJoinUtils<SysUser, SysUserRole, SysRole, SysUserQueryVO> userRoleJoin;
+  private CenterJoinUtils<SysRole, SysRoleMenu, SysMenu, SysRoleQueryVO> roleMenuJoin;
+
   /**
    * 管理端用户列表(全部)
    *
@@ -77,6 +80,18 @@ public class SysUserServiceImpl extends JoinServiceImpl<SysUserMapper, SysUser>
     Page<SysUserQueryVO> voPage =
         sysUserMapper.joinSelectPage(
             new Page<>(request.getPageNum(), request.getPageSize()), wrapper, SysUserQueryVO.class);
+
+    //    CenterJoinUtils<SysUserQueryVO, SysUser, SysUserRole, SysRole, SysRoleQueryVO>
+    // centerJoinUtils =
+    //        new CenterJoinUtils<>(
+    //            voPage.getRecords(),
+    //            SysUserQueryVO::getId,
+    //            SysUser::getId,
+    //            SysUserRole::getSysUserId,
+    //            SysUserRole::getSysRoleId,
+    //            SysRole::getId);
+    //
+    //    centerJoinUtils.joinList2(SysUserQueryVO::setRolesList);
     return voPage;
   }
 
@@ -183,15 +198,65 @@ public class SysUserServiceImpl extends JoinServiceImpl<SysUserMapper, SysUser>
     if (StringUtilsPlus.isNull(sysUserResp)) {
       throw new BusinessException(ResultCode.USER_NOT_FIND);
     }
-    if (sysUserResp.getPassword().equals(po.getPassword())) {
+    if (!sysUserResp.getPassword().equals(po.getPassword())) {
       throw new BusinessException(ResultCode.USER_PASS_ERROR);
     }
     // 使用用户id完成satoken登录,并返回token
     StpUtil.login(sysUserResp.getId());
     SysUserAdminAccoutLoginVO voBean = new SysUserAdminAccoutLoginVO();
     voBean.setToken(StpUtil.getTokenValue());
-    // 关联查询角色信息
-    sysUserResp = this.joinSysRoleOne(sysUserResp);
+
+    //    @Resource
+    //    private CenterJoinUtils<SysRole, SysRoleMenu, SysMenu, SysMenuQueryVO> centerJoinUtils2;
+    //
+    //    CenterJoinUtils<SysUserQueryVO, SysUser, SysUserRole, SysRole, SysRoleQueryVO>
+    // centerJoinUtils =
+    //        new CenterJoinUtils<>(
+    //            sysUserResp,
+    //            SysUserQueryVO::getId,
+    //            SysUser::getId,
+    //            SysUserRole::getSysUserId,
+    //            SysUserRole::getSysRoleId,
+    //            SysRole::getId);
+    List<SysUserQueryVO> voList = new ArrayList<>();
+    voList.add(sysUserResp);
+    userRoleJoin = CenterJoinUtils.of();
+    userRoleJoin.setVoList(voList, SysUserQueryVO::getId, SysUserQueryVO::setRolesList);
+    userRoleJoin
+        .setLeftTable(SysUser::getId)
+        .setCenterTable(SysUserRole::getSysUserId, SysUserRole::getSysRoleId)
+        .setRightTable(SysRole::getId)
+        .select()
+        .map()
+        .mapResult();
+    // 获取code编码缓存redis
+    List<String> roleCodeList = userRoleJoin.getRightAnyFieldList(SysRole::getCode);
+    sysUserRedisService.set(
+        SysUserRedisService.KEY_SYS_USER_ROLE,
+        sysUserResp.getId(),
+        roleCodeList,
+        SysUserRedisService.EXPIRE_SYS_USER_ROLE);
+
+    List<String> roleIdList = new ArrayList<>();
+    if (!roleCodeList.contains("admin")) {
+      roleIdList = userRoleJoin.getRightAnyFieldList(SysRole::getId);
+    }
+    // 关联菜单表
+    roleMenuJoin =
+        new CenterJoinUtils<>(
+            SysRole::getId,
+            SysRoleMenu::getSysRoleId,
+            SysRoleMenu::getSysMenuId,
+            SysMenu::getId,
+            roleIdList);
+    List<String> menuPermissionList = roleMenuJoin.getRightAnyFieldList(SysMenu::getPermission);
+    sysUserRedisService.set(
+        SysUserRedisService.KEY_SYS_USER_PERMISSION,
+        sysUserResp.getId(),
+        menuPermissionList,
+        SysUserRedisService.EXPIRE_SYS_USER_PERMISSION);
+    log.info("menuPermissionList:{}", menuPermissionList);
+
     return voBean;
   }
 
@@ -199,65 +264,5 @@ public class SysUserServiceImpl extends JoinServiceImpl<SysUserMapper, SysUser>
   public SysUserTenantAccoutLoginVO tenantAccoutLogin(SysUserTenantAccoutLoginDTO request)
       throws Exception {
     return null;
-  }
-
-  /**
-   * 关联查询角色信息-单个
-   *
-   * @param sysUser 用户查询对象
-   * @return {@link SysUserQueryVO}
-   * @author 一源-花和尚
-   * @date 2023-09-18
-   */
-  public SysUserQueryVO joinSysRoleOne(SysUserQueryVO sysUser) {
-    List<SysUserQueryVO> list = new ArrayList<>();
-    list.add(sysUser);
-    this.joinSysRoleList(list);
-    return list.get(list.size() - 1);
-  }
-
-  /**
-   * 关联查询角色信息-多个
-   *
-   * @param sysUserList 用户查询对象集合
-   * @author 一源-花和尚
-   * @date 2023-09-18
-   */
-  public void joinSysRoleList(List<SysUserQueryVO> sysUserList) {
-    // 获取idList
-    List<String> sysUserIdsList =
-        sysUserList.stream()
-            .map(SysUserQueryVO::getId)
-            .map(String::toString)
-            .distinct()
-            .collect(Collectors.toList());
-    // id去重
-    sysUserIdsList =
-        sysUserIdsList.stream().map(String::toString).distinct().collect(Collectors.toList());
-
-    // 根据去重得用户id查询关联表得所有角色id
-    JoinLambdaWrapper<SysUserRole> sysUserRolewrapper = new JoinLambdaWrapper<>(SysUserRole.class);
-    sysUserRolewrapper.in(SysUserRole::getSysUserId, sysUserIdsList);
-    // 指定只查询关联角色id
-    sysUserRolewrapper.select(SysUserRole::getSysRoleId);
-    List<SysUserRole> sysUserRoleRespList =
-        sysUserRoleMapper.joinSelectList(sysUserRolewrapper, SysUserRole.class);
-    // 转成纯角色id的集合,因为mp查询支持id集合
-    List<String> roleIdsList =
-        sysUserRoleRespList.stream()
-            .map(SysUserRole::getSysRoleId)
-            .map(String::toString)
-            .distinct()
-            .collect(Collectors.toList());
-
-    JoinLambdaWrapper<SysRole> sysRolewrapper = new JoinLambdaWrapper<>(SysRole.class);
-    sysRolewrapper.in(SysRole::getId, roleIdsList);
-    // 不指定select,默认查询所有字段
-    List<SysRole> sysRoleRespList = sysRoleMapper.joinSelectList(sysRolewrapper, SysRole.class);
-    // 使用流操作将List转换为Map,便于根据id直接获取,避免再次循环
-    Map<String, SysRole> map =
-        sysRoleRespList.stream().collect(Collectors.toMap(SysRole::getId, obj -> obj));
-    // 给list设置
-
   }
 }

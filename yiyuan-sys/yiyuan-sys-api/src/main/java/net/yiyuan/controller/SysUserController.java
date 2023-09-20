@@ -57,10 +57,11 @@ public class SysUserController {
    * @date 2023-09-18
    */
   @Description("系统管理/管理端用户管理/查询管理端用户")
-  @SaCheckPermission(
-      value = {"sys:user:query"},
-      orRole = "admin")
+  //  @SaCheckPermission(
+  //      value = {"sys:user:query"},
+  //      orRole = "admin")
   @GetMapping(value = "/sys/user/page")
+  @SaIgnore
   @ResponseBody
   public CommonResult<Page<SysUserQueryVO>> page(SysUserPageDTO request) throws Exception {
     return CommonResult.success(sysUserService.page(request), "分页查询管理端用户成功");
@@ -164,13 +165,9 @@ public class SysUserController {
   @SaIgnore
   @PostMapping(value = "/sys/user/admin/accout/login")
   @ResponseBody
-  public CommonResult<String> adminAccoutLogin(
-      @RequestBody @Validated SysUserAdminAccoutLoginDTO request) throws Exception {
-    if (sysUserService.adminAccoutLogin(request)) {
-      return CommonResult.success(null, "新增管理端用户成功");
-    } else {
-      return CommonResult.failed("新增管理端用户失败");
-    }
+  public CommonResult adminAccoutLogin(@RequestBody @Validated SysUserAdminAccoutLoginDTO request)
+      throws Exception {
+    return CommonResult.success(sysUserService.adminAccoutLogin(request));
   }
 
   /**
@@ -184,12 +181,8 @@ public class SysUserController {
   @SaIgnore
   @PostMapping(value = "/sys/user/tenant/accout/login")
   @ResponseBody
-  public CommonResult<String> tenantAccoutLogin(
-      @RequestBody @Validated SysUserTenantAccoutLoginDTO request) throws Exception {
-    if (sysUserService.tenantAccoutLogin(request)) {
-      return CommonResult.success(null, "新增管理端用户成功");
-    } else {
-      return CommonResult.failed("新增管理端用户失败");
-    }
+  public CommonResult tenantAccoutLogin(@RequestBody @Validated SysUserTenantAccoutLoginDTO request)
+      throws Exception {
+    return CommonResult.success(sysUserService.tenantAccoutLogin(request));
   }
 }

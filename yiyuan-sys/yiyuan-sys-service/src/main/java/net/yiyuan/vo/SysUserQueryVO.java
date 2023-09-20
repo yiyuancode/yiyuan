@@ -3,10 +3,12 @@ package net.yiyuan.vo;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import net.yiyuan.enums.SysUserPlatformEnum;
+import net.yiyuan.model.SysRole;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 管理端用户查询请求响应参数实体
@@ -92,4 +94,12 @@ public class SysUserQueryVO implements Serializable {
    * @date 2023-09-18
    */
   private String updateUser;
+
+  /**
+   * 关联角色
+   *
+   * @author 一源-花和尚
+   * @date 2023-09-18
+   */
+  private List<SysRole> rolesList;
 }

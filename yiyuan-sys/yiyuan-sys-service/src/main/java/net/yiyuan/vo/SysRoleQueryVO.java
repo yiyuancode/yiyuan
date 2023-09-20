@@ -99,4 +99,20 @@ public class SysRoleQueryVO implements Serializable {
    * @date 2023-09-18
    */
   private String updateUser;
+
+  /**
+   * 用户ID
+   *
+   * @author 一源-花和尚
+   * @date 2023-09-18
+   */
+  private String sysUserId;
+
+  /**
+   * 角色ID
+   *
+   * @author 一源-花和尚
+   * @date 2023-09-18
+   */
+  private String sysRoleId;
 }
