@@ -1,0 +1,29 @@
+spring:
+  datasource:
+    url: jdbc:mysql://106.54.87.159:23306/admin_dev?serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+    #password: Av*duP#992CBd##wdL&K
+    #连接池的配置信息
+    initialSize: 10
+    minIdle: 10
+    maxActive: 100
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxPoolPreparedStatementPerConnectionSize: 20
+    type: com.alibaba.druid.pool.DruidDataSource
+    # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+    filters: stat,wall,log4j
+    # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+    driver-class-name: com.alibaba.druid.proxy.DruidDriver
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+    default-property-inclusion: NON_NULL

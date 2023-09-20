@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false">
+    <property name="APP_NAME" value="logback-dubbo-provider"/>
+    <property name="LOG_HOME" value="./logs"/>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder charset="UTF-8" class="com.yomahub.tlog.core.enhance.logback.AspectLogbackEncoder">
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+        </encoder>
+
+        <!--        <encoder charset="UTF-8" class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">-->
+        <!--            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>-->
+        <!--        </encoder>-->
+    </appender>
+    <!--    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+    <!--        <File>${LOG_HOME}/${APP_NAME}.log</File>-->
+    <!--        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">-->
+    <!--            <FileNamePattern>${LOG_HOME}/${APP_NAME}.log.%d{yyyy-MM-dd}.%i.log</FileNamePattern>-->
+    <!--            <MaxHistory>30</MaxHistory>-->
+    <!--            <maxFileSize>1000MB</maxFileSize>-->
+    <!--        </rollingPolicy>-->
+    <!--        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">-->
+    <!--            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>-->
+    <!--        </encoder>-->
+    <!--    </appender>-->
+
+    <!--    &lt;!&ndash; 这里替换成AspectLogbackAsyncAppender &ndash;&gt;-->
+    <!--    <appender name="ASYNC_FILE" class="com.yomahub.tlog.core.enhance.logback.async.AspectLogbackAsyncAppender">-->
+    <!--        <discardingThreshold>0</discardingThreshold>-->
+    <!--        <queueSize>2048</queueSize>-->
+    <!--        <includeCallerData>true</includeCallerData>-->
+    <!--        <appender-ref ref="FILE"/>-->
+    <!--    </appender>-->
+
+
+    <!-- 为logstash输出的JSON格式的Appender -->
+    <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+        <destination>106.54.87.159:50032</destination>
+        <keepAliveDuration>5 minutes</keepAliveDuration>
+        <!-- 日志输出编码 -->
+        <encoder charset="UTF-8" class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <providers>
+                <provider class="com.yomahub.tlog.logstash.logback.TLogLogstashLogbackProvider"/>
+                <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符-->
+                <pattern>
+                    <pattern>
+                        {
+                        "level": "%level",
+                        "thread": "%thread",
+                        "class": "%logger{40}",
+                        "message": "%message",
+                        "stack_trace": "%exception{10}",
+                        "client_time": "%d{yyyy-MM-dd HH:mm:ss.SSS}"
+                        }
+                    </pattern>
+                </pattern>
+            </providers>
+        </encoder>
+    </appender>
+
+    <appender name="GLC" class="top.gotoeasy.framework.glc.logback.appender.GlcHttpJsonAppender">
+        <glcApiUrl>http://106.54.87.159:5000/glc/v1/log/add</glcApiUrl>
+        <system>yiyuan-admin</system>
+
+        <layout>
+
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %logger{50} - %msg%n</pattern>
+        </layout>
+    </appender>
+    <root level="INFO">
+        <appender-ref ref="STDOUT"/>
+        <!--        <appender-ref ref="ASYNC_FILE"/>-->
+        <appender-ref ref="LOGSTASH"/>
+        <!--        <appender-ref ref="GLC"/>-->
+    </root>
+</configuration>

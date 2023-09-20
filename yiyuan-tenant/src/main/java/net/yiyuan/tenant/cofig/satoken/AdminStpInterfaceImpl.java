@@ -2,14 +2,8 @@ package net.yiyuan.tenant.cofig.satoken;
 
 import cn.dev33.satoken.stp.StpInterface;
 import lombok.extern.slf4j.Slf4j;
-import net.yiyuan.service.AuthAdminRoleService;
-import net.yiyuan.service.AuthAdminService;
-import net.yiyuan.service.AuthRoleMenuService;
-import net.yiyuan.service.AuthRoleService;
-import net.yiyuan.tenant.redis.TenantRedisService;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -22,35 +16,38 @@ import java.util.List;
 @Component
 public class AdminStpInterfaceImpl implements StpInterface {
 
-  @Resource private AuthAdminService authAdminService;
-
-  @Resource private AuthRoleService authRoleService;
-
-  @Resource private AuthAdminRoleService authAdminRoleService;
-
-  @Resource private AuthRoleMenuService authRoleMenuService;
-
-  @Resource private TenantRedisService tenantRedisService;
+  //  @Resource private AuthAdminService authAdminService;
+  //
+  //  @Resource private AuthRoleService authRoleService;
+  //
+  //  @Resource private AuthAdminRoleService authAdminRoleService;
+  //
+  //  @Resource private AuthRoleMenuService authRoleMenuService;
+  //
+  //  @Resource private TenantRedisService tenantRedisService;
 
   // 返回一个账号所拥有的权限码集合
   @Override
   public List<String> getPermissionList(Object loginId, String loginType) {
 
-    // 1. 声明权限码集合
-    List<String> permissionList = tenantRedisService.GET_TENANT_USER_PERMISSION((String) loginId);
-
-    log.info("登录账号所有权限:{}", permissionList);
-    // 3. 返回权限码集合
-    return permissionList;
+    //    // 1. 声明权限码集合
+    //    List<String> permissionList = tenantRedisService.GET_TENANT_USER_PERMISSION((String)
+    // loginId);
+    //
+    //    log.info("登录账号所有权限:{}", permissionList);
+    //    // 3. 返回权限码集合
+    //    return permissionList;
+    return null;
   }
 
   // 返回一个账号所拥有的角色标识集合
   @Override
   public List<String> getRoleList(Object loginId, String loginType) {
-    List<String> rolesCodeList = tenantRedisService.GET_TENANT_USER_ROLE((String) loginId);
-    //
-    log.info("登录账号所有角色:{}", rolesCodeList);
-    //        rolesCodeList.add("admin" );
-    return rolesCodeList;
+    //    List<String> rolesCodeList = tenantRedisService.GET_TENANT_USER_ROLE((String) loginId);
+    //    //
+    //    log.info("登录账号所有角色:{}", rolesCodeList);
+    //    //        rolesCodeList.add("admin" );
+    //    return rolesCodeList;
+    return null;
   }
 }

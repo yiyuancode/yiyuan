@@ -2,7 +2,7 @@ package net.yiyuan.admin;
 
 import com.yomahub.tlog.core.enhance.bytes.AspectLogEnhance;
 import lombok.extern.slf4j.Slf4j;
-import net.yiyuan.CenterJoinUtils;
+import net.yiyuan.plugins.mp.utils.CenterJoinUtils;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;

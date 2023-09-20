@@ -1,0 +1,11 @@
+spring:
+  config:
+    import: classpath:prod/application-db.yml,classpath:prod/application-mp.yml,classpath:prod/application-redis.yml,classpath:prod/application-satoken.yml,classpath:prod/application-jobs.yml,classpath:prod/application-file.yml,classpath:dev/application-sms.yml
+
+logstash:
+  host: 106.54.87.159
+logging:
+  level:
+    root: info
+tlog:
+  enable-invoke-time-print: true

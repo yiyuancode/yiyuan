@@ -1,0 +1,19 @@
+file:
+  server:
+    common:
+      activeTypeName: MinIo
+    minio:
+      enabled: true
+      endpoint: http://106.54.87.159:50008
+      accessKey: admin
+      secretKey: 123/456/789
+    local:
+      rootPath: D:\code\20231001-20231101
+    huawei:
+      endabled: false
+      endpoint:
+      accessKey:
+      secretKey:
+    fastdfs:
+      enabled: false
+
