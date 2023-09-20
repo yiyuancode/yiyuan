@@ -27,7 +27,12 @@ public class UmUserAppController {
     @Autowired
     private UmUserAppService umUserAppService;
 
-
+    /**
+     * 用户登录接口
+     * @param umUserTokenDto
+     * @return
+     * @throws Exception
+     */
     @SaIgnore
     @PostMapping(value = "/login/umUser")
     @ResponseBody

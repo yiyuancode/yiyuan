@@ -60,7 +60,7 @@ public class UmUserAppServiceImpl extends JoinServiceImpl<UmUserMapper, UmUser>
         if (StringUtilsPlus.isNotEmpty(umUser.getAccount())) {
             wrapper.eq(UmUser::getAccount, umUser.getAccount());
         }
-        UmUserQueryVO umUserQueryVO = joinGetOne(wrapper, UmUserQueryVO.class);
+        UmUserQueryVO umUserQueryVO = umUserMapper.joinSelectOne(wrapper, UmUserQueryVO.class);
         //验证类型
         if ("0".equals(umUserTokenDto.getType())) {
             if (StringUtilsPlus.isNull(umUserQueryVO)) {
@@ -125,6 +125,7 @@ public class UmUserAppServiceImpl extends JoinServiceImpl<UmUserMapper, UmUser>
 
     @Override
     public MyselfIndexVO findMySelfIndexVO() throws Exception {
+        //链表 test
         TestVO testVO = new TestVO();
         JoinLambdaWrapper<UmUser> umWrapper = new JoinLambdaWrapper<>(UmUser.class);
         umWrapper.eq(UmUser::getId, "767dd335d2aa16f3efafd1cc86a938c1");

@@ -127,7 +127,7 @@ public class EmailSmsServiceImpl implements SmsAndEmailService {
         //用redis处理缓存
         smsRedisService.DEL_EMAIL_PERMISSION(info.getEmail());
         smsRedisService.SET_EMAIL_PERMISSION(info.getEmail(),code);
-        return info.getEmail();
+        return code;
     }
 
     public String getMailSendCode(int number, boolean hasAlphabet) {
