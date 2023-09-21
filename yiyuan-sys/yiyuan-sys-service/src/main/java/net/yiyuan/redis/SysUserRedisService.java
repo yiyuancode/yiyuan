@@ -14,14 +14,14 @@ public class SysUserRedisService {
 
   public static String KEY_SYS_USER = "sys:user";
   public static Long EXPIRE_SYS_USER = 0L;
-  public static String KEY_SYS_USER_PERMISSION = "sys:user:permissions";
-  public static Long EXPIRE_SYS_USER_PERMISSION = 0L;
-  public static String KEY_SYS_USER_ROLE = "sys:user:roles";
+  public static String KEY_SYS_USER_MENU = "sys:user:menu";
+  public static Long EXPIRE_SYS_USER_MENU = 0L;
+  public static String KEY_SYS_USER_ROLE = "sys:user:role";
   public static Long EXPIRE_SYS_USER_ROLE = 0L;
-  public static String KEY_SYS_USER_PERMISSION_OBJ_LIST = "sys:user:permissions:obj:list";
-  public static Long EXPIRE_SYS_USER_PERMISSION_OBJ_LIST = 0L;
-  public static String KEY_SYS_USER_ROLE_OBJ_LIST = "sys:user:role:obj:list";
-  public static Long EXPIRE_SYS_USER_ROLE_OBJ_LIST = 0L;
+  public static String KEY_SYS_USER_MENU_PERMISSION = "sys:user:menu:permission";
+  public static Long EXPIRE_SYS_USER_MENU_PERMISSION = 0L;
+  public static String KEY_SYS_USER_ROLE_CODE = "sys:user:role:code";
+  public static Long EXPIRE_SYS_USER_ROLE_CODE = 0L;
   @Autowired private RedisService redisService;
 
   /**
@@ -38,13 +38,13 @@ public class SysUserRedisService {
           || (data instanceof Integer)
           || (data instanceof Double)
           || (data instanceof Boolean)) {
-        if (ttl == 0L) {
+        if (ttl == null) {
           redisService.set(key + keyId, data);
         } else {
           redisService.set(key + keyId, data, ttl);
         }
       } else {
-        if (ttl == 0L) {
+        if (ttl == null) {
           redisService.set(key + keyId, JSONObject.toJSONString(data));
         } else {
           redisService.set(key + keyId, JSONObject.toJSONString(data), ttl);
@@ -55,13 +55,13 @@ public class SysUserRedisService {
           || (data instanceof Integer)
           || (data instanceof Double)
           || (data instanceof Boolean)) {
-        if (ttl == 0L) {
+        if (ttl == null) {
           redisService.set(key + keyId, data);
         } else {
           redisService.set(key + keyId, data, ttl);
         }
       } else {
-        if (ttl == 0L) {
+        if (ttl == null) {
           redisService.set(key + keyId, JSONObject.toJSONString(data));
         } else {
           redisService.set(key + keyId, JSONObject.toJSONString(data), ttl);
@@ -128,7 +128,7 @@ public class SysUserRedisService {
   //   */
   //  public void setJson(String key, String keyId, Object data, Long ttl) {
   //    String s = JSONObject.toJSONString(data);
-  //    if (ttl == 0L) {
+  //    if (ttl == null) {
   //      redisService.set(key + keyId, s);
   //    } else {
   //      redisService.set(key + keyId, s, ttl);

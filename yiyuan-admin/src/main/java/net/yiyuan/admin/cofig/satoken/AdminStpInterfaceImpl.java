@@ -25,7 +25,7 @@ public class AdminStpInterfaceImpl implements StpInterface {
     // 1. 声明权限码集合
     List<String> permissionList =
         sysUserRedisService.getList(
-            SysUserRedisService.KEY_SYS_USER_PERMISSION, (String) loginId, String.class);
+            SysUserRedisService.KEY_SYS_USER_MENU_PERMISSION, (String) loginId, String.class);
     log.info("登录账号所有权限:{}", permissionList);
     // 3. 返回权限码集合
     return permissionList;
@@ -36,7 +36,7 @@ public class AdminStpInterfaceImpl implements StpInterface {
   public List<String> getRoleList(Object loginId, String loginType) {
     List<String> rolesCodeList =
         sysUserRedisService.getList(
-            SysUserRedisService.KEY_SYS_USER_ROLE, (String) loginId, String.class);
+            SysUserRedisService.KEY_SYS_USER_ROLE_CODE, (String) loginId, String.class);
     log.info("登录账号所有角色:{}", rolesCodeList);
     return rolesCodeList;
   }

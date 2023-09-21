@@ -1,7 +1,7 @@
 ############## Sa-Token 配置 (文档: https://sa-token.cc) ##############
 sa-token:
   # token名称 (同时也是cookie名称)一定要小写 就用默认的 不是默认的有问题
-  token-name: satoken
+  token-name: admintoken
   # token有效期，单位s 默认30天, -1代表永不过期
   timeout: -1
   # token临时有效期 (指定时间内无操作就视为token过期) 单位: 秒
