@@ -1,382 +1,364 @@
 package net.yiyuan.model;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
-import net.yiyuan.enums.PtmProductAuditStatusEnum;
-import net.yiyuan.enums.PtmProductIsAuditEnum;
-import net.yiyuan.enums.PtmProductIsDelEnum;
-import net.yiyuan.enums.PtmProductIsShowEnum;
+import net.yiyuan.common.constatnt.CustomSqlCondition;
+import net.yiyuan.enums.*;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Date;
 /**
- *  商品实体
+ * 商品实体
  *
- * @author  一源-花和尚
- * @date 2023-09-21
- *
+ * @author 一源-花和尚
+ * @date 2023-09-22
  */
 @Data
-public class PtmProduct implements Serializable{
-private static final long serialVersionUID=1L;
+public class PtmProduct implements Serializable {
+  private static final long serialVersionUID = 1L;
 
+  /**
+   * 商品id
+   *
+   * @author 一源-花和尚
+   * @date 2023-09-22
+   */
+  @TableId(value = "id", type = IdType.ASSIGN_UUID)
+  private String id;
 
-        /**
-     * 商品id
-     *
-     * @author 一源-花和尚
-     * @date 2023-09-21
-     */
-    @TableId(value = "id", type = IdType.ASSIGN_UUID)
-    private String id;
-    
+  /**
+   * 商户id
+   *
+   * @author 一源-花和尚
+   * @date 2023-09-22
+   */
+  private String tenantId;
 
-    
-        
+  /**
+   * 商品图片
+   *
+   * @author 一源-花和尚
+   * @date 2023-09-22
+   */
+  private String image;
 
-        /**
-         * 商户id
-         *
-         * @author 一源-花和尚
-         * @date 2023-09-21
-         */
-                                                private String tenantId;
-            
+  /**
+   * 展示图
+   *
+   * @author 一源-花和尚
+   * @date 2023-09-22
+   */
+  private String flatPattern;
 
-    
-        
+  /**
+   * 轮播图
+   *
+   * @author 一源-花和尚
+   * @date 2023-09-22
+   */
+  private String sliderImage;
 
-        /**
-         * 商品图片
-         *
-         * @author 一源-花和尚
-         * @date 2023-09-21
-         */
-                                                private String image;
-            
+  /**
+   * 商品名称
+   *
+   * @author 一源-花和尚
+   * @date 2023-09-22
+   */
+  private String name;
 
-    
-        
+  /**
+   * 商品简介
+   *
+   * @author 一源-花和尚
+   * @date 2023-09-22
+   */
+  private String title;
 
-        /**
-         * 展示图
-         *
-         * @author 一源-花和尚
-         * @date 2023-09-21
-         */
-                                                private String flatPattern;
-            
+  /**
+   * 关键字,英文逗号拼接
+   *
+   * @author 一源-花和尚
+   * @date 2023-09-22
+   */
+  private String keyword;
 
-    
-        
+  /**
+   * 租户分类id(逗号拼接)
+   *
+   * @author 一源-花和尚
+   * @date 2023-09-22
+   */
+  private String cateId;
 
-        /**
-         * 轮播图
-         *
-         * @author 一源-花和尚
-         * @date 2023-09-21
-         */
-                                                private String sliderImage;
-            
+  /**
+   * 品牌id
+   *
+   * @author 一源-花和尚
+   * @date 2023-09-22
+   */
+  private String brandId;
 
-    
-        
+  /**
+   * 平台分类id
+   *
+   * @author 一源-花和尚
+   * @date 2023-09-22
+   */
+  private String categoryId;
 
-        /**
-         * 商品名称
-         *
-         * @author 一源-花和尚
-         * @date 2023-09-21
-         */
-                                                private String name;
-            
+  /**
+   * 保障服务ids(英文逗号拼接)
+   *
+   * @author 一源-花和尚
+   * @date 2023-09-22
+   */
+  private String guaranteeIds;
 
-    
-        
+  /**
+   * 商品价格
+   *
+   * @author 一源-花和尚
+   * @date 2023-09-22
+   */
+  private BigDecimal price;
 
-        /**
-         * 商品简介
-         *
-         * @author 一源-花和尚
-         * @date 2023-09-21
-         */
-                                                private String title;
-            
+  /**
+   * 会员价格
+   *
+   * @author 一源-花和尚
+   * @date 2023-09-22
+   */
+  private BigDecimal vipPrice;
 
-    
-        
+  /**
+   * 市场价
+   *
+   * @author 一源-花和尚
+   * @date 2023-09-22
+   */
+  private BigDecimal otPrice;
 
-        /**
-         * 关键字,英文逗号拼接
-         *
-         * @author 一源-花和尚
-         * @date 2023-09-21
-         */
-                                                private String keyword;
-            
+  /**
+   * 单位名
+   *
+   * @author 一源-花和尚
+   * @date 2023-09-22
+   */
+  private String unitName;
 
-    
-        
+  /**
+   * 销量
+   *
+   * @author 一源-花和尚
+   * @date 2023-09-22
+   */
+  private Integer sales;
 
-        /**
-         * 租户分类id(逗号拼接)
-         *
-         * @author 一源-花和尚
-         * @date 2023-09-21
-         */
-                                                private String cateId;
-            
+  /**
+   * 库存
+   *
+   * @author 一源-花和尚
+   * @date 2023-09-22
+   */
+  private Integer stock;
 
-    
-        
+  /**
+   * 成本价
+   *
+   * @author 一源-花和尚
+   * @date 2023-09-22
+   */
+  private BigDecimal cost;
 
-        /**
-         * 品牌id
-         *
-         * @author 一源-花和尚
-         * @date 2023-09-21
-         */
-                                                private String brandId;
-            
+  /**
+   * 虚拟销量
+   *
+   * @author 一源-花和尚
+   * @date 2023-09-22
+   */
+  private Integer ficti;
 
-    
-        
+  /**
+   * 浏览量
+   *
+   * @author 一源-花和尚
+   * @date 2023-09-22
+   */
+  private Integer browse;
 
-        /**
-         * 平台分类id
-         *
-         * @author 一源-花和尚
-         * @date 2023-09-21
-         */
-                                                private String categoryId;
-            
+  /**
+   * 商品二维码地址(用户小程序海报)
+   *
+   * @author 一源-花和尚
+   * @date 2023-09-22
+   */
+  private String codePath;
 
-    
-        
+  /**
+   * 主图视频链接
+   *
+   * @author 一源-花和尚
+   * @date 2023-09-22
+   */
+  private String videoLink;
 
-        /**
-         * 保障服务ids(英文逗号拼接)
-         *
-         * @author 一源-花和尚
-         * @date 2023-09-21
-         */
-                                                private String guaranteeIds;
-        /**
-         * 单位名
-         *
-         * @author 一源-花和尚
-         * @date 2023-09-21
-         */
-                                                private String unitName; price;
-        /**
-         * 虚拟销量
-         *
-         * @author 一源-花和尚
-         * @date 2023-09-21
-         */
-                                                private Integer ficti; vipPrice;
-        /**
-         * 浏览量
-         *
-         * @author 一源-花和尚
-         * @date 2023-09-21
-         */
-                                                private Integer browse; otPrice;
-        /**
-         * 商品二维码地址(用户小程序海报)
-         *
-         * @author 一源-花和尚
-         * @date 2023-09-21
-         */
-                                                private String codePath;
-        /**
-         * 主图视频链接
-         *
-         * @author 一源-花和尚
-         * @date 2023-09-21
-         */
-                                                private String videoLink; sales;
-        /**
-         * 运费模板ID
-         *
-         * @author 一源-花和尚
-         * @date 2023-09-21
-         */
-                                                private Integer tempId; stock;
-        /**
-         * 排序
-         *
-         * @author 一源-花和尚
-         * @date 2023-09-21
-         */
-                                                private Short sort; cost;
-        /**
-         * 总后台排序
-         *
-         * @author 一源-花和尚
-         * @date 2023-09-21
-         */
-                                                private Short rank;
-        /**
-         * 状态#0=未上架|1=上架
-         *
-         * @author 一源-花和尚
-         * @date 2023-09-21
-         */
-                                                private PtmProductIsShowEnum isShow;
-        /**
-         * 审核状态#0=无需审核|1=待审核|2=审核成功|3=审核拒绝
-         *
-         * @author 一源-花和尚
-         * @date 2023-09-21
-         */
-                                                private PtmProductAuditStatusEnum auditStatus;
-        /**
-         * 是否加入审核#0=正常|1=审核流程中
-         *
-         * @author 一源-花和尚
-         * @date 2023-09-21
-         */
-                                                private PtmProductIsAuditEnum isAudit;
-        /**
-         * 拒绝原因
-         *
-         * @author 一源-花和尚
-         * @date 2023-09-21
-         */
-                                                private String reasonContent;
-        /**
-         * 是否删除#0=否|1=是
-         *
-         * @author 一源-花和尚
-         * @date 2023-09-21
-         */
-                                                private PtmProductIsDelEnum isDel;
-        /**
-         * 创建时间
-         *
-         * @author 一源-花和尚
-         * @date 2023-09-21
-         */
-                                                private Timestamp createTime;
-        /**
-         * 更新时间
-         *
-         * @author 一源-花和尚
-         * @date 2023-09-21
-         */
-                                                private Timestamp updateTime; specType;
-            
+  /**
+   * 运费模板ID
+   *
+   * @author 一源-花和尚
+   * @date 2023-09-22
+   */
+  private Integer tempId;
 
-    
-        
+  /**
+   * 排序
+   *
+   * @author 一源-花和尚
+   * @date 2023-09-22
+   */
+  private Integer sort;
 
-        /**
-         * 商品价格
-         *
-         * @author 一源-花和尚
-         * @date 2023-09-21
-         */
-                                                private ${columnsItem.propertyType} isRecycle;
-            
+  /**
+   * 总后台排序
+   *
+   * @author 一源-花和尚
+   * @date 2023-09-22
+   */
+  private Integer rank;
 
-    
-        
+  /**
+   * 规格#0=单|1=多
+   *
+   * @author 一源-花和尚
+   * @date 2023-09-22
+   */
+  private PtmProductSpecTypeEnum specType;
 
-        /**
-         * 会员价格
-         *
-         * @author 一源-花和尚
-         * @date 2023-09-21
-         */
-                                                private ${columnsItem.propertyType} isSub;
-            
+  /**
+   * 是否回收站
+   *
+   * @author 一源-花和尚
+   * @date 2023-09-22
+   */
+  private Integer isRecycle;
 
-    
-        
+  /**
+   * 是否单独分佣
+   *
+   * @author 一源-花和尚
+   * @date 2023-09-22
+   */
+  private Integer isSub;
 
-/**
-         * 市场价
-         *
-         * @author 一源-花和尚
-         * @date 2023-09-21
-         */
-                                                private ${columnsItem.propertyType}
-            
+  /**
+   * 状态#0=未上架|1=上架
+   *
+   * @author 一源-花和尚
+   * @date 2023-09-22
+   */
+  private PtmProductIsShowEnum isShow;
 
-    
-        
+  /**
+   * 审核状态#0=无需审核|1=待审核|2=审核成功|3=审核拒绝
+   *
+   * @author 一源-花和尚
+   * @date 2023-09-22
+   */
+  private PtmProductAuditStatusEnum auditStatus;
 
-/**
-         * 销量
-         *
-         * @author 一源-花和尚
-         * @date 2023-09-21
-         */
-                                                private ${columnsItem.propertyType}
-            
+  /**
+   * 是否加入审核#0=正常|1=审核流程中
+   *
+   * @author 一源-花和尚
+   * @date 2023-09-22
+   */
+  private PtmProductIsAuditEnum isAudit;
 
-    
-        
+  /**
+   * 拒绝原因
+   *
+   * @author 一源-花和尚
+   * @date 2023-09-22
+   */
+  private String reasonContent;
 
-/**
-         * 库存
-         *
-         * @author 一源-花和尚
-         * @date 2023-09-21
-         */
-                                                private ${columnsItem.propertyType}
-            
+  /**
+   * 是否删除#0=否|1=是
+   *
+   * @author 一源-花和尚
+   * @date 2023-09-22
+   */
+  private PtmProductIsDelEnum isDel;
 
-    
-        
+  /**
+   * 创建时间
+   *
+   * @author 一源-花和尚
+   * @date 2023-09-22
+   */
+  @TableField(fill = FieldFill.INSERT)
+  private Date createTime;
+  /**
+   * 创建时间(查询开始时间)
+   *
+   * @author 一源-花和尚
+   * @date 2023-09-22
+   */
+  @TableField(value = "create_time ", condition = CustomSqlCondition.START_EQUAL, select = false)
+  private Date createTimeStart;
+  /**
+   * 创建时间(查询结束时间)
+   *
+   * @author 一源-花和尚
+   * @date 2023-09-22
+   */
+  @TableField(value = "create_time", condition = CustomSqlCondition.END_EQUAL, select = false)
+  private Date createTimeEnd;
 
-/**
-         * 成本价
-         *
-         * @author 一源-花和尚
-         * @date 2023-09-21
-         */
-                                                private ${columnsItem.propertyType}
-            
+  /**
+   * 修改时间
+   *
+   * @author 一源-花和尚
+   * @date 2023-09-22
+   */
+  @TableField(fill = FieldFill.INSERT_UPDATE)
+  private Date updateTime;
+  /**
+   * 修改时间(查询开始时间)
+   *
+   * @author 一源-花和尚
+   * @date 2023-09-22
+   */
+  @TableField(value = "update_time ", condition = CustomSqlCondition.START_EQUAL, select = false)
+  private Date updateTimeStart;
+  /**
+   * 修改时间(查询结束时间)
+   *
+   * @author 一源-花和尚
+   * @date 2023-09-22
+   */
+  @TableField(value = "update_time", condition = CustomSqlCondition.END_EQUAL, select = false)
+  private Date updateTimeEnd;
 
-    
-        
+  /**
+   * 创建人
+   *
+   * @author 一源-花和尚
+   * @date 2023-09-22
+   */
+  @TableField(fill = FieldFill.INSERT)
+  private String createUser;
 
-/**
-         * 规格 0单 1多
-         *
-         * @author 一源-花和尚
-         * @date 2023-09-21
-         */
-                                                private ${columnsItem.propertyType}
-            
-
-    
-        
-
-/**
-         * 是否回收站
-         *
-         * @author 一源-花和尚
-         * @date 2023-09-21
-         */
-                                                private ${columnsItem.propertyType}
-            
-
-    
-        
-
-/**
-         * 是否单独分佣
-         *
-         * @author 一源-花和尚
-         * @date 2023-09-21
-         */
-                                                private ${columnsItem.propertyType}
-            
-
-
-
-
+  /**
+   * 修改人
+   *
+   * @author 一源-花和尚
+   * @date 2023-09-22
+   */
+  @TableField(fill = FieldFill.INSERT_UPDATE)
+  private String updateUser;
 }

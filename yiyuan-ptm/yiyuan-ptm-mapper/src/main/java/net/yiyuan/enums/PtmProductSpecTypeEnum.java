@@ -6,36 +6,36 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 
 /**
- * 商品管理-是否加入审核枚举类
+ * 商品管理-规格枚举类
  *
  * @author 一源-花和尚
  * @date 2023-09-22
  */
 @Getter // 没有引入lombok依赖包的，可以自己实现get方法
 @JsonFormat(shape = JsonFormat.Shape.OBJECT) // 实现场景2，只需要加上这个注解
-public enum PtmProductIsAuditEnum implements IEnum<Integer> {
+public enum PtmProductSpecTypeEnum implements IEnum<Integer> {
 
   /**
-   * 是否加入审核#0=正常|1=审核流程中
+   * 规格#0=单|1=多
    *
-   * @see PtmProductIsAuditEnum
+   * @see PtmProductSpecTypeEnum
    * @author 一源-花和尚
    * @date 2023-09-22
    */
-  NORMAL(0, "正常"),
+  SINGLE(0, "单"),
   /**
-   * 是否加入审核#0=正常|1=审核流程中
+   * 规格#0=单|1=多
    *
-   * @see PtmProductIsAuditEnum
+   * @see PtmProductSpecTypeEnum
    * @author 一源-花和尚
    * @date 2023-09-22
    */
-  IN_THE_REVIEW_PROCESS(1, "审核流程中");
+  MANY(1, "多");
 
   @EnumValue private final int value;
   private final String desc;
 
-  PtmProductIsAuditEnum(int value, String desc) {
+  PtmProductSpecTypeEnum(int value, String desc) {
     this.value = value;
     this.desc = desc;
   }

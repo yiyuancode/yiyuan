@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
  * 商品移动端接口
  *
  * @author 一源-花和尚
- * @date 2023-09-21
+ * @date 2023-09-22
  * @folder 商品管理/商品移动端接口
  */
 @Slf4j

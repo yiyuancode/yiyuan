@@ -23,7 +23,7 @@ import java.util.List;
  * 商品Service层接口实现
  *
  * @author 一源-花和尚
- * @date 2023-09-21
+ * @date 2023-09-22
  */
 @Slf4j
 @Service
@@ -37,7 +37,7 @@ public class PtmProductServiceImpl extends JoinServiceImpl<PtmProductMapper, Ptm
    * @param request 商品实体
    * @return {@link List< PtmProductQueryVO >}
    * @author 一源-花和尚
-   * @date 2023-09-21
+   * @date 2023-09-22
    */
   @Override
   public List<PtmProductQueryVO> list(PtmProductListDTO request) throws Exception {
@@ -57,7 +57,7 @@ public class PtmProductServiceImpl extends JoinServiceImpl<PtmProductMapper, Ptm
    * @param request 商品实体
    * @return {@link Page< PtmProductQueryVO >}
    * @author 一源-花和尚
-   * @date 2023-09-21
+   * @date 2023-09-22
    */
   @Override
   public Page<PtmProductQueryVO> page(PtmProductPageDTO request) throws Exception {
@@ -78,7 +78,7 @@ public class PtmProductServiceImpl extends JoinServiceImpl<PtmProductMapper, Ptm
    * @param id 商品id
    * @return {@link PtmProductQueryVO}
    * @author 一源-花和尚
-   * @date 2023-09-21
+   * @date 2023-09-22
    */
   @Override
   public PtmProductQueryVO details(String id) throws Exception {
@@ -95,7 +95,7 @@ public class PtmProductServiceImpl extends JoinServiceImpl<PtmProductMapper, Ptm
    * @param request 商品实体
    * @return {@link PtmProduct}
    * @author 一源-花和尚
-   * @date 2023-09-21
+   * @date 2023-09-22
    */
   @Override
   public PtmProductQueryVO details(PtmProduct request) throws Exception {
@@ -110,7 +110,7 @@ public class PtmProductServiceImpl extends JoinServiceImpl<PtmProductMapper, Ptm
    * @param ids 商品id(多个逗号分割)
    * @return {@link boolean}
    * @author 一源-花和尚
-   * @date 2023-09-21
+   * @date 2023-09-22
    */
   @Override
   public boolean delete(String ids) throws Exception {
@@ -129,7 +129,7 @@ public class PtmProductServiceImpl extends JoinServiceImpl<PtmProductMapper, Ptm
    * @param request 商品实体
    * @return {@link boolean}
    * @author 一源-花和尚
-   * @date 2023-09-21
+   * @date 2023-09-22
    */
   @Override
   public boolean edit(PtmProductEditDTO request) throws Exception {
@@ -149,7 +149,7 @@ public class PtmProductServiceImpl extends JoinServiceImpl<PtmProductMapper, Ptm
    * @param request 商品实体
    * @return {@link boolean}
    * @author 一源-花和尚
-   * @date 2023-09-21
+   * @date 2023-09-22
    */
   @Override
   public boolean add(PtmProductAddDTO request) throws Exception {

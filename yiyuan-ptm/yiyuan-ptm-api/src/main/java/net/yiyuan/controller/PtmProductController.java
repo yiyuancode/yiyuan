@@ -23,7 +23,7 @@ import java.util.List;
  * 商品管理
  *
  * @author 一源-花和尚
- * @date 2023-09-21
+ * @date 2023-09-22
  * @folder 商品管理/商品管理
  */
 @SaCheckLogin
@@ -38,7 +38,7 @@ public class PtmProductController {
    * @param request 商品实体
    * @return {@link CommonResult<List<PtmProductQueryVO>>}
    * @author 一源-花和尚
-   * @date 2023-09-21
+   * @date 2023-09-22
    */
   @Description("商品管理/商品管理/查询商品")
   @SaCheckPermission(
@@ -56,7 +56,7 @@ public class PtmProductController {
    * @param request 商品实体
    * @return {@link CommonResult<Page<PtmProductQueryVO>>}
    * @author 一源-花和尚
-   * @date 2023-09-21
+   * @date 2023-09-22
    */
   @Description("商品管理/商品管理/查询商品")
   @SaCheckPermission(
@@ -74,7 +74,7 @@ public class PtmProductController {
    * @param id 商品id
    * @return {@link CommonResult<PtmProductQueryVO>}
    * @author 一源-花和尚
-   * @date 2023-09-21
+   * @date 2023-09-22
    */
   @Description("商品管理/商品管理/查询商品")
   @SaCheckPermission(
@@ -93,7 +93,7 @@ public class PtmProductController {
    * @param ids 商品id(多个逗号分割)
    * @return {@link CommonResult<String>}
    * @author 一源-花和尚
-   * @date 2023-09-21
+   * @date 2023-09-22
    */
   @Description("商品管理/商品管理/删除商品")
   @SaCheckPermission(
@@ -116,7 +116,7 @@ public class PtmProductController {
    * @param request 商品实体
    * @return {@link CommonResult<String>}
    * @author 一源-花和尚
-   * @date 2023-09-21
+   * @date 2023-09-22
    */
   @Description("商品管理/商品管理/编辑商品")
   @SaCheckPermission(
@@ -139,7 +139,7 @@ public class PtmProductController {
    * @param request 商品实体
    * @return {@link CommonResult<String>}
    * @author 一源-花和尚
-   * @date 2023-09-21
+   * @date 2023-09-22
    */
   @Description("商品管理/商品管理/新增商品")
   @SaCheckPermission(

@@ -15,7 +15,7 @@ import java.util.List;
  * 商品Service层接口
  *
  * @author 一源-花和尚
- * @date 2023-09-21
+ * @date 2023-09-22
  */
 public interface PtmProductService extends JoinIService<PtmProduct> {
 
@@ -25,7 +25,7 @@ public interface PtmProductService extends JoinIService<PtmProduct> {
    * @param request 商品实体
    * @return {@link List< PtmProductQueryVO >}
    * @author 一源-花和尚
-   * @date 2023-09-21
+   * @date 2023-09-22
    */
   List<PtmProductQueryVO> list(PtmProductListDTO request) throws Exception;
 
@@ -35,7 +35,7 @@ public interface PtmProductService extends JoinIService<PtmProduct> {
    * @param request 商品实体
    * @return {@link Page< PtmProductQueryVO >}
    * @author 一源-花和尚
-   * @date 2023-09-21
+   * @date 2023-09-22
    */
   Page<PtmProductQueryVO> page(PtmProductPageDTO request) throws Exception;
 
@@ -45,7 +45,7 @@ public interface PtmProductService extends JoinIService<PtmProduct> {
    * @param id 商品id
    * @return {@link PtmProductQueryVO}
    * @author 一源-花和尚
-   * @date 2023-09-21
+   * @date 2023-09-22
    */
   PtmProductQueryVO details(String id) throws Exception;
 
@@ -55,7 +55,7 @@ public interface PtmProductService extends JoinIService<PtmProduct> {
    * @param request 商品实体
    * @return {@link PtmProduct}
    * @author 一源-花和尚
-   * @date 2023-09-21
+   * @date 2023-09-22
    */
   PtmProductQueryVO details(PtmProduct request) throws Exception;
 
@@ -65,7 +65,7 @@ public interface PtmProductService extends JoinIService<PtmProduct> {
    * @param ids 商品id(多个逗号分割)
    * @return {@link boolean}
    * @author 一源-花和尚
-   * @date 2023-09-21
+   * @date 2023-09-22
    */
   boolean delete(String ids) throws Exception;
 
@@ -75,7 +75,7 @@ public interface PtmProductService extends JoinIService<PtmProduct> {
    * @param request 商品实体
    * @return {@link boolean}
    * @author 一源-花和尚
-   * @date 2023-09-21
+   * @date 2023-09-22
    */
   boolean edit(PtmProductEditDTO request) throws Exception;
 
@@ -85,7 +85,7 @@ public interface PtmProductService extends JoinIService<PtmProduct> {
    * @param request 商品实体
    * @return {@link boolean}
    * @author 一源-花和尚
-   * @date 2023-09-21
+   * @date 2023-09-22
    */
   boolean add(PtmProductAddDTO request) throws Exception;
 }
