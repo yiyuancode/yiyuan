@@ -34,6 +34,7 @@ public enum PtmProductIsShowEnum implements IEnum<Integer> {
 
   @EnumValue private final int value;
   private final String desc;
+
   PtmProductIsShowEnum(int value, String desc) {
     this.value = value;
     this.desc = desc;

@@ -1,5 +1,11 @@
 package net.yiyuan.dto;
 
+import lombok.Data;
+import net.yiyuan.enums.PtmProductAuditStatusEnum;
+import net.yiyuan.enums.PtmProductIsAuditEnum;
+import net.yiyuan.enums.PtmProductIsDelEnum;
+import net.yiyuan.enums.PtmProductIsShowEnum;
+
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 

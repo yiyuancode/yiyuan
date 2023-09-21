@@ -3,6 +3,10 @@ package net.yiyuan.model;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
+import net.yiyuan.enums.PtmProductAuditStatusEnum;
+import net.yiyuan.enums.PtmProductIsAuditEnum;
+import net.yiyuan.enums.PtmProductIsDelEnum;
+import net.yiyuan.enums.PtmProductIsShowEnum;
 
 import java.io.Serializable;
 /**
