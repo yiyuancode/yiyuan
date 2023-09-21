@@ -9,16 +9,14 @@ import net.yiyuan.common.constatnt.ResultCode;
 import net.yiyuan.common.exception.BusinessException;
 import net.yiyuan.common.utils.BeanUtilsPlus;
 import net.yiyuan.common.utils.StringUtilsPlus;
+import net.yiyuan.common.utils.TreeUtil;
 import net.yiyuan.dto.*;
 import net.yiyuan.mapper.*;
 import net.yiyuan.model.*;
 import net.yiyuan.plugins.mp.utils.CenterJoinUtils;
 import net.yiyuan.redis.SysUserRedisService;
 import net.yiyuan.service.SysUserService;
-import net.yiyuan.vo.SysRoleQueryVO;
-import net.yiyuan.vo.SysUserGetUserInfoVO;
-import net.yiyuan.vo.SysUserLoginVO;
-import net.yiyuan.vo.SysUserQueryVO;
+import net.yiyuan.vo.*;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -201,6 +199,7 @@ public class SysUserServiceImpl extends JoinServiceImpl<SysUserMapper, SysUser>
     }
     // 使用用户id完成satoken登录,并返回token
     StpUtil.login(sysUserResp.getId());
+    String loginIdAsString = sysUserResp.getId();
     SysUserLoginVO voBean = new SysUserLoginVO();
     voBean.setToken(StpUtil.getTokenValue());
     // 构造成list 调用
@@ -217,7 +216,7 @@ public class SysUserServiceImpl extends JoinServiceImpl<SysUserMapper, SysUser>
     // 缓存redisObjList ,查询用户信息给前端用
     sysUserRedisService.set(
         SysUserRedisService.KEY_SYS_USER_ROLE_OBJ_LIST,
-        sysUserResp.getId(),
+        loginIdAsString,
         sysUserResp.getRolesList(),
         SysUserRedisService.EXPIRE_SYS_USER_ROLE_OBJ_LIST);
 
@@ -226,7 +225,7 @@ public class SysUserServiceImpl extends JoinServiceImpl<SysUserMapper, SysUser>
     // 缓存redis,用作satoken的接口角色权限拦截
     sysUserRedisService.set(
         SysUserRedisService.KEY_SYS_USER_ROLE,
-        sysUserResp.getId(),
+        loginIdAsString,
         roleCodeList,
         SysUserRedisService.EXPIRE_SYS_USER_ROLE);
     // 判断当前角色编码是否包含admin角色编码，如果则查询角色_菜单时候主表的id加条件，如果不包含，就得查询当前拥有那些角色id
@@ -246,15 +245,34 @@ public class SysUserServiceImpl extends JoinServiceImpl<SysUserMapper, SysUser>
     // 缓存权限表达式到redis，用作satoken的接口权限拦截
     sysUserRedisService.set(
         SysUserRedisService.KEY_SYS_USER_PERMISSION,
-        sysUserResp.getId(),
+        loginIdAsString,
         menuPermissionList,
         SysUserRedisService.EXPIRE_SYS_USER_PERMISSION);
-    // 缓存菜单对象list进去
-    sysUserRedisService.setList(
+
+    // 缓存菜单对象list进去，支持树据结构缓存
+    List<SysMenu> sysMenuList = roleMenuJoin.getRighList();
+    List<SysMenuQueryVO> sysMenuVoList =
+        BeanUtilsPlus.copyToList(sysMenuList, SysMenuQueryVO.class);
+    List<SysMenuQueryVO> sysMenuTreeList =
+        TreeUtil.buildTreeByTwoLayersFor(
+            sysMenuVoList,
+            SysMenuQueryVO::getId,
+            SysMenuQueryVO::getParentId,
+            SysMenuQueryVO::getChild,
+            "0");
+    sysUserRedisService.set(
         SysUserRedisService.KEY_SYS_USER_PERMISSION_OBJ_LIST,
-        sysUserResp.getId(),
-        roleMenuJoin.getRighList(),
+        loginIdAsString,
+        sysMenuTreeList,
         SysUserRedisService.EXPIRE_SYS_USER_PERMISSION_OBJ_LIST);
+
+    // 缓存用户数据
+    sysUserResp.setPassword(null);
+    sysUserRedisService.set(
+        SysUserRedisService.KEY_SYS_USER,
+        loginIdAsString,
+        sysUserResp,
+        SysUserRedisService.EXPIRE_SYS_USER);
     return voBean;
   }
 
@@ -263,22 +281,23 @@ public class SysUserServiceImpl extends JoinServiceImpl<SysUserMapper, SysUser>
     SysUserGetUserInfoVO voResp = new SysUserGetUserInfoVO();
     String loginIdAsString = StpUtil.getLoginIdAsString();
     List<String> menuPermissionList =
-        (List<String>)
-            sysUserRedisService.get(SysUserRedisService.KEY_SYS_USER_PERMISSION, loginIdAsString);
+        sysUserRedisService.getList(
+            SysUserRedisService.KEY_SYS_USER_PERMISSION, loginIdAsString, String.class);
 
-    // 缓存菜单对象list进去
-    List<SysMenu> sysMenuList =
-        (List<SysMenu>)
-            sysUserRedisService.getList(
-                SysUserRedisService.KEY_SYS_USER_PERMISSION_OBJ_LIST,
-                loginIdAsString,
-                SysMenu.class);
+    // 获取缓存得菜单树结构数据，支持json转化
+    List<SysMenuQueryVO> sysMenuList =
+        sysUserRedisService.getList(
+            SysUserRedisService.KEY_SYS_USER_PERMISSION_OBJ_LIST,
+            loginIdAsString,
+            SysMenuQueryVO.class);
 
+    // 获取用户数据
+    SysUser sysUser =
+        sysUserRedisService.get(SysUserRedisService.KEY_SYS_USER, loginIdAsString, SysUser.class);
     log.info("sysMenuList{}", sysMenuList);
-    // TreeUtils.convertListToTree(sysMenuList,"pid","id",)
-
-    //    voResp.setMenuTreeList(this.convertPermissionList(menuPermissionList));
+    voResp.setMenuTreeList(sysMenuList);
     voResp.setPermissionsList(this.convertPermissionList(menuPermissionList));
+    voResp.setUsername(sysUser.getUsername());
     return voResp;
   }
 

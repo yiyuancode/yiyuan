@@ -42,6 +42,7 @@ public enum SysMenuTypeEnum implements IEnum<Integer> {
 
   @EnumValue private final int value;
   private final String desc;
+
   SysMenuTypeEnum(int value, String desc) {
     this.value = value;
     this.desc = desc;

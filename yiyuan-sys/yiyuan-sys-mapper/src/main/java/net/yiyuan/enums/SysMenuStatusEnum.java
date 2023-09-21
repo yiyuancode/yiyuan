@@ -34,6 +34,7 @@ public enum SysMenuStatusEnum implements IEnum<Integer> {
 
   @EnumValue private final int value;
   private final String desc;
+
   SysMenuStatusEnum(int value, String desc) {
     this.value = value;
     this.desc = desc;

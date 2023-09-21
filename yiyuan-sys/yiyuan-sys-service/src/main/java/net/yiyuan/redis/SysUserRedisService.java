@@ -6,77 +6,162 @@ import net.yiyuan.plugins.redis.service.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
 @Component
 public class SysUserRedisService {
 
-  @Autowired private RedisService redisService;
-
+  public static String KEY_SYS_USER = "sys:user";
+  public static Long EXPIRE_SYS_USER = 0L;
   public static String KEY_SYS_USER_PERMISSION = "sys:user:permissions";
   public static Long EXPIRE_SYS_USER_PERMISSION = 0L;
-
   public static String KEY_SYS_USER_ROLE = "sys:user:roles";
   public static Long EXPIRE_SYS_USER_ROLE = 0L;
-
   public static String KEY_SYS_USER_PERMISSION_OBJ_LIST = "sys:user:permissions:obj:list";
   public static Long EXPIRE_SYS_USER_PERMISSION_OBJ_LIST = 0L;
-
   public static String KEY_SYS_USER_ROLE_OBJ_LIST = "sys:user:role:obj:list";
   public static Long EXPIRE_SYS_USER_ROLE_OBJ_LIST = 0L;
+  @Autowired private RedisService redisService;
 
+  /**
+   * 存基本类型，string，string集合或者数组
+   *
+   * @return {@link boolean}
+   * @author 一源-花和尚
+   * @date 2023-09-18
+   */
   public void set(String key, String keyId, Object data, Long ttl) {
-    if (ttl == 0L) {
-      redisService.set(key + keyId, data);
+    if (data instanceof List) {
+      List<?> dataList = (List<?>) data;
+      if ((!dataList.isEmpty() && dataList.get(0) instanceof String)
+          || (data instanceof Integer)
+          || (data instanceof Double)
+          || (data instanceof Boolean)) {
+        if (ttl == 0L) {
+          redisService.set(key + keyId, data);
+        } else {
+          redisService.set(key + keyId, data, ttl);
+        }
+      } else {
+        if (ttl == 0L) {
+          redisService.set(key + keyId, JSONObject.toJSONString(data));
+        } else {
+          redisService.set(key + keyId, JSONObject.toJSONString(data), ttl);
+        }
+      }
     } else {
-      redisService.set(key + keyId, data, ttl);
+      if (data instanceof String
+          || (data instanceof Integer)
+          || (data instanceof Double)
+          || (data instanceof Boolean)) {
+        if (ttl == 0L) {
+          redisService.set(key + keyId, data);
+        } else {
+          redisService.set(key + keyId, data, ttl);
+        }
+      } else {
+        if (ttl == 0L) {
+          redisService.set(key + keyId, JSONObject.toJSONString(data));
+        } else {
+          redisService.set(key + keyId, JSONObject.toJSONString(data), ttl);
+        }
+      }
     }
   }
 
-  public Object get(String key, String keyId) {
-    return redisService.get(key + keyId);
-  }
-
+  /**
+   * 获取复杂类型，对象，可能会包含枚举值得一类，reids无法自动序列化得问题解决
+   *
+   * @return {@link boolean}
+   * @author 一源-花和尚
+   * @date 2023-09-18
+   */
   public <T> T get(String key, String keyId, Class<T> cls) {
-    String s = (String) redisService.get(key + keyId);
-    return (T) JSONObject.parseObject(s, cls);
-  }
-
-  public void setList(String key, String keyId, Object data, Long ttl) {
-    String s = JSONObject.toJSONString(data);
-    if (ttl == 0L) {
-      redisService.set(key + keyId, s);
+    if (cls.equals(String.class)
+        || cls.equals(Integer.class)
+        || cls.equals(Double.class)
+        || cls.equals(Boolean.class)
+        || cls.equals(Float.class)) {
+      return (T) redisService.get(key + keyId);
     } else {
-      redisService.set(key + keyId, s, ttl);
+      return (T) JSONObject.parseObject((String) redisService.get(key + keyId), cls);
     }
   }
 
+  /**
+   * 获取复杂类型，对象，可能会包含枚举值得一类，reids无法自动序列化得问题解决
+   *
+   * @return {@link boolean}
+   * @author 一源-花和尚
+   * @date 2023-09-18
+   */
   public <T> List<T> getList(String key, String keyId, Class<T> cls) {
-    String s = (String) redisService.get(key + keyId);
-    //    ObjectMapper ob = new ObjectMapper();
-    //    ob.convertValue(, )
-    //            ob.readValue()
-    //    ob.readerForListOf().
-    //    FastJsonConfig config = new FastJsonConfig();
-    //    config.setSerializerFeatures(SerializerFeature.WriteEnumUsingToString);
-    //    builder -> builder.featuresToEnable(SerializationFeature.WRITE_ENUMS_USING_TO_STRING);
-    //    CollectionType listType = ob.getTypeFactory().constructCollectionType(ArrayList.class,
-    // cls);
-
-    List<T> list = new ArrayList<>();
-    list = JSONObject.parseArray(s, cls);
-    //    try {
-    //
-    //      //      list = ob.readValue(s, listType);
-    //    } catch (JsonProcessingException e) {
-    //      e.printStackTrace();
-    //    }
-    //    ob.readValue(s, new TypeReference<List<T>>() {});
-    //    ob.readValue();
-    return list;
+    if (cls.equals(String.class)
+        || cls.equals(Integer.class)
+        || cls.equals(Double.class)
+        || cls.equals(Boolean.class)
+        || cls.equals(Float.class)) {
+      return (List<T>) redisService.get(key + keyId);
+    } else {
+      return (List<T>) JSONObject.parseArray((String) redisService.get(key + keyId), cls);
+    }
   }
+
+  //  /**
+  //   * 存基本类型，string，string集合或者数组
+  //   *
+  //   * @return {@link boolean}
+  //   * @author 一源-花和尚
+  //   * @date 2023-09-18
+  //   */
+  //  public Object getStr(String key, String keyId) {
+  //    return redisService.get(key + keyId);
+  //  }
+  //
+  //  /**
+  //   * 存储复杂类型，对象或者对象集合，可能会包含枚举值得一类，reids无法自动序列化得问题解决
+  //   *
+  //   * @return {@link boolean}
+  //   * @author 一源-花和尚
+  //   * @date 2023-09-18
+  //   */
+  //  public void setJson(String key, String keyId, Object data, Long ttl) {
+  //    String s = JSONObject.toJSONString(data);
+  //    if (ttl == 0L) {
+  //      redisService.set(key + keyId, s);
+  //    } else {
+  //      redisService.set(key + keyId, s, ttl);
+  //    }
+  //  }
+  //
+  //  /**
+  //   * 获取复杂类型，对象，可能会包含枚举值得一类，reids无法自动序列化得问题解决
+  //   *
+  //   * @return {@link boolean}
+  //   * @author 一源-花和尚
+  //   * @date 2023-09-18
+  //   */
+  //  public <T> T getJsonObj(String key, String keyId, Class<T> cls) {
+  //    String s = (String) redisService.get(key + keyId);
+  //    return (T) JSONObject.parseObject(s, cls);
+  //  }
+  //
+  //  /**
+  //   * 获取复杂类型，对象集合，可能会包含枚举值得一类，reids无法自动序列化得问题解决
+  //   *
+  //   * @return {@link boolean}
+  //   * @author 一源-花和尚
+  //   * @date 2023-09-18
+  //   */
+  //  public <T> List<T> getJsonList(String key, String keyId, Class<T> cls) {
+  //    if (cls == String.class) {}
+  //
+  //    String s = (String) redisService.get(key + keyId);
+  //    List<T> list = new ArrayList<>();
+  //    list = JSONObject.parseArray(s, cls);
+  //    return list;
+  //  }
 
   public void del(String key, String keyId) {
     redisService.del(key + keyId);

@@ -1,5 +1,7 @@
 package net.yiyuan.common.utils;
 
+import com.baomidou.mybatisplus.core.toolkit.LambdaUtils;
+import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.CollectionUtils;
 
@@ -29,7 +31,7 @@ public class TreeUtil {
    * @return {@link List}<{@link T}>
    */
   public static <T> List<T> buildTreeByMap(List<T> list) {
-    return buildTreeByMap(list, "id", "parentId", "children", "0");
+    return buildTreeByMap(list, "id", "pid", "child", "0");
   }
 
   /**
@@ -39,7 +41,37 @@ public class TreeUtil {
    * @return {@link List}<{@link T}>
    */
   public static <T> List<T> buildTreeByTwoLayersFor(List<T> list) {
-    return buildTreeByTwoLayersFor(list, "id", "parentId", "children", "0");
+    return buildTreeByTwoLayersFor(list, "id", "pid", "child", "0");
+  }
+
+  public static <T, F> List<T> buildTreeByTwoLayersFor(
+      List<T> list,
+      SFunction<T, Object> idField,
+      SFunction<T, Object> pidField,
+      SFunction<T, Object> childField,
+      String topVal) {
+    // 获取左表的id字段
+    String idFieldName = LambdaUtils.extract(idField).getImplMethodName();
+    // 去掉 get
+    idFieldName = idFieldName.substring(3);
+    // 下划线转驼峰首字母小写
+    idFieldName = Character.toLowerCase(idFieldName.charAt(0)) + idFieldName.substring(1);
+
+    // 获取左表的id字段
+    String pidFieldName = LambdaUtils.extract(pidField).getImplMethodName();
+    // 去掉 get
+    pidFieldName = pidFieldName.substring(3);
+    // 下划线转驼峰首字母小写
+    pidFieldName = Character.toLowerCase(pidFieldName.charAt(0)) + pidFieldName.substring(1);
+
+    // 获取左表的id字段
+    String childFieldName = LambdaUtils.extract(childField).getImplMethodName();
+    // 去掉 get
+    childFieldName = childFieldName.substring(3);
+    // 下划线转驼峰首字母小写
+    childFieldName = Character.toLowerCase(childFieldName.charAt(0)) + childFieldName.substring(1);
+
+    return buildTreeByTwoLayersFor(list, idFieldName, pidFieldName, childFieldName, topVal);
   }
 
   /**

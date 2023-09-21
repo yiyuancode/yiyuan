@@ -42,6 +42,7 @@ public enum SysQrtzJobStatusEnum implements IEnum<Integer> {
 
   @EnumValue private final int value;
   private final String desc;
+
   SysQrtzJobStatusEnum(int value, String desc) {
     this.value = value;
     this.desc = desc;

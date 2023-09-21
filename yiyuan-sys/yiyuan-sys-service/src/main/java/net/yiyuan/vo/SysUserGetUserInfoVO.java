@@ -1,6 +1,5 @@
 package net.yiyuan.vo;
 
-import cn.hutool.core.lang.tree.Tree;
 import lombok.Data;
 import net.yiyuan.model.SysRole;
 
@@ -38,7 +37,7 @@ public class SysUserGetUserInfoVO {
    * @author ${author}
    * @date 2023-07-27
    */
-  private List<Tree<String>> menuTreeList;
+  private List<SysMenuQueryVO> menuTreeList;
 
   /**
    * antd前端所需权限表达式集合

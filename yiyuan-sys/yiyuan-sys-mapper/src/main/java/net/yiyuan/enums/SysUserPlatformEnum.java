@@ -42,6 +42,7 @@ public enum SysUserPlatformEnum implements IEnum<Integer> {
 
   @EnumValue private final int value;
   private final String desc;
+
   SysUserPlatformEnum(int value, String desc) {
     this.value = value;
     this.desc = desc;

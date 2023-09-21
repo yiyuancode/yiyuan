@@ -34,6 +34,7 @@ public enum SysMenuIsFrameEnum implements IEnum<Integer> {
 
   @EnumValue private final int value;
   private final String desc;
+
   SysMenuIsFrameEnum(int value, String desc) {
     this.value = value;
     this.desc = desc;
