@@ -17,7 +17,7 @@ spring:
     testOnReturn: false
     poolPreparedStatements: true
     maxPoolPreparedStatementPerConnectionSize: 20
-    driver-class-name: com.alibaba.druid.proxy.DruidDriver
+    type: com.alibaba.druid.pool.DruidDataSource
   jackson:
     time-zone: GMT+8
     date-format: yyyy-MM-dd HH:mm:ss
