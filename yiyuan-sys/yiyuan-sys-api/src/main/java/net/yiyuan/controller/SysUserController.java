@@ -22,7 +22,6 @@ import java.util.List;
  *
  * @author 一源-花和尚
  * @date 2023-09-18
- * @folder 系统管理/管理端用户管理
  */
 @SaCheckLogin
 @Slf4j
@@ -37,6 +36,7 @@ public class SysUserController {
    * @return {@link CommonResult<List<SysUserQueryVO>>}
    * @author 一源-花和尚
    * @date 2023-09-18
+   * @folder 公共接口/系统管理/管理端用户管理
    */
   @Description("系统管理/管理端用户管理/查询管理端用户")
   @SaCheckPermission(
@@ -55,11 +55,12 @@ public class SysUserController {
    * @return {@link CommonResult<Page<SysUserQueryVO>>}
    * @author 一源-花和尚
    * @date 2023-09-18
+   * @folder 公共接口/系统管理/管理端用户管理
    */
   @Description("系统管理/管理端用户管理/查询管理端用户")
-  //  @SaCheckPermission(
-  //      value = {"sys:user:query"},
-  //      orRole = "admin")
+  @SaCheckPermission(
+      value = {"sys:user:query"},
+      orRole = "admin")
   @GetMapping(value = "/sys/user/page")
   @SaIgnore
   @ResponseBody
@@ -74,6 +75,7 @@ public class SysUserController {
    * @return {@link CommonResult<SysUserQueryVO>}
    * @author 一源-花和尚
    * @date 2023-09-18
+   * @folder 公共接口/系统管理/管理端用户管理
    */
   @Description("系统管理/管理端用户管理/查询管理端用户")
   @SaCheckPermission(
@@ -93,6 +95,7 @@ public class SysUserController {
    * @return {@link CommonResult<String>}
    * @author 一源-花和尚
    * @date 2023-09-18
+   * @folder 公共接口/系统管理/管理端用户管理
    */
   @Description("系统管理/管理端用户管理/删除管理端用户")
   @SaCheckPermission(
@@ -116,6 +119,7 @@ public class SysUserController {
    * @return {@link CommonResult<String>}
    * @author 一源-花和尚
    * @date 2023-09-18
+   * @folder 公共接口/系统管理/管理端用户管理
    */
   @Description("系统管理/管理端用户管理/编辑管理端用户")
   @SaCheckPermission(
@@ -139,6 +143,7 @@ public class SysUserController {
    * @return {@link CommonResult<String>}
    * @author 一源-花和尚
    * @date 2023-09-18
+   * @folder 公共接口/系统管理/管理端用户管理
    */
   @Description("系统管理/管理端用户管理/新增管理端用户")
   @SaCheckPermission(
@@ -155,34 +160,33 @@ public class SysUserController {
   }
 
   /**
-   * 平台端-登录
+   * 登录
    *
-   * @param request 平台端-登录实体
+   * @param request 登录请求实体
    * @return {@link CommonResult<String>}
    * @author 一源-花和尚
    * @date 2023-09-18
+   * @folder 平台端/系统管理/用户管理/登录
    */
   @SaIgnore
-  @PostMapping(value = "/sys/user/admin/accout/login")
+  @PostMapping(value = "/sys/user/login")
   @ResponseBody
-  public CommonResult adminAccoutLogin(@RequestBody @Validated SysUserAdminAccoutLoginDTO request)
+  public CommonResult adminAccoutLogin(@RequestBody @Validated SysUserLoginDTO request)
       throws Exception {
     return CommonResult.success(sysUserService.adminAccoutLogin(request));
   }
 
   /**
-   * 租户端-登录
+   * 获取用户信息
    *
-   * @param request 租户端-登录实体
    * @return {@link CommonResult<String>}
    * @author 一源-花和尚
    * @date 2023-09-18
+   * @folder 平台端/系统管理/用户管理/获取用户信息
    */
-  @SaIgnore
-  @PostMapping(value = "/sys/user/tenant/accout/login")
+  @GetMapping(value = "/sys/user/getUserInfo")
   @ResponseBody
-  public CommonResult tenantAccoutLogin(@RequestBody @Validated SysUserTenantAccoutLoginDTO request)
-      throws Exception {
-    return CommonResult.success(sysUserService.tenantAccoutLogin(request));
+  public CommonResult getUserInfo() throws Exception {
+    return CommonResult.success(sysUserService.getUserInfo());
   }
 }

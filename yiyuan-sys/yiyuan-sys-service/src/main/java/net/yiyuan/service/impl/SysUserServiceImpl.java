@@ -16,15 +16,13 @@ import net.yiyuan.plugins.mp.utils.CenterJoinUtils;
 import net.yiyuan.redis.SysUserRedisService;
 import net.yiyuan.service.SysUserService;
 import net.yiyuan.vo.SysRoleQueryVO;
-import net.yiyuan.vo.SysUserAdminAccoutLoginVO;
+import net.yiyuan.vo.SysUserGetUserInfoVO;
+import net.yiyuan.vo.SysUserLoginVO;
 import net.yiyuan.vo.SysUserQueryVO;
-import net.yiyuan.vo.SysUserTenantAccoutLoginVO;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /**
  * 管理端用户Service层接口实现
@@ -187,13 +185,13 @@ public class SysUserServiceImpl extends JoinServiceImpl<SysUserMapper, SysUser>
   }
 
   @Override
-  public SysUserAdminAccoutLoginVO adminAccoutLogin(SysUserAdminAccoutLoginDTO request)
-      throws Exception {
+  public SysUserLoginVO adminAccoutLogin(SysUserLoginDTO request) throws Exception {
     SysUser po = new SysUser();
     BeanUtilsPlus.copy(request, po);
     // 查询用户名是否存在
     JoinLambdaWrapper<SysUser> sysUserwrapper = new JoinLambdaWrapper<>(SysUser.class);
-    sysUserwrapper.eq(SysUser::getUsername, po.getUsername());
+    sysUserwrapper.eq(SysUser::getUsername, request.getUsername());
+    sysUserwrapper.eq(SysUser::getPlatform, request.getPlatform());
     SysUserQueryVO sysUserResp = sysUserMapper.joinSelectOne(sysUserwrapper, SysUserQueryVO.class);
     if (StringUtilsPlus.isNull(sysUserResp)) {
       throw new BusinessException(ResultCode.USER_NOT_FIND);
@@ -203,45 +201,40 @@ public class SysUserServiceImpl extends JoinServiceImpl<SysUserMapper, SysUser>
     }
     // 使用用户id完成satoken登录,并返回token
     StpUtil.login(sysUserResp.getId());
-    SysUserAdminAccoutLoginVO voBean = new SysUserAdminAccoutLoginVO();
+    SysUserLoginVO voBean = new SysUserLoginVO();
     voBean.setToken(StpUtil.getTokenValue());
+    // 构造成list 调用
+    userRoleJoin =
+        new CenterJoinUtils<>(
+            SysUser::getId,
+            SysUserRole::getSysUserId,
+            SysUserRole::getSysRoleId,
+            SysRole::getId,
+            sysUserResp,
+            SysUserQueryVO::getId,
+            SysUserQueryVO::setRolesList);
 
-    //    @Resource
-    //    private CenterJoinUtils<SysRole, SysRoleMenu, SysMenu, SysMenuQueryVO> centerJoinUtils2;
-    //
-    //    CenterJoinUtils<SysUserQueryVO, SysUser, SysUserRole, SysRole, SysRoleQueryVO>
-    // centerJoinUtils =
-    //        new CenterJoinUtils<>(
-    //            sysUserResp,
-    //            SysUserQueryVO::getId,
-    //            SysUser::getId,
-    //            SysUserRole::getSysUserId,
-    //            SysUserRole::getSysRoleId,
-    //            SysRole::getId);
-    List<SysUserQueryVO> voList = new ArrayList<>();
-    voList.add(sysUserResp);
-    userRoleJoin = CenterJoinUtils.of();
-    userRoleJoin.setVoList(voList, SysUserQueryVO::getId, SysUserQueryVO::setRolesList);
-    userRoleJoin
-        .setLeftTable(SysUser::getId)
-        .setCenterTable(SysUserRole::getSysUserId, SysUserRole::getSysRoleId)
-        .setRightTable(SysRole::getId)
-        .select()
-        .map()
-        .mapResult();
-    // 获取code编码缓存redis
+    // 缓存redisObjList ,查询用户信息给前端用
+    sysUserRedisService.set(
+        SysUserRedisService.KEY_SYS_USER_ROLE_OBJ_LIST,
+        sysUserResp.getId(),
+        sysUserResp.getRolesList(),
+        SysUserRedisService.EXPIRE_SYS_USER_ROLE_OBJ_LIST);
+
+    // 获取关联表code编码字段缓存redis,作为satoken角色权限判断
     List<String> roleCodeList = userRoleJoin.getRightAnyFieldList(SysRole::getCode);
+    // 缓存redis,用作satoken的接口角色权限拦截
     sysUserRedisService.set(
         SysUserRedisService.KEY_SYS_USER_ROLE,
         sysUserResp.getId(),
         roleCodeList,
         SysUserRedisService.EXPIRE_SYS_USER_ROLE);
-
+    // 判断当前角色编码是否包含admin角色编码，如果则查询角色_菜单时候主表的id加条件，如果不包含，就得查询当前拥有那些角色id
     List<String> roleIdList = new ArrayList<>();
     if (!roleCodeList.contains("admin")) {
       roleIdList = userRoleJoin.getRightAnyFieldList(SysRole::getId);
     }
-    // 关联菜单表
+    // 关联角色菜单权限表,查询对应权限表达式数据
     roleMenuJoin =
         new CenterJoinUtils<>(
             SysRole::getId,
@@ -250,19 +243,94 @@ public class SysUserServiceImpl extends JoinServiceImpl<SysUserMapper, SysUser>
             SysMenu::getId,
             roleIdList);
     List<String> menuPermissionList = roleMenuJoin.getRightAnyFieldList(SysMenu::getPermission);
+    // 缓存权限表达式到redis，用作satoken的接口权限拦截
     sysUserRedisService.set(
         SysUserRedisService.KEY_SYS_USER_PERMISSION,
         sysUserResp.getId(),
         menuPermissionList,
         SysUserRedisService.EXPIRE_SYS_USER_PERMISSION);
-    log.info("menuPermissionList:{}", menuPermissionList);
-
+    // 缓存菜单对象list进去
+    sysUserRedisService.setList(
+        SysUserRedisService.KEY_SYS_USER_PERMISSION_OBJ_LIST,
+        sysUserResp.getId(),
+        roleMenuJoin.getRighList(),
+        SysUserRedisService.EXPIRE_SYS_USER_PERMISSION_OBJ_LIST);
     return voBean;
   }
 
   @Override
-  public SysUserTenantAccoutLoginVO tenantAccoutLogin(SysUserTenantAccoutLoginDTO request)
-      throws Exception {
-    return null;
+  public SysUserGetUserInfoVO getUserInfo() throws Exception {
+    SysUserGetUserInfoVO voResp = new SysUserGetUserInfoVO();
+    String loginIdAsString = StpUtil.getLoginIdAsString();
+    List<String> menuPermissionList =
+        (List<String>)
+            sysUserRedisService.get(SysUserRedisService.KEY_SYS_USER_PERMISSION, loginIdAsString);
+
+    // 缓存菜单对象list进去
+    List<SysMenu> sysMenuList =
+        (List<SysMenu>)
+            sysUserRedisService.getList(
+                SysUserRedisService.KEY_SYS_USER_PERMISSION_OBJ_LIST,
+                loginIdAsString,
+                SysMenu.class);
+
+    log.info("sysMenuList{}", sysMenuList);
+    // TreeUtils.convertListToTree(sysMenuList,"pid","id",)
+
+    //    voResp.setMenuTreeList(this.convertPermissionList(menuPermissionList));
+    voResp.setPermissionsList(this.convertPermissionList(menuPermissionList));
+    return voResp;
+  }
+
+  /**
+   * 将权限表达式转成antd要求格式式
+   *
+   * @param permissions 一维数组格式得前端表达式
+   * @return {@link boolean}
+   * @author 一源-花和尚
+   * @date 2023-09-18
+   */
+  public List<Map<String, Object>> convertPermissionList(List<String> permissions) {
+    log.info("permissionList源数据:{}", permissions);
+    // 将权限数据转换成菜单项列表
+    List<Map<String, Object>> result = new ArrayList<>();
+    Map<String, Map<String, Object>> secendMap = new HashMap<>();
+    for (String permission : permissions) {
+      log.info("permission.lastIndexOf{},{}", permission, permission.lastIndexOf(":"));
+      if (permission.lastIndexOf(":") == -1) {
+        Map<String, Object> item = new HashMap<>();
+        item.put("id", permission);
+        result.add(item);
+      }
+      if (permission.lastIndexOf(":") != permission.indexOf(":") && permission.indexOf(":") != -1) {
+        String secendPermission = permission.substring(0, permission.lastIndexOf(":"));
+        log.info("permission.secendPermission{},{}", secendPermission);
+
+        Map<String, Object> permissionCur = secendMap.get(secendPermission);
+        if (StringUtilsPlus.isEmpty(permissionCur)) {
+          Map<String, Object> item = new HashMap<>();
+          item.put("id", secendPermission);
+          List<String> permList = new ArrayList<>();
+          permList.add(permission);
+          item.put("operation", permList);
+          secendMap.put(secendPermission, item);
+        } else {
+          List<String> newList = (List<String>) permissionCur.get("operation");
+          newList.add(permission);
+          secendMap.put(secendPermission, permissionCur);
+        }
+      }
+    }
+    secendMap
+        .values()
+        .forEach(
+            (item) -> {
+              result.add(item);
+            });
+
+    // 打印菜单的层级结构
+    log.info("printMenu{}", result);
+    // 打印菜单的层级结构
+    return result;
   }
 }

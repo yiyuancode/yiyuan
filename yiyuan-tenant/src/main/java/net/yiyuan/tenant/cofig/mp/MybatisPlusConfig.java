@@ -95,7 +95,7 @@ public class MybatisPlusConfig extends JoinDefaultSqlInjector {
                     ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
                         .getRequest();
                 String requestURI = request.getRequestURI();
-                if (requestURI.contains("accountLogin") || requestURI.contains("getUserInfo")) {
+                if (requestURI.contains("/sys/user/login")) {
                   return true;
                 }
 

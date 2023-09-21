@@ -4,9 +4,9 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import icu.mhb.mybatisplus.plugln.base.service.JoinIService;
 import net.yiyuan.dto.*;
 import net.yiyuan.model.SysUser;
-import net.yiyuan.vo.SysUserAdminAccoutLoginVO;
+import net.yiyuan.vo.SysUserGetUserInfoVO;
+import net.yiyuan.vo.SysUserLoginVO;
 import net.yiyuan.vo.SysUserQueryVO;
-import net.yiyuan.vo.SysUserTenantAccoutLoginVO;
 
 import java.util.List;
 
@@ -89,23 +89,21 @@ public interface SysUserService extends JoinIService<SysUser> {
   boolean add(SysUserAddDTO request) throws Exception;
 
   /**
-   * 平台端-登录
+   * 登录
    *
    * @param request 管理端用户实体
    * @return {@link boolean}
    * @author 一源-花和尚
    * @date 2023-09-18
    */
-  SysUserAdminAccoutLoginVO adminAccoutLogin(SysUserAdminAccoutLoginDTO request) throws Exception;
+  SysUserLoginVO adminAccoutLogin(SysUserLoginDTO request) throws Exception;
 
   /**
-   * 租户端-登录
+   * 获取用户信息
    *
-   * @param request 管理端用户实体
    * @return {@link boolean}
    * @author 一源-花和尚
    * @date 2023-09-18
    */
-  SysUserTenantAccoutLoginVO tenantAccoutLogin(SysUserTenantAccoutLoginDTO request)
-      throws Exception;
+  SysUserGetUserInfoVO getUserInfo() throws Exception;
 }

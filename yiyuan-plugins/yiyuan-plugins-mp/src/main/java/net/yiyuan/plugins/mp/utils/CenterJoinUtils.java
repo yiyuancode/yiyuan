@@ -286,4 +286,15 @@ public class CenterJoinUtils<L, C, R, LV> {
                 .collect(Collectors.toList());
     return leftTableGetFieldList;
   }
+
+  /**
+   * 获取vo关联的表任意字段值集合
+   *
+   * @author 一源-花和尚
+   * @date 2023-09-18
+   */
+  public List<R> getRighList() throws Exception {
+    List<R> list = BeanUtilsPlus.copyToList(this.selectMapList, this.rClass);
+    return list;
+  }
 }

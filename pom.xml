@@ -38,6 +38,7 @@
         <module>yiyuan-SMS</module>
         <module>yiyuan-spm</module>
         <module>yiyuan-um</module>
+        <module>yiyuan-ptm</module>
         <!--        <module>yiyuan-file</module>-->
 
     </modules>

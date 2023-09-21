@@ -3,31 +3,19 @@
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>yiyuan-sys</artifactId>
+        <artifactId>yiyuan-ptm</artifactId>
         <groupId>net.yiyuan</groupId>
         <version>${revision}</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <version>${revision}</version>
-
-    <artifactId>yiyuan-sys-api</artifactId>
+    <artifactId>yiyuan-ptm-mapper</artifactId>
 
     <dependencies>
         <dependency>
-            <groupId>com.github.javaparser</groupId>
-            <artifactId>javaparser-core</artifactId>
-            <version>3.24.0</version>
-        </dependency>
-        <dependency>
             <groupId>net.yiyuan</groupId>
-            <artifactId>yiyuan-plugins-satoken</artifactId>
+            <artifactId>yiyuan-plugins-mp</artifactId>
             <version>${revision}</version>
         </dependency>
-        <dependency>
-            <groupId>net.yiyuan</groupId>
-            <artifactId>yiyuan-sys-service</artifactId>
-            <version>${revision}</version>
-        </dependency>
-
     </dependencies>
 </project>

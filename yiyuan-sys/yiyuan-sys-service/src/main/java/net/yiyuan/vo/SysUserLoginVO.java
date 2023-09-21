@@ -9,7 +9,7 @@ import lombok.Data;
  * @date 2023-09-18
  */
 @Data
-public class SysUserAdminAccoutLoginVO {
+public class SysUserLoginVO {
   /**
    * token
    *
