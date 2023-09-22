@@ -14,7 +14,7 @@ import java.util.Date;
  * 店铺主营类目查询请求响应参数实体
  *
  * @author 一源-花和尚
- * @date 2023-09-18
+ * @date 2023-09-22
  */
 @Data
 public class SpmShopMainCategoryQueryVO implements Serializable {
@@ -23,7 +23,7 @@ public class SpmShopMainCategoryQueryVO implements Serializable {
    * 主营类目id
    *
    * @author 一源-花和尚
-   * @date 2023-09-18
+   * @date 2023-09-22
    */
   private String id;
 
@@ -31,7 +31,7 @@ public class SpmShopMainCategoryQueryVO implements Serializable {
    * 主营类目名称
    *
    * @author 一源-花和尚
-   * @date 2023-09-18
+   * @date 2023-09-22
    */
   private String name;
 
@@ -39,7 +39,7 @@ public class SpmShopMainCategoryQueryVO implements Serializable {
    * 主营类目手续费
    *
    * @author 一源-花和尚
-   * @date 2023-09-18
+   * @date 2023-09-22
    */
   private BigDecimal fee;
 
@@ -47,7 +47,7 @@ public class SpmShopMainCategoryQueryVO implements Serializable {
    * 排序
    *
    * @author 一源-花和尚
-   * @date 2023-09-18
+   * @date 2023-09-22
    */
   private Integer sort;
 
@@ -55,7 +55,7 @@ public class SpmShopMainCategoryQueryVO implements Serializable {
    * 显示状态#0=不显示|1=显示
    *
    * @author 一源-花和尚
-   * @date 2023-09-18
+   * @date 2023-09-22
    */
   private SpmShopMainCategoryIsShowEnum isShow;
 
@@ -63,7 +63,7 @@ public class SpmShopMainCategoryQueryVO implements Serializable {
    * 是否删除#0=未删除|1=已删除
    *
    * @author 一源-花和尚
-   * @date 2023-09-18
+   * @date 2023-09-22
    */
   private SpmShopMainCategoryIsDelEnum isDel;
 
@@ -71,7 +71,7 @@ public class SpmShopMainCategoryQueryVO implements Serializable {
    * 创建时间
    *
    * @author 一源-花和尚
-   * @date 2023-09-18
+   * @date 2023-09-22
    */
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
@@ -81,7 +81,7 @@ public class SpmShopMainCategoryQueryVO implements Serializable {
    * 修改时间
    *
    * @author 一源-花和尚
-   * @date 2023-09-18
+   * @date 2023-09-22
    */
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
@@ -91,7 +91,7 @@ public class SpmShopMainCategoryQueryVO implements Serializable {
    * 创建人
    *
    * @author 一源-花和尚
-   * @date 2023-09-18
+   * @date 2023-09-22
    */
   private String createUser;
 
@@ -99,7 +99,7 @@ public class SpmShopMainCategoryQueryVO implements Serializable {
    * 修改人
    *
    * @author 一源-花和尚
-   * @date 2023-09-18
+   * @date 2023-09-22
    */
   private String updateUser;
 }

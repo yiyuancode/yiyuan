@@ -11,7 +11,7 @@ import java.io.Serializable;
  * 店铺类型修改接口请求入参实体
  *
  * @author 一源-花和尚
- * @date 2023-09-18
+ * @date 2023-09-22
  */
 @Data
 public class SpmShopTypeEditDTO implements Serializable {
@@ -20,7 +20,7 @@ public class SpmShopTypeEditDTO implements Serializable {
    * 店铺类型id
    *
    * @author 一源-花和尚
-   * @date 2023-09-18
+   * @date 2023-09-22
    */
   @NotBlank(message = "店铺类型id不能为空")
   private String id;
@@ -29,7 +29,7 @@ public class SpmShopTypeEditDTO implements Serializable {
    * 店铺类型名称
    *
    * @author 一源-花和尚
-   * @date 2023-09-18
+   * @date 2023-09-22
    */
   private String name;
 
@@ -37,7 +37,7 @@ public class SpmShopTypeEditDTO implements Serializable {
    * 店铺类型描述
    *
    * @author 一源-花和尚
-   * @date 2023-09-18
+   * @date 2023-09-22
    */
   private String typeDesc;
 
@@ -45,7 +45,7 @@ public class SpmShopTypeEditDTO implements Serializable {
    * 店铺类型合约
    *
    * @author 一源-花和尚
-   * @date 2023-09-18
+   * @date 2023-09-22
    */
   private String typeContract;
 
@@ -54,7 +54,7 @@ public class SpmShopTypeEditDTO implements Serializable {
    *
    * @mock 0
    * @author 一源-花和尚
-   * @date 2023-09-18
+   * @date 2023-09-22
    */
   private Integer sort;
 
@@ -63,7 +63,7 @@ public class SpmShopTypeEditDTO implements Serializable {
    *
    * @mock 1
    * @author 一源-花和尚
-   * @date 2023-09-18
+   * @date 2023-09-22
    */
   private SpmShopTypeIsShowEnum isShow;
 
@@ -72,7 +72,7 @@ public class SpmShopTypeEditDTO implements Serializable {
    *
    * @mock 0
    * @author 一源-花和尚
-   * @date 2023-09-18
+   * @date 2023-09-22
    */
   private SpmShopTypeIsDelEnum isDel;
 }

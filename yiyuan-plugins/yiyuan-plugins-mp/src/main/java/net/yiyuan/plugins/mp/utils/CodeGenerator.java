@@ -119,6 +119,11 @@ public class CodeGenerator {
 
     for (String tableName : inputTableName) {
       int hasKeyFlag = 0;
+      int hasIsDel = 0;
+      int hasIsShow = 0;
+      int hasCreateTime = 0;
+      int hasSort = 0;
+
       Map<String, Object> routerAndI18nMap = new HashMap<>();
       // 定义生成基本增删改查的DTO
       VelocityContext dtoContext = new VelocityContext();
@@ -230,6 +235,20 @@ public class CodeGenerator {
         } else {
           dtoColumnMap.put("keyFlag", "false");
         }
+        // 设置主键
+        if (columnName.equals("is_del")) {
+          hasIsDel = 1;
+        }
+        if (columnName.equals("is_show")) {
+          hasIsShow = 1;
+        }
+        if (columnName.equals("create_time")) {
+          hasCreateTime = 1;
+        }
+        if (columnName.equals("sort")) {
+          hasSort = 1;
+        }
+
         // 生成枚举类
         if (StrUtil.contains(columnComment, "#") && !StrUtil.contains(columnComment, "##")) {
           String[] columnCommentArray = columnComment.split("#");
@@ -300,6 +319,11 @@ public class CodeGenerator {
         }
         dtoTableColumns.add(dtoColumnMap);
       }
+      dtoContext.put("hasIsDel", hasIsDel == 1 ? "true" : "fasle");
+      dtoContext.put("hasIsShow", hasIsShow == 1 ? "true" : "fasle");
+
+      dtoContext.put("hasCreateTime", hasCreateTime == 1 ? "true" : "fasle");
+      dtoContext.put("hasSort", hasSort == 1 ? "true" : "fasle");
 
       dtoContext.put("revision", "${revision}");
       dtoContext.put("author", AUTHOR);
@@ -339,6 +363,7 @@ public class CodeGenerator {
       createMapperByVelocity(dtoContext);
       createMapperXmlByVelocity(dtoContext);
       createMaperPomByVelocity(dtoContext);
+
       // 没有主键 表示中间表，不创建控制器等
       if (hasKeyFlag == 1) {
         createControllerByVelocity(dtoContext);

@@ -63,7 +63,7 @@ public class SysUserRedisService {
    * @date 2023-09-18
    */
   public <T> List<T> getList(String key, String keyId, Class<T> cls) {
-    return (List<T>) redisService.get(key + keyId, cls);
+    return (List<T>) redisService.getList(key + keyId, cls);
   }
 
   /**

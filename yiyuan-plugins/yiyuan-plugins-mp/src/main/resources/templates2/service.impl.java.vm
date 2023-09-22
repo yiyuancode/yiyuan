@@ -16,10 +16,15 @@ import ${parentPack}.mapper.${className}Mapper;
 
 import  ${parentPack}.service.${className}Service;
 import org.springframework.stereotype.Service;
-
+import ${parentPack}.model.*;
+import ${parentPack}.enums.*;
 import javax.annotation.Resource;
 import java.util.Arrays;
 import java.util.List;
+
+import net.yiyuan.plugins.mp.utils.LambdaFunUtils;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 #set($firstName=$className.substring(0,1).toLowerCase()+$className.substring(1))
 /**
  * $!{tableComment.replaceAll("表", "")}Service层接口实现
@@ -52,6 +57,20 @@ public class ${className}ServiceImpl extends JoinServiceImpl
         BeanUtilsPlus.copy(request, po);
         JoinLambdaWrapper
                 <${className}> wrapper = new JoinLambdaWrapper<>(po);
+        #if(${hasIsDel.equals("true")})
+            wrapper.eq(${className}::getIsDel, ${className}IsDelEnum.NOT_DELETED);
+        #end
+        ##        #if(${hasIsShow.equals("true")})
+        ##            wrapper.eq(${className}::getIsDel, ${className}IsDelEnum.NOT_DELETED);
+        ##        #end
+
+        #if(${hasSort.equals("true")})
+            wrapper.orderByDesc(${className}::getSort);
+        #end
+        #if(${hasCreateTime.equals("true")})
+            wrapper.orderByDesc(${className}::getCreateTime);
+        #end
+
         List
                 <${className}QueryVO> voList = ${firstName}Mapper.joinSelectList(wrapper, ${className}QueryVO.class);
 
@@ -73,6 +92,20 @@ public class ${className}ServiceImpl extends JoinServiceImpl
         BeanUtilsPlus.copy(request, po);
         JoinLambdaWrapper
                 <${className}> wrapper = new JoinLambdaWrapper<>(po);
+
+        #if(${hasIsDel.equals("true")})
+            wrapper.eq(${className}::getIsDel, ${className}IsDelEnum.NOT_DELETED);
+        #end
+        ##        #if(${hasIsShow.equals("true")})
+        ##            wrapper.eq(${className}::getIsDel, ${className}IsDelEnum.NOT_DELETED);
+        ##        #end
+
+        #if(${hasSort.equals("true")})
+            wrapper.orderByDesc(${className}::getSort);
+        #end
+        #if(${hasCreateTime.equals("true")})
+            wrapper.orderByDesc(${className}::getCreateTime);
+        #end
         Page
                 <${className}QueryVO> voPage =
                     ${firstName}Mapper.joinSelectPage(
@@ -94,6 +127,10 @@ public class ${className}ServiceImpl extends JoinServiceImpl
         po.setId(id);
         JoinLambdaWrapper
                 <${className}> wrapper = new JoinLambdaWrapper<>(po);
+        #if(${hasIsDel.equals("true")})
+            wrapper.eq(${className}::getIsDel, ${className}IsDelEnum.NOT_DELETED);
+        #end
+
             ${className}QueryVO voBean = ${firstName}Mapper.joinSelectOne(wrapper, ${className}QueryVO.class);
         return voBean;
     }
@@ -110,6 +147,9 @@ public class ${className}ServiceImpl extends JoinServiceImpl
     public ${className}QueryVO details(${className} request) throws Exception {
         JoinLambdaWrapper
                 <${className}> wrapper = new JoinLambdaWrapper<>(request);
+        #if(${hasIsDel.equals("true")})
+            wrapper.eq(${className}::getIsDel, ${className}IsDelEnum.NOT_DELETED);
+        #end
             ${className}QueryVO voBean = ${firstName}Mapper.joinSelectOne(wrapper, ${className}QueryVO.class);
         return voBean;
     }
@@ -124,12 +164,16 @@ public class ${className}ServiceImpl extends JoinServiceImpl
      */
     @Override
     public boolean delete(String ids) throws Exception {
-        List<String> idList = Arrays.asList(ids.split("," ));
-        int i = ${firstName}Mapper.deleteBatchIds(idList);
+        List<String> idList = Arrays.asList(ids.split(","));
+        UpdateWrapper<${className}> updateWrapper = new UpdateWrapper();
+        updateWrapper.in(LambdaFunUtils.getFieldName(${className}::getId), idList);
+        LambdaUpdateWrapper<${className}> lambdaWrapper = updateWrapper.lambda();
+        lambdaWrapper.set(${className}::getIsDel, ${className}IsDelEnum.DELETED);
+        int i = ${firstName}Mapper.update(null, updateWrapper);
         if (i == idList.size()) {
             return true;
         } else {
-            throw new BusinessException("批量删除异常" );
+            throw new BusinessException("批量删除异常");
         }
 
     }
@@ -151,7 +195,7 @@ public class ${className}ServiceImpl extends JoinServiceImpl
         if (i != 0) {
             return true;
         } else {
-            throw new BusinessException("修改异常" );
+            throw new BusinessException("修改异常");
         }
     }
 
@@ -171,7 +215,7 @@ public class ${className}ServiceImpl extends JoinServiceImpl
         if (i != 0) {
             return true;
         } else {
-            throw new BusinessException("新增异常" );
+            throw new BusinessException("新增异常");
         }
     }
 }

@@ -1,5 +1,7 @@
 package net.yiyuan.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import icu.mhb.mybatisplus.plugln.base.service.impl.JoinServiceImpl;
 import icu.mhb.mybatisplus.plugln.core.JoinLambdaWrapper;
@@ -10,8 +12,10 @@ import net.yiyuan.dto.SpmShopMainCategoryAddDTO;
 import net.yiyuan.dto.SpmShopMainCategoryEditDTO;
 import net.yiyuan.dto.SpmShopMainCategoryListDTO;
 import net.yiyuan.dto.SpmShopMainCategoryPageDTO;
+import net.yiyuan.enums.SpmShopMainCategoryIsDelEnum;
 import net.yiyuan.mapper.SpmShopMainCategoryMapper;
 import net.yiyuan.model.SpmShopMainCategory;
+import net.yiyuan.plugins.mp.utils.LambdaFunUtils;
 import net.yiyuan.service.SpmShopMainCategoryService;
 import net.yiyuan.vo.SpmShopMainCategoryQueryVO;
 import org.springframework.stereotype.Service;
@@ -23,7 +27,7 @@ import java.util.List;
  * 店铺主营类目Service层接口实现
  *
  * @author 一源-花和尚
- * @date 2023-09-18
+ * @date 2023-09-22
  */
 @Slf4j
 @Service
@@ -38,7 +42,7 @@ public class SpmShopMainCategoryServiceImpl
    * @param request 店铺主营类目实体
    * @return {@link List< SpmShopMainCategoryQueryVO >}
    * @author 一源-花和尚
-   * @date 2023-09-18
+   * @date 2023-09-22
    */
   @Override
   public List<SpmShopMainCategoryQueryVO> list(SpmShopMainCategoryListDTO request)
@@ -47,6 +51,11 @@ public class SpmShopMainCategoryServiceImpl
     SpmShopMainCategory po = new SpmShopMainCategory();
     BeanUtilsPlus.copy(request, po);
     JoinLambdaWrapper<SpmShopMainCategory> wrapper = new JoinLambdaWrapper<>(po);
+    wrapper.eq(SpmShopMainCategory::getIsDel, SpmShopMainCategoryIsDelEnum.NOT_DELETED);
+
+    wrapper.orderByDesc(SpmShopMainCategory::getSort);
+    wrapper.orderByDesc(SpmShopMainCategory::getCreateTime);
+
     List<SpmShopMainCategoryQueryVO> voList =
         spmShopMainCategoryMapper.joinSelectList(wrapper, SpmShopMainCategoryQueryVO.class);
 
@@ -59,7 +68,7 @@ public class SpmShopMainCategoryServiceImpl
    * @param request 店铺主营类目实体
    * @return {@link Page< SpmShopMainCategoryQueryVO >}
    * @author 一源-花和尚
-   * @date 2023-09-18
+   * @date 2023-09-22
    */
   @Override
   public Page<SpmShopMainCategoryQueryVO> page(SpmShopMainCategoryPageDTO request)
@@ -67,6 +76,11 @@ public class SpmShopMainCategoryServiceImpl
     SpmShopMainCategory po = new SpmShopMainCategory();
     BeanUtilsPlus.copy(request, po);
     JoinLambdaWrapper<SpmShopMainCategory> wrapper = new JoinLambdaWrapper<>(po);
+
+    wrapper.eq(SpmShopMainCategory::getIsDel, SpmShopMainCategoryIsDelEnum.NOT_DELETED);
+
+    wrapper.orderByDesc(SpmShopMainCategory::getSort);
+    wrapper.orderByDesc(SpmShopMainCategory::getCreateTime);
     Page<SpmShopMainCategoryQueryVO> voPage =
         spmShopMainCategoryMapper.joinSelectPage(
             new Page<>(request.getPageNum(), request.getPageSize()),
@@ -81,13 +95,15 @@ public class SpmShopMainCategoryServiceImpl
    * @param id 店铺主营类目id
    * @return {@link SpmShopMainCategoryQueryVO}
    * @author 一源-花和尚
-   * @date 2023-09-18
+   * @date 2023-09-22
    */
   @Override
   public SpmShopMainCategoryQueryVO details(String id) throws Exception {
     SpmShopMainCategory po = new SpmShopMainCategory();
     po.setId(id);
     JoinLambdaWrapper<SpmShopMainCategory> wrapper = new JoinLambdaWrapper<>(po);
+    wrapper.eq(SpmShopMainCategory::getIsDel, SpmShopMainCategoryIsDelEnum.NOT_DELETED);
+
     SpmShopMainCategoryQueryVO voBean =
         spmShopMainCategoryMapper.joinSelectOne(wrapper, SpmShopMainCategoryQueryVO.class);
     return voBean;
@@ -99,11 +115,12 @@ public class SpmShopMainCategoryServiceImpl
    * @param request 店铺主营类目实体
    * @return {@link SpmShopMainCategory}
    * @author 一源-花和尚
-   * @date 2023-09-18
+   * @date 2023-09-22
    */
   @Override
   public SpmShopMainCategoryQueryVO details(SpmShopMainCategory request) throws Exception {
     JoinLambdaWrapper<SpmShopMainCategory> wrapper = new JoinLambdaWrapper<>(request);
+    wrapper.eq(SpmShopMainCategory::getIsDel, SpmShopMainCategoryIsDelEnum.NOT_DELETED);
     SpmShopMainCategoryQueryVO voBean =
         spmShopMainCategoryMapper.joinSelectOne(wrapper, SpmShopMainCategoryQueryVO.class);
     return voBean;
@@ -115,12 +132,16 @@ public class SpmShopMainCategoryServiceImpl
    * @param ids 店铺主营类目id(多个逗号分割)
    * @return {@link boolean}
    * @author 一源-花和尚
-   * @date 2023-09-18
+   * @date 2023-09-22
    */
   @Override
   public boolean delete(String ids) throws Exception {
     List<String> idList = Arrays.asList(ids.split(","));
-    int i = spmShopMainCategoryMapper.deleteBatchIds(idList);
+    UpdateWrapper<SpmShopMainCategory> updateWrapper = new UpdateWrapper();
+    updateWrapper.in(LambdaFunUtils.getFieldName(SpmShopMainCategory::getId), idList);
+    LambdaUpdateWrapper<SpmShopMainCategory> lambdaWrapper = updateWrapper.lambda();
+    lambdaWrapper.set(SpmShopMainCategory::getIsDel, SpmShopMainCategoryIsDelEnum.DELETED);
+    int i = spmShopMainCategoryMapper.update(null, updateWrapper);
     if (i == idList.size()) {
       return true;
     } else {
@@ -134,7 +155,7 @@ public class SpmShopMainCategoryServiceImpl
    * @param request 店铺主营类目实体
    * @return {@link boolean}
    * @author 一源-花和尚
-   * @date 2023-09-18
+   * @date 2023-09-22
    */
   @Override
   public boolean edit(SpmShopMainCategoryEditDTO request) throws Exception {
@@ -154,7 +175,7 @@ public class SpmShopMainCategoryServiceImpl
    * @param request 店铺主营类目实体
    * @return {@link boolean}
    * @author 一源-花和尚
-   * @date 2023-09-18
+   * @date 2023-09-22
    */
   @Override
   public boolean add(SpmShopMainCategoryAddDTO request) throws Exception {

@@ -154,4 +154,27 @@ public class SpmShopController {
       return CommonResult.failed("新增店铺失败");
     }
   }
+
+  /**
+   * 申请店铺
+   *
+   * @param request 店铺实体
+   * @return {@link CommonResult<String>}
+   * @author 一源-花和尚
+   * @date 2023-09-18
+   */
+  @Description("店铺管理/店铺管理/申请店铺")
+  @SaCheckPermission(
+      value = {"spm:shop:apply"},
+      orRole = "admin")
+  @PostMapping(value = "/spm/shop/apply")
+  @ResponseBody
+  public CommonResult<String> apply(@RequestBody @Validated SpmShopAddDTO request)
+      throws Exception {
+    if (spmShopService.add(request)) {
+      return CommonResult.success(null, "新增店铺成功");
+    } else {
+      return CommonResult.failed("新增店铺失败");
+    }
+  }
 }

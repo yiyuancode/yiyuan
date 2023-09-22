@@ -14,7 +14,7 @@ import java.util.Date;
  * 店铺类型分页接口请求入参实体
  *
  * @author 一源-花和尚
- * @date 2023-09-18
+ * @date 2023-09-22
  */
 @Data
 public class SpmShopTypePageDTO implements Serializable {
@@ -23,7 +23,7 @@ public class SpmShopTypePageDTO implements Serializable {
    *
    * @mock 10
    * @author 一源-花和尚
-   * @date 2023-09-18
+   * @date 2023-09-22
    */
   @NotNull(message = "分页条数不能为空")
   private Integer pageSize;
@@ -32,7 +32,7 @@ public class SpmShopTypePageDTO implements Serializable {
    *
    * @mock 1
    * @author 一源-花和尚
-   * @date 2023-09-18
+   * @date 2023-09-22
    */
   @NotNull(message = "分页页数不能为空")
   private Integer pageNum;
@@ -41,7 +41,7 @@ public class SpmShopTypePageDTO implements Serializable {
    * 店铺类型id
    *
    * @author 一源-花和尚
-   * @date 2023-09-18
+   * @date 2023-09-22
    */
   private String id;
 
@@ -49,7 +49,7 @@ public class SpmShopTypePageDTO implements Serializable {
    * 店铺类型名称
    *
    * @author 一源-花和尚
-   * @date 2023-09-18
+   * @date 2023-09-22
    */
   private String name;
 
@@ -57,7 +57,7 @@ public class SpmShopTypePageDTO implements Serializable {
    * 店铺类型描述
    *
    * @author 一源-花和尚
-   * @date 2023-09-18
+   * @date 2023-09-22
    */
   private String typeDesc;
 
@@ -65,23 +65,15 @@ public class SpmShopTypePageDTO implements Serializable {
    * 店铺类型合约
    *
    * @author 一源-花和尚
-   * @date 2023-09-18
+   * @date 2023-09-22
    */
   private String typeContract;
-
-  /**
-   * 排序
-   *
-   * @author 一源-花和尚
-   * @date 2023-09-18
-   */
-  private Integer sort;
 
   /**
    * 显示状态#0=不显示|1=显示
    *
    * @author 一源-花和尚
-   * @date 2023-09-18
+   * @date 2023-09-22
    */
   private SpmShopTypeIsShowEnum isShow;
 
@@ -89,7 +81,7 @@ public class SpmShopTypePageDTO implements Serializable {
    * 是否删除#0=未删除|1=已删除
    *
    * @author 一源-花和尚
-   * @date 2023-09-18
+   * @date 2023-09-22
    */
   private SpmShopTypeIsDelEnum isDel;
 
@@ -98,7 +90,7 @@ public class SpmShopTypePageDTO implements Serializable {
    *
    * @see Date
    * @author 一源-花和尚
-   * @date 2023-09-18
+   * @date 2023-09-22
    */
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
@@ -108,7 +100,7 @@ public class SpmShopTypePageDTO implements Serializable {
    *
    * @see Date
    * @author 一源-花和尚
-   * @date 2023-09-18
+   * @date 2023-09-22
    */
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
@@ -119,7 +111,7 @@ public class SpmShopTypePageDTO implements Serializable {
    *
    * @see Date
    * @author 一源-花和尚
-   * @date 2023-09-18
+   * @date 2023-09-22
    */
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
@@ -129,7 +121,7 @@ public class SpmShopTypePageDTO implements Serializable {
    *
    * @see Date
    * @author 一源-花和尚
-   * @date 2023-09-18
+   * @date 2023-09-22
    */
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
@@ -139,7 +131,7 @@ public class SpmShopTypePageDTO implements Serializable {
    * 创建人
    *
    * @author 一源-花和尚
-   * @date 2023-09-18
+   * @date 2023-09-22
    */
   private String createUser;
 
@@ -147,7 +139,7 @@ public class SpmShopTypePageDTO implements Serializable {
    * 修改人
    *
    * @author 一源-花和尚
-   * @date 2023-09-18
+   * @date 2023-09-22
    */
   private String updateUser;
 }

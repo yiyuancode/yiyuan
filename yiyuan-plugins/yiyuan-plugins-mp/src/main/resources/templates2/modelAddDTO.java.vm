@@ -27,7 +27,10 @@ public class ${className}AddDTO implements Serializable {
 
         #if(!${columnsItem.keyFlag.equals("true")}&&!${columnsItem.columnName.equals(
             "createTime")}&&!${columnsItem.columnName.equals("updateTime")}&&!${columnsItem.columnName.equals(
-            "createUser")}&&!${columnsItem.columnName.equals("updateUser")})
+            "createUser")}&&!${columnsItem.columnName.equals("updateUser")}&&!${columnsItem.columnName.equals(
+            "isDel")}&&!${columnsItem.columnName.equals(
+            "isShow")}&&!${columnsItem.columnName.equals(
+            "sort")})
             #if(!${columnsItem.defaultValue.equals("NULL")})
                 /**
                  * ${columnsItem.columnComment}

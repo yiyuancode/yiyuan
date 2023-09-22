@@ -15,7 +15,7 @@ import java.util.List;
  * 店铺主营类目Service层接口
  *
  * @author 一源-花和尚
- * @date 2023-09-18
+ * @date 2023-09-22
  */
 public interface SpmShopMainCategoryService extends JoinIService<SpmShopMainCategory> {
 
@@ -25,7 +25,7 @@ public interface SpmShopMainCategoryService extends JoinIService<SpmShopMainCate
    * @param request 店铺主营类目实体
    * @return {@link List< SpmShopMainCategoryQueryVO >}
    * @author 一源-花和尚
-   * @date 2023-09-18
+   * @date 2023-09-22
    */
   List<SpmShopMainCategoryQueryVO> list(SpmShopMainCategoryListDTO request) throws Exception;
 
@@ -35,7 +35,7 @@ public interface SpmShopMainCategoryService extends JoinIService<SpmShopMainCate
    * @param request 店铺主营类目实体
    * @return {@link Page< SpmShopMainCategoryQueryVO >}
    * @author 一源-花和尚
-   * @date 2023-09-18
+   * @date 2023-09-22
    */
   Page<SpmShopMainCategoryQueryVO> page(SpmShopMainCategoryPageDTO request) throws Exception;
 
@@ -45,7 +45,7 @@ public interface SpmShopMainCategoryService extends JoinIService<SpmShopMainCate
    * @param id 店铺主营类目id
    * @return {@link SpmShopMainCategoryQueryVO}
    * @author 一源-花和尚
-   * @date 2023-09-18
+   * @date 2023-09-22
    */
   SpmShopMainCategoryQueryVO details(String id) throws Exception;
 
@@ -55,7 +55,7 @@ public interface SpmShopMainCategoryService extends JoinIService<SpmShopMainCate
    * @param request 店铺主营类目实体
    * @return {@link SpmShopMainCategory}
    * @author 一源-花和尚
-   * @date 2023-09-18
+   * @date 2023-09-22
    */
   SpmShopMainCategoryQueryVO details(SpmShopMainCategory request) throws Exception;
 
@@ -65,7 +65,7 @@ public interface SpmShopMainCategoryService extends JoinIService<SpmShopMainCate
    * @param ids 店铺主营类目id(多个逗号分割)
    * @return {@link boolean}
    * @author 一源-花和尚
-   * @date 2023-09-18
+   * @date 2023-09-22
    */
   boolean delete(String ids) throws Exception;
 
@@ -75,7 +75,7 @@ public interface SpmShopMainCategoryService extends JoinIService<SpmShopMainCate
    * @param request 店铺主营类目实体
    * @return {@link boolean}
    * @author 一源-花和尚
-   * @date 2023-09-18
+   * @date 2023-09-22
    */
   boolean edit(SpmShopMainCategoryEditDTO request) throws Exception;
 
@@ -85,7 +85,7 @@ public interface SpmShopMainCategoryService extends JoinIService<SpmShopMainCate
    * @param request 店铺主营类目实体
    * @return {@link boolean}
    * @author 一源-花和尚
-   * @date 2023-09-18
+   * @date 2023-09-22
    */
   boolean add(SpmShopMainCategoryAddDTO request) throws Exception;
 }

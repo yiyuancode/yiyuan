@@ -12,7 +12,7 @@ import java.math.BigDecimal;
  * 店铺主营类目修改接口请求入参实体
  *
  * @author 一源-花和尚
- * @date 2023-09-18
+ * @date 2023-09-22
  */
 @Data
 public class SpmShopMainCategoryEditDTO implements Serializable {
@@ -21,7 +21,7 @@ public class SpmShopMainCategoryEditDTO implements Serializable {
    * 主营类目id
    *
    * @author 一源-花和尚
-   * @date 2023-09-18
+   * @date 2023-09-22
    */
   @NotBlank(message = "主营类目id不能为空")
   private String id;
@@ -30,7 +30,7 @@ public class SpmShopMainCategoryEditDTO implements Serializable {
    * 主营类目名称
    *
    * @author 一源-花和尚
-   * @date 2023-09-18
+   * @date 2023-09-22
    */
   private String name;
 
@@ -38,7 +38,7 @@ public class SpmShopMainCategoryEditDTO implements Serializable {
    * 主营类目手续费
    *
    * @author 一源-花和尚
-   * @date 2023-09-18
+   * @date 2023-09-22
    */
   private BigDecimal fee;
 
@@ -47,7 +47,7 @@ public class SpmShopMainCategoryEditDTO implements Serializable {
    *
    * @mock 0
    * @author 一源-花和尚
-   * @date 2023-09-18
+   * @date 2023-09-22
    */
   private Integer sort;
 
@@ -56,7 +56,7 @@ public class SpmShopMainCategoryEditDTO implements Serializable {
    *
    * @mock 1
    * @author 一源-花和尚
-   * @date 2023-09-18
+   * @date 2023-09-22
    */
   private SpmShopMainCategoryIsShowEnum isShow;
 
@@ -65,7 +65,7 @@ public class SpmShopMainCategoryEditDTO implements Serializable {
    *
    * @mock 0
    * @author 一源-花和尚
-   * @date 2023-09-18
+   * @date 2023-09-22
    */
   private SpmShopMainCategoryIsDelEnum isDel;
 }

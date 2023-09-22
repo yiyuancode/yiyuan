@@ -1,7 +1,6 @@
 package net.yiyuan.plugins.mp.utils;
 
 import com.alibaba.fastjson.JSONObject;
-import com.baomidou.mybatisplus.core.toolkit.LambdaUtils;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import icu.mhb.mybatisplus.plugln.base.mapper.JoinBaseMapper;
 import icu.mhb.mybatisplus.plugln.core.JoinLambdaWrapper;
@@ -123,7 +122,9 @@ public class CenterJoinUtils<L, C, R, LV> {
     this.leftVoOfRightSetField = leftVoOfRightSetField;
     this.poIdList =
         this.voList.stream().map(this.lvIdField).map(Object::toString).collect(Collectors.toList());
-    this.lvClass = (Class<LV>) LambdaUtils.extract(lvIdField).getInstantiatedClass();
+    //    this.lvClass = (Class<LV>) LambdaUtils.extract(lvIdField).getInstantiatedClass();
+    this.lvClass = LambdaFunUtils.getFieldOfClass(lvIdField);
+
     return this;
   }
 
@@ -135,7 +136,9 @@ public class CenterJoinUtils<L, C, R, LV> {
    */
   public CenterJoinUtils<L, C, R, LV> setLeftTable(SFunction<L, Object> leftPrimaryKeyField) {
     this.leftPrimaryKeyField = leftPrimaryKeyField;
-    this.lClass = (Class<L>) LambdaUtils.extract(this.leftPrimaryKeyField).getInstantiatedClass();
+    //    this.lClass = (Class<L>)
+    // LambdaUtils.extract(this.leftPrimaryKeyField).getInstantiatedClass();
+    this.lClass = LambdaFunUtils.getFieldOfClass(this.leftPrimaryKeyField);
     return this;
   }
 
@@ -144,14 +147,20 @@ public class CenterJoinUtils<L, C, R, LV> {
       SFunction<C, Object> centerOfRightForeignKeyField) {
     this.centerOfLeftForeignKeyField = centerOfLeftForeignKeyField;
     this.centerOfRightForeignKeyField = centerOfRightForeignKeyField;
-    this.cClass =
-        (Class<C>) LambdaUtils.extract(this.centerOfLeftForeignKeyField).getInstantiatedClass();
+    //    this.cClass =
+    //        (Class<C>)
+    // LambdaUtils.extract(this.centerOfLeftForeignKeyField).getInstantiatedClass();
+
+    this.cClass = LambdaFunUtils.getFieldOfClass(this.centerOfLeftForeignKeyField);
     return this;
   }
 
   public CenterJoinUtils<L, C, R, LV> setRightTable(SFunction<R, Object> rightPrimaryKeyField) {
     this.rightPrimaryKeyField = rightPrimaryKeyField;
-    this.rClass = (Class<R>) LambdaUtils.extract(this.rightPrimaryKeyField).getInstantiatedClass();
+    //    this.rClass = (Class<R>)
+    // LambdaUtils.extract(this.rightPrimaryKeyField).getInstantiatedClass();
+
+    this.rClass = LambdaFunUtils.getFieldOfClass(this.rightPrimaryKeyField);
     return this;
   }
 
@@ -215,15 +224,18 @@ public class CenterJoinUtils<L, C, R, LV> {
    */
   public CenterJoinUtils<L, C, R, LV> map() {
     // 获取左表的id字段
-    String methodName = LambdaUtils.extract(this.centerOfLeftForeignKeyField).getImplMethodName();
-    // 去掉 get
-    String field = methodName.substring(3);
-    // 下划线转驼峰首字母小写
-    String fieldName =
-        StringUtilsPlus.camelCaseToSnakeCase(
-            Character.toLowerCase(field.charAt(0)) + field.substring(1));
-    log.info("mapResult.fieldName{}", fieldName);
-    log.info("mapResult.selectMapList{}", selectMapList);
+    //    String methodName =
+    // LambdaUtils.extract(this.centerOfLeftForeignKeyField).getImplMethodName();
+    //    // 去掉 get
+    //    String field = methodName.substring(3);
+    //    // 下划线转驼峰首字母小写
+    //    String fieldName =
+    //        StringUtilsPlus.camelCaseToSnakeCase(
+    //            Character.toLowerCase(field.charAt(0)) + field.substring(1));
+    //    log.info("mapResult.fieldName{}", fieldName);
+    //    log.info("mapResult.selectMapList{}", selectMapList);
+
+    String fieldName = LambdaFunUtils.getFieldName(this.centerOfLeftForeignKeyField);
     // 使用中间表的左表id分组来分组
     Map<Object, List<Map>> groupedMap =
         this.selectMapList.stream().collect(Collectors.groupingBy(map -> map.get(fieldName)));
@@ -270,14 +282,17 @@ public class CenterJoinUtils<L, C, R, LV> {
    * @date 2023-09-18
    */
   public <F> List<F> getRightAnyFieldList(SFunction<R, F> anyField) throws Exception {
-    // 获取左表的id字段
-    String methodName = LambdaUtils.extract(anyField).getImplMethodName();
-    // 去掉 get
-    String field = methodName.substring(3);
-    // 下划线转驼峰首字母小写
-    String fieldName =
-        StringUtilsPlus.camelCaseToSnakeCase(
-            Character.toLowerCase(field.charAt(0)) + field.substring(1));
+    //    // 获取左表的id字段
+    //    String methodName = LambdaUtils.extract(anyField).getImplMethodName();
+    //    // 去掉 get
+    //    String field = methodName.substring(3);
+    //    // 下划线转驼峰首字母小写
+    //    String fieldName =
+    //        StringUtilsPlus.camelCaseToSnakeCase(
+    //            Character.toLowerCase(field.charAt(0)) + field.substring(1));
+
+    String fieldName = LambdaFunUtils.getFieldName(anyField);
+
     List<F> leftTableGetFieldList =
         (List<F>)
             this.selectMapList.stream()
