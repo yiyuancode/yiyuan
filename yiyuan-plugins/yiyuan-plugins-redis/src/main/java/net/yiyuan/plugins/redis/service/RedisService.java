@@ -12,6 +12,17 @@ public interface RedisService {
   /** 保存属性 */
   void set(String key, Object value);
 
+  /**
+   * 获取复杂类型，对象，可能会包含枚举值得一类，reids无法自动序列化得问题解决
+   *
+   * @return {@link boolean}
+   * @author 一源-花和尚
+   * @date 2023-09-18
+   */
+  public <T> T get(String key, Class<T> cls);
+
+  public <T> List<T> getList(String key, Class<T> cls);
+
   /** 获取属性 */
   Object get(String key);
 

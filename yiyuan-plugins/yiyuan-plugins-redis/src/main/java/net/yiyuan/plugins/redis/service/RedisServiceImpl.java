@@ -1,5 +1,6 @@
 package net.yiyuan.plugins.redis.service;
 
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 
@@ -14,12 +15,85 @@ public class RedisServiceImpl implements RedisService {
 
   @Override
   public void set(String key, Object value, long time) {
-    redisTemplate.opsForValue().set(key, value, time, TimeUnit.SECONDS);
+    // 非基本类型或者非基本类型得集合
+    boolean isOther = true;
+    if (value instanceof List) {
+      List<?> dataList = (List<?>) value;
+      if ((!dataList.isEmpty() && dataList.get(0) instanceof String)
+          || (dataList.get(0) instanceof Integer)
+          || (dataList.get(0) instanceof Double)
+          || (dataList.get(0) instanceof Boolean)) {
+        isOther = false;
+      }
+    } else {
+      if (value instanceof String
+          || (value instanceof Integer)
+          || (value instanceof Double)
+          || (value instanceof Boolean)) {
+        isOther = false;
+      }
+    }
+
+    if (isOther) {
+      redisTemplate.opsForValue().set(key, JSONObject.toJSONString(value), time, TimeUnit.SECONDS);
+    } else {
+      redisTemplate.opsForValue().set(key, value, time, TimeUnit.SECONDS);
+    }
   }
 
   @Override
   public void set(String key, Object value) {
-    redisTemplate.opsForValue().set(key, value);
+
+    // 非基本类型或者非基本类型得集合
+    boolean isOther = true;
+    if (value instanceof List) {
+      List<?> dataList = (List<?>) value;
+      if ((!dataList.isEmpty() && dataList.get(0) instanceof String)
+          || (dataList.get(0) instanceof Integer)
+          || (dataList.get(0) instanceof Double)
+          || (dataList.get(0) instanceof Boolean)) {
+        isOther = false;
+      }
+    } else {
+      if (value instanceof String
+          || (value instanceof Integer)
+          || (value instanceof Double)
+          || (value instanceof Boolean)) {
+        isOther = false;
+      }
+    }
+
+    if (isOther) {
+      redisTemplate.opsForValue().set(key, JSONObject.toJSONString(value));
+    } else {
+      redisTemplate.opsForValue().set(key, value);
+    }
+  }
+
+  @Override
+  public <T> T get(String key, Class<T> cls) {
+    if (cls.equals(String.class)
+        || cls.equals(Integer.class)
+        || cls.equals(Double.class)
+        || cls.equals(Boolean.class)
+        || cls.equals(Float.class)) {
+      return (T) redisTemplate.opsForValue().get(key);
+    } else {
+      return (T) JSONObject.parseObject((String) redisTemplate.opsForValue().get(key), cls);
+    }
+  }
+
+  @Override
+  public <T> List<T> getList(String key, Class<T> cls) {
+    if (cls.equals(String.class)
+        || cls.equals(Integer.class)
+        || cls.equals(Double.class)
+        || cls.equals(Boolean.class)
+        || cls.equals(Float.class)) {
+      return (List<T>) redisTemplate.opsForValue().get(key);
+    } else {
+      return (List<T>) JSONObject.parseArray((String) redisTemplate.opsForValue().get(key), cls);
+    }
   }
 
   @Override
