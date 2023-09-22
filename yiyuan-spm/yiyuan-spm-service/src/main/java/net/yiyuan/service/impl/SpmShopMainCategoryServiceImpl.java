@@ -1,7 +1,5 @@
 package net.yiyuan.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import icu.mhb.mybatisplus.plugln.base.service.impl.JoinServiceImpl;
 import icu.mhb.mybatisplus.plugln.core.JoinLambdaWrapper;
@@ -15,7 +13,6 @@ import net.yiyuan.dto.SpmShopMainCategoryPageDTO;
 import net.yiyuan.enums.SpmShopMainCategoryIsDelEnum;
 import net.yiyuan.mapper.SpmShopMainCategoryMapper;
 import net.yiyuan.model.SpmShopMainCategory;
-import net.yiyuan.plugins.mp.utils.LambdaFunUtils;
 import net.yiyuan.service.SpmShopMainCategoryService;
 import net.yiyuan.vo.SpmShopMainCategoryQueryVO;
 import org.springframework.stereotype.Service;
@@ -52,10 +49,8 @@ public class SpmShopMainCategoryServiceImpl
     BeanUtilsPlus.copy(request, po);
     JoinLambdaWrapper<SpmShopMainCategory> wrapper = new JoinLambdaWrapper<>(po);
     wrapper.eq(SpmShopMainCategory::getIsDel, SpmShopMainCategoryIsDelEnum.NOT_DELETED);
-
     wrapper.orderByDesc(SpmShopMainCategory::getSort);
     wrapper.orderByDesc(SpmShopMainCategory::getCreateTime);
-
     List<SpmShopMainCategoryQueryVO> voList =
         spmShopMainCategoryMapper.joinSelectList(wrapper, SpmShopMainCategoryQueryVO.class);
 
@@ -76,9 +71,7 @@ public class SpmShopMainCategoryServiceImpl
     SpmShopMainCategory po = new SpmShopMainCategory();
     BeanUtilsPlus.copy(request, po);
     JoinLambdaWrapper<SpmShopMainCategory> wrapper = new JoinLambdaWrapper<>(po);
-
     wrapper.eq(SpmShopMainCategory::getIsDel, SpmShopMainCategoryIsDelEnum.NOT_DELETED);
-
     wrapper.orderByDesc(SpmShopMainCategory::getSort);
     wrapper.orderByDesc(SpmShopMainCategory::getCreateTime);
     Page<SpmShopMainCategoryQueryVO> voPage =
@@ -103,7 +96,6 @@ public class SpmShopMainCategoryServiceImpl
     po.setId(id);
     JoinLambdaWrapper<SpmShopMainCategory> wrapper = new JoinLambdaWrapper<>(po);
     wrapper.eq(SpmShopMainCategory::getIsDel, SpmShopMainCategoryIsDelEnum.NOT_DELETED);
-
     SpmShopMainCategoryQueryVO voBean =
         spmShopMainCategoryMapper.joinSelectOne(wrapper, SpmShopMainCategoryQueryVO.class);
     return voBean;
@@ -137,11 +129,7 @@ public class SpmShopMainCategoryServiceImpl
   @Override
   public boolean delete(String ids) throws Exception {
     List<String> idList = Arrays.asList(ids.split(","));
-    UpdateWrapper<SpmShopMainCategory> updateWrapper = new UpdateWrapper();
-    updateWrapper.in(LambdaFunUtils.getFieldName(SpmShopMainCategory::getId), idList);
-    LambdaUpdateWrapper<SpmShopMainCategory> lambdaWrapper = updateWrapper.lambda();
-    lambdaWrapper.set(SpmShopMainCategory::getIsDel, SpmShopMainCategoryIsDelEnum.DELETED);
-    int i = spmShopMainCategoryMapper.update(null, updateWrapper);
+    int i = spmShopMainCategoryMapper.deleteBatchIds(idList);
     if (i == idList.size()) {
       return true;
     } else {

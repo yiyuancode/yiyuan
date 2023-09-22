@@ -63,14 +63,12 @@ public class ${className}ServiceImpl extends JoinServiceImpl
         ##        #if(${hasIsShow.equals("true")})
         ##            wrapper.eq(${className}::getIsDel, ${className}IsDelEnum.NOT_DELETED);
         ##        #end
-
         #if(${hasSort.equals("true")})
             wrapper.orderByDesc(${className}::getSort);
         #end
         #if(${hasCreateTime.equals("true")})
             wrapper.orderByDesc(${className}::getCreateTime);
         #end
-
         List
                 <${className}QueryVO> voList = ${firstName}Mapper.joinSelectList(wrapper, ${className}QueryVO.class);
 
@@ -92,14 +90,12 @@ public class ${className}ServiceImpl extends JoinServiceImpl
         BeanUtilsPlus.copy(request, po);
         JoinLambdaWrapper
                 <${className}> wrapper = new JoinLambdaWrapper<>(po);
-
         #if(${hasIsDel.equals("true")})
             wrapper.eq(${className}::getIsDel, ${className}IsDelEnum.NOT_DELETED);
         #end
         ##        #if(${hasIsShow.equals("true")})
         ##            wrapper.eq(${className}::getIsDel, ${className}IsDelEnum.NOT_DELETED);
         ##        #end
-
         #if(${hasSort.equals("true")})
             wrapper.orderByDesc(${className}::getSort);
         #end
@@ -130,7 +126,6 @@ public class ${className}ServiceImpl extends JoinServiceImpl
         #if(${hasIsDel.equals("true")})
             wrapper.eq(${className}::getIsDel, ${className}IsDelEnum.NOT_DELETED);
         #end
-
             ${className}QueryVO voBean = ${firstName}Mapper.joinSelectOne(wrapper, ${className}QueryVO.class);
         return voBean;
     }
@@ -164,12 +159,14 @@ public class ${className}ServiceImpl extends JoinServiceImpl
      */
     @Override
     public boolean delete(String ids) throws Exception {
+        ##        List<String> idList = Arrays.asList(ids.split(","));
+        ##        UpdateWrapper<${className}> updateWrapper = new UpdateWrapper();
+        ##        updateWrapper.in(LambdaFunUtils.getFieldName(${className}::getId), idList);
+        ##        LambdaUpdateWrapper<${className}> lambdaWrapper = updateWrapper.lambda();
+        ##        lambdaWrapper.set(${className}::getIsDel, ${className}IsDelEnum.DELETED);
+        ##        int i = ${firstName}Mapper.update(null, updateWrapper);
         List<String> idList = Arrays.asList(ids.split(","));
-        UpdateWrapper<${className}> updateWrapper = new UpdateWrapper();
-        updateWrapper.in(LambdaFunUtils.getFieldName(${className}::getId), idList);
-        LambdaUpdateWrapper<${className}> lambdaWrapper = updateWrapper.lambda();
-        lambdaWrapper.set(${className}::getIsDel, ${className}IsDelEnum.DELETED);
-        int i = ${firstName}Mapper.update(null, updateWrapper);
+        int i = ${firstName}Mapper.deleteBatchIds(idList);
         if (i == idList.size()) {
             return true;
         } else {

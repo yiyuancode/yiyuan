@@ -1,7 +1,5 @@
 package net.yiyuan.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import icu.mhb.mybatisplus.plugln.base.service.impl.JoinServiceImpl;
 import icu.mhb.mybatisplus.plugln.core.JoinLambdaWrapper;
@@ -15,7 +13,6 @@ import net.yiyuan.dto.SpmShopTypePageDTO;
 import net.yiyuan.enums.SpmShopTypeIsDelEnum;
 import net.yiyuan.mapper.SpmShopTypeMapper;
 import net.yiyuan.model.SpmShopType;
-import net.yiyuan.plugins.mp.utils.LambdaFunUtils;
 import net.yiyuan.service.SpmShopTypeService;
 import net.yiyuan.vo.SpmShopTypeQueryVO;
 import org.springframework.stereotype.Service;
@@ -50,10 +47,8 @@ public class SpmShopTypeServiceImpl extends JoinServiceImpl<SpmShopTypeMapper, S
     BeanUtilsPlus.copy(request, po);
     JoinLambdaWrapper<SpmShopType> wrapper = new JoinLambdaWrapper<>(po);
     wrapper.eq(SpmShopType::getIsDel, SpmShopTypeIsDelEnum.NOT_DELETED);
-
     wrapper.orderByDesc(SpmShopType::getSort);
     wrapper.orderByDesc(SpmShopType::getCreateTime);
-
     List<SpmShopTypeQueryVO> voList =
         spmShopTypeMapper.joinSelectList(wrapper, SpmShopTypeQueryVO.class);
 
@@ -73,9 +68,7 @@ public class SpmShopTypeServiceImpl extends JoinServiceImpl<SpmShopTypeMapper, S
     SpmShopType po = new SpmShopType();
     BeanUtilsPlus.copy(request, po);
     JoinLambdaWrapper<SpmShopType> wrapper = new JoinLambdaWrapper<>(po);
-
     wrapper.eq(SpmShopType::getIsDel, SpmShopTypeIsDelEnum.NOT_DELETED);
-
     wrapper.orderByDesc(SpmShopType::getSort);
     wrapper.orderByDesc(SpmShopType::getCreateTime);
     Page<SpmShopTypeQueryVO> voPage =
@@ -100,7 +93,6 @@ public class SpmShopTypeServiceImpl extends JoinServiceImpl<SpmShopTypeMapper, S
     po.setId(id);
     JoinLambdaWrapper<SpmShopType> wrapper = new JoinLambdaWrapper<>(po);
     wrapper.eq(SpmShopType::getIsDel, SpmShopTypeIsDelEnum.NOT_DELETED);
-
     SpmShopTypeQueryVO voBean = spmShopTypeMapper.joinSelectOne(wrapper, SpmShopTypeQueryVO.class);
     return voBean;
   }
@@ -132,11 +124,7 @@ public class SpmShopTypeServiceImpl extends JoinServiceImpl<SpmShopTypeMapper, S
   @Override
   public boolean delete(String ids) throws Exception {
     List<String> idList = Arrays.asList(ids.split(","));
-    UpdateWrapper<SpmShopType> updateWrapper = new UpdateWrapper();
-    updateWrapper.in(LambdaFunUtils.getFieldName(SpmShopType::getId), idList);
-    LambdaUpdateWrapper<SpmShopType> lambdaWrapper = updateWrapper.lambda();
-    lambdaWrapper.set(SpmShopType::getIsDel, SpmShopTypeIsDelEnum.DELETED);
-    int i = spmShopTypeMapper.update(null, updateWrapper);
+    int i = spmShopTypeMapper.deleteBatchIds(idList);
     if (i == idList.size()) {
       return true;
     } else {
