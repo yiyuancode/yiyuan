@@ -295,12 +295,10 @@ public class SysUserServiceImpl extends JoinServiceImpl<SysUserMapper, SysUser>
    * @date 2023-09-18
    */
   public List<Map<String, Object>> convertPermissionList(List<String> permissions) {
-    log.info("permissionList源数据:{}", permissions);
     // 将权限数据转换成菜单项列表
     List<Map<String, Object>> result = new ArrayList<>();
     Map<String, Map<String, Object>> secendMap = new HashMap<>();
     for (String permission : permissions) {
-      log.info("permission.lastIndexOf{},{}", permission, permission.lastIndexOf(":"));
       if (permission.lastIndexOf(":") == -1) {
         Map<String, Object> item = new HashMap<>();
         item.put("id", permission);
@@ -308,8 +306,6 @@ public class SysUserServiceImpl extends JoinServiceImpl<SysUserMapper, SysUser>
       }
       if (permission.lastIndexOf(":") != permission.indexOf(":") && permission.indexOf(":") != -1) {
         String secendPermission = permission.substring(0, permission.lastIndexOf(":"));
-        log.info("permission.secendPermission{},{}", secendPermission);
-
         Map<String, Object> permissionCur = secendMap.get(secendPermission);
         if (StringUtilsPlus.isEmpty(permissionCur)) {
           Map<String, Object> item = new HashMap<>();
@@ -331,10 +327,6 @@ public class SysUserServiceImpl extends JoinServiceImpl<SysUserMapper, SysUser>
             (item) -> {
               result.add(item);
             });
-
-    // 打印菜单的层级结构
-    log.info("printMenu{}", result);
-    // 打印菜单的层级结构
     return result;
   }
 }

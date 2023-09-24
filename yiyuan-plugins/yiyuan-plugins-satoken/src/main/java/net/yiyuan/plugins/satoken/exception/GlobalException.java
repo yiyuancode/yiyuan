@@ -4,6 +4,7 @@ import cn.dev33.satoken.exception.*;
 import lombok.extern.slf4j.Slf4j;
 import net.yiyuan.common.exception.BusinessException;
 import net.yiyuan.common.model.vo.CommonResult;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 /**
@@ -211,6 +214,46 @@ public class GlobalException {
     return CommonResult.failed(errorMessage.toString());
   }
 
+  /**
+   * 拦截：数据库相关得异常,例如值重复了等
+   *
+   * @param e e
+   * @return {@link CommonResult }
+   * @author 一源团队-花和尚
+   * @date 2023/06/23
+   */
+  @ExceptionHandler(DataIntegrityViolationException.class)
+  public CommonResult handleDataIntegrityViolationException(DataIntegrityViolationException e) {
+    e.printStackTrace();
+    String errorMessage = e.getMessage();
+    String fieldName = extractFieldNameFromErrorMessage(errorMessage);
+    // 可以在此处添加自定义的处理逻辑，如记录日志、返回自定义的错误信息等
+    return CommonResult.failed(
+        extractFieldNameFromErrorMessage(errorMessage)
+            + "字段值["
+            + extractDuplicateValueFromErrorMessage(errorMessage)
+            + "]重复");
+  }
+
+  private static String extractDuplicateValueFromErrorMessage(String errorMessage) {
+    String regex = "Duplicate entry '(.+)' for key";
+    Pattern pattern = Pattern.compile(regex);
+    Matcher matcher = pattern.matcher(errorMessage);
+    if (matcher.find()) {
+      return matcher.group(1);
+    }
+    return null;
+  }
+
+  private static String extractFieldNameFromErrorMessage(String errorMessage) {
+    String regex = "for key '(.+)'";
+    Pattern pattern = Pattern.compile(regex);
+    Matcher matcher = pattern.matcher(errorMessage);
+    if (matcher.find()) {
+      return matcher.group(1);
+    }
+    return null;
+  }
   /**
    * 拦截：其它所有异常
    *

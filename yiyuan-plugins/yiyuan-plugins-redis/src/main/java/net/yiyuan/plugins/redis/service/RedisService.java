@@ -6,6 +6,35 @@ import java.util.Set;
 
 /** redis操作Service Created by macro on 2020/3/3. */
 public interface RedisService {
+  /**
+   * 存基本类型，string，string集合或者数组
+   *
+   * @return {@link boolean}
+   * @author 一源-花和尚
+   * @date 2023-09-18
+   */
+  public void set(String key, String keyId, Object data, Long ttl);
+
+  /**
+   * 获取复杂类型，对象，可能会包含枚举值得一类，reids无法自动序列化得问题解决
+   *
+   * @return {@link boolean}
+   * @author 一源-花和尚
+   * @date 2023-09-18
+   */
+  public <T> T get(String key, String keyId, Class<T> cls);
+
+  /**
+   * 获取复杂类型，对象，可能会包含枚举值得一类，reids无法自动序列化得问题解决
+   *
+   * @return {@link boolean}
+   * @author 一源-花和尚
+   * @date 2023-09-18
+   */
+  public <T> List<T> getList(String key, String keyId, Class<T> cls);
+
+  public void del(String key, String keyId);
+
   /** 保存属性 */
   void set(String key, Object value, long time);
 

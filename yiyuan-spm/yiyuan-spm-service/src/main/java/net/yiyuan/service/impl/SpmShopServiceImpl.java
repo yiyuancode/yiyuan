@@ -1,5 +1,6 @@
 package net.yiyuan.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import icu.mhb.mybatisplus.plugln.base.service.impl.JoinServiceImpl;
 import icu.mhb.mybatisplus.plugln.core.JoinLambdaWrapper;
@@ -167,5 +168,25 @@ public class SpmShopServiceImpl extends JoinServiceImpl<SpmShopMapper, SpmShop>
     } else {
       throw new BusinessException("新增异常");
     }
+  }
+
+  @Override
+  public boolean apply(SpmShopAddDTO request) throws Exception {
+    SpmShop po = new SpmShop();
+    BeanUtilsPlus.copy(request, po);
+    LambdaQueryWrapper queryWrapper = new LambdaQueryWrapper();
+
+    //    JoinLambdaWrapper<SpmShop> wrapper = Joins.of(SpmShop.class);
+    //    wrapper.se();
+    //    wrapper
+    //        .eq(SpmShop::getMerchantEmail, request.getMerchantEmail())
+    //        .or()
+    //        .eq(SpmShop::getMerchantPhone, request.getMerchantPhone())
+    //        .or()
+    //        .eq(SpmShop::getShopName, request.getShopName())
+    //        .or()
+    //        .eq(SpmShop::getMerchantName, request.getMerchantName());
+
+    return false;
   }
 }

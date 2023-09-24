@@ -13,6 +13,58 @@ import java.util.concurrent.TimeUnit;
 public class RedisServiceImpl implements RedisService {
   @Autowired private RedisTemplate<String, Object> redisTemplate;
 
+  /**
+   * 存基本类型，string，string集合或者数组
+   *
+   * @return {@link boolean}
+   * @author 一源-花和尚
+   * @date 2023-09-18
+   */
+  @Override
+  public void set(String key, String keyId, Object data, Long ttl) {
+    if (ttl == null) {
+      this.set(key + keyId, data);
+    } else {
+      this.set(key + keyId, data, ttl);
+    }
+  }
+
+  /**
+   * 获取复杂类型，对象，可能会包含枚举值得一类，reids无法自动序列化得问题解决
+   *
+   * @return {@link boolean}
+   * @author 一源-花和尚
+   * @date 2023-09-18
+   */
+  @Override
+  public <T> T get(String key, String keyId, Class<T> cls) {
+    return (T) this.get(key + keyId, cls);
+  }
+
+  /**
+   * 获取复杂类型，对象，可能会包含枚举值得一类，reids无法自动序列化得问题解决
+   *
+   * @return {@link boolean}
+   * @author 一源-花和尚
+   * @date 2023-09-18
+   */
+  @Override
+  public <T> List<T> getList(String key, String keyId, Class<T> cls) {
+    return (List<T>) this.getList(key + keyId, cls);
+  }
+
+  /**
+   * 删除指定key数据
+   *
+   * @return {@link boolean}
+   * @author 一源-花和尚
+   * @date 2023-09-18
+   */
+  @Override
+  public void del(String key, String keyId) {
+    this.del(key + keyId);
+  }
+
   @Override
   public void set(String key, Object value, long time) {
     // 非基本类型或者非基本类型得集合

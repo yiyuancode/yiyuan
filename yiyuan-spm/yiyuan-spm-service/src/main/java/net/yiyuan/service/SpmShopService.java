@@ -88,4 +88,14 @@ public interface SpmShopService extends JoinIService<SpmShop> {
    * @date 2023-09-22
    */
   boolean add(SpmShopAddDTO request) throws Exception;
+
+  /**
+   * 申请店铺
+   *
+   * @param request 店铺实体
+   * @return {@link boolean}
+   * @author 一源-花和尚
+   * @date 2023-09-22
+   */
+  boolean apply(SpmShopAddDTO request) throws Exception;
 }
