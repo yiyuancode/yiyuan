@@ -8,6 +8,7 @@ import net.yiyuan.vo.SysUserGetUserInfoVO;
 import net.yiyuan.vo.SysUserLoginVO;
 import net.yiyuan.vo.SysUserQueryVO;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -106,4 +107,12 @@ public interface SysUserService extends JoinIService<SysUser> {
    * @date 2023-09-18
    */
   SysUserGetUserInfoVO getUserInfo() throws Exception;
+  /**
+   * 导出
+   *
+   * @return {@link boolean}
+   * @author 一源-花和尚
+   * @date 2023-09-18
+   */
+  void excel(HttpServletResponse response) throws Exception;
 }
