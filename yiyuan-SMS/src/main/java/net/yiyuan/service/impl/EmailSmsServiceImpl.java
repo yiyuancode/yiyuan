@@ -52,7 +52,7 @@ public class EmailSmsServiceImpl implements SmsAndEmailService {
         if (StringUtils.isBlank(phoneOrEmail) || StringUtils.isBlank(code)) {
             return false;
         }
-        String scode = smsRedisService.GET_EMAIL_PERMISSION(phoneOrEmail);
+        String scode = smsRedisService.get(SmsRedisService.REDIS_KEY_EMAIL_PERMISSION,phoneOrEmail,String.class);
 
         return code.equals(scode);
     }
@@ -125,8 +125,9 @@ public class EmailSmsServiceImpl implements SmsAndEmailService {
         String mailId = UUID.randomUUID().toString();
         //验证码存入缓存
         //用redis处理缓存
-        smsRedisService.DEL_EMAIL_PERMISSION(info.getEmail());
-        smsRedisService.SET_EMAIL_PERMISSION(info.getEmail(),code);
+        // 生成一个随机数。
+        smsRedisService.del(info.getEmail());
+        smsRedisService.set(SmsRedisService.REDIS_KEY_EMAIL_PERMISSION,info.getEmail(),code,SmsRedisService.REDIS_EXPIRE_ADMIN_USER_PERMISSION);
         return code;
     }
 

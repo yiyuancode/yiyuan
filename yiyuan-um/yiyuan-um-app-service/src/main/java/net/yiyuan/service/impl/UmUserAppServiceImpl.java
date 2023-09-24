@@ -10,16 +10,15 @@ import net.yiyuan.common.utils.StringUtilsPlus;
 import net.yiyuan.dto.UmUserTokenDTO;
 import net.yiyuan.enums.UmUserSexEnum;
 import net.yiyuan.enums.UmUserStatusEnum;
+import net.yiyuan.mapper.PtmProductMapper;
 import net.yiyuan.mapper.UmBrowseRecordMapper;
 import net.yiyuan.mapper.UmUserMapper;
 import net.yiyuan.mapper.UmUserMerchantCollectMapper;
-import net.yiyuan.model.UmBrowseRecord;
-import net.yiyuan.model.UmUser;
-import net.yiyuan.model.UmUserAddress;
-import net.yiyuan.model.UmUserMerchantCollect;
+import net.yiyuan.model.*;
 import net.yiyuan.redis.SmsRedisService;
 import net.yiyuan.service.UmUserAppService;
 import net.yiyuan.vo.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -44,6 +43,7 @@ public class UmUserAppServiceImpl extends JoinServiceImpl<UmUserMapper, UmUser>
     @Resource
     private UmUserMerchantCollectMapper umUserMerchantCollectMapper;
 
+    @Resource private PtmProductMapper ptmProductMapper;
     /**
      * 用户登录
      *
@@ -64,7 +64,7 @@ public class UmUserAppServiceImpl extends JoinServiceImpl<UmUserMapper, UmUser>
         //验证类型
         if ("0".equals(umUserTokenDto.getType())) {
             if (StringUtilsPlus.isNull(umUserQueryVO)) {
-                String phoneCode = smsRedisService.GET_SMS_PERMISSION(umUserTokenDto.getPhoneOrEmail());
+                String phoneCode = smsRedisService.get(SmsRedisService.REDIS_KEY_SMS_PERMISSION,umUserTokenDto.getPhoneOrEmail(),String.class);
                 if (umUserTokenDto.getCode().equals(phoneCode)) {
                     //获取token
                     String tokenValue = insertUmUser(umUser, umUserTokenDto);
@@ -75,7 +75,7 @@ public class UmUserAppServiceImpl extends JoinServiceImpl<UmUserMapper, UmUser>
                 }
             } else {
                 //如果用户已经完成注册。用户不为空
-                String phoneCode = smsRedisService.GET_SMS_PERMISSION(umUserTokenDto.getPhoneOrEmail());
+                String phoneCode =smsRedisService.get(SmsRedisService.REDIS_KEY_SMS_PERMISSION,umUserTokenDto.getPhoneOrEmail(),String.class);
                 if (umUserTokenDto.getCode().equals(phoneCode)) {
                     StpUtil.login(umUserQueryVO.getId());
                     String tokenValue = StpUtil.getTokenValue();
@@ -87,7 +87,7 @@ public class UmUserAppServiceImpl extends JoinServiceImpl<UmUserMapper, UmUser>
             }
         } else if ("1".equals(umUserTokenDto.getType())) {
             if (StringUtilsPlus.isNull(umUserQueryVO)) {
-                String emailCode = smsRedisService.GET_EMAIL_PERMISSION(umUserTokenDto.getPhoneOrEmail());
+                String emailCode = smsRedisService.get(SmsRedisService.REDIS_KEY_EMAIL_PERMISSION,umUserTokenDto.getPhoneOrEmail(),String.class);
                 if (umUserTokenDto.getCode().equals(emailCode)) {
                     //获取token
                     String tokenValue = insertUmUser(umUser, umUserTokenDto);
@@ -98,7 +98,7 @@ public class UmUserAppServiceImpl extends JoinServiceImpl<UmUserMapper, UmUser>
                 }
             } else {
                 //如果用户已经完成注册。用户不为空
-                String emailCode = smsRedisService.GET_EMAIL_PERMISSION(umUserTokenDto.getPhoneOrEmail());
+                String emailCode = smsRedisService.get(SmsRedisService.REDIS_KEY_EMAIL_PERMISSION,umUserTokenDto.getPhoneOrEmail(),String.class);
                 if (umUserTokenDto.getCode().equals(emailCode)) {
                     StpUtil.login(umUserQueryVO.getId());
                     String tokenValue = StpUtil.getTokenValue();
@@ -157,6 +157,31 @@ public class UmUserAppServiceImpl extends JoinServiceImpl<UmUserMapper, UmUser>
         myselfIndexVO.setMyCars("0");
 
         return myselfIndexVO;
+    }
+
+    /**
+     * 用户商品收藏
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public ProjectCollectVO finProjectCollectListVO() throws Exception {
+
+        String loginId = (String) StpUtil.getLoginId();
+        JoinLambdaWrapper<UmProjectCollect> umWrapper = new JoinLambdaWrapper<>(UmProjectCollect.class);
+        umWrapper.eq(UmProjectCollect::getUid, loginId);
+        // TODO  关联商品表
+//        umWrapper.leftJoin(PtmProduct.class,PtmProduct::getId,UmProjectCollect::getProductId);
+//        umWrapper.selectAs(PtmProduct::getTenantId,ProjectCollectVO::getShopId);
+//        umWrapper.eq();
+        umWrapper.leftJoin(PtmProduct.class,PtmProduct::getId,UmProjectCollect::getProductId)
+                        .selectAs(PtmProduct::getTenantId,ProjectCollectVO::getShopId);
+
+
+//        ptmProductMapper.joinSelectList(umWrapper,)
+
+
+        return null;
     }
 
 

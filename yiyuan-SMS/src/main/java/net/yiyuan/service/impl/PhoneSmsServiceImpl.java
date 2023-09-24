@@ -8,6 +8,7 @@ import com.aliyuncs.IAcsClient;
 import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.http.MethodType;
 import com.aliyuncs.profile.DefaultProfile;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import net.yiyuan.common.exception.BusinessException;
 import net.yiyuan.common.model.vo.CommonResult;
@@ -64,7 +65,7 @@ public class PhoneSmsServiceImpl implements SmsAndEmailService {
         if (StringUtils.isBlank(phoneOrEmail) || StringUtils.isBlank(code)) {
             return false;
         }
-        String scode = smsRedisService.GET_SMS_PERMISSION(phoneOrEmail);
+        String scode = smsRedisService.get(SmsRedisService.REDIS_KEY_SMS_PERMISSION,phoneOrEmail,String.class);
 
         return code.equals(scode);
     }
@@ -92,7 +93,8 @@ public class PhoneSmsServiceImpl implements SmsAndEmailService {
 
         if ("OK".equalsIgnoreCase((String) map.get("Code"))) {
 
-            smsRedisService.SET_SMS_PERMISSION(smsCode.getPhone(),smsCode.getCode());
+            smsRedisService.set(SmsRedisService.REDIS_KEY_SMS_PERMISSION,smsCode.getPhone(),smsCode.getCode(),SmsRedisService.REDIS_EXPIRE_ADMIN_USER_PERMISSION);
+
             return CommonResult.success(smsCode.getPhone(), "短信发送成功");
         }
         System.out.println(response.getData());
@@ -110,7 +112,7 @@ public class PhoneSmsServiceImpl implements SmsAndEmailService {
      */
     public SmsCode buildSmsCode(String phone) {
 
-        if (smsRedisService.GET_SMS_PERMISSION(phone) != null) {
+        if (smsRedisService.get(SmsRedisService.REDIS_KEY_SMS_PERMISSION,phone,String.class) != null) {
             throw new BusinessException("请勿重复发送短信");
         }
         return new SmsCode(phone, fix);

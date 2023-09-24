@@ -5,6 +5,7 @@ import net.yiyuan.dto.UmUserTokenDTO;
 import net.yiyuan.model.UmUser;
 import net.yiyuan.vo.GetUmUserInfoVO;
 import net.yiyuan.vo.MyselfIndexVO;
+import net.yiyuan.vo.ProjectCollectVO;
 import net.yiyuan.vo.UmUserTokenVO;
 
 /**
@@ -20,4 +21,7 @@ public interface UmUserAppService extends JoinIService<UmUser> {
     GetUmUserInfoVO getUmUserInfo() throws Exception;
 
     MyselfIndexVO findMySelfIndexVO() throws Exception;
+
+    ProjectCollectVO finProjectCollectListVO() throws Exception;
+
 }

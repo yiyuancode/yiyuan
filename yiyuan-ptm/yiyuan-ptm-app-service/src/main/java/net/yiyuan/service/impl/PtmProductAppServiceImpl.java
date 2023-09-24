@@ -8,6 +8,7 @@ import net.yiyuan.service.PtmProductAppService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+
 /**
  * 商品移动端Service层接口实现
  *
@@ -17,6 +18,7 @@ import javax.annotation.Resource;
 @Slf4j
 @Service
 public class PtmProductAppServiceImpl extends JoinServiceImpl<PtmProductMapper, PtmProduct>
-    implements PtmProductAppService {
-  @Resource private PtmProductMapper ptmProductMapper;
+        implements PtmProductAppService {
+    @Resource
+    private PtmProductMapper ptmProductMapper;
 }
