@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * 浏览记录Service层接口
  *
- * @author  小林同学
+ * @author 小林同学
  * @date 2023-09-21
  */
 public interface UmProjectCollectService extends JoinIService
@@ -25,7 +25,7 @@ public interface UmProjectCollectService extends JoinIService
      *
      * @param request 浏览记录实体
      * @return {@link List< UmProjectCollectQueryVO >}
-     * @author  小林同学
+     * @author 小林同学
      * @date 2023-09-21
      */
     List
@@ -36,7 +36,7 @@ public interface UmProjectCollectService extends JoinIService
      *
      * @param request 浏览记录实体
      * @return {@link Page< UmProjectCollectQueryVO >}
-     * @author  小林同学
+     * @author 小林同学
      * @date 2023-09-21
      */
     Page
@@ -47,27 +47,27 @@ public interface UmProjectCollectService extends JoinIService
      *
      * @param id 浏览记录id
      * @return {@link UmProjectCollectQueryVO}
-     * @author  小林同学
+     * @author 小林同学
      * @date 2023-09-21
      */
-        UmProjectCollectQueryVO details(String id) throws Exception;
+    UmProjectCollectQueryVO details(String id) throws Exception;
 
     /**
      * 浏览记录详情
      *
      * @param request 浏览记录实体
      * @return {@link UmProjectCollect}
-     * @author  小林同学
+     * @author 小林同学
      * @date 2023-09-21
      */
-        UmProjectCollectQueryVO details(UmProjectCollect request) throws Exception;
+    UmProjectCollectQueryVO details(UmProjectCollect request) throws Exception;
 
     /**
      * 删除浏览记录(支持批量)
      *
      * @param ids 浏览记录id(多个逗号分割)
      * @return {@link boolean}
-     * @author  小林同学
+     * @author 小林同学
      * @date 2023-09-21
      */
     boolean delete(String ids) throws Exception;
@@ -78,7 +78,7 @@ public interface UmProjectCollectService extends JoinIService
      *
      * @param request 浏览记录实体
      * @return {@link boolean}
-     * @author  小林同学
+     * @author 小林同学
      * @date 2023-09-21
      */
     boolean edit(UmProjectCollectEditDTO request) throws Exception;
@@ -88,7 +88,7 @@ public interface UmProjectCollectService extends JoinIService
      *
      * @param request 浏览记录实体
      * @return {@link boolean}
-     * @author  小林同学
+     * @author 小林同学
      * @date 2023-09-21
      */
     boolean add(UmProjectCollectAddDTO request) throws Exception;

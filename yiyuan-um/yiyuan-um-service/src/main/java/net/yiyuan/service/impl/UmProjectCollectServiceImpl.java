@@ -4,26 +4,26 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import icu.mhb.mybatisplus.plugln.base.service.impl.JoinServiceImpl;
 import icu.mhb.mybatisplus.plugln.core.JoinLambdaWrapper;
 import lombok.extern.slf4j.Slf4j;
-import net.yiyuan.common.exception.*;
+import net.yiyuan.common.exception.BusinessException;
 import net.yiyuan.common.utils.BeanUtilsPlus;
 import net.yiyuan.dto.UmProjectCollectAddDTO;
 import net.yiyuan.dto.UmProjectCollectEditDTO;
 import net.yiyuan.dto.UmProjectCollectListDTO;
 import net.yiyuan.dto.UmProjectCollectPageDTO;
-import net.yiyuan.model.UmProjectCollect;
-import net.yiyuan.vo.UmProjectCollectQueryVO;
 import net.yiyuan.mapper.UmProjectCollectMapper;
-
-import  net.yiyuan.service.UmProjectCollectService;
+import net.yiyuan.model.UmProjectCollect;
+import net.yiyuan.service.UmProjectCollectService;
+import net.yiyuan.vo.UmProjectCollectQueryVO;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.Arrays;
 import java.util.List;
+
 /**
  * 浏览记录Service层接口实现
  *
- * @author  小林同学
+ * @author 小林同学
  * @date 2023-09-21
  */
 @Slf4j
@@ -40,7 +40,7 @@ public class UmProjectCollectServiceImpl extends JoinServiceImpl
      *
      * @param request 浏览记录实体
      * @return {@link List< UmProjectCollectQueryVO >}
-     * @author  小林同学
+     * @author 小林同学
      * @date 2023-09-21
      */
     @Override
@@ -62,7 +62,7 @@ public class UmProjectCollectServiceImpl extends JoinServiceImpl
      *
      * @param request 浏览记录实体
      * @return {@link Page< UmProjectCollectQueryVO >}
-     * @author  小林同学
+     * @author 小林同学
      * @date 2023-09-21
      */
     @Override
@@ -74,8 +74,8 @@ public class UmProjectCollectServiceImpl extends JoinServiceImpl
                 <UmProjectCollect> wrapper = new JoinLambdaWrapper<>(po);
         Page
                 <UmProjectCollectQueryVO> voPage =
-                    umProjectCollectMapper.joinSelectPage(
-                new Page<>(request.getPageNum(), request.getPageSize()), wrapper, UmProjectCollectQueryVO.class);
+                umProjectCollectMapper.joinSelectPage(
+                        new Page<>(request.getPageNum(), request.getPageSize()), wrapper, UmProjectCollectQueryVO.class);
         return voPage;
     }
 
@@ -84,7 +84,7 @@ public class UmProjectCollectServiceImpl extends JoinServiceImpl
      *
      * @param id 浏览记录id
      * @return {@link UmProjectCollectQueryVO}
-     * @author  小林同学
+     * @author 小林同学
      * @date 2023-09-21
      */
     @Override
@@ -93,7 +93,7 @@ public class UmProjectCollectServiceImpl extends JoinServiceImpl
         po.setId(id);
         JoinLambdaWrapper
                 <UmProjectCollect> wrapper = new JoinLambdaWrapper<>(po);
-            UmProjectCollectQueryVO voBean = umProjectCollectMapper.joinSelectOne(wrapper, UmProjectCollectQueryVO.class);
+        UmProjectCollectQueryVO voBean = umProjectCollectMapper.joinSelectOne(wrapper, UmProjectCollectQueryVO.class);
         return voBean;
     }
 
@@ -102,14 +102,14 @@ public class UmProjectCollectServiceImpl extends JoinServiceImpl
      *
      * @param request 浏览记录实体
      * @return {@link UmProjectCollect}
-     * @author  小林同学
+     * @author 小林同学
      * @date 2023-09-21
      */
     @Override
     public UmProjectCollectQueryVO details(UmProjectCollect request) throws Exception {
         JoinLambdaWrapper
                 <UmProjectCollect> wrapper = new JoinLambdaWrapper<>(request);
-            UmProjectCollectQueryVO voBean = umProjectCollectMapper.joinSelectOne(wrapper, UmProjectCollectQueryVO.class);
+        UmProjectCollectQueryVO voBean = umProjectCollectMapper.joinSelectOne(wrapper, UmProjectCollectQueryVO.class);
         return voBean;
     }
 
@@ -118,17 +118,17 @@ public class UmProjectCollectServiceImpl extends JoinServiceImpl
      *
      * @param ids 浏览记录id(多个逗号分割)
      * @return {@link boolean}
-     * @author  小林同学
+     * @author 小林同学
      * @date 2023-09-21
      */
     @Override
     public boolean delete(String ids) throws Exception {
-        List<String> idList = Arrays.asList(ids.split("," ));
+        List<String> idList = Arrays.asList(ids.split(","));
         int i = umProjectCollectMapper.deleteBatchIds(idList);
         if (i == idList.size()) {
             return true;
         } else {
-            throw new BusinessException("批量删除异常" );
+            throw new BusinessException("批量删除异常");
         }
 
     }
@@ -139,7 +139,7 @@ public class UmProjectCollectServiceImpl extends JoinServiceImpl
      *
      * @param request 浏览记录实体
      * @return {@link boolean}
-     * @author  小林同学
+     * @author 小林同学
      * @date 2023-09-21
      */
     @Override
@@ -150,7 +150,7 @@ public class UmProjectCollectServiceImpl extends JoinServiceImpl
         if (i != 0) {
             return true;
         } else {
-            throw new BusinessException("修改异常" );
+            throw new BusinessException("修改异常");
         }
     }
 
@@ -159,7 +159,7 @@ public class UmProjectCollectServiceImpl extends JoinServiceImpl
      *
      * @param request 浏览记录实体
      * @return {@link boolean}
-     * @author  小林同学
+     * @author 小林同学
      * @date 2023-09-21
      */
     @Override
@@ -170,7 +170,7 @@ public class UmProjectCollectServiceImpl extends JoinServiceImpl
         if (i != 0) {
             return true;
         } else {
-            throw new BusinessException("新增异常" );
+            throw new BusinessException("新增异常");
         }
     }
 }

@@ -9,10 +9,8 @@ import net.yiyuan.dto.UmProjectCollectAddDTO;
 import net.yiyuan.dto.UmProjectCollectEditDTO;
 import net.yiyuan.dto.UmProjectCollectListDTO;
 import net.yiyuan.dto.UmProjectCollectPageDTO;
-import net.yiyuan.model.UmProjectCollect;
-import net.yiyuan.vo.UmProjectCollectQueryVO;
-
 import net.yiyuan.service.UmProjectCollectService;
+import net.yiyuan.vo.UmProjectCollectQueryVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Description;
 import org.springframework.validation.annotation.Validated;
@@ -25,7 +23,7 @@ import java.util.List;
 /**
  * 浏览记录管理
  *
- * @author  小林同学
+ * @author 小林同学
  * @date 2023-09-21
  * @folder 用户管理/浏览记录管理
  */
@@ -34,19 +32,19 @@ import java.util.List;
 @RestController
 public class UmProjectCollectController {
     @Autowired
-    private UmProjectCollectService  umProjectCollectService;
+    private UmProjectCollectService umProjectCollectService;
 
     /**
      * 浏览记录列表(全部)
      *
      * @param request 浏览记录实体
      * @return {@link CommonResult<List<UmProjectCollectQueryVO>>}
-     * @author  小林同学
+     * @author 小林同学
      * @date 2023-09-21
      */
     @Description("用户管理/浏览记录管理/查询浏览记录")
     @SaCheckPermission(
-            value = {"um:projectCollect:query" },
+            value = {"um:projectCollect:query"},
             orRole = "admin")
     @GetMapping(value = "/um/projectCollect/list")
     @ResponseBody
@@ -59,12 +57,12 @@ public class UmProjectCollectController {
      *
      * @param request 浏览记录实体
      * @return {@link CommonResult<Page<UmProjectCollectQueryVO>>}
-     * @author  小林同学
+     * @author 小林同学
      * @date 2023-09-21
      */
     @Description("用户管理/浏览记录管理/查询浏览记录")
     @SaCheckPermission(
-            value = {"um:projectCollect:query" },
+            value = {"um:projectCollect:query"},
             orRole = "admin")
     @GetMapping(value = "/um/projectCollect/page")
     @ResponseBody
@@ -77,12 +75,12 @@ public class UmProjectCollectController {
      *
      * @param id 浏览记录id
      * @return {@link CommonResult<UmProjectCollectQueryVO>}
-     * @author  小林同学
+     * @author 小林同学
      * @date 2023-09-21
      */
     @Description("用户管理/浏览记录管理/查询浏览记录")
     @SaCheckPermission(
-            value = {"um:projectCollect:query" },
+            value = {"um:projectCollect:query"},
             orRole = "admin")
     @GetMapping(value = "/um/projectCollect/details/{id}")
     @ResponseBody
@@ -96,12 +94,12 @@ public class UmProjectCollectController {
      *
      * @param ids 浏览记录id(多个逗号分割)
      * @return {@link CommonResult<String>}
-     * @author  小林同学
+     * @author 小林同学
      * @date 2023-09-21
      */
     @Description("用户管理/浏览记录管理/删除浏览记录")
     @SaCheckPermission(
-            value = {"um:projectCollect:delete" },
+            value = {"um:projectCollect:delete"},
             orRole = "admin")
     @PostMapping(value = "/um/projectCollect/delete")
     @ResponseBody
@@ -119,12 +117,12 @@ public class UmProjectCollectController {
      *
      * @param request 浏览记录实体
      * @return {@link CommonResult<String>}
-     * @author  小林同学
+     * @author 小林同学
      * @date 2023-09-21
      */
     @Description("用户管理/浏览记录管理/编辑浏览记录")
     @SaCheckPermission(
-            value = {"um:projectCollect:edit" },
+            value = {"um:projectCollect:edit"},
             orRole = "admin")
     @PostMapping(value = "/um/projectCollect/edit")
     @ResponseBody
@@ -142,12 +140,12 @@ public class UmProjectCollectController {
      *
      * @param request 浏览记录实体
      * @return {@link CommonResult<String>}
-     * @author  小林同学
+     * @author 小林同学
      * @date 2023-09-21
      */
     @Description("用户管理/浏览记录管理/新增浏览记录")
     @SaCheckPermission(
-            value = {"um:projectCollect:add" },
+            value = {"um:projectCollect:add"},
             orRole = "admin")
     @PostMapping(value = "/um/projectCollect/add")
     @ResponseBody

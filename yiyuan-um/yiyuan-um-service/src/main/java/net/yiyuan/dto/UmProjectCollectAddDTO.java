@@ -1,95 +1,61 @@
 package net.yiyuan.dto;
-import net.yiyuan.model.*;
-import net.yiyuan.enums.*;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import org.springframework.format.annotation.DateTimeFormat;
-import lombok.*;
-import net.yiyuan.common.*;
 
-import javax.validation.constraints.NotEmpty;
-import java.io.Serializable;
-import java.util.Date;
+import lombok.Data;
+
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import java.math.BigDecimal;
+import java.io.Serializable;
 
 /**
- *  浏览记录新增接口请求入参实体
+ * 浏览记录新增接口请求入参实体
  *
- * @author  小林同学
+ * @author 小林同学
  * @date 2023-09-21
- *
  */
 @Data
 public class UmProjectCollectAddDTO implements Serializable {
 
-    
-        
+
+    /**
+     * 用户id
+     *
+     * @mock 0
+     * @author 小林同学
+     * @date 2023-09-21
+     */
 
 
-
-    
-                                    /**
-                 * 用户id
-                 *
-                 * @mock 0
-                 * @author 小林同学
-                 * @date 2023-09-21
-                 */
-                
-            
-                                                        @NotBlank(message = "用户id不能为空")
-                
-
-            
-        private String uid;
-
-        
+    @NotBlank(message = "用户id不能为空")
 
 
-
-    
-                                    /**
-                 * 商品id
-                 *
-                 * @mock 0
-                 * @author 小林同学
-                 * @date 2023-09-21
-                 */
-                
-            
-                                                        @NotBlank(message = "商品id不能为空")
-                
-
-            
-        private String productId;
-
-        
+    private String uid;
 
 
-
-    
-                                    /**
-                 * 日期：年-月-日
-                 *
-                 * @author 小林同学
-                 * @date 2023-09-21
-                 */
-            
-                                                        @NotBlank(message = "日期：年-月-日不能为空")
-                
-
-            
-        private String date;
-
-        
+    /**
+     * 商品id
+     *
+     * @mock 0
+     * @author 小林同学
+     * @date 2023-09-21
+     */
 
 
-
-    
-        
+    @NotBlank(message = "商品id不能为空")
 
 
+    private String productId;
 
-    
+
+    /**
+     * 日期：年-月-日
+     *
+     * @author 小林同学
+     * @date 2023-09-21
+     */
+
+    @NotBlank(message = "日期：年-月-日不能为空")
+
+
+    private String date;
+
+
 }

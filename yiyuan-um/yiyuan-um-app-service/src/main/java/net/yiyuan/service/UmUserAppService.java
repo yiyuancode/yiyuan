@@ -8,6 +8,8 @@ import net.yiyuan.vo.MyselfIndexVO;
 import net.yiyuan.vo.ProjectCollectVO;
 import net.yiyuan.vo.UmUserTokenVO;
 
+import java.util.List;
+
 /**
  * 用户移动端Service层接口
  *
@@ -22,6 +24,6 @@ public interface UmUserAppService extends JoinIService<UmUser> {
 
     MyselfIndexVO findMySelfIndexVO() throws Exception;
 
-    ProjectCollectVO finProjectCollectListVO() throws Exception;
+    List<ProjectCollectVO> finProjectCollectListVO() throws Exception;
 
 }

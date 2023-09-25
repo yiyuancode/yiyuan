@@ -8,10 +8,13 @@ import net.yiyuan.dto.UmUserTokenDTO;
 import net.yiyuan.service.UmUserAppService;
 import net.yiyuan.vo.GetUmUserInfoVO;
 import net.yiyuan.vo.MyselfIndexVO;
+import net.yiyuan.vo.ProjectCollectVO;
 import net.yiyuan.vo.UmUserTokenVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 用户移动端接口
@@ -29,6 +32,7 @@ public class UmUserAppController {
 
     /**
      * 用户登录接口
+     *
      * @param umUserTokenDto
      * @return
      * @throws Exception
@@ -67,5 +71,15 @@ public class UmUserAppController {
 
         return CommonResult.success(umUserAppService.findMySelfIndexVO(), "我的详情查询成功");
     }
+
+
+    @GetMapping(value = "/collect/shop")
+    @SaIgnore
+    @ResponseBody
+    public CommonResult<List<ProjectCollectVO>> collectShop() throws Exception {
+
+        return CommonResult.success(umUserAppService.finProjectCollectListVO(), "我的收藏查询成功");
+    }
+
 
 }

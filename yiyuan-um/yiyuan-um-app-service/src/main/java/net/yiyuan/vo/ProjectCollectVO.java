@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class ProjectCollectVO {
     /**
-     *  商品id
+     * 商品id
      */
     private String id;
     /**
