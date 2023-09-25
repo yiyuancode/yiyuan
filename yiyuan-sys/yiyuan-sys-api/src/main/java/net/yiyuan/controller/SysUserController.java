@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Description;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
 
@@ -188,5 +189,20 @@ public class SysUserController {
   @ResponseBody
   public CommonResult getUserInfo() throws Exception {
     return CommonResult.success(sysUserService.getUserInfo());
+  }
+
+  /**
+   * 导出
+   *
+   * @return {@link CommonResult<String>}
+   * @author 一源-花和尚
+   * @date 2023-09-18
+   * @folder 平台端/系统管理/用户管理/导出
+   */
+  @SaIgnore
+  @GetMapping(value = "/sys/user/excel")
+  @ResponseBody
+  public void excel(HttpServletResponse response) throws Exception {
+    sysUserService.excel(response);
   }
 }

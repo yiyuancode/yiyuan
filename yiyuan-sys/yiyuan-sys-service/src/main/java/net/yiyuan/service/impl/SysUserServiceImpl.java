@@ -20,6 +20,7 @@ import net.yiyuan.vo.*;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 
 /**
@@ -252,14 +253,15 @@ public class SysUserServiceImpl extends JoinServiceImpl<SysUserMapper, SysUser>
             sysMenuVoList,
             SysMenuQueryVO::getId,
             SysMenuQueryVO::getParentId,
-            SysMenuQueryVO::getChild,
+            SysMenuQueryVO::getChildren,
             "0");
     sysUserRedisService.set(
         SysUserRedisService.KEY_SYS_USER_MENU, loginIdAsString, sysMenuTreeList, null);
 
     // 缓存用户数据
     sysUserResp.setPassword(null);
-    sysUserRedisService.set(SysUserRedisService.KEY_SYS_USER, loginIdAsString, sysUserResp, null);
+    sysUserRedisService.set(
+        SysUserRedisService.KEY_SYS_USER_ROLE, loginIdAsString, roleMenuJoin.getRighList(), null);
     return voBean;
   }
 
@@ -276,6 +278,11 @@ public class SysUserServiceImpl extends JoinServiceImpl<SysUserMapper, SysUser>
         sysUserRedisService.getList(
             SysUserRedisService.KEY_SYS_USER_MENU, loginIdAsString, SysMenuQueryVO.class);
 
+    // 获取角色list
+    List<SysRole> sysRoleList =
+        sysUserRedisService.getList(
+            SysUserRedisService.KEY_SYS_USER_ROLE, loginIdAsString, SysRole.class);
+
     // 获取用户数据
     SysUser sysUser =
         sysUserRedisService.get(SysUserRedisService.KEY_SYS_USER, loginIdAsString, SysUser.class);
@@ -283,7 +290,34 @@ public class SysUserServiceImpl extends JoinServiceImpl<SysUserMapper, SysUser>
     voResp.setMenuTreeList(sysMenuList);
     voResp.setPermissionsList(this.convertPermissionList(menuPermissionList));
     voResp.setUsername(sysUser.getUsername());
+    voResp.setRoleList(sysRoleList);
     return voResp;
+  }
+
+  @Override
+  public void excel(HttpServletResponse response) throws Exception {
+    JoinLambdaWrapper<SysUser> wrapper = new JoinLambdaWrapper<>(SysUser.class);
+    List<SysUserExcelVO> voList = sysUserMapper.joinSelectList(wrapper, SysUserExcelVO.class);
+    //    wrapper.leftJoin(SysUserRole.class, SysUserRole::getSysRoleId, SysUserRole::getSysRoleId,
+    // )
+    //    wrapper.selectAs(SysUser::getUsername, SysUserExcelVO::getId);
+
+    log.info("voList:{}", voList);
+    //    Workbook workbook =
+    //        ExcelExportUtil.exportExcel(new ExportParams("用户导出", "学生"), SysUserExcelVO.class,
+    // voList);
+
+    //    ExcelUtil.exportExcelX(voList, "测试导出表", "sheet1", SysUserExcelVO.class, "测试导出表.xlsx",
+    // response);
+    //    Workbook workbook =
+    //        ExcelExportUtil.exportExcel(new ExportParams("物资库存信息", "物资"), SysUserExcelVO.class,
+    // voList);
+    //
+    //    ServletOutputStream outputStream = response.getOutputStream();
+    //    workbook.write(outputStream);
+    response.setHeader("Content-Disposition", "attachment; filename=" + "用户信息统计File.xlsx");
+    ExcelUtils.exportExcel(
+        voList, "用户信息统计表Title", "用户表Sheet", SysUserExcelVO.class, "用户信息统计File", response);
   }
 
   /**

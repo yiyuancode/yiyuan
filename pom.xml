@@ -99,6 +99,12 @@
     <!--6：新增dependencyManagement只是生命这些项目所有依赖声明，方便阅读，实际使用需要再子模块中再次声明出来-->
     <dependencyManagement>
         <dependencies>
+            <!--excel导出-->
+            <dependency>
+                <groupId>cn.afterturn</groupId>
+                <artifactId>easypoi-spring-boot-starter</artifactId>
+                <version>4.2.0</version>
+            </dependency>
 
             <!-- 统一依赖管理 -->
             <dependency>

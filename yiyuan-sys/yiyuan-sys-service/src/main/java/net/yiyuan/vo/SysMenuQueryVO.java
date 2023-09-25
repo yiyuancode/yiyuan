@@ -220,5 +220,5 @@ public class SysMenuQueryVO implements Serializable {
    * @author 一源-花和尚
    * @date 2023-09-18
    */
-  private List<SysMenuQueryVO> child;
+  private List<SysMenuQueryVO> children;
 }
