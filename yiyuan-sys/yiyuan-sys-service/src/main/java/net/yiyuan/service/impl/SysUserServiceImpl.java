@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import icu.mhb.mybatisplus.plugln.base.service.impl.JoinServiceImpl;
 import icu.mhb.mybatisplus.plugln.core.JoinLambdaWrapper;
 import lombok.extern.slf4j.Slf4j;
+import ma.glasnost.orika.MapperFacade;
 import net.yiyuan.common.constatnt.ResultCode;
 import net.yiyuan.common.exception.BusinessException;
 import net.yiyuan.common.utils.BeanUtilsPlus;
@@ -17,11 +18,13 @@ import net.yiyuan.plugins.mp.utils.CenterJoinUtils;
 import net.yiyuan.redis.SysUserRedisService;
 import net.yiyuan.service.SysUserService;
 import net.yiyuan.vo.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * 管理端用户Service层接口实现
@@ -41,6 +44,7 @@ public class SysUserServiceImpl extends JoinServiceImpl<SysUserMapper, SysUser>
   @Resource private SysUserRedisService sysUserRedisService;
   private CenterJoinUtils<SysUser, SysUserRole, SysRole, SysUserQueryVO> userRoleJoin;
   private CenterJoinUtils<SysRole, SysRoleMenu, SysMenu, SysRoleQueryVO> roleMenuJoin;
+  @Autowired private MapperFacade mapperFacade;
 
   /**
    * 管理端用户列表(全部)
@@ -225,9 +229,10 @@ public class SysUserServiceImpl extends JoinServiceImpl<SysUserMapper, SysUser>
         SysUserRedisService.KEY_SYS_USER_ROLE_CODE, loginIdAsString, roleCodeList, null);
     // 判断当前角色编码是否包含admin角色编码，如果则查询角色_菜单时候主表的id加条件，如果不包含，就得查询当前拥有那些角色id
     List<String> roleIdList = new ArrayList<>();
-    if (!roleCodeList.contains("admin")) {
-      roleIdList = userRoleJoin.getRightAnyFieldList(SysRole::getId);
-    }
+    //    if (!roleCodeList.contains("admin")) {
+    //
+    //    }
+    roleIdList = userRoleJoin.getRightAnyFieldList(SysRole::getId);
     // 关联角色菜单权限表,查询对应权限表达式数据
     roleMenuJoin =
         new CenterJoinUtils<>(
@@ -252,7 +257,7 @@ public class SysUserServiceImpl extends JoinServiceImpl<SysUserMapper, SysUser>
         TreeUtil.buildTreeByTwoLayersFor(
             sysMenuVoList,
             SysMenuQueryVO::getId,
-            SysMenuQueryVO::getParentId,
+            SysMenuQueryVO::getPid,
             SysMenuQueryVO::getChildren,
             "0");
     sysUserRedisService.set(
@@ -286,9 +291,22 @@ public class SysUserServiceImpl extends JoinServiceImpl<SysUserMapper, SysUser>
     // 获取用户数据
     SysUser sysUser =
         sysUserRedisService.get(SysUserRedisService.KEY_SYS_USER, loginIdAsString, SysUser.class);
+
+    List<SysMenuVueRouteVO> vueRouteVOList =
+        sysMenuList.stream()
+            .map(
+                item -> {
+                  SysMenuVueRouteVO sysMenuVueRouteVO = new SysMenuVueRouteVO();
+                  BeanUtilsPlus.copy(item, sysMenuVueRouteVO);
+                  SysMenuVueRouteMetaVO sysMenuVueRouteMetaVO = new SysMenuVueRouteMetaVO();
+                  BeanUtilsPlus.copy(item, sysMenuVueRouteMetaVO);
+                  sysMenuVueRouteVO.setMeta(sysMenuVueRouteMetaVO);
+                  return sysMenuVueRouteVO;
+                })
+            .collect(Collectors.toList());
     log.info("sysMenuList{}", sysMenuList);
     voResp.setMenuTreeList(sysMenuList);
-    voResp.setPermissionsList(this.convertPermissionList(menuPermissionList));
+    voResp.setVueRouteList(vueRouteVOList);
     voResp.setUsername(sysUser.getUsername());
     voResp.setRoleList(sysRoleList);
     return voResp;

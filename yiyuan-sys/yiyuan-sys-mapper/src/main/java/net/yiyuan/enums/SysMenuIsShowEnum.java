@@ -6,35 +6,36 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 
 /**
- * 菜单管理-meta部分:打开方式枚举类
+ * 菜单管理-显示状态枚举类
  *
  * @author 一源-花和尚
  * @date 2023-09-26
  */
 @Getter // 没有引入lombok依赖包的，可以自己实现get方法
 @JsonFormat(shape = JsonFormat.Shape.OBJECT) // 实现场景2，只需要加上这个注解
-public enum SysMenuOpenTypeEnum implements IEnum<Integer> {
+public enum SysMenuIsShowEnum implements IEnum<Integer> {
 
   /**
-   * meta部分:打开方式#0=当前窗口|1=新窗口
+   * 显示状态#0=不显示|1=显示
    *
-   * @see SysMenuOpenTypeEnum
+   * @see SysMenuIsShowEnum
    * @author 一源-花和尚
    * @date 2023-09-26
    */
-  CURRENT_WINDOW(0, "当前窗口"),
+  DO_NOT_DISPLAY(0, "不显示"),
   /**
-   * meta部分:打开方式#0=当前窗口|1=新窗口
+   * 显示状态#0=不显示|1=显示
    *
-   * @see SysMenuOpenTypeEnum
+   * @see SysMenuIsShowEnum
    * @author 一源-花和尚
    * @date 2023-09-26
    */
-  NEW_WINDOW(1, "新窗口");
+  DISPLAY(1, "显示");
 
   @EnumValue private final int value;
   private final String desc;
-  SysMenuOpenTypeEnum(int value, String desc) {
+
+  SysMenuIsShowEnum(int value, String desc) {
     this.value = value;
     this.desc = desc;
   }

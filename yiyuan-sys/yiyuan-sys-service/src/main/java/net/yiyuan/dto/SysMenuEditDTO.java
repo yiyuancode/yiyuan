@@ -1,186 +1,212 @@
 package net.yiyuan.dto;
-
-import lombok.Data;
+import net.yiyuan.model.*;
 import net.yiyuan.enums.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+import lombok.*;
+import net.yiyuan.common.*;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
+import java.util.Date;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 
 /**
- * 菜单修改接口请求入参实体
+ *  修改接口请求入参实体
  *
- * @author 一源-花和尚
- * @date 2023-09-18
+ * @author  一源-花和尚
+ * @date 2023-09-26
+ *
  */
 @Data
 public class SysMenuEditDTO implements Serializable {
 
-  /**
-   * 菜单ID
-   *
-   * @author 一源-花和尚
-   * @date 2023-09-18
-   */
-  @NotBlank(message = "菜单ID不能为空")
-  private String id;
+    
+                    /**
+             * 菜单ID
+             *
+             * @author 一源-花和尚
+             * @date 2023-09-26
+             */
+            @NotBlank(message = "菜单ID不能为空")
+            private String id;
+        
 
-  /**
-   * 上级菜单
-   *
-   * @author 一源-花和尚
-   * @date 2023-09-18
-   */
-  private String parentId;
+    
+                                    /**
+                 * 上级菜单
+                 *
+                 * @author 一源-花和尚
+                 * @date 2023-09-26
+                 */
+                        private String pid;
+        
 
-  /**
-   * 商户id
-   *
-   * @author 一源-花和尚
-   * @date 2023-09-18
-   */
-  private String tenantId;
+    
+                                    /**
+                 * 商户id
+                 *
+                 * @author 一源-花和尚
+                 * @date 2023-09-26
+                 */
+                        private String tenantId;
+        
 
-  /**
-   * 菜单名称
-   *
-   * @author 一源-花和尚
-   * @date 2023-09-18
-   */
-  private String name;
+    
+                                    /**
+                 * 菜单路径(顶级以/开头,子集不能以/开头)
+                 *
+                 * @author 一源-花和尚
+                 * @date 2023-09-26
+                 */
+                        private String path;
+        
 
-  /**
-   * 权限表达式
-   *
-   * @author 一源-花和尚
-   * @date 2023-09-18
-   */
-  private String permission;
+    
+                                    /**
+                 * 菜单名称(英文,就是组件的path值，如果组件的path值是顶级,则去掉/开头)
+                 *
+                 * @author 一源-花和尚
+                 * @date 2023-09-26
+                 */
+                        private String name;
+        
 
-  /**
-   * 菜单图标
-   *
-   * @author 一源-花和尚
-   * @date 2023-09-18
-   */
-  private String icon;
+    
+                                    /**
+                 * 组件路径(顶级统一为/components/layout/Layout/index.vue,子集对应/page,所有级别都以/开头，index.vue可忽略)
+                 *
+                 * @author 一源-花和尚
+                 * @date 2023-09-26
+                 */
+                        private String component;
+        
 
-  /**
-   * 选中路由名称
-   *
-   * @author 一源-花和尚
-   * @date 2023-09-18
-   */
-  private String activeMenu;
+    
+                                    /**
+                 * meta部分:菜单名称(中文)
+                 *
+                 * @author 一源-花和尚
+                 * @date 2023-09-26
+                 */
+                        private String title;
+        
 
-  /**
-   * 外链#0=否|1=是
-   *
-   * @mock 0
-   * @author 一源-花和尚
-   * @date 2023-09-18
-   */
-  private SysMenuIsFrameEnum isFrame;
+    
+                                    /**
+                 * meta部分:权限表达式
+                 *
+                 * @author 一源-花和尚
+                 * @date 2023-09-26
+                 */
+                        private String permission;
+        
 
-  /**
-   * 外部链接地址
-   *
-   * @author 一源-花和尚
-   * @date 2023-09-18
-   */
-  private String frameSrc;
+    
+                                    /**
+                 * meta部分:是否缓存(0=否|1=是)
+                 *
+                 * @mock 1
+                 * @author 一源-花和尚
+                 * @date 2023-09-26
+                 */
+                
+                        private Boolean isKeepAlive;
+        
 
-  /**
-   * 固定多页签#0=关闭|1=开启
-   *
-   * @mock 0
-   * @author 一源-花和尚
-   * @date 2023-09-18
-   */
-  private SysMenuIsAffixEnum isAffix;
+    
+                                    /**
+                 * meta部分:菜单图标
+                 *
+                 * @author 一源-花和尚
+                 * @date 2023-09-26
+                 */
+                        private String icon;
+        
 
-  /**
-   * 菜单状态#0=停用|1=正常
-   *
-   * @mock 1
-   * @author 一源-花和尚
-   * @date 2023-09-18
-   */
-  private SysMenuStatusEnum status;
+    
+                                    /**
+                 * meta部分:是否外链(0=否|1=是)
+                 *
+                 * @mock 1
+                 * @author 一源-花和尚
+                 * @date 2023-09-26
+                 */
+                
+                        private Boolean isFrame;
+        
 
-  /**
-   * 简化路由#0=关闭|1=开启
-   *
-   * @mock 0
-   * @author 一源-花和尚
-   * @date 2023-09-18
-   */
-  private SysMenuIsAlwaysShowEnum isAlwaysShow;
+    
+                                    /**
+                 * meta部分：外链url地址
+                 *
+                 * @author 一源-花和尚
+                 * @date 2023-09-26
+                 */
+                        private String frameSrc;
+        
 
-  /**
-   * 是否缓存#0=否|1=是
-   *
-   * @mock 0
-   * @author 一源-花和尚
-   * @date 2023-09-18
-   */
-  private SysMenuIsCacheEnum isCache;
+    
+                                    /**
+                 * meta部分:类型#0=目录|1=菜单|2=按钮
+                 *
+                 * @mock 0
+                 * @author 一源-花和尚
+                 * @date 2023-09-26
+                 */
+                
+                        private SysMenuTypeEnum type;
+        
 
-  /**
-   * 类型#0=目录|1=菜单|2=按钮
-   *
-   * @mock 0
-   * @author 一源-花和尚
-   * @date 2023-09-18
-   */
-  private SysMenuTypeEnum type;
+    
+                                    /**
+                 * meta部分:是否当前窗口(0=否|1=是)
+                 *
+                 * @mock 1
+                 * @author 一源-花和尚
+                 * @date 2023-09-26
+                 */
+                
+                        private Boolean isCurWin;
+        
 
-  /**
-   * 打开方式#0=当前窗口|1=新窗口
-   *
-   * @mock 0
-   * @author 一源-花和尚
-   * @date 2023-09-18
-   */
-  private SysMenuOpenTypeEnum openType;
+    
+                                    /**
+                 * 是否显示(0=否|1=是)
+                 *
+                 * @mock 1
+                 * @author 一源-花和尚
+                 * @date 2023-09-26
+                 */
+                
+                        private Boolean isShow;
+        
 
-  /**
-   * 显示排序
-   *
-   * @mock 0
-   * @author 一源-花和尚
-   * @date 2023-09-18
-   */
-  private Integer sort;
+    
+                                    /**
+                 * 显示排序
+                 *
+                 * @mock 0
+                 * @author 一源-花和尚
+                 * @date 2023-09-26
+                 */
+                
+                        private Integer sort;
+        
 
-  /**
-   * 路由对应组件路径(相对于@也就是src下面,例如：@/pages/pms/RenewalConsume)
-   *
-   * @author 一源-花和尚
-   * @date 2023-09-18
-   */
-  private String routeComponent;
+    
+        
 
-  /**
-   * 路由访问路径(如果是antv-admin,一级路由是它官方定义的,所以咱们添加都不用加/，如果是element-admin，目录类型的path就属于1级.,x需要加、)
-   *
-   * @author 一源-花和尚
-   * @date 2023-09-18
-   */
-  private String routePath;
+    
+        
 
-  /**
-   * 路由名称(菜单表唯一,前端可用path和name两种方式跳转)
-   *
-   * @author 一源-花和尚
-   * @date 2023-09-18
-   */
-  private String routeName;
+    
+        
 
-  /**
-   * 路由默认重定向页面的一级二级所有级全path访问路径(例如)
-   *
-   * @author 一源-花和尚
-   * @date 2023-09-18
-   */
-  private String routeRedirect;
+    
+        
+
+    
 }

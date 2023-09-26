@@ -117,7 +117,16 @@ const moduleConfig = {
     moduleName: "${tableComment.replaceAll("表", "")}",
 }
 
+// 权限对象
+const permissionObj = {
+    id: '${pm0}:${pm1}',
+    addBtn: '${pm0}:${pm1}:add',
+    editBtn: '${pm0}:${pm1}:edit',
+    deleteBtn: '${pm0}:${pm1}:delete'
+};
+
 export {
     columns,
     moduleConfig,
+    permissionObj
 };

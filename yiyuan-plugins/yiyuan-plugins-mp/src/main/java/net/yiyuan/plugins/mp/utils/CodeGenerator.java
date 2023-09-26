@@ -79,7 +79,8 @@ public class CodeGenerator {
    */
   public static void getTableFiled(String inputTableName[], PackageConfig pc) throws Exception {
     Map<String, String> mysqlToJavaTypeMap = new HashMap<>();
-    mysqlToJavaTypeMap.put("tinyint", "Byte");
+    mysqlToJavaTypeMap.put("tinyint", "Boolean");
+    mysqlToJavaTypeMap.put("bit", "Boolean");
     mysqlToJavaTypeMap.put("smallint", "Short");
     mysqlToJavaTypeMap.put("mediumint", "Integer");
     mysqlToJavaTypeMap.put("int", "Integer");
@@ -352,8 +353,8 @@ public class CodeGenerator {
       routerAndI18nMap.put("tableComment", dtoContext.get("tableComment"));
       routerAndI18nMapList.add(routerAndI18nMap);
 
-      createJsRouterIndexJsByVelocity(dtoContext);
-      createJsRouterJsByVelocity(dtoContext);
+      //      createJsRouterIndexJsByVelocity(dtoContext);
+      //      createJsRouterJsByVelocity(dtoContext);
       createJsConfigByVelocity(dtoContext);
       createJsApiByVelocity(dtoContext);
       createJsVueByVelocity(dtoContext);

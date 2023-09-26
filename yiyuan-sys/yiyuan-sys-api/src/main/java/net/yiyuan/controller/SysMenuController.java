@@ -2,6 +2,7 @@ package net.yiyuan.controller;
 
 import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.annotation.SaCheckPermission;
+import cn.dev33.satoken.annotation.SaIgnore;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import net.yiyuan.common.model.vo.CommonResult;
@@ -23,7 +24,7 @@ import java.util.List;
  * 菜单管理
  *
  * @author 一源-花和尚
- * @date 2023-09-18
+ * @date 2023-09-26
  * @folder 系统管理/菜单管理
  */
 @SaCheckLogin
@@ -38,7 +39,7 @@ public class SysMenuController {
    * @param request 菜单实体
    * @return {@link CommonResult<List<SysMenuQueryVO>>}
    * @author 一源-花和尚
-   * @date 2023-09-18
+   * @date 2023-09-26
    */
   @Description("系统管理/菜单管理/查询菜单")
   @SaCheckPermission(
@@ -56,7 +57,7 @@ public class SysMenuController {
    * @param request 菜单实体
    * @return {@link CommonResult<Page<SysMenuQueryVO>>}
    * @author 一源-花和尚
-   * @date 2023-09-18
+   * @date 2023-09-26
    */
   @Description("系统管理/菜单管理/查询菜单")
   @SaCheckPermission(
@@ -74,7 +75,7 @@ public class SysMenuController {
    * @param id 菜单id
    * @return {@link CommonResult<SysMenuQueryVO>}
    * @author 一源-花和尚
-   * @date 2023-09-18
+   * @date 2023-09-26
    */
   @Description("系统管理/菜单管理/查询菜单")
   @SaCheckPermission(
@@ -93,7 +94,7 @@ public class SysMenuController {
    * @param ids 菜单id(多个逗号分割)
    * @return {@link CommonResult<String>}
    * @author 一源-花和尚
-   * @date 2023-09-18
+   * @date 2023-09-26
    */
   @Description("系统管理/菜单管理/删除菜单")
   @SaCheckPermission(
@@ -116,7 +117,7 @@ public class SysMenuController {
    * @param request 菜单实体
    * @return {@link CommonResult<String>}
    * @author 一源-花和尚
-   * @date 2023-09-18
+   * @date 2023-09-26
    */
   @Description("系统管理/菜单管理/编辑菜单")
   @SaCheckPermission(
@@ -139,7 +140,7 @@ public class SysMenuController {
    * @param request 菜单实体
    * @return {@link CommonResult<String>}
    * @author 一源-花和尚
-   * @date 2023-09-18
+   * @date 2023-09-26
    */
   @Description("系统管理/菜单管理/新增菜单")
   @SaCheckPermission(
@@ -149,6 +150,28 @@ public class SysMenuController {
   @ResponseBody
   public CommonResult<String> add(@RequestBody @Validated SysMenuAddDTO request) throws Exception {
     if (sysMenuService.add(request)) {
+      return CommonResult.success(null, "新增菜单成功");
+    } else {
+      return CommonResult.failed("新增菜单失败");
+    }
+  }
+
+  /**
+   * 自动生成菜单
+   *
+   * @return {@link CommonResult<String>}
+   * @author 一源-花和尚
+   * @date 2023-09-26
+   */
+  //  @Description("系统管理/菜单管理/自动生成菜单")
+  //  @SaCheckPermission(
+  //      value = {"sys:menu:autoScanMenu"},
+  //      orRole = "admin")
+  @SaIgnore
+  @PostMapping(value = "/sys/menu/autoScanMenu")
+  @ResponseBody
+  public CommonResult<String> autoScanMenu() throws Exception {
+    if (sysMenuService.autoScanMenu()) {
       return CommonResult.success(null, "新增菜单成功");
     } else {
       return CommonResult.failed("新增菜单失败");
