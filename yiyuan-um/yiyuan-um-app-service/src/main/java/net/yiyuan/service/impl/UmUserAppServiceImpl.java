@@ -18,8 +18,9 @@ import net.yiyuan.vo.*;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.Date;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * 用户移动端Service层接口实现
@@ -167,12 +168,13 @@ public class UmUserAppServiceImpl extends JoinServiceImpl<UmUserMapper, UmUser>
      * @throws Exception
      */
     @Override
-    public List<ProjectCollectVO> finProjectCollectListVO() throws Exception {
+    public Map<String,List<ProjectCollectReVO>> finProjectCollectListVO() throws Exception {
 
         String loginId = (String) StpUtil.getLoginId();
         JoinLambdaWrapper<UmProjectCollect> umWrapper = new JoinLambdaWrapper<>(UmProjectCollect.class);
         umWrapper.notDefaultSelectAll()
                 .eq(UmProjectCollect::getUid, loginId)
+                .select(UmProjectCollect::getDate)
                 .orderByDesc(UmProjectCollect::getDate)
                 .leftJoin(PtmProduct.class, PtmProduct::getId, UmProjectCollect::getProductId)
                 .selectAs((cb)->{
@@ -186,10 +188,75 @@ public class UmUserAppServiceImpl extends JoinServiceImpl<UmUserMapper, UmUser>
 
         List<ProjectCollectVO> projectCollectVOS = umProjectCollectMapper.joinSelectList(umWrapper, ProjectCollectVO.class);
 
-        return projectCollectVOS;
+        Map<String,List<ProjectCollectReVO>> map = new HashMap<>();
+        List<ProjectCollectReVO> list = new ArrayList<>();
+        if (projectCollectVOS!=null &&  projectCollectVOS.size()>0){
+            for (ProjectCollectVO projectCollectVO : projectCollectVOS) {
+                ProjectCollectReVO projectCollectReVO = new ProjectCollectReVO();
+                BeanUtilsPlus.copy(projectCollectVO,projectCollectReVO);
+                Date date = projectCollectVO.getDate();
+                SimpleDateFormat formatter = new SimpleDateFormat("yy-MM-dd");
+                projectCollectReVO.setDate(formatter.format(date));
+                list.add(projectCollectReVO);
+            }
+            map = list.stream().collect(Collectors.groupingBy(ProjectCollectReVO::getDate));
+        }
+
+        return map;
+    }
+
+    /**
+     * 用户店铺收藏
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public Map<String, List<ProjectCollectReShopVO>> findProjectCollectListShopVO() throws Exception {
+
+        JoinLambdaWrapper<UmUserMerchantCollect> umWrapper = new JoinLambdaWrapper<>(UmUserMerchantCollect.class);
+        umWrapper.notDefaultSelectAll()
+                .eq(UmUserMerchantCollect::getUid,(String) StpUtil.getLoginId())
+                .selectAs((cb)->{
+                    cb.addFunAlias(UmUserMerchantCollect::getCreateTime,ProjectCollectShopVO::getDate);
+                })
+                .orderByDesc(UmUserMerchantCollect::getCreateTime)
+                .leftJoin(SpmShop.class,SpmShop::getId,UmUserMerchantCollect::getUid)
+                .selectAs((cb)->{
+                    cb.addFunAlias(SpmShop::getId,ProjectCollectVO::getId)
+                            .addFunAlias(SpmShop::getMerchantName,ProjectCollectShopVO::getShopName)
+                            .addFunAlias(SpmShop::getShopOwnerAvatar,ProjectCollectShopVO::getShopImage)
+                            .addFunAlias(SpmShop::getMerchantRating,ProjectCollectShopVO::getStar);
+
+                }).end();
+
+        List<ProjectCollectShopVO> projectCollectShopVOS = umUserMerchantCollectMapper.joinSelectList(umWrapper, ProjectCollectShopVO.class);
+
+        Map<String,List<ProjectCollectReShopVO>> map = new HashMap<>();
+        List<ProjectCollectReShopVO> list = new ArrayList<>();
+
+        if (projectCollectShopVOS!=null &&  projectCollectShopVOS.size()>0){
+            for (ProjectCollectShopVO projectCollectShopVO : projectCollectShopVOS) {
+                ProjectCollectReShopVO projectCollectShop = new ProjectCollectReShopVO();
+                BeanUtilsPlus.copy(projectCollectShopVO,projectCollectShop);
+                Date date = projectCollectShopVO.getDate();
+                SimpleDateFormat formatter = new SimpleDateFormat("yy-MM-dd");
+                projectCollectShop.setDate(formatter.format(date));
+                list.add(projectCollectShop);
+            }
+            map = list.stream().collect(Collectors.groupingBy(ProjectCollectReShopVO::getDate));
+        }
+
+
+        return map;
     }
 
 
+    /**
+     * 新增用户
+     * @param umUser
+     * @param umUserTokenDto
+     * @return
+     */
     public String insertUmUser(UmUser umUser, UmUserTokenDTO umUserTokenDto) {
 
         umUser.setAccount(umUserTokenDto.getPhoneOrEmail());

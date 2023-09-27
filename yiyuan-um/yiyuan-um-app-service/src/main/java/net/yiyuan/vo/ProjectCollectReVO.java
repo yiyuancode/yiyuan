@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class ProjectCollectVO {
+public class ProjectCollectReVO {
     /**
      * 商品id
      */
@@ -29,6 +29,5 @@ public class ProjectCollectVO {
     /**
      * 时间
      */
-    private Date date;
-
+    private String date;
 }
