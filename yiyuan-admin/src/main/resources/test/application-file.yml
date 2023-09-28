@@ -4,7 +4,7 @@ file:
       activeTypeName: MinIo
     minio:
       enabled: true
-      endpoint: http://43.154.183.115:40036
+      endpoint: http://127.0.0.1:40036
       accessKey: admin
       secretKey: 123/456/789
     local:

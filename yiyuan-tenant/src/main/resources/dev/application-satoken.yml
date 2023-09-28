@@ -19,6 +19,6 @@ sa-token:
   #读取header里面的
   is-read-header: true
   # jwt秘钥
-  jwt-secret-key: abc123djededease
+  jwt-secret-key: 111111
   # 配置当前项目的网络访问地址
   curr-domain: http://localhost:8085

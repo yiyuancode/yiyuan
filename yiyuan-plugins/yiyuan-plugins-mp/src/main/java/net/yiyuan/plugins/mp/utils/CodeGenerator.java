@@ -36,14 +36,14 @@ public class CodeGenerator {
   //  public static String DEFAULT_MODULENAME = "";
   public static String AUTHOR = "";
   public static String MYSQL_URL =
-      "jdbc:mysql://106.54.87.159:23306/admin_dev?serverTimezone=Asia/Shanghai&nullCatalogMeansCurrent=true";
+      "jdbc:mysql://127.0.0.1:23306/admin_dev?serverTimezone=Asia/Shanghai&nullCatalogMeansCurrent=true";
   public static String MYSQL_USERNAME = "root";
   public static String MYSQL_PASSWORD = "123456";
 
-  public static String SSH_URL = "43.154.183.115";
+  public static String SSH_URL = "127.0.0.1";
   public static int SSH_PORT = 60035;
   public static String SSH_USERNAME = "root";
-  public static String SSH_PASSWORD = "ABC123#123CBd";
+  public static String SSH_PASSWORD = "111111";
   public static String SSH_COMMAND_FY = "fy ";
 
   /** 读取控制台内容 */

@@ -4,7 +4,7 @@ file:
       activeTypeName: MinIo
     minio:
       enabled: true
-      endpoint: http://106.54.87.159:50008
+      endpoint: http://127.0.0.1:50008
       accessKey: admin
       secretKey: 123/456/789
     local:

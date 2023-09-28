@@ -175,7 +175,6 @@ public class RedisMonitorJob implements BaseJob {
       sysRedisListDTO.setIsMonitorEnabled(SysRedisIsMonitorEnabledEnum.OPEN);
       List<SysRedisQueryVO> redisQueryVOList = sysRedisService.list(sysRedisListDTO);
       for (SysRedisQueryVO item : redisQueryVOList) {
-        // "106.54.87.159", 50006
         // 创建 Jedis 实例并连接到 Redis
         Jedis jedis = new Jedis(item.getHost(), item.getPort());
         if (StringUtilsPlus.isNotEmpty(item.getPassword())) {

@@ -2,18 +2,18 @@ sms:
   config:
     aliyun:
       ### 阿里云的apiKey
-      appKey: LTAI5t8A1zJF5HwSUThj62CS
+      appKey: 111
       ### 阿里云apiSecret
-      appSecret: AO7U4CZmsyYHe3OD6vXj9I3VP2Op9X
+      appSecret: 111
       ### 签名
-      signName: 小林程序猿
+      signName: 一源源码
       ### 模板code
       templateCode: SMS_463196083
 email:
   config:
     define:
       emailAccount: yiyuancode@sina.com
-      emailPassword: 10c8122fb73521c9
+      emailPassword: 111111
       emailSmtphost: smtp.sina.com
       ###选用手机号还是邮箱验证码验证 email 或者phone
       active: email

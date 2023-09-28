@@ -34,7 +34,7 @@
 
     <!-- 为logstash输出的JSON格式的Appender -->
     <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
-        <destination>106.54.87.159:50032</destination>
+        <destination>127.0.0.1:50032</destination>
         <keepAliveDuration>5 minutes</keepAliveDuration>
         <!-- 日志输出编码 -->
         <encoder charset="UTF-8" class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
@@ -58,7 +58,7 @@
     </appender>
 
     <appender name="GLC" class="top.gotoeasy.framework.glc.logback.appender.GlcHttpJsonAppender">
-        <glcApiUrl>http://106.54.87.159:5000/glc/v1/log/add</glcApiUrl>
+        <glcApiUrl>http://127.0.0.1:5000/glc/v1/log/add</glcApiUrl>
         <system>yiyuan-admin</system>
 
         <layout>
