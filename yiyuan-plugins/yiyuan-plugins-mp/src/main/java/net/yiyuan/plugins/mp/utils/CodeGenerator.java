@@ -28,8 +28,8 @@ import java.util.*;
 @Slf4j
 public class CodeGenerator {
   public static String DEFAULT_OUT_PUT_DIR = System.getProperty("user.dir");
-  public static String DEFAULT_SRC = "\\src\\main\\java";
-  public static String DEFAULT_JS_SRC = "\\src";
+  public static String DEFAULT_SRC = "/src/main/java";
+  public static String DEFAULT_JS_SRC = "/src";
   public static String MOUDLE_NAME_ZH = "";
 
   public static String DEFAULT_PARENT_PACK = "";
@@ -265,7 +265,7 @@ public class CodeGenerator {
             Map<String, String> columnMap = new HashMap<>();
             columnMap.put("code", kvArray[0]);
             columnMap.put("desc", kvArray[1]);
-            // String filed=TransUtils.toEn2(kvArray[1]).toUpperCase().replaceAll("\\s+", "_");
+            // String filed=TransUtils.toEn2(kvArray[1]).toUpperCase().replaceAll("/s+", "_");
             String filed =
                 StringUtilsPlus.trimAndFormatString(
                         SshUtil.executeScript(
@@ -430,7 +430,7 @@ public class CodeGenerator {
       file.createNewFile();
     }
 
-    Template template = velocityEngine.getTemplate("templates2\\router.js.vm", "UTF-8");
+    Template template = velocityEngine.getTemplate("templates2/router.js.vm", "UTF-8");
     FileWriter writer = new FileWriter(filePath);
     template.merge(context, writer);
     writer.flush();
@@ -475,7 +475,7 @@ public class CodeGenerator {
       file.createNewFile();
     }
 
-    Template template = velocityEngine.getTemplate("templates2\\routerIndex.js.vm", "UTF-8");
+    Template template = velocityEngine.getTemplate("templates2/routerIndex.js.vm", "UTF-8");
     FileWriter writer = new FileWriter(filePath);
     template.merge(context, writer);
     writer.flush();
@@ -518,7 +518,7 @@ public class CodeGenerator {
       file.createNewFile();
     }
 
-    Template template = velocityEngine.getTemplate("templates2\\api.js.vm", "UTF-8");
+    Template template = velocityEngine.getTemplate("templates2/api.js.vm", "UTF-8");
     FileWriter writer = new FileWriter(filePath);
     template.merge(context, writer);
     writer.flush();
@@ -567,7 +567,7 @@ public class CodeGenerator {
       file.createNewFile();
     }
 
-    Template template = velocityEngine.getTemplate("templates2\\config.js.vm", "UTF-8");
+    Template template = velocityEngine.getTemplate("templates2/config.js.vm", "UTF-8");
     FileWriter writer = new FileWriter(filePath);
     template.merge(context, writer);
     writer.flush();
@@ -617,7 +617,7 @@ public class CodeGenerator {
       file.createNewFile();
     }
 
-    Template template = velocityEngine.getTemplate("templates2\\index.vue.vm", "UTF-8");
+    Template template = velocityEngine.getTemplate("templates2/index.vue.vm", "UTF-8");
     FileWriter writer = new FileWriter(filePath);
     template.merge(context, writer);
     writer.flush();
@@ -669,7 +669,7 @@ public class CodeGenerator {
       file.createNewFile();
     }
 
-    Template template = velocityEngine.getTemplate("templates2\\controller.java.vm", "UTF-8");
+    Template template = velocityEngine.getTemplate("templates2/controller.java.vm", "UTF-8");
     FileWriter writer = new FileWriter(filePath);
     template.merge(context, writer);
     writer.flush();
@@ -721,7 +721,7 @@ public class CodeGenerator {
       file.createNewFile();
     }
 
-    Template template = velocityEngine.getTemplate("templates2\\mapper.java.vm", "UTF-8");
+    Template template = velocityEngine.getTemplate("templates2/mapper.java.vm", "UTF-8");
     FileWriter writer = new FileWriter(filePath);
     template.merge(context, writer);
     writer.flush();
@@ -767,7 +767,7 @@ public class CodeGenerator {
       file.createNewFile();
     }
 
-    Template template = velocityEngine.getTemplate("templates2\\mapper.pom.vm", "UTF-8");
+    Template template = velocityEngine.getTemplate("templates2/mapper.pom.vm", "UTF-8");
     FileWriter writer = new FileWriter(filePath);
     template.merge(context, writer);
     writer.flush();
@@ -819,7 +819,7 @@ public class CodeGenerator {
       file.createNewFile();
     }
 
-    Template template = velocityEngine.getTemplate("templates2\\mapper.xml.java.vm", "UTF-8");
+    Template template = velocityEngine.getTemplate("templates2/mapper.xml.java.vm", "UTF-8");
     FileWriter writer = new FileWriter(filePath);
     template.merge(context, writer);
     writer.flush();
@@ -871,7 +871,7 @@ public class CodeGenerator {
       file.createNewFile();
     }
 
-    Template template = velocityEngine.getTemplate("templates2\\service.java.vm", "UTF-8");
+    Template template = velocityEngine.getTemplate("templates2/service.java.vm", "UTF-8");
     FileWriter writer = new FileWriter(filePath);
     template.merge(context, writer);
     writer.flush();
@@ -923,7 +923,7 @@ public class CodeGenerator {
       file.createNewFile();
     }
 
-    Template template = velocityEngine.getTemplate("templates2\\service.impl.java.vm", "UTF-8");
+    Template template = velocityEngine.getTemplate("templates2/service.impl.java.vm", "UTF-8");
     FileWriter writer = new FileWriter(filePath);
     template.merge(context, writer);
     writer.flush();
@@ -973,7 +973,7 @@ public class CodeGenerator {
       file.createNewFile();
     }
 
-    Template template = velocityEngine.getTemplate("templates2\\enum.java.vm", "UTF-8");
+    Template template = velocityEngine.getTemplate("templates2/enum.java.vm", "UTF-8");
     FileWriter writer = new FileWriter(filePath);
     template.merge(context, writer);
     writer.flush();
@@ -1025,7 +1025,7 @@ public class CodeGenerator {
       file.createNewFile();
     }
 
-    Template template = velocityEngine.getTemplate("templates2\\model.java.vm", "UTF-8");
+    Template template = velocityEngine.getTemplate("templates2/model.java.vm", "UTF-8");
     FileWriter writer = new FileWriter(filePath);
     template.merge(context, writer);
     writer.flush();
@@ -1076,7 +1076,7 @@ public class CodeGenerator {
       file.createNewFile();
     }
 
-    Template template = velocityEngine.getTemplate("templates2\\modelAddDTO.java.vm", "UTF-8");
+    Template template = velocityEngine.getTemplate("templates2/modelAddDTO.java.vm", "UTF-8");
     FileWriter writer = new FileWriter(filePath);
     template.merge(context, writer);
     writer.flush();
@@ -1128,7 +1128,7 @@ public class CodeGenerator {
       file.createNewFile();
     }
 
-    Template template = velocityEngine.getTemplate("templates2\\modelListDTO.java.vm", "UTF-8");
+    Template template = velocityEngine.getTemplate("templates2/modelListDTO.java.vm", "UTF-8");
     FileWriter writer = new FileWriter(filePath);
     template.merge(context, writer);
     writer.flush();
@@ -1180,7 +1180,7 @@ public class CodeGenerator {
       file.createNewFile();
     }
 
-    Template template = velocityEngine.getTemplate("templates2\\modelPageDTO.java.vm", "UTF-8");
+    Template template = velocityEngine.getTemplate("templates2/modelPageDTO.java.vm", "UTF-8");
     FileWriter writer = new FileWriter(filePath);
     template.merge(context, writer);
     writer.flush();
@@ -1232,7 +1232,7 @@ public class CodeGenerator {
       file.createNewFile();
     }
 
-    Template template = velocityEngine.getTemplate("templates2\\modelEditDTO.java.vm", "UTF-8");
+    Template template = velocityEngine.getTemplate("templates2/modelEditDTO.java.vm", "UTF-8");
     FileWriter writer = new FileWriter(filePath);
     template.merge(context, writer);
     writer.flush();
@@ -1284,7 +1284,7 @@ public class CodeGenerator {
       file.createNewFile();
     }
 
-    Template template = velocityEngine.getTemplate("templates2\\modelQueryVO.java.vm", "UTF-8");
+    Template template = velocityEngine.getTemplate("templates2/modelQueryVO.java.vm", "UTF-8");
     FileWriter writer = new FileWriter(filePath);
     template.merge(context, writer);
     writer.flush();
@@ -1330,7 +1330,7 @@ public class CodeGenerator {
       file.createNewFile();
     }
 
-    Template template = velocityEngine.getTemplate("templates2\\api.pom.vm", "UTF-8");
+    Template template = velocityEngine.getTemplate("templates2/api.pom.vm", "UTF-8");
     FileWriter writer = new FileWriter(filePath);
     template.merge(context, writer);
     writer.flush();
@@ -1376,7 +1376,7 @@ public class CodeGenerator {
       file.createNewFile();
     }
 
-    Template template = velocityEngine.getTemplate("templates2\\service.pom.vm", "UTF-8");
+    Template template = velocityEngine.getTemplate("templates2/service.pom.vm", "UTF-8");
     FileWriter writer = new FileWriter(filePath);
     template.merge(context, writer);
     writer.flush();
@@ -1413,7 +1413,7 @@ public class CodeGenerator {
       file.createNewFile();
     }
 
-    Template template = velocityEngine.getTemplate("templates2\\parent.pom.vm", "UTF-8");
+    Template template = velocityEngine.getTemplate("templates2/parent.pom.vm", "UTF-8");
     FileWriter writer = new FileWriter(filePath);
     template.merge(context, writer);
     writer.flush();
@@ -1506,7 +1506,7 @@ public class CodeGenerator {
       file.createNewFile();
     }
 
-    Template template = velocityEngine.getTemplate("templates2\\serviceApp.java.vm", "UTF-8");
+    Template template = velocityEngine.getTemplate("templates2/serviceApp.java.vm", "UTF-8");
     FileWriter writer = new FileWriter(filePath);
     template.merge(context, writer);
     writer.flush();
@@ -1558,7 +1558,7 @@ public class CodeGenerator {
       file.createNewFile();
     }
 
-    Template template = velocityEngine.getTemplate("templates2\\serviceApp.impl.java.vm", "UTF-8");
+    Template template = velocityEngine.getTemplate("templates2/serviceApp.impl.java.vm", "UTF-8");
     FileWriter writer = new FileWriter(filePath);
     template.merge(context, writer);
     writer.flush();
@@ -1604,7 +1604,7 @@ public class CodeGenerator {
       file.createNewFile();
     }
 
-    Template template = velocityEngine.getTemplate("templates2\\serviceApp.pom.vm", "UTF-8");
+    Template template = velocityEngine.getTemplate("templates2/serviceApp.pom.vm", "UTF-8");
     FileWriter writer = new FileWriter(filePath);
     template.merge(context, writer);
     writer.flush();
@@ -1656,7 +1656,7 @@ public class CodeGenerator {
       file.createNewFile();
     }
 
-    Template template = velocityEngine.getTemplate("templates2\\controllerApp.java.vm", "UTF-8");
+    Template template = velocityEngine.getTemplate("templates2/controllerApp.java.vm", "UTF-8");
     FileWriter writer = new FileWriter(filePath);
     template.merge(context, writer);
     writer.flush();
@@ -1702,7 +1702,7 @@ public class CodeGenerator {
       file.createNewFile();
     }
 
-    Template template = velocityEngine.getTemplate("templates2\\apiApp.pom.vm", "UTF-8");
+    Template template = velocityEngine.getTemplate("templates2/apiApp.pom.vm", "UTF-8");
     FileWriter writer = new FileWriter(filePath);
     template.merge(context, writer);
     writer.flush();
