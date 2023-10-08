@@ -14,7 +14,6 @@ import org.springframework.context.annotation.Description;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
 
@@ -23,6 +22,7 @@ import java.util.List;
  *
  * @author 一源-花和尚
  * @date 2023-09-18
+ * @folder 系统管理/管理端用户管理
  */
 @SaCheckLogin
 @Slf4j
@@ -37,7 +37,6 @@ public class SysUserController {
    * @return {@link CommonResult<List<SysUserQueryVO>>}
    * @author 一源-花和尚
    * @date 2023-09-18
-   * @folder 公共接口/系统管理/管理端用户管理
    */
   @Description("系统管理/管理端用户管理/查询管理端用户")
   @SaCheckPermission(
@@ -56,7 +55,6 @@ public class SysUserController {
    * @return {@link CommonResult<Page<SysUserQueryVO>>}
    * @author 一源-花和尚
    * @date 2023-09-18
-   * @folder 公共接口/系统管理/管理端用户管理
    */
   @Description("系统管理/管理端用户管理/查询管理端用户")
   @SaCheckPermission(
@@ -76,7 +74,6 @@ public class SysUserController {
    * @return {@link CommonResult<SysUserQueryVO>}
    * @author 一源-花和尚
    * @date 2023-09-18
-   * @folder 公共接口/系统管理/管理端用户管理
    */
   @Description("系统管理/管理端用户管理/查询管理端用户")
   @SaCheckPermission(
@@ -96,7 +93,6 @@ public class SysUserController {
    * @return {@link CommonResult<String>}
    * @author 一源-花和尚
    * @date 2023-09-18
-   * @folder 公共接口/系统管理/管理端用户管理
    */
   @Description("系统管理/管理端用户管理/删除管理端用户")
   @SaCheckPermission(
@@ -120,7 +116,6 @@ public class SysUserController {
    * @return {@link CommonResult<String>}
    * @author 一源-花和尚
    * @date 2023-09-18
-   * @folder 公共接口/系统管理/管理端用户管理
    */
   @Description("系统管理/管理端用户管理/编辑管理端用户")
   @SaCheckPermission(
@@ -144,7 +139,6 @@ public class SysUserController {
    * @return {@link CommonResult<String>}
    * @author 一源-花和尚
    * @date 2023-09-18
-   * @folder 公共接口/系统管理/管理端用户管理
    */
   @Description("系统管理/管理端用户管理/新增管理端用户")
   @SaCheckPermission(
@@ -167,7 +161,6 @@ public class SysUserController {
    * @return {@link CommonResult<String>}
    * @author 一源-花和尚
    * @date 2023-09-18
-   * @folder 平台端/系统管理/用户管理/登录
    */
   @SaIgnore
   @PostMapping(value = "/sys/user/login")
@@ -183,7 +176,6 @@ public class SysUserController {
    * @return {@link CommonResult<String>}
    * @author 一源-花和尚
    * @date 2023-09-18
-   * @folder 平台端/系统管理/用户管理/获取用户信息
    */
   @GetMapping(value = "/sys/user/getUserInfo")
   @ResponseBody
@@ -191,18 +183,17 @@ public class SysUserController {
     return CommonResult.success(sysUserService.getUserInfo());
   }
 
-  /**
-   * 导出
-   *
-   * @return {@link CommonResult<String>}
-   * @author 一源-花和尚
-   * @date 2023-09-18
-   * @folder 平台端/系统管理/用户管理/导出
-   */
-  @SaIgnore
-  @GetMapping(value = "/sys/user/excel")
-  @ResponseBody
-  public void excel(HttpServletResponse response) throws Exception {
-    sysUserService.excel(response);
-  }
+  //  /**
+  //   * 导出
+  //   *
+  //   * @return {@link CommonResult<String>}
+  //   * @author 一源-花和尚
+  //   * @date 2023-09-18
+  //   */
+  //  @SaIgnore
+  //  @GetMapping(value = "/sys/user/excel")
+  //  @ResponseBody
+  //  public void excel(HttpServletResponse response) throws Exception {
+  //    sysUserService.excel(response);
+  //  }
 }

@@ -10,7 +10,6 @@ import net.yiyuan.dto.SpmShopTypeAddDTO;
 import net.yiyuan.dto.SpmShopTypeEditDTO;
 import net.yiyuan.dto.SpmShopTypeListDTO;
 import net.yiyuan.dto.SpmShopTypePageDTO;
-import net.yiyuan.enums.SpmShopTypeIsDelEnum;
 import net.yiyuan.mapper.SpmShopTypeMapper;
 import net.yiyuan.model.SpmShopType;
 import net.yiyuan.service.SpmShopTypeService;
@@ -24,7 +23,7 @@ import java.util.List;
  * 店铺类型Service层接口实现
  *
  * @author 一源-花和尚
- * @date 2023-09-22
+ * @date 2023-10-06
  */
 @Slf4j
 @Service
@@ -38,7 +37,7 @@ public class SpmShopTypeServiceImpl extends JoinServiceImpl<SpmShopTypeMapper, S
    * @param request 店铺类型实体
    * @return {@link List< SpmShopTypeQueryVO >}
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
   @Override
   public List<SpmShopTypeQueryVO> list(SpmShopTypeListDTO request) throws Exception {
@@ -46,7 +45,6 @@ public class SpmShopTypeServiceImpl extends JoinServiceImpl<SpmShopTypeMapper, S
     SpmShopType po = new SpmShopType();
     BeanUtilsPlus.copy(request, po);
     JoinLambdaWrapper<SpmShopType> wrapper = new JoinLambdaWrapper<>(po);
-    wrapper.eq(SpmShopType::getIsDel, SpmShopTypeIsDelEnum.NOT_DELETED);
     wrapper.orderByDesc(SpmShopType::getSort);
     wrapper.orderByDesc(SpmShopType::getCreateTime);
     List<SpmShopTypeQueryVO> voList =
@@ -61,14 +59,13 @@ public class SpmShopTypeServiceImpl extends JoinServiceImpl<SpmShopTypeMapper, S
    * @param request 店铺类型实体
    * @return {@link Page< SpmShopTypeQueryVO >}
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
   @Override
   public Page<SpmShopTypeQueryVO> page(SpmShopTypePageDTO request) throws Exception {
     SpmShopType po = new SpmShopType();
     BeanUtilsPlus.copy(request, po);
     JoinLambdaWrapper<SpmShopType> wrapper = new JoinLambdaWrapper<>(po);
-    wrapper.eq(SpmShopType::getIsDel, SpmShopTypeIsDelEnum.NOT_DELETED);
     wrapper.orderByDesc(SpmShopType::getSort);
     wrapper.orderByDesc(SpmShopType::getCreateTime);
     Page<SpmShopTypeQueryVO> voPage =
@@ -85,14 +82,13 @@ public class SpmShopTypeServiceImpl extends JoinServiceImpl<SpmShopTypeMapper, S
    * @param id 店铺类型id
    * @return {@link SpmShopTypeQueryVO}
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
   @Override
   public SpmShopTypeQueryVO details(String id) throws Exception {
     SpmShopType po = new SpmShopType();
     po.setId(id);
     JoinLambdaWrapper<SpmShopType> wrapper = new JoinLambdaWrapper<>(po);
-    wrapper.eq(SpmShopType::getIsDel, SpmShopTypeIsDelEnum.NOT_DELETED);
     SpmShopTypeQueryVO voBean = spmShopTypeMapper.joinSelectOne(wrapper, SpmShopTypeQueryVO.class);
     return voBean;
   }
@@ -103,12 +99,11 @@ public class SpmShopTypeServiceImpl extends JoinServiceImpl<SpmShopTypeMapper, S
    * @param request 店铺类型实体
    * @return {@link SpmShopType}
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
   @Override
   public SpmShopTypeQueryVO details(SpmShopType request) throws Exception {
     JoinLambdaWrapper<SpmShopType> wrapper = new JoinLambdaWrapper<>(request);
-    wrapper.eq(SpmShopType::getIsDel, SpmShopTypeIsDelEnum.NOT_DELETED);
     SpmShopTypeQueryVO voBean = spmShopTypeMapper.joinSelectOne(wrapper, SpmShopTypeQueryVO.class);
     return voBean;
   }
@@ -119,7 +114,7 @@ public class SpmShopTypeServiceImpl extends JoinServiceImpl<SpmShopTypeMapper, S
    * @param ids 店铺类型id(多个逗号分割)
    * @return {@link boolean}
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
   @Override
   public boolean delete(String ids) throws Exception {
@@ -138,7 +133,7 @@ public class SpmShopTypeServiceImpl extends JoinServiceImpl<SpmShopTypeMapper, S
    * @param request 店铺类型实体
    * @return {@link boolean}
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
   @Override
   public boolean edit(SpmShopTypeEditDTO request) throws Exception {
@@ -158,7 +153,7 @@ public class SpmShopTypeServiceImpl extends JoinServiceImpl<SpmShopTypeMapper, S
    * @param request 店铺类型实体
    * @return {@link boolean}
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
   @Override
   public boolean add(SpmShopTypeAddDTO request) throws Exception {

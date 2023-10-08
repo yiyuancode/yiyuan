@@ -1,7 +1,7 @@
 package net.yiyuan.dto;
 
 import lombok.Data;
-import net.yiyuan.enums.*;
+import net.yiyuan.enums.PtmProductAuditStatusEnum;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -9,10 +9,10 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
- * 商品新增接口请求入参实体
+ * 商品信息新增接口请求入参实体
  *
  * @author 一源-花和尚
- * @date 2023-09-22
+ * @date 2023-10-06
  */
 @Data
 public class PtmProductAddDTO implements Serializable {
@@ -22,16 +22,62 @@ public class PtmProductAddDTO implements Serializable {
    *
    * @mock 0
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
   @NotBlank(message = "商户id不能为空")
   private String tenantId;
 
   /**
+   * 主类目id(商品分类2级id，逗号拼接)
+   *
+   * @author 一源-花和尚
+   * @date 2023-10-06
+   */
+  @NotBlank(message = "主类目id(商品分类2级id，逗号拼接)不能为空")
+  private String mainCategoryId;
+
+  /**
+   * 店铺内部分类id(商品分类3级)
+   *
+   * @author 一源-花和尚
+   * @date 2023-10-06
+   */
+  @NotBlank(message = "店铺内部分类id(商品分类3级)不能为空")
+  private String categoryId;
+
+  /**
+   * 品牌id
+   *
+   * @author 一源-花和尚
+   * @date 2023-10-06
+   */
+  @NotBlank(message = "品牌id不能为空")
+  private String brandId;
+
+  /**
+   * 保障服务ids(英文逗号拼接)
+   *
+   * @mock 0
+   * @author 一源-花和尚
+   * @date 2023-10-06
+   */
+  @NotBlank(message = "保障服务ids(英文逗号拼接)不能为空")
+  private String guaranteeIds;
+
+  /**
+   * 运费模板ID
+   *
+   * @author 一源-花和尚
+   * @date 2023-10-06
+   */
+  @NotBlank(message = "运费模板ID不能为空")
+  private String tempId;
+
+  /**
    * 商品图片
    *
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
   @NotBlank(message = "商品图片不能为空")
   private String image;
@@ -40,7 +86,7 @@ public class PtmProductAddDTO implements Serializable {
    * 展示图
    *
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
   @NotBlank(message = "展示图不能为空")
   private String flatPattern;
@@ -49,7 +95,7 @@ public class PtmProductAddDTO implements Serializable {
    * 轮播图
    *
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
   @NotBlank(message = "轮播图不能为空")
   private String sliderImage;
@@ -58,7 +104,7 @@ public class PtmProductAddDTO implements Serializable {
    * 商品名称
    *
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
   @NotBlank(message = "商品名称不能为空")
   private String name;
@@ -67,7 +113,7 @@ public class PtmProductAddDTO implements Serializable {
    * 商品简介
    *
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
   @NotBlank(message = "商品简介不能为空")
   private String title;
@@ -76,56 +122,17 @@ public class PtmProductAddDTO implements Serializable {
    * 关键字,英文逗号拼接
    *
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
   @NotBlank(message = "关键字,英文逗号拼接不能为空")
   private String keyword;
-
-  /**
-   * 租户分类id(逗号拼接)
-   *
-   * @author 一源-花和尚
-   * @date 2023-09-22
-   */
-  @NotBlank(message = "租户分类id(逗号拼接)不能为空")
-  private String cateId;
-
-  /**
-   * 品牌id
-   *
-   * @mock 0
-   * @author 一源-花和尚
-   * @date 2023-09-22
-   */
-  @NotBlank(message = "品牌id不能为空")
-  private String brandId;
-
-  /**
-   * 平台分类id
-   *
-   * @mock 0
-   * @author 一源-花和尚
-   * @date 2023-09-22
-   */
-  @NotBlank(message = "平台分类id不能为空")
-  private String categoryId;
-
-  /**
-   * 保障服务ids(英文逗号拼接)
-   *
-   * @mock 0
-   * @author 一源-花和尚
-   * @date 2023-09-22
-   */
-  @NotBlank(message = "保障服务ids(英文逗号拼接)不能为空")
-  private String guaranteeIds;
 
   /**
    * 商品价格
    *
    * @mock 0.00
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
   @NotNull(message = "商品价格不能为空")
   private BigDecimal price;
@@ -135,7 +142,7 @@ public class PtmProductAddDTO implements Serializable {
    *
    * @mock 0.00
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
   @NotNull(message = "会员价格不能为空")
   private BigDecimal vipPrice;
@@ -145,7 +152,7 @@ public class PtmProductAddDTO implements Serializable {
    *
    * @mock 0.00
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
   @NotNull(message = "市场价不能为空")
   private BigDecimal otPrice;
@@ -154,7 +161,7 @@ public class PtmProductAddDTO implements Serializable {
    * 单位名
    *
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
   @NotBlank(message = "单位名不能为空")
   private String unitName;
@@ -164,7 +171,7 @@ public class PtmProductAddDTO implements Serializable {
    *
    * @mock 0
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
   @NotNull(message = "销量不能为空")
   private Integer sales;
@@ -174,7 +181,7 @@ public class PtmProductAddDTO implements Serializable {
    *
    * @mock 0
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
   @NotNull(message = "库存不能为空")
   private Integer stock;
@@ -184,7 +191,7 @@ public class PtmProductAddDTO implements Serializable {
    *
    * @mock 0.00
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
   @NotNull(message = "成本价不能为空")
   private BigDecimal cost;
@@ -194,7 +201,7 @@ public class PtmProductAddDTO implements Serializable {
    *
    * @mock 0
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
   @NotNull(message = "虚拟销量不能为空")
   private Integer ficti;
@@ -204,7 +211,7 @@ public class PtmProductAddDTO implements Serializable {
    *
    * @mock 0
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
   @NotNull(message = "浏览量不能为空")
   private Integer browse;
@@ -213,7 +220,7 @@ public class PtmProductAddDTO implements Serializable {
    * 商品二维码地址(用户小程序海报)
    *
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
   private String codePath;
 
@@ -221,116 +228,76 @@ public class PtmProductAddDTO implements Serializable {
    * 主图视频链接
    *
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
   private String videoLink;
-
-  /**
-   * 运费模板ID
-   *
-   * @mock 1
-   * @author 一源-花和尚
-   * @date 2023-09-22
-   */
-  @NotNull(message = "运费模板ID不能为空")
-  private Integer tempId;
-
-  /**
-   * 排序
-   *
-   * @mock 0
-   * @author 一源-花和尚
-   * @date 2023-09-22
-   */
-  @NotNull(message = "排序不能为空")
-  private Integer sort;
 
   /**
    * 总后台排序
    *
    * @mock 0
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
   @NotNull(message = "总后台排序不能为空")
   private Integer rank;
 
   /**
-   * 规格#0=单|1=多
+   * 是否单规格0=单|1=多
    *
-   * @mock 0
+   * @mock 1
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
-  @NotNull(message = "规格#0=单|1=多不能为空")
-  private PtmProductSpecTypeEnum specType;
+  @NotNull(message = "是否单规格0=单|1=多不能为空")
+  private Boolean isSpecType;
 
   /**
-   * 是否回收站
+   * 是否放入回收站0=否|1=是
    *
-   * @mock 0
+   * @mock 1
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
-  @NotNull(message = "是否回收站不能为空")
-  private Integer isRecycle;
+  @NotNull(message = "是否放入回收站0=否|1=是不能为空")
+  private Boolean isRecycle;
 
   /**
-   * 是否单独分佣
+   * 是否单独分佣0=否|1=是
    *
    * @mock 0
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
-  @NotNull(message = "是否单独分佣不能为空")
-  private Integer isSub;
+  @NotNull(message = "是否单独分佣0=否|1=是不能为空")
+  private Boolean isSub;
 
   /**
-   * 状态#0=未上架|1=上架
+   * 是否加入审核0=否|1=是
    *
-   * @mock 0
+   * @mock 1
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
-  @NotNull(message = "状态#0=未上架|1=上架不能为空")
-  private PtmProductIsShowEnum isShow;
+  @NotNull(message = "是否加入审核0=否|1=是不能为空")
+  private Boolean isAudit;
 
   /**
    * 审核状态#0=无需审核|1=待审核|2=审核成功|3=审核拒绝
    *
    * @mock 1
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
   @NotNull(message = "审核状态#0=无需审核|1=待审核|2=审核成功|3=审核拒绝不能为空")
   private PtmProductAuditStatusEnum auditStatus;
 
   /**
-   * 是否加入审核#0=正常|1=审核流程中
-   *
-   * @mock 0
-   * @author 一源-花和尚
-   * @date 2023-09-22
-   */
-  @NotNull(message = "是否加入审核#0=正常|1=审核流程中不能为空")
-  private PtmProductIsAuditEnum isAudit;
-
-  /**
    * 拒绝原因
    *
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
   @NotBlank(message = "拒绝原因不能为空")
   private String reasonContent;
-
-  /**
-   * 是否删除#0=否|1=是
-   *
-   * @mock 0
-   * @author 一源-花和尚
-   * @date 2023-09-22
-   */
-  @NotNull(message = "是否删除#0=否|1=是不能为空")
-  private PtmProductIsDelEnum isDel;
 }

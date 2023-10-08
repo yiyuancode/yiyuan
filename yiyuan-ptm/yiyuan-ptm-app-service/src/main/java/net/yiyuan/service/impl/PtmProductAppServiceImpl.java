@@ -9,10 +9,10 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 /**
- * 商品移动端Service层接口实现
+ * 商品信息移动端Service层接口实现
  *
  * @author 一源-花和尚
- * @date 2023-09-22
+ * @date 2023-10-06
  */
 @Slf4j
 @Service

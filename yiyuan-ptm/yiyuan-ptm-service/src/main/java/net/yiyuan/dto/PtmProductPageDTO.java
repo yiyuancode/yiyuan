@@ -2,7 +2,7 @@ package net.yiyuan.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
-import net.yiyuan.enums.*;
+import net.yiyuan.enums.PtmProductAuditStatusEnum;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotNull;
@@ -11,10 +11,10 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 /**
- * 商品分页接口请求入参实体
+ * 商品信息分页接口请求入参实体
  *
  * @author 一源-花和尚
- * @date 2023-09-22
+ * @date 2023-10-06
  */
 @Data
 public class PtmProductPageDTO implements Serializable {
@@ -23,7 +23,7 @@ public class PtmProductPageDTO implements Serializable {
    *
    * @mock 10
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
   @NotNull(message = "分页条数不能为空")
   private Integer pageSize;
@@ -32,7 +32,7 @@ public class PtmProductPageDTO implements Serializable {
    *
    * @mock 1
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
   @NotNull(message = "分页页数不能为空")
   private Integer pageNum;
@@ -41,7 +41,7 @@ public class PtmProductPageDTO implements Serializable {
    * 商品id
    *
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
   private String id;
 
@@ -49,15 +49,55 @@ public class PtmProductPageDTO implements Serializable {
    * 商户id
    *
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
   private String tenantId;
+
+  /**
+   * 主类目id(商品分类2级id，逗号拼接)
+   *
+   * @author 一源-花和尚
+   * @date 2023-10-06
+   */
+  private String mainCategoryId;
+
+  /**
+   * 店铺内部分类id(商品分类3级)
+   *
+   * @author 一源-花和尚
+   * @date 2023-10-06
+   */
+  private String categoryId;
+
+  /**
+   * 品牌id
+   *
+   * @author 一源-花和尚
+   * @date 2023-10-06
+   */
+  private String brandId;
+
+  /**
+   * 保障服务ids(英文逗号拼接)
+   *
+   * @author 一源-花和尚
+   * @date 2023-10-06
+   */
+  private String guaranteeIds;
+
+  /**
+   * 运费模板ID
+   *
+   * @author 一源-花和尚
+   * @date 2023-10-06
+   */
+  private String tempId;
 
   /**
    * 商品图片
    *
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
   private String image;
 
@@ -65,7 +105,7 @@ public class PtmProductPageDTO implements Serializable {
    * 展示图
    *
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
   private String flatPattern;
 
@@ -73,7 +113,7 @@ public class PtmProductPageDTO implements Serializable {
    * 轮播图
    *
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
   private String sliderImage;
 
@@ -81,7 +121,7 @@ public class PtmProductPageDTO implements Serializable {
    * 商品名称
    *
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
   private String name;
 
@@ -89,7 +129,7 @@ public class PtmProductPageDTO implements Serializable {
    * 商品简介
    *
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
   private String title;
 
@@ -97,47 +137,15 @@ public class PtmProductPageDTO implements Serializable {
    * 关键字,英文逗号拼接
    *
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
   private String keyword;
-
-  /**
-   * 租户分类id(逗号拼接)
-   *
-   * @author 一源-花和尚
-   * @date 2023-09-22
-   */
-  private String cateId;
-
-  /**
-   * 品牌id
-   *
-   * @author 一源-花和尚
-   * @date 2023-09-22
-   */
-  private String brandId;
-
-  /**
-   * 平台分类id
-   *
-   * @author 一源-花和尚
-   * @date 2023-09-22
-   */
-  private String categoryId;
-
-  /**
-   * 保障服务ids(英文逗号拼接)
-   *
-   * @author 一源-花和尚
-   * @date 2023-09-22
-   */
-  private String guaranteeIds;
 
   /**
    * 商品价格
    *
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
   private BigDecimal price;
 
@@ -145,7 +153,7 @@ public class PtmProductPageDTO implements Serializable {
    * 会员价格
    *
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
   private BigDecimal vipPrice;
 
@@ -153,7 +161,7 @@ public class PtmProductPageDTO implements Serializable {
    * 市场价
    *
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
   private BigDecimal otPrice;
 
@@ -161,7 +169,7 @@ public class PtmProductPageDTO implements Serializable {
    * 单位名
    *
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
   private String unitName;
 
@@ -169,7 +177,7 @@ public class PtmProductPageDTO implements Serializable {
    * 销量
    *
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
   private Integer sales;
 
@@ -177,7 +185,7 @@ public class PtmProductPageDTO implements Serializable {
    * 库存
    *
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
   private Integer stock;
 
@@ -185,7 +193,7 @@ public class PtmProductPageDTO implements Serializable {
    * 成本价
    *
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
   private BigDecimal cost;
 
@@ -193,7 +201,7 @@ public class PtmProductPageDTO implements Serializable {
    * 虚拟销量
    *
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
   private Integer ficti;
 
@@ -201,7 +209,7 @@ public class PtmProductPageDTO implements Serializable {
    * 浏览量
    *
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
   private Integer browse;
 
@@ -209,7 +217,7 @@ public class PtmProductPageDTO implements Serializable {
    * 商品二维码地址(用户小程序海报)
    *
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
   private String codePath;
 
@@ -217,104 +225,80 @@ public class PtmProductPageDTO implements Serializable {
    * 主图视频链接
    *
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
   private String videoLink;
-
-  /**
-   * 运费模板ID
-   *
-   * @author 一源-花和尚
-   * @date 2023-09-22
-   */
-  private Integer tempId;
-
-  /**
-   * 排序
-   *
-   * @author 一源-花和尚
-   * @date 2023-09-22
-   */
-  private Integer sort;
 
   /**
    * 总后台排序
    *
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
   private Integer rank;
 
   /**
-   * 规格#0=单|1=多
+   * 是否单规格0=单|1=多
    *
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
-  private PtmProductSpecTypeEnum specType;
+  private Boolean isSpecType;
 
   /**
-   * 是否回收站
+   * 是否放入回收站0=否|1=是
    *
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
-  private Integer isRecycle;
+  private Boolean isRecycle;
 
   /**
-   * 是否单独分佣
+   * 是否单独分佣0=否|1=是
    *
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
-  private Integer isSub;
+  private Boolean isSub;
 
   /**
-   * 状态#0=未上架|1=上架
+   * 是否加入审核0=否|1=是
    *
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
-  private PtmProductIsShowEnum isShow;
+  private Boolean isAudit;
 
   /**
    * 审核状态#0=无需审核|1=待审核|2=审核成功|3=审核拒绝
    *
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
   private PtmProductAuditStatusEnum auditStatus;
-
-  /**
-   * 是否加入审核#0=正常|1=审核流程中
-   *
-   * @author 一源-花和尚
-   * @date 2023-09-22
-   */
-  private PtmProductIsAuditEnum isAudit;
 
   /**
    * 拒绝原因
    *
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
   private String reasonContent;
 
   /**
-   * 是否删除#0=否|1=是
+   * 是否上架0=否|1=是
    *
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
-  private PtmProductIsDelEnum isDel;
+  private Boolean isShow;
 
   /**
    * 创建时间(查询开始时间)
    *
    * @see Date
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
@@ -324,7 +308,7 @@ public class PtmProductPageDTO implements Serializable {
    *
    * @see Date
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
@@ -335,7 +319,7 @@ public class PtmProductPageDTO implements Serializable {
    *
    * @see Date
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
@@ -345,7 +329,7 @@ public class PtmProductPageDTO implements Serializable {
    *
    * @see Date
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
@@ -355,7 +339,7 @@ public class PtmProductPageDTO implements Serializable {
    * 创建人
    *
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
   private String createUser;
 
@@ -363,7 +347,7 @@ public class PtmProductPageDTO implements Serializable {
    * 修改人
    *
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
   private String updateUser;
 }

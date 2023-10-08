@@ -23,8 +23,8 @@ import java.util.List;
  * 店铺管理
  *
  * @author 一源-花和尚
- * @date 2023-09-18
- * @folder 店铺管理/店铺管理
+ * @date 2023-10-06
+ * @folder 商户管理/店铺管理
  */
 @SaCheckLogin
 @Slf4j
@@ -38,9 +38,9 @@ public class SpmShopController {
    * @param request 店铺实体
    * @return {@link CommonResult<List<SpmShopQueryVO>>}
    * @author 一源-花和尚
-   * @date 2023-09-18
+   * @date 2023-10-06
    */
-  @Description("店铺管理/店铺管理/查询店铺")
+  @Description("商户管理/店铺管理/查询店铺")
   @SaCheckPermission(
       value = {"spm:shop:query"},
       orRole = "admin")
@@ -56,9 +56,9 @@ public class SpmShopController {
    * @param request 店铺实体
    * @return {@link CommonResult<Page<SpmShopQueryVO>>}
    * @author 一源-花和尚
-   * @date 2023-09-18
+   * @date 2023-10-06
    */
-  @Description("店铺管理/店铺管理/查询店铺")
+  @Description("商户管理/店铺管理/查询店铺")
   @SaCheckPermission(
       value = {"spm:shop:query"},
       orRole = "admin")
@@ -74,9 +74,9 @@ public class SpmShopController {
    * @param id 店铺id
    * @return {@link CommonResult<SpmShopQueryVO>}
    * @author 一源-花和尚
-   * @date 2023-09-18
+   * @date 2023-10-06
    */
-  @Description("店铺管理/店铺管理/查询店铺")
+  @Description("商户管理/店铺管理/查询店铺")
   @SaCheckPermission(
       value = {"spm:shop:query"},
       orRole = "admin")
@@ -93,9 +93,9 @@ public class SpmShopController {
    * @param ids 店铺id(多个逗号分割)
    * @return {@link CommonResult<String>}
    * @author 一源-花和尚
-   * @date 2023-09-18
+   * @date 2023-10-06
    */
-  @Description("店铺管理/店铺管理/删除店铺")
+  @Description("商户管理/店铺管理/删除店铺")
   @SaCheckPermission(
       value = {"spm:shop:delete"},
       orRole = "admin")
@@ -116,9 +116,9 @@ public class SpmShopController {
    * @param request 店铺实体
    * @return {@link CommonResult<String>}
    * @author 一源-花和尚
-   * @date 2023-09-18
+   * @date 2023-10-06
    */
-  @Description("店铺管理/店铺管理/编辑店铺")
+  @Description("商户管理/店铺管理/编辑店铺")
   @SaCheckPermission(
       value = {"spm:shop:edit"},
       orRole = "admin")
@@ -139,38 +139,15 @@ public class SpmShopController {
    * @param request 店铺实体
    * @return {@link CommonResult<String>}
    * @author 一源-花和尚
-   * @date 2023-09-18
+   * @date 2023-10-06
    */
-  @Description("店铺管理/店铺管理/新增店铺")
+  @Description("商户管理/店铺管理/新增店铺")
   @SaCheckPermission(
       value = {"spm:shop:add"},
       orRole = "admin")
   @PostMapping(value = "/spm/shop/add")
   @ResponseBody
   public CommonResult<String> add(@RequestBody @Validated SpmShopAddDTO request) throws Exception {
-    if (spmShopService.add(request)) {
-      return CommonResult.success(null, "新增店铺成功");
-    } else {
-      return CommonResult.failed("新增店铺失败");
-    }
-  }
-
-  /**
-   * 申请店铺
-   *
-   * @param request 店铺实体
-   * @return {@link CommonResult<String>}
-   * @author 一源-花和尚
-   * @date 2023-09-18
-   */
-  @Description("店铺管理/店铺管理/申请店铺")
-  @SaCheckPermission(
-      value = {"spm:shop:apply"},
-      orRole = "admin")
-  @PostMapping(value = "/spm/shop/apply")
-  @ResponseBody
-  public CommonResult<String> apply(@RequestBody @Validated SpmShopAddDTO request)
-      throws Exception {
     if (spmShopService.add(request)) {
       return CommonResult.success(null, "新增店铺成功");
     } else {
