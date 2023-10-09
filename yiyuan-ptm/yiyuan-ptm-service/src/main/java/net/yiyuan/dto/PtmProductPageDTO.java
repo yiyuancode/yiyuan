@@ -13,341 +13,361 @@ import java.util.Date;
 /**
  * 商品信息分页接口请求入参实体
  *
- * @author 一源-花和尚
- * @date 2023-10-06
+ * @author 一源团队-花和尚
+ * @date 2023-10-09
  */
 @Data
 public class PtmProductPageDTO implements Serializable {
-  /**
-   * 分页条数
-   *
-   * @mock 10
-   * @author 一源-花和尚
-   * @date 2023-10-06
-   */
-  @NotNull(message = "分页条数不能为空")
-  private Integer pageSize;
-  /**
-   * 分页页数
-   *
-   * @mock 1
-   * @author 一源-花和尚
-   * @date 2023-10-06
-   */
-  @NotNull(message = "分页页数不能为空")
-  private Integer pageNum;
+    /**
+     * 分页条数
+     *
+     * @mock 10
+     * @author 一源团队-花和尚
+     * @date 2023-10-09
+     */
+    @NotNull(message = "分页条数不能为空")
+    private Integer pageSize;
+    /**
+     * 分页页数
+     *
+     * @mock 1
+     * @author 一源团队-花和尚
+     * @date 2023-10-09
+     */
+    @NotNull(message = "分页页数不能为空")
+    private Integer pageNum;
 
-  /**
-   * 商品id
-   *
-   * @author 一源-花和尚
-   * @date 2023-10-06
-   */
-  private String id;
 
-  /**
-   * 商户id
-   *
-   * @author 一源-花和尚
-   * @date 2023-10-06
-   */
-  private String tenantId;
+    /**
+     * 商品id
+     *
+     * @author 一源团队-花和尚
+     * @date 2023-10-09
+     */
+    private String id;
 
-  /**
-   * 主类目id(商品分类2级id，逗号拼接)
-   *
-   * @author 一源-花和尚
-   * @date 2023-10-06
-   */
-  private String mainCategoryId;
 
-  /**
-   * 店铺内部分类id(商品分类3级)
-   *
-   * @author 一源-花和尚
-   * @date 2023-10-06
-   */
-  private String categoryId;
+    /**
+     * 商户id
+     *
+     * @author 一源团队-花和尚
+     * @date 2023-10-09
+     */
+    private String tenantId;
 
-  /**
-   * 品牌id
-   *
-   * @author 一源-花和尚
-   * @date 2023-10-06
-   */
-  private String brandId;
 
-  /**
-   * 保障服务ids(英文逗号拼接)
-   *
-   * @author 一源-花和尚
-   * @date 2023-10-06
-   */
-  private String guaranteeIds;
+    /**
+     * 主类目id(商品分类2级id，逗号拼接)
+     *
+     * @author 一源团队-花和尚
+     * @date 2023-10-09
+     */
+    private String tenantCategoryId;
 
-  /**
-   * 运费模板ID
-   *
-   * @author 一源-花和尚
-   * @date 2023-10-06
-   */
-  private String tempId;
 
-  /**
-   * 商品图片
-   *
-   * @author 一源-花和尚
-   * @date 2023-10-06
-   */
-  private String image;
+    /**
+     * 店铺内部分类id(商品分类3级)
+     *
+     * @author 一源团队-花和尚
+     * @date 2023-10-09
+     */
+    private String shopCategoryId;
 
-  /**
-   * 展示图
-   *
-   * @author 一源-花和尚
-   * @date 2023-10-06
-   */
-  private String flatPattern;
 
-  /**
-   * 轮播图
-   *
-   * @author 一源-花和尚
-   * @date 2023-10-06
-   */
-  private String sliderImage;
+    /**
+     * 品牌id
+     *
+     * @author 一源团队-花和尚
+     * @date 2023-10-09
+     */
+    private String brandId;
 
-  /**
-   * 商品名称
-   *
-   * @author 一源-花和尚
-   * @date 2023-10-06
-   */
-  private String name;
 
-  /**
-   * 商品简介
-   *
-   * @author 一源-花和尚
-   * @date 2023-10-06
-   */
-  private String title;
+    /**
+     * 保障服务ids(英文逗号拼接)
+     *
+     * @author 一源团队-花和尚
+     * @date 2023-10-09
+     */
+    private String guaranteeIds;
 
-  /**
-   * 关键字,英文逗号拼接
-   *
-   * @author 一源-花和尚
-   * @date 2023-10-06
-   */
-  private String keyword;
 
-  /**
-   * 商品价格
-   *
-   * @author 一源-花和尚
-   * @date 2023-10-06
-   */
-  private BigDecimal price;
+    /**
+     * 运费模板ID
+     *
+     * @author 一源团队-花和尚
+     * @date 2023-10-09
+     */
+    private String tempId;
 
-  /**
-   * 会员价格
-   *
-   * @author 一源-花和尚
-   * @date 2023-10-06
-   */
-  private BigDecimal vipPrice;
 
-  /**
-   * 市场价
-   *
-   * @author 一源-花和尚
-   * @date 2023-10-06
-   */
-  private BigDecimal otPrice;
+    /**
+     * 商品橱窗图片
+     *
+     * @author 一源团队-花和尚
+     * @date 2023-10-09
+     */
+    private String image;
 
-  /**
-   * 单位名
-   *
-   * @author 一源-花和尚
-   * @date 2023-10-06
-   */
-  private String unitName;
 
-  /**
-   * 销量
-   *
-   * @author 一源-花和尚
-   * @date 2023-10-06
-   */
-  private Integer sales;
+    /**
+     * 详情图(多个逗号分割)
+     *
+     * @author 一源团队-花和尚
+     * @date 2023-10-09
+     */
+    private String sliderImage;
 
-  /**
-   * 库存
-   *
-   * @author 一源-花和尚
-   * @date 2023-10-06
-   */
-  private Integer stock;
 
-  /**
-   * 成本价
-   *
-   * @author 一源-花和尚
-   * @date 2023-10-06
-   */
-  private BigDecimal cost;
+    /**
+     * 详情视频链接
+     *
+     * @author 一源团队-花和尚
+     * @date 2023-10-09
+     */
+    private String videoLink;
 
-  /**
-   * 虚拟销量
-   *
-   * @author 一源-花和尚
-   * @date 2023-10-06
-   */
-  private Integer ficti;
 
-  /**
-   * 浏览量
-   *
-   * @author 一源-花和尚
-   * @date 2023-10-06
-   */
-  private Integer browse;
+    /**
+     * 商品名称
+     *
+     * @author 一源团队-花和尚
+     * @date 2023-10-09
+     */
+    private String name;
 
-  /**
-   * 商品二维码地址(用户小程序海报)
-   *
-   * @author 一源-花和尚
-   * @date 2023-10-06
-   */
-  private String codePath;
 
-  /**
-   * 主图视频链接
-   *
-   * @author 一源-花和尚
-   * @date 2023-10-06
-   */
-  private String videoLink;
+    /**
+     * 商品简介
+     *
+     * @author 一源团队-花和尚
+     * @date 2023-10-09
+     */
+    private String title;
 
-  /**
-   * 总后台排序
-   *
-   * @author 一源-花和尚
-   * @date 2023-10-06
-   */
-  private Integer rank;
 
-  /**
-   * 是否单规格0=单|1=多
-   *
-   * @author 一源-花和尚
-   * @date 2023-10-06
-   */
-  private Boolean isSpecType;
+    /**
+     * 关键字,英文逗号拼接
+     *
+     * @author 一源团队-花和尚
+     * @date 2023-10-09
+     */
+    private String keyword;
 
-  /**
-   * 是否放入回收站0=否|1=是
-   *
-   * @author 一源-花和尚
-   * @date 2023-10-06
-   */
-  private Boolean isRecycle;
 
-  /**
-   * 是否单独分佣0=否|1=是
-   *
-   * @author 一源-花和尚
-   * @date 2023-10-06
-   */
-  private Boolean isSub;
+    /**
+     * 库存(根据sku所有累计库存自动设置)
+     *
+     * @author 一源团队-花和尚
+     * @date 2023-10-09
+     */
+    private Integer stock;
 
-  /**
-   * 是否加入审核0=否|1=是
-   *
-   * @author 一源-花和尚
-   * @date 2023-10-06
-   */
-  private Boolean isAudit;
 
-  /**
-   * 审核状态#0=无需审核|1=待审核|2=审核成功|3=审核拒绝
-   *
-   * @author 一源-花和尚
-   * @date 2023-10-06
-   */
-  private PtmProductAuditStatusEnum auditStatus;
+    /**
+     * 售卖价格(根据sku最低售卖价格自动设置)
+     *
+     * @author 一源团队-花和尚
+     * @date 2023-10-09
+     */
+    private BigDecimal salePrice;
 
-  /**
-   * 拒绝原因
-   *
-   * @author 一源-花和尚
-   * @date 2023-10-06
-   */
-  private String reasonContent;
 
-  /**
-   * 是否上架0=否|1=是
-   *
-   * @author 一源-花和尚
-   * @date 2023-10-06
-   */
-  private Boolean isShow;
+    /**
+     * 划线价格(根据sku最低划线价格自动设置)
+     *
+     * @author 一源团队-花和尚
+     * @date 2023-10-09
+     */
+    private BigDecimal crossedPrice;
 
-  /**
-   * 创建时间(查询开始时间)
-   *
-   * @see Date
-   * @author 一源-花和尚
-   * @date 2023-10-06
-   */
-  @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-  private Date createTimeStart;
-  /**
-   * 创建时间(查询结束时间)
-   *
-   * @see Date
-   * @author 一源-花和尚
-   * @date 2023-10-06
-   */
-  @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-  private Date createTimeEnd;
 
-  /**
-   * 修改时间(查询开始时间)
-   *
-   * @see Date
-   * @author 一源-花和尚
-   * @date 2023-10-06
-   */
-  @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-  private Date updateTimeStart;
-  /**
-   * 修改时间(查询结束时间)
-   *
-   * @see Date
-   * @author 一源-花和尚
-   * @date 2023-10-06
-   */
-  @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-  private Date updateTimeEnd;
+    /**
+     * 成本价(根据sku最低成本价自动设置)
+     *
+     * @author 一源团队-花和尚
+     * @date 2023-10-09
+     */
+    private BigDecimal costPrice;
 
-  /**
-   * 创建人
-   *
-   * @author 一源-花和尚
-   * @date 2023-10-06
-   */
-  private String createUser;
 
-  /**
-   * 修改人
-   *
-   * @author 一源-花和尚
-   * @date 2023-10-06
-   */
-  private String updateUser;
+    /**
+     * 单位名
+     *
+     * @author 一源团队-花和尚
+     * @date 2023-10-09
+     */
+    private String unitName;
+
+
+    /**
+     * 实际销量
+     *
+     * @author 一源团队-花和尚
+     * @date 2023-10-09
+     */
+    private Integer sales;
+
+
+    /**
+     * 虚拟销量(如果为默认值前端展示实际销量,反之展示虚拟销量)
+     *
+     * @author 一源团队-花和尚
+     * @date 2023-10-09
+     */
+    private Integer fictiSales;
+
+
+    /**
+     * 浏览量
+     *
+     * @author 一源团队-花和尚
+     * @date 2023-10-09
+     */
+    private Integer browse;
+
+
+    /**
+     * 商品二维码地址(用户小程序海报)
+     *
+     * @author 一源团队-花和尚
+     * @date 2023-10-09
+     */
+    private String codePath;
+
+
+    /**
+     * 总后台排序
+     *
+     * @author 一源团队-花和尚
+     * @date 2023-10-09
+     */
+    private Integer tenantSort;
+
+
+    /**
+     * 是否单规格0=单|1=多
+     *
+     * @author 一源团队-花和尚
+     * @date 2023-10-09
+     */
+    private Boolean isSpecType;
+
+
+    /**
+     * 是否放入回收站0=否|1=是
+     *
+     * @author 一源团队-花和尚
+     * @date 2023-10-09
+     */
+    private Boolean isRecycle;
+
+
+    /**
+     * 是否单独分佣0=否|1=是
+     *
+     * @author 一源团队-花和尚
+     * @date 2023-10-09
+     */
+    private Boolean isSub;
+
+
+    /**
+     * 是否加入审核0=否|1=是
+     *
+     * @author 一源团队-花和尚
+     * @date 2023-10-09
+     */
+    private Boolean isAudit;
+
+
+    /**
+     * 审核状态#0=无需审核|1=待审核|2=审核成功|3=审核拒绝
+     *
+     * @author 一源团队-花和尚
+     * @date 2023-10-09
+     */
+    private PtmProductAuditStatusEnum auditStatus;
+
+
+    /**
+     * 拒绝原因
+     *
+     * @author 一源团队-花和尚
+     * @date 2023-10-09
+     */
+    private String reasonContent;
+
+
+    /**
+     * 是否上架0=否|1=是
+     *
+     * @author 一源团队-花和尚
+     * @date 2023-10-09
+     */
+    private Boolean isShow;
+
+
+    /**
+     * 创建时间(查询开始时间)
+     *
+     * @author 一源团队-花和尚
+     * @date 2023-10-09
+     * @see Date
+     */
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date createTimeStart;
+    /**
+     * 创建时间(查询结束时间)
+     *
+     * @author 一源团队-花和尚
+     * @date 2023-10-09
+     * @see Date
+     */
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date createTimeEnd;
+
+
+    /**
+     * 修改时间(查询开始时间)
+     *
+     * @author 一源团队-花和尚
+     * @date 2023-10-09
+     * @see Date
+     */
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date updateTimeStart;
+    /**
+     * 修改时间(查询结束时间)
+     *
+     * @author 一源团队-花和尚
+     * @date 2023-10-09
+     * @see Date
+     */
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date updateTimeEnd;
+
+
+    /**
+     * 创建人
+     *
+     * @author 一源团队-花和尚
+     * @date 2023-10-09
+     */
+    private String createUser;
+
+
+    /**
+     * 修改人
+     *
+     * @author 一源团队-花和尚
+     * @date 2023-10-09
+     */
+    private String updateUser;
+
+
 }

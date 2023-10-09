@@ -73,6 +73,11 @@
             <artifactId>yiyuan-ptm-api</artifactId>
             <version>${revision}</version>
         </dependency>
+        <dependency>
+            <groupId>net.yiyuan</groupId>
+            <artifactId>yiyuan-mam-api</artifactId>
+            <version>${revision}</version>
+        </dependency>
     </dependencies>
 
     <build>

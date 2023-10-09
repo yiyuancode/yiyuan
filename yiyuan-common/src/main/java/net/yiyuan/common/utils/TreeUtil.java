@@ -41,7 +41,7 @@ public class TreeUtil {
    * @return {@link List}<{@link T}>
    */
   public static <T> List<T> buildTreeByTwoLayersFor(List<T> list) {
-    return buildTreeByTwoLayersFor(list, "id", "pid", "child", "0");
+    return buildTreeByTwoLayersFor(list, "id", "pid", "children", "0");
   }
 
   public static <T, F> List<T> buildTreeByTwoLayersFor(

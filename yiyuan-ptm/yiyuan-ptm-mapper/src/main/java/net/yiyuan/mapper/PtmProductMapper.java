@@ -6,7 +6,8 @@ import net.yiyuan.model.PtmProduct;
 /**
  * 商品信息 Mapper接口
  *
- * @author 一源-花和尚
+ * @author 一源团队-花和尚
  * @date 2023-07-27
  */
-public interface PtmProductMapper extends JoinBaseMapper<PtmProduct> {}
+public interface PtmProductMapper extends JoinBaseMapper<PtmProduct> {
+}

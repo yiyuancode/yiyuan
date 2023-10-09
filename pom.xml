@@ -39,6 +39,7 @@
         <module>yiyuan-spm</module>
         <module>yiyuan-um</module>
         <module>yiyuan-ptm</module>
+        <module>yiyuan-mam</module>
         <!--        <module>yiyuan-file</module>-->
 
     </modules>

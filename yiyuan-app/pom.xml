@@ -26,6 +26,17 @@
             <artifactId>yiyuan-um-app-api</artifactId>
             <version>${revision}</version>
         </dependency>
+
+        <dependency>
+            <groupId>net.yiyuan</groupId>
+            <artifactId>yiyuan-mam-app-api</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.yiyuan</groupId>
+            <artifactId>yiyuan-ptm-app-api</artifactId>
+            <version>${revision}</version>
+        </dependency>
     </dependencies>
 
     <build>

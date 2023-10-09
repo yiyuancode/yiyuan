@@ -6,7 +6,10 @@ import net.yiyuan.model.PtmProductBrand;
 /**
  * 品牌移动端Service层接口
  *
- * @author 一源-花和尚
- * @date 2023-10-06
+ * @author 一源团队-花和尚
+ * @date 2023-10-09
  */
-public interface PtmProductBrandAppService extends JoinIService<PtmProductBrand> {}
+public interface PtmProductBrandAppService extends JoinIService<PtmProductBrand> {
+
+
+}

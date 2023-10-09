@@ -4,7 +4,7 @@
  * @author  ${author}
  * @date ${date}
  */
-import * as ${pm1} from "@/api/sys/${pm1}";
+import * as ${pm1} from "@/api/${pm0}/${pm1}";
 ## import _ from "lodash";
 
 const columns = [

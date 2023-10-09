@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
 echo '----部署java开始----'
-mkdir -p /install/service/yiyuan-admin-dev/
-cd /install/service/yiyuan-admin-dev/
-docker stop mall-api-dev
-docker rm mall-api-dev
+mkdir -p /install/yiyuan-admin-dev
+cd /install/yiyuan-admin-dev
+docker stop yiyuan-admin-dev
+docker rm yiyuan-admin-dev
 
 docker stop yiyuan-admin-dev
 docker rm yiyuan-admin-dev
