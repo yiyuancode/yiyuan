@@ -11,12 +11,15 @@ import net.yiyuan.dto.PtmProductEditDTO;
 import net.yiyuan.dto.PtmProductListDTO;
 import net.yiyuan.dto.PtmProductPageDTO;
 import net.yiyuan.mapper.PtmProductMapper;
+import net.yiyuan.mapper.PtmProductSkuMapper;
 import net.yiyuan.model.PtmProduct;
+import net.yiyuan.model.PtmProductSku;
 import net.yiyuan.service.PtmProductService;
 import net.yiyuan.vo.PtmProductQueryVO;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 
@@ -28,153 +31,178 @@ import java.util.List;
  */
 @Slf4j
 @Service
-public class PtmProductServiceImpl extends JoinServiceImpl
-        <PtmProductMapper, PtmProduct>
-        implements PtmProductService {
-    @Resource
-    private PtmProductMapper ptmProductMapper;
+public class PtmProductServiceImpl extends JoinServiceImpl<PtmProductMapper, PtmProduct>
+    implements PtmProductService {
+  @Resource private PtmProductMapper ptmProductMapper;
+  @Resource private PtmProductSkuMapper ptmProductSkuMapper;
 
+  /**
+   * 商品信息列表(全部)
+   *
+   * @param request 商品信息实体
+   * @return {@link List< PtmProductQueryVO >}
+   * @author 一源团队-花和尚
+   * @date 2023-10-09
+   */
+  @Override
+  public List<PtmProductQueryVO> list(PtmProductListDTO request) throws Exception {
 
-    /**
-     * 商品信息列表(全部)
-     *
-     * @param request 商品信息实体
-     * @return {@link List< PtmProductQueryVO >}
-     * @author 一源团队-花和尚
-     * @date 2023-10-09
-     */
-    @Override
-    public List
-            <PtmProductQueryVO> list(PtmProductListDTO request) throws Exception {
+    PtmProduct po = new PtmProduct();
+    BeanUtilsPlus.copy(request, po);
+    JoinLambdaWrapper<PtmProduct> wrapper = new JoinLambdaWrapper<>(po);
+    wrapper.orderByDesc(PtmProduct::getSort);
+    wrapper.orderByDesc(PtmProduct::getCreateTime);
+    List<PtmProductQueryVO> voList =
+        ptmProductMapper.joinSelectList(wrapper, PtmProductQueryVO.class);
 
-        PtmProduct po = new PtmProduct();
-        BeanUtilsPlus.copy(request, po);
-        JoinLambdaWrapper
-                <PtmProduct> wrapper = new JoinLambdaWrapper<>(po);
-        wrapper.orderByDesc(PtmProduct::getSort);
-        wrapper.orderByDesc(PtmProduct::getCreateTime);
-        List
-                <PtmProductQueryVO> voList = ptmProductMapper.joinSelectList(wrapper, PtmProductQueryVO.class);
+    return voList;
+  }
 
-        return voList;
+  /**
+   * 商品信息列表(分页)
+   *
+   * @param request 商品信息实体
+   * @return {@link Page< PtmProductQueryVO >}
+   * @author 一源团队-花和尚
+   * @date 2023-10-09
+   */
+  @Override
+  public Page<PtmProductQueryVO> page(PtmProductPageDTO request) throws Exception {
+    PtmProduct po = new PtmProduct();
+    BeanUtilsPlus.copy(request, po);
+    JoinLambdaWrapper<PtmProduct> wrapper = new JoinLambdaWrapper<>(po);
+    wrapper.orderByDesc(PtmProduct::getSort);
+    wrapper.orderByDesc(PtmProduct::getCreateTime);
+    Page<PtmProductQueryVO> voPage =
+        ptmProductMapper.joinSelectPage(
+            new Page<>(request.getPageNum(), request.getPageSize()),
+            wrapper,
+            PtmProductQueryVO.class);
+    return voPage;
+  }
+
+  /**
+   * 商品信息详情
+   *
+   * @param id 商品信息id
+   * @return {@link PtmProductQueryVO}
+   * @author 一源团队-花和尚
+   * @date 2023-10-09
+   */
+  @Override
+  public PtmProductQueryVO details(String id) throws Exception {
+    PtmProduct po = new PtmProduct();
+    po.setId(id);
+    JoinLambdaWrapper<PtmProduct> wrapper = new JoinLambdaWrapper<>(po);
+    PtmProductQueryVO voBean = ptmProductMapper.joinSelectOne(wrapper, PtmProductQueryVO.class);
+    return voBean;
+  }
+
+  /**
+   * 商品信息详情
+   *
+   * @param request 商品信息实体
+   * @return {@link PtmProduct}
+   * @author 一源团队-花和尚
+   * @date 2023-10-09
+   */
+  @Override
+  public PtmProductQueryVO details(PtmProduct request) throws Exception {
+    JoinLambdaWrapper<PtmProduct> wrapper = new JoinLambdaWrapper<>(request);
+    PtmProductQueryVO voBean = ptmProductMapper.joinSelectOne(wrapper, PtmProductQueryVO.class);
+    return voBean;
+  }
+
+  /**
+   * 删除商品信息(支持批量)
+   *
+   * @param ids 商品信息id(多个逗号分割)
+   * @return {@link boolean}
+   * @author 一源团队-花和尚
+   * @date 2023-10-09
+   */
+  @Override
+  public boolean delete(String ids) throws Exception {
+    List<String> idList = Arrays.asList(ids.split(","));
+    int i = ptmProductMapper.deleteBatchIds(idList);
+    if (i == idList.size()) {
+      return true;
+    } else {
+      throw new BusinessException("批量删除异常");
     }
+  }
 
-    /**
-     * 商品信息列表(分页)
-     *
-     * @param request 商品信息实体
-     * @return {@link Page< PtmProductQueryVO >}
-     * @author 一源团队-花和尚
-     * @date 2023-10-09
-     */
-    @Override
-    public Page
-            <PtmProductQueryVO> page(PtmProductPageDTO request) throws Exception {
-        PtmProduct po = new PtmProduct();
-        BeanUtilsPlus.copy(request, po);
-        JoinLambdaWrapper
-                <PtmProduct> wrapper = new JoinLambdaWrapper<>(po);
-        wrapper.orderByDesc(PtmProduct::getSort);
-        wrapper.orderByDesc(PtmProduct::getCreateTime);
-        Page
-                <PtmProductQueryVO> voPage =
-                ptmProductMapper.joinSelectPage(
-                        new Page<>(request.getPageNum(), request.getPageSize()), wrapper, PtmProductQueryVO.class);
-        return voPage;
+  /**
+   * 编辑商品信息
+   *
+   * @param request 商品信息实体
+   * @return {@link boolean}
+   * @author 一源团队-花和尚
+   * @date 2023-10-09
+   */
+  @Override
+  public boolean edit(PtmProductEditDTO request) throws Exception {
+    PtmProduct po = new PtmProduct();
+    BeanUtilsPlus.copy(request, po);
+    int i = ptmProductMapper.updateById(po);
+    if (i != 0) {
+      return true;
+    } else {
+      throw new BusinessException("修改异常");
     }
+  }
 
-    /**
-     * 商品信息详情
-     *
-     * @param id 商品信息id
-     * @return {@link PtmProductQueryVO}
-     * @author 一源团队-花和尚
-     * @date 2023-10-09
-     */
-    @Override
-    public PtmProductQueryVO details(String id) throws Exception {
-        PtmProduct po = new PtmProduct();
-        po.setId(id);
-        JoinLambdaWrapper
-                <PtmProduct> wrapper = new JoinLambdaWrapper<>(po);
-        PtmProductQueryVO voBean = ptmProductMapper.joinSelectOne(wrapper, PtmProductQueryVO.class);
-        return voBean;
+  /**
+   * 新增商品信息
+   *
+   * @param request 商品信息实体
+   * @return {@link boolean}
+   * @author 一源团队-花和尚
+   * @date 2023-10-09
+   */
+  @Override
+  public boolean add(PtmProductAddDTO request) throws Exception {
+    PtmProduct po = new PtmProduct();
+    BeanUtilsPlus.copy(request, po);
+    // 取出sku的总库存,以及最低各个价格
+    List<PtmProductSku> skuList = request.getSkuList();
+
+    Integer totalStock = skuList.stream().mapToInt(PtmProductSku::getStock).sum();
+
+    BigDecimal minCrossedPrice =
+        skuList.stream()
+            .map(PtmProductSku::getCrossedPrice)
+            .reduce(BigDecimal::min)
+            .orElse(BigDecimal.ZERO);
+
+    BigDecimal minCostPrice =
+        skuList.stream()
+            .map(PtmProductSku::getCostPrice)
+            .reduce(BigDecimal::min)
+            .orElse(BigDecimal.ZERO);
+
+    BigDecimal minSalePrice =
+        skuList.stream()
+            .map(PtmProductSku::getSalePrice)
+            .reduce(BigDecimal::min)
+            .orElse(BigDecimal.ZERO);
+    // 设置商品总体价格
+    po.setCostPrice(minCostPrice);
+    po.setSalePrice(minSalePrice);
+    po.setCrossedPrice(minCrossedPrice);
+    // 设置总库存
+    po.setStock(totalStock);
+    int i = ptmProductMapper.insert(po);
+    // 添加sku
+    skuList.forEach(
+        (sku) -> {
+          sku.setPtmProductId(po.getId());
+          ptmProductSkuMapper.insert(sku);
+        });
+    if (i != 0) {
+      return true;
+    } else {
+      throw new BusinessException("新增异常");
     }
-
-    /**
-     * 商品信息详情
-     *
-     * @param request 商品信息实体
-     * @return {@link PtmProduct}
-     * @author 一源团队-花和尚
-     * @date 2023-10-09
-     */
-    @Override
-    public PtmProductQueryVO details(PtmProduct request) throws Exception {
-        JoinLambdaWrapper
-                <PtmProduct> wrapper = new JoinLambdaWrapper<>(request);
-        PtmProductQueryVO voBean = ptmProductMapper.joinSelectOne(wrapper, PtmProductQueryVO.class);
-        return voBean;
-    }
-
-    /**
-     * 删除商品信息(支持批量)
-     *
-     * @param ids 商品信息id(多个逗号分割)
-     * @return {@link boolean}
-     * @author 一源团队-花和尚
-     * @date 2023-10-09
-     */
-    @Override
-    public boolean delete(String ids) throws Exception {
-        List<String> idList = Arrays.asList(ids.split(","));
-        int i = ptmProductMapper.deleteBatchIds(idList);
-        if (i == idList.size()) {
-            return true;
-        } else {
-            throw new BusinessException("批量删除异常");
-        }
-
-    }
-
-
-    /**
-     * 编辑商品信息
-     *
-     * @param request 商品信息实体
-     * @return {@link boolean}
-     * @author 一源团队-花和尚
-     * @date 2023-10-09
-     */
-    @Override
-    public boolean edit(PtmProductEditDTO request) throws Exception {
-        PtmProduct po = new PtmProduct();
-        BeanUtilsPlus.copy(request, po);
-        int i = ptmProductMapper.updateById(po);
-        if (i != 0) {
-            return true;
-        } else {
-            throw new BusinessException("修改异常");
-        }
-    }
-
-    /**
-     * 新增商品信息
-     *
-     * @param request 商品信息实体
-     * @return {@link boolean}
-     * @author 一源团队-花和尚
-     * @date 2023-10-09
-     */
-    @Override
-    public boolean add(PtmProductAddDTO request) throws Exception {
-        PtmProduct po = new PtmProduct();
-        BeanUtilsPlus.copy(request, po);
-        int i = ptmProductMapper.insert(po);
-        if (i != 0) {
-            return true;
-        } else {
-            throw new BusinessException("新增异常");
-        }
-    }
+  }
 }

@@ -5,7 +5,6 @@ import net.yiyuan.service.PtmProductAttrValueAppService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
-
 /**
  * 商品属性value移动端接口
  *
@@ -16,6 +15,5 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 public class PtmProductAttrValueAppController {
-    @Autowired
-    private PtmProductAttrValueAppService ptmProductAttrValueAppService;
+  @Autowired private PtmProductAttrValueAppService ptmProductAttrValueAppService;
 }

@@ -12,25 +12,21 @@ import java.io.Serializable;
  */
 @Data
 public class PtmProductCategoryBrandLink implements Serializable {
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
+  /**
+   * 品牌id
+   *
+   * @author 一源团队-花和尚
+   * @date 2023-10-09
+   */
+  private String ptmProductBrandId;
 
-    /**
-     * 品牌id
-     *
-     * @author 一源团队-花和尚
-     * @date 2023-10-09
-     */
-    private String ptmProductBrandId;
-
-
-    /**
-     * 商品类型id
-     *
-     * @author 一源团队-花和尚
-     * @date 2023-10-09
-     */
-    private String ptmProductCategoryId;
-
-
+  /**
+   * 商品类型id
+   *
+   * @author 一源团队-花和尚
+   * @date 2023-10-09
+   */
+  private String ptmProductCategoryId;
 }

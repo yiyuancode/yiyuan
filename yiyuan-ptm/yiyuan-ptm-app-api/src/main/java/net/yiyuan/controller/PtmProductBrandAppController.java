@@ -5,7 +5,6 @@ import net.yiyuan.service.PtmProductBrandAppService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
-
 /**
  * 品牌移动端接口
  *
@@ -16,6 +15,5 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 public class PtmProductBrandAppController {
-    @Autowired
-    private PtmProductBrandAppService ptmProductBrandAppService;
+  @Autowired private PtmProductBrandAppService ptmProductBrandAppService;
 }

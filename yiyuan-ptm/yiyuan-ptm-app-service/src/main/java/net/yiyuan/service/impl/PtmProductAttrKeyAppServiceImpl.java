@@ -17,10 +17,8 @@ import javax.annotation.Resource;
  */
 @Slf4j
 @Service
-public class PtmProductAttrKeyAppServiceImpl extends JoinServiceImpl
-        <PtmProductAttrKeyMapper, PtmProductAttrKey>
-        implements PtmProductAttrKeyAppService {
-    @Resource
-    private PtmProductAttrKeyMapper ptmProductAttrKeyMapper;
-
+public class PtmProductAttrKeyAppServiceImpl
+    extends JoinServiceImpl<PtmProductAttrKeyMapper, PtmProductAttrKey>
+    implements PtmProductAttrKeyAppService {
+  @Resource private PtmProductAttrKeyMapper ptmProductAttrKeyMapper;
 }

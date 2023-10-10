@@ -22,21 +22,25 @@ import java.util.List;
  */
 @Slf4j
 @Service
-public class PtmProductCategoryAppServiceImpl extends JoinServiceImpl
-        <PtmProductCategoryMapper, PtmProductCategory>
-        implements PtmProductCategoryAppService {
-    @Resource
-    private PtmProductCategoryMapper ptmProductCategoryMapper;
+public class PtmProductCategoryAppServiceImpl
+    extends JoinServiceImpl<PtmProductCategoryMapper, PtmProductCategory>
+    implements PtmProductCategoryAppService {
+  @Resource private PtmProductCategoryMapper ptmProductCategoryMapper;
 
-    @Override
-    public List<PtmProductCategoryGetTreeVO> getTree() throws Exception {
-        JoinLambdaWrapper<PtmProductCategory> wrapper = Joins.of(PtmProductCategory.class);
-        wrapper.select(PtmProductCategory::getId, PtmProductCategory::getPid, PtmProductCategory::getIcon, PtmProductCategory::getName);
-        wrapper.eq(PtmProductCategory::getIsShow, true);
-        wrapper.orderByDesc(PtmProductCategory::getSort);
-        wrapper.orderByDesc(PtmProductCategory::getCreateTime);
-        List<PtmProductCategoryGetTreeVO> vOList = ptmProductCategoryMapper.joinSelectList(wrapper, PtmProductCategoryGetTreeVO.class);
-        List<PtmProductCategoryGetTreeVO> getTreeVOList = TreeUtil.buildTreeByTwoLayersFor(vOList);
-        return getTreeVOList;
-    }
+  @Override
+  public List<PtmProductCategoryGetTreeVO> getTree() throws Exception {
+    JoinLambdaWrapper<PtmProductCategory> wrapper = Joins.of(PtmProductCategory.class);
+    wrapper.select(
+        PtmProductCategory::getId,
+        PtmProductCategory::getPid,
+        PtmProductCategory::getIcon,
+        PtmProductCategory::getName);
+    wrapper.eq(PtmProductCategory::getIsShow, true);
+    wrapper.orderByDesc(PtmProductCategory::getSort);
+    wrapper.orderByDesc(PtmProductCategory::getCreateTime);
+    List<PtmProductCategoryGetTreeVO> vOList =
+        ptmProductCategoryMapper.joinSelectList(wrapper, PtmProductCategoryGetTreeVO.class);
+    List<PtmProductCategoryGetTreeVO> getTreeVOList = TreeUtil.buildTreeByTwoLayersFor(vOList);
+    return getTreeVOList;
+  }
 }

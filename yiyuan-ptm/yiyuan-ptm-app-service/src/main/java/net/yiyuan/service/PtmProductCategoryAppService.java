@@ -14,5 +14,5 @@ import java.util.List;
  */
 public interface PtmProductCategoryAppService extends JoinIService<PtmProductCategory> {
 
-    public List<PtmProductCategoryGetTreeVO> getTree() throws Exception;
+  public List<PtmProductCategoryGetTreeVO> getTree() throws Exception;
 }

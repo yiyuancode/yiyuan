@@ -9,7 +9,4 @@ import net.yiyuan.model.PtmProductAttrValue;
  * @author 一源团队-花和尚
  * @date 2023-10-09
  */
-public interface PtmProductAttrValueAppService extends JoinIService<PtmProductAttrValue> {
-
-
-}
+public interface PtmProductAttrValueAppService extends JoinIService<PtmProductAttrValue> {}

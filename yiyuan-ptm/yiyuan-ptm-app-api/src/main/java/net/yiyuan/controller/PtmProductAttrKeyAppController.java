@@ -5,7 +5,6 @@ import net.yiyuan.service.PtmProductAttrKeyAppService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
-
 /**
  * 商品属性key移动端接口
  *
@@ -16,6 +15,5 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 public class PtmProductAttrKeyAppController {
-    @Autowired
-    private PtmProductAttrKeyAppService ptmProductAttrKeyAppService;
+  @Autowired private PtmProductAttrKeyAppService ptmProductAttrKeyAppService;
 }

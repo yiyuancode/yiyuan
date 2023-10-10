@@ -9,7 +9,4 @@ import net.yiyuan.model.PtmProductSku;
  * @author 一源团队-花和尚
  * @date 2023-10-09
  */
-public interface PtmProductSkuAppService extends JoinIService<PtmProductSku> {
-
-
-}
+public interface PtmProductSkuAppService extends JoinIService<PtmProductSku> {}
