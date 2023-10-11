@@ -23,11 +23,11 @@
             <artifactId>easypoi-spring-boot-starter</artifactId>
             <version>4.2.0</version>
         </dependency>
-        <dependency>
-            <groupId>net.yiyuan</groupId>
-            <artifactId>yiyuan-ptm-service</artifactId>
-            <version>${revision}</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>net.yiyuan</groupId>-->
+<!--            <artifactId>yiyuan-ptm-service</artifactId>-->
+<!--            <version>${revision}</version>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>net.yiyuan</groupId>
             <artifactId>yiyuan-um-service</artifactId>
