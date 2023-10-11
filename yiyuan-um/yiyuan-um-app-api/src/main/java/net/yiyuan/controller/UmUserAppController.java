@@ -6,12 +6,13 @@ import lombok.extern.slf4j.Slf4j;
 import net.yiyuan.common.model.vo.CommonResult;
 import net.yiyuan.dto.UmUserTokenDTO;
 import net.yiyuan.service.UmUserAppService;
-import net.yiyuan.vo.GetUmUserInfoVO;
-import net.yiyuan.vo.MyselfIndexVO;
-import net.yiyuan.vo.UmUserTokenVO;
+import net.yiyuan.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * 用户移动端接口
@@ -29,6 +30,7 @@ public class UmUserAppController {
 
     /**
      * 用户登录接口
+     *
      * @param umUserTokenDto
      * @return
      * @throws Exception
@@ -67,5 +69,32 @@ public class UmUserAppController {
 
         return CommonResult.success(umUserAppService.findMySelfIndexVO(), "我的详情查询成功");
     }
+
+    /**
+     * 用户商品收藏
+     * @return
+     * @throws Exception
+     */
+    @GetMapping(value = "/collect/commodity")
+    @SaIgnore
+    @ResponseBody
+    public CommonResult<Map<String,List<ProjectCollectReVO>>> collectCommodity() throws Exception {
+
+        return CommonResult.success(umUserAppService.finProjectCollectListVO(), "我的收藏少商品查询成功");
+    }
+
+    /**
+     * 用户商店收藏
+     * @return
+     * @throws Exception
+     */
+    @GetMapping(value = "/collect/shop")
+    @SaIgnore
+    @ResponseBody
+    public CommonResult<Map<String,List<ProjectCollectReShopVO>>> collectShop() throws Exception {
+
+        return CommonResult.success(umUserAppService.findProjectCollectListShopVO(), "我的收藏商铺查询成功");
+    }
+
 
 }

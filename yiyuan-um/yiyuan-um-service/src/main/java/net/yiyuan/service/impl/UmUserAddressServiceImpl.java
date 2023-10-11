@@ -47,9 +47,8 @@ public class UmUserAddressServiceImpl extends JoinServiceImpl
     @Override
     public List
             <UmUserAddressQueryVO> list(UmUserAddressListDTO request) throws Exception {
-        Object loginId = StpUtil.getLoginId();
-
-
+        String loginId = (String) StpUtil.getLoginId();
+        request.setUid(loginId);
         UmUserAddress po = new UmUserAddress();
         BeanUtilsPlus.copy(request, po);
         JoinLambdaWrapper
@@ -71,6 +70,8 @@ public class UmUserAddressServiceImpl extends JoinServiceImpl
     @Override
     public Page
             <UmUserAddressQueryVO> page(UmUserAddressPageDTO request) throws Exception {
+        String loginId = (String) StpUtil.getLoginId();
+        request.setUid(loginId);
         UmUserAddress po = new UmUserAddress();
         BeanUtilsPlus.copy(request, po);
         JoinLambdaWrapper
