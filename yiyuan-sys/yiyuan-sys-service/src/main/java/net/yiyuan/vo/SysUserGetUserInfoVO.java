@@ -40,6 +40,14 @@ public class SysUserGetUserInfoVO {
   private List<SysMenuQueryVO> menuTreeList;
 
   /**
+   * 对应菜单权限信息
+   *
+   * @author ${author}
+   * @date 2023-07-27
+   */
+  private List<SysMenuVueRouteVO> vueRouteList;
+
+  /**
    * antd前端所需权限表达式集合
    *
    * @author ${author}

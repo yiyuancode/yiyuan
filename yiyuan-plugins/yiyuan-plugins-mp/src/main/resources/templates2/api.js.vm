@@ -8,13 +8,12 @@ import {request} from '@/utils/request';
  * @author  ${author}
  * @date ${date}
  */
-export async function get${pm1_2}PageList(data) {
-    const resp = await
-    request({
+export function get${pm1_2}PageList(data) {
+    return request({
         url: "/${pm0}/${pm1}/page",
         params: data
     });
-    return resp.data;
+
 }
 
 
@@ -26,12 +25,11 @@ export async function get${pm1_2}PageList(data) {
  * @author  ${author}
  * @date ${date}
  */
-export async function get${pm1_2}Detail(id) {
-    const resp = await
-    request({
+export function get${pm1_2}Detail(id) {
+    return request({
         url: `/${pm0}/${pm1}/details/${id}`,
     });
-    return resp.data;
+
 }
 
 /**
@@ -43,14 +41,13 @@ export async function get${pm1_2}Detail(id) {
  * @date ${date}
  */
 
-export async function add${pm1_2}(data) {
-    const resp = await
-    request({
+export function add${pm1_2}(data) {
+    return request({
         url: "/${pm0}/${pm1}/add",
         method: "post",
         data
     });
-    return resp.data;
+
 }
 
 /**
@@ -62,9 +59,8 @@ export async function add${pm1_2}(data) {
  * @author  ${author}
  * @date ${date}
  */
-export async function edit${pm1_2}(data, id) {
-    const resp = await
-    request({
+export function edit${pm1_2}(data, id) {
+    return request({
         url: "/${pm0}/${pm1}/edit",
         method: "post",
         data: {
@@ -73,7 +69,7 @@ export async function edit${pm1_2}(data, id) {
 }
 })
     ;
-    return resp.data;
+
 }
 ##delete是vm关键字，会和拼接的方法名分开所以单独定义变量来
 #set($delete = "delete")
@@ -85,15 +81,14 @@ export async function edit${pm1_2}(data, id) {
  * @author  ${author}
  * @date ${date}
  */
-export async function ${delete}${pm1_2}(ids) {
-    const resp = await
-    request({
+export function ${delete}${pm1_2}(ids) {
+    return request({
         url: "/${pm0}/${pm1}/delete",
         method: "post",
         params: {
             ids
         }
     });
-    return resp.data;
+
 }
 

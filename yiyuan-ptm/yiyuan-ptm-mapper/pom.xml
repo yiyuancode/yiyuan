@@ -17,5 +17,15 @@
             <artifactId>yiyuan-plugins-mp</artifactId>
             <version>${revision}</version>
         </dependency>
+        <dependency>
+            <groupId>net.yiyuan</groupId>
+            <artifactId>yiyuan-ptm-model</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.yiyuan</groupId>
+            <artifactId>yiyuan-spm-mapper</artifactId>
+            <version>${revision}</version>
+        </dependency>
     </dependencies>
 </project>

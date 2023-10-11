@@ -17,6 +17,7 @@
         <module>yiyuan-${pm0}-app-api</module>
         <module>yiyuan-${pm0}-app-service</module>
         <module>yiyuan-${pm0}-mapper</module>
+        <module>yiyuan-${pm0}-model</module>
     </modules>
 
     <dependencies>

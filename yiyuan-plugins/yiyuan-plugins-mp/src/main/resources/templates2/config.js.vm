@@ -4,7 +4,7 @@
  * @author  ${author}
  * @date ${date}
  */
-import * as ${pm1} from "@/api/sys/${pm1}";
+import * as ${pm1} from "@/api/${pm0}/${pm1}";
 ## import _ from "lodash";
 
 const columns = [
@@ -18,17 +18,24 @@ const columns = [
             dataIndex: '${columnsItem.columnName}',
             key: '${columnsItem.columnName}',
             width: 160,
-            #if(${columnsItem.propertyType.equals("String")})
+            #if(${columnsItem.propertyType.equals("String")}&&!${columnsItem.columnType.equals("TEXT")})
                 ##必填项并且默认值是null的
                 #if((${columnsItem.isNullable.equals("1")}||!${columnsItem.defaultValue.equals("NULL")}))
                     rules: [{required: true, message: '请输入${columnsItem.columnComment}', trigger: 'blur'},],
                 #end
             #end
+            #if(${columnsItem.propertyType.equals("String")}&&${columnsItem.columnType.equals("TEXT")})
+                ##必填项并且默认值是null的
+                #if((${columnsItem.isNullable.equals("1")}||!${columnsItem.defaultValue.equals("NULL")}))
+                    rules: [{required: true, message: '请输入${columnsItem.columnComment}', trigger: 'blur'},],
+                #end
+                formType: "text",
+            #end
             #if(${columnsItem.propertyType.equals("Date")})
                 ##必填项并且默认值是null的
-                searchObj: {
-                    formType: "rangePicker"
-                },
+                ## searchObj: {
+                ##     formType: "rangePicker"
+                ## },
                 props: {
                     showTime: true,
                     style: {width: '100%'}
@@ -44,19 +51,19 @@ const columns = [
             #if(${columnsItem.propertyType.contains("Enum")})
                 //值类型
                 valType: "object",
-                searchObj: {
-                    formType: "select",
-                    options: [
-                        #foreach($columnsItem2 in ${columnsItem.eumsCodeList})
-                            {
-
-                                label: '${columnsItem2.label}',
-                                value:${columnsItem2.value},
-
-                            },
-                        #end
-                    ]
-                },
+                ## searchObj: {
+                ##     formType: "select",
+                ##     options: [
+                ##         #foreach($columnsItem2 in ${columnsItem.eumsCodeList})
+                ##             {
+                ##
+                ##                 label: '${columnsItem2.label}',
+                ##                 value:${columnsItem2.value},
+                ##
+                ##             },
+                ##         #end
+                ##     ]
+                ## },
                 formType: "radioGroup",
                 props: {
                     options: [
@@ -117,7 +124,16 @@ const moduleConfig = {
     moduleName: "${tableComment.replaceAll("表", "")}",
 }
 
+// 权限对象
+const permissionObj = {
+    id: '${pm0}:${pm1}',
+    addBtn: '${pm0}:${pm1}:add',
+    editBtn: '${pm0}:${pm1}:edit',
+    deleteBtn: '${pm0}:${pm1}:delete'
+};
+
 export {
     columns,
     moduleConfig,
+    permissionObj
 };

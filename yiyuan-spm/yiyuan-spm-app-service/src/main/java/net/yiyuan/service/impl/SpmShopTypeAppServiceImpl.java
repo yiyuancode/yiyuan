@@ -12,7 +12,7 @@ import javax.annotation.Resource;
  * 店铺类型移动端Service层接口实现
  *
  * @author 一源-花和尚
- * @date 2023-09-18
+ * @date 2023-10-06
  */
 @Slf4j
 @Service
