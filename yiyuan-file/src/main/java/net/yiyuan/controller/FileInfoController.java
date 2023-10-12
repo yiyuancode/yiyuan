@@ -174,10 +174,9 @@ public class FileInfoController {
     try {
       fileId = fileInfoService.uploadAsTemp(file);
     } catch (Exception e) {
-
       return CommonResult.failed("上传失败");
     }
-    return CommonResult.success("上传成功", fileId);
+    return CommonResult.success(fileId , "上传成功");
   }
 
   /**
