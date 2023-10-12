@@ -4,7 +4,7 @@ import net.yiyuan.enums.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 import lombok.*;
-import net.yiyuan.common.*;
+
 
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
@@ -30,7 +30,7 @@ public class SysMenuPageDTO implements Serializable {
      * @date 2023-09-26
      */
     @NotNull(message = "分页条数不能为空")
-    private Integer pageSize;
+    private Integer pageSize = 10;
     /**
      * 分页页数
      *
@@ -39,7 +39,7 @@ public class SysMenuPageDTO implements Serializable {
      * @date 2023-09-26
      */
     @NotNull(message = "分页页数不能为空")
-    private Integer pageNum;
+    private Integer pageNum= 1;
     
 
                     /**

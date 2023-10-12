@@ -24,7 +24,7 @@ public class SysTablePageDTO implements Serializable {
    * @date 2023-09-18
    */
   @NotNull(message = "分页条数不能为空")
-  private Integer pageSize;
+  private Integer pageSize = 10;
   /**
    * 分页页数
    *
@@ -33,7 +33,7 @@ public class SysTablePageDTO implements Serializable {
    * @date 2023-09-18
    */
   @NotNull(message = "分页页数不能为空")
-  private Integer pageNum;
+  private Integer pageNum= 1;
 
   /**
    * 主键id

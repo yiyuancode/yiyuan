@@ -23,7 +23,7 @@ public class PtmProductGetPageListDTO implements Serializable {
    * @date 2023-10-09
    */
   @NotNull(message = "分页条数不能为空")
-  private Integer pageSize;
+  private Integer pageSize = 10;
   /**
    * 分页页数
    *
@@ -32,7 +32,7 @@ public class PtmProductGetPageListDTO implements Serializable {
    * @date 2023-10-09
    */
   @NotNull(message = "分页页数不能为空")
-  private Integer pageNum;
+  private Integer pageNum= 1;
 
   /**
    * 主类目id(商品分类2级id，逗号拼接)
