@@ -9,5 +9,4 @@ import net.yiyuan.model.UmProjectCollect;
  * @author 小林同学
  * @date 2023-07-27
  */
-public interface UmProjectCollectMapper extends JoinBaseMapper<UmProjectCollect> {
-}
+public interface UmProjectCollectMapper extends JoinBaseMapper<UmProjectCollect> {}

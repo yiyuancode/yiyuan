@@ -1,6 +1,5 @@
 package net.yiyuan.plugins.mp.config;
 
-
 import com.baomidou.mybatisplus.annotation.IEnum;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.BeanProperty;
@@ -18,33 +17,33 @@ import java.io.IOException;
 @EqualsAndHashCode(callSuper = true)
 public class EnumDeserializer extends JsonDeserializer<Enum<?>> implements ContextualDeserializer {
 
-    private Class<?> target;
+  private Class<?> target;
 
-    @SuppressWarnings("all")
-    @Override
-    public Enum<?> deserialize(JsonParser jsonParser, DeserializationContext ctx) throws IOException {
-        if (!StringUtils.hasText(jsonParser.getText())) {
-            return null;
-        }
-        if (IEnum.class.isAssignableFrom(target)) {
-            return (Enum<?>) StringCodeToEnumConverterFactory.getEnum((Class) target, jsonParser.getText());
-        }
-        return null;
+  @SuppressWarnings("all")
+  @Override
+  public Enum<?> deserialize(JsonParser jsonParser, DeserializationContext ctx) throws IOException {
+    if (!StringUtils.hasText(jsonParser.getText())) {
+      return null;
     }
-
-    /**
-     * @param ctx      ctx
-     * @param property property
-     * @return 1
-     * @throws JsonMappingException
-     */
-    @Override
-    public JsonDeserializer<?> createContextual(DeserializationContext ctx, BeanProperty property) throws JsonMappingException {
-        Class<?> rawCls = ctx.getContextualType().getRawClass();
-        EnumDeserializer enumDeserializer = new EnumDeserializer();
-        enumDeserializer.setTarget(rawCls);
-        return enumDeserializer;
+    if (IEnum.class.isAssignableFrom(target)) {
+      return (Enum<?>)
+          StringCodeToEnumConverterFactory.getEnum((Class) target, jsonParser.getText());
     }
+    return null;
+  }
 
+  /**
+   * @param ctx ctx
+   * @param property property
+   * @return 1
+   * @throws JsonMappingException
+   */
+  @Override
+  public JsonDeserializer<?> createContextual(DeserializationContext ctx, BeanProperty property)
+      throws JsonMappingException {
+    Class<?> rawCls = ctx.getContextualType().getRawClass();
+    EnumDeserializer enumDeserializer = new EnumDeserializer();
+    enumDeserializer.setTarget(rawCls);
+    return enumDeserializer;
+  }
 }
-

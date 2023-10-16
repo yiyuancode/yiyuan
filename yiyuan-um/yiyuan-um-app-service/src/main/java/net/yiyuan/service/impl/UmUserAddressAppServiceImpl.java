@@ -17,10 +17,7 @@ import javax.annotation.Resource;
  */
 @Slf4j
 @Service
-public class UmUserAddressAppServiceImpl extends JoinServiceImpl
-        <UmUserAddressMapper, UmUserAddress>
-        implements UmUserAddressAppService {
-    @Resource
-    private UmUserAddressMapper umUserAddressMapper;
-
+public class UmUserAddressAppServiceImpl extends JoinServiceImpl<UmUserAddressMapper, UmUserAddress>
+    implements UmUserAddressAppService {
+  @Resource private UmUserAddressMapper umUserAddressMapper;
 }

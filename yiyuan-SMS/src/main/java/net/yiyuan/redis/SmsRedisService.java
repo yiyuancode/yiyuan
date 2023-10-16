@@ -10,13 +10,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class SmsRedisService extends RedisServiceImpl {
 
-    @Autowired
-    private RedisService redisService;
-    public static String REDIS_KEY_SMS_PERMISSION = "sms:permission:";
-
-    public static Long REDIS_EXPIRE_ADMIN_USER_PERMISSION = 60L;
-
-    public static String REDIS_KEY_EMAIL_PERMISSION = "email:permission:";
-
-
+  public static String REDIS_KEY_SMS_PERMISSION = "sms:permission:";
+  public static Long REDIS_EXPIRE_ADMIN_USER_PERMISSION = 60L;
+  public static String REDIS_KEY_EMAIL_PERMISSION = "email:permission:";
+  @Autowired private RedisService redisService;
 }

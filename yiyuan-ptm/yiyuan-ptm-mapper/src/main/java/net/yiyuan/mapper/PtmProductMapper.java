@@ -9,5 +9,4 @@ import net.yiyuan.model.PtmProduct;
  * @author 一源团队-花和尚
  * @date 2023-07-27
  */
-public interface PtmProductMapper extends JoinBaseMapper<PtmProduct> {
-}
+public interface PtmProductMapper extends JoinBaseMapper<PtmProduct> {}

@@ -5,7 +5,6 @@ import net.yiyuan.service.UmProjectCollectAppService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
-
 /**
  * 浏览记录移动端接口
  *
@@ -16,6 +15,5 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 public class UmProjectCollectAppController {
-    @Autowired
-    private UmProjectCollectAppService umProjectCollectAppService;
+  @Autowired private UmProjectCollectAppService umProjectCollectAppService;
 }

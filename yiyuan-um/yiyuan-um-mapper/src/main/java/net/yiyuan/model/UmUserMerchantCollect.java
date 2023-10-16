@@ -16,51 +16,46 @@ import java.util.Date;
  */
 @Data
 public class UmUserMerchantCollect implements Serializable {
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
+  /**
+   * 用户ID
+   *
+   * @author 小林同学
+   * @date 2023-09-19
+   */
+  private String uid;
 
-    /**
-     * 用户ID
-     *
-     * @author 小林同学
-     * @date 2023-09-19
-     */
-    private String uid;
+  /**
+   * 租户ID
+   *
+   * @author 小林同学
+   * @date 2023-09-19
+   */
+  private String tenantId;
 
-
-    /**
-     * 租户ID
-     *
-     * @author 小林同学
-     * @date 2023-09-19
-     */
-    private String tenantId;
-
-
-    /**
-     * 创建时间
-     *
-     * @author 小林同学
-     * @date 2023-09-19
-     */
-    @TableField(fill = FieldFill.INSERT)
-    private Date createTime;
-    /**
-     * 创建时间(查询开始时间)
-     *
-     * @author 小林同学
-     * @date 2023-09-19
-     */
-    @TableField(value = "create_time ", condition = CustomSqlCondition.START_EQUAL, select = false)
-    private Date createTimeStart;
-    /**
-     * 创建时间(查询结束时间)
-     *
-     * @author 小林同学
-     * @date 2023-09-19
-     */
-    @TableField(value = "create_time", condition = CustomSqlCondition.END_EQUAL, select = false)
-    private Date createTimeEnd;
-
-
+  /**
+   * 创建时间
+   *
+   * @author 小林同学
+   * @date 2023-09-19
+   */
+  @TableField(fill = FieldFill.INSERT)
+  private Date createTime;
+  /**
+   * 创建时间(查询开始时间)
+   *
+   * @author 小林同学
+   * @date 2023-09-19
+   */
+  @TableField(value = "create_time ", condition = CustomSqlCondition.START_EQUAL, select = false)
+  private Date createTimeStart;
+  /**
+   * 创建时间(查询结束时间)
+   *
+   * @author 小林同学
+   * @date 2023-09-19
+   */
+  @TableField(value = "create_time", condition = CustomSqlCondition.END_EQUAL, select = false)
+  private Date createTimeEnd;
 }

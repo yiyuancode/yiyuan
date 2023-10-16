@@ -33,7 +33,7 @@ public class SysHostMonitorPageDTO implements Serializable {
    * @date 2023-09-18
    */
   @NotNull(message = "分页页数不能为空")
-  private Integer pageNum= 1;
+  private Integer pageNum = 1;
 
   /**
    * 采集记录的唯一标识

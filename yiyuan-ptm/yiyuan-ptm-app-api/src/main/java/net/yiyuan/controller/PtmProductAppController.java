@@ -15,6 +15,5 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 public class PtmProductAppController {
-    @Autowired
-    private PtmProductAppService ptmProductAppService;
+  @Autowired private PtmProductAppService ptmProductAppService;
 }

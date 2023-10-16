@@ -30,6 +30,11 @@ public class DozerHelper {
     return mapper;
   }
 
+  /** @param mpr */
+  public static void setMapper(Mapper mpr) {
+    mapper = mpr;
+  }
+
   /**
    * 使用source映射给target，复制属性
    *
@@ -89,11 +94,6 @@ public class DozerHelper {
    */
   public static <T> T map(Object source, Class<T> targetClass, String mapId) {
     return getMapper().map(source, targetClass, mapId);
-  }
-
-  /** @param mpr */
-  public static void setMapper(Mapper mpr) {
-    mapper = mpr;
   }
 
   /*

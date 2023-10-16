@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 
 @Slf4j
 public class CenterJoinUtils<L, C, R, LV> {
+  public static ConfigurableApplicationContext context;
   private List<LV> voList;
   private SFunction<L, Object> leftPrimaryKeyField;
   private SFunction<C, Object> centerOfLeftForeignKeyField;
@@ -25,22 +26,13 @@ public class CenterJoinUtils<L, C, R, LV> {
   private SFunction<R, Object> rightPrimaryKeyField;
   private SFunction<LV, Object> lvIdField;
   private BiConsumer<LV, List<R>> leftVoOfRightSetField;
-
   private Class<L> lClass;
   private Class<C> cClass;
   private Class<R> rClass;
   private Class<LV> lvClass;
   private List<String> poIdList;
-
   private List<Map> selectMapList;
   private Map<Object, List<Map>> groupedMap;
-
-  public static ConfigurableApplicationContext context;
-
-  public JoinBaseMapper getMapper(Class<?> cl) throws Exception {
-    return (JoinBaseMapper)
-        context.getBean(Class.forName("net.yiyuan.mapper." + cl.getSimpleName() + "Mapper"));
-  }
 
   public CenterJoinUtils() {}
 
@@ -105,6 +97,11 @@ public class CenterJoinUtils<L, C, R, LV> {
    */
   public static <L, C, R, LV> CenterJoinUtils<L, C, R, LV> of() {
     return new CenterJoinUtils<>();
+  }
+
+  public JoinBaseMapper getMapper(Class<?> cl) throws Exception {
+    return (JoinBaseMapper)
+        context.getBean(Class.forName("net.yiyuan.mapper." + cl.getSimpleName() + "Mapper"));
   }
 
   /**

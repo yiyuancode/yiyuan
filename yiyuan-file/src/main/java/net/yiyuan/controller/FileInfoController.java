@@ -176,7 +176,7 @@ public class FileInfoController {
     } catch (Exception e) {
       return CommonResult.failed("上传失败");
     }
-    return CommonResult.success(fileId , "上传成功");
+    return CommonResult.success(fileId, "上传成功");
   }
 
   /**

@@ -27,7 +27,8 @@ public interface ${className}Service extends JoinIService<${className}> {
 * @author  ${author}
 * @date ${date}
 */
-List<${className}QueryVO> list(${className}ListDTO request) throws Exception;
+List
+<${className}QueryVO> list(${className}ListDTO request) throws Exception;
 
     /**
     * $!{tableComment.replaceAll("表", "")}列表(分页)
@@ -37,7 +38,8 @@ List<${className}QueryVO> list(${className}ListDTO request) throws Exception;
     * @author  ${author}
     * @date ${date}
     */
-    Page<${className}QueryVO> page(${className}PageDTO request) throws Exception;
+    Page
+    <${className}QueryVO> page(${className}PageDTO request) throws Exception;
 
         /**
         * $!{tableComment.replaceAll("表", "")}详情

@@ -9,7 +9,4 @@ import net.yiyuan.model.UmUserAddress;
  * @author 小林同学
  * @date 2023-09-19
  */
-public interface UmUserAddressAppService extends JoinIService<UmUserAddress> {
-
-
-}
+public interface UmUserAddressAppService extends JoinIService<UmUserAddress> {}

@@ -9,10 +9,9 @@ import java.util.List;
 @Data
 public class TestVO {
 
-    private List<UmUserAddress> addressList;
+  private List<UmUserAddress> addressList;
 
-    private List<UmBrowseRecord> browseRecordList;
+  private List<UmBrowseRecord> browseRecordList;
 
-    private String phone;
-
+  private String phone;
 }

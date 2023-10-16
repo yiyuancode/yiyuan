@@ -17,10 +17,8 @@ import javax.annotation.Resource;
  */
 @Slf4j
 @Service
-public class UmProjectCollectAppServiceImpl extends JoinServiceImpl
-        <UmProjectCollectMapper, UmProjectCollect>
-        implements UmProjectCollectAppService {
-    @Resource
-    private UmProjectCollectMapper umProjectCollectMapper;
-
+public class UmProjectCollectAppServiceImpl
+    extends JoinServiceImpl<UmProjectCollectMapper, UmProjectCollect>
+    implements UmProjectCollectAppService {
+  @Resource private UmProjectCollectMapper umProjectCollectMapper;
 }

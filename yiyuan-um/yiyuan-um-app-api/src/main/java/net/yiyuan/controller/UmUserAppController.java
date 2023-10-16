@@ -25,76 +25,75 @@ import java.util.Map;
 @SaCheckLogin
 @RestController
 public class UmUserAppController {
-    @Autowired
-    private UmUserAppService umUserAppService;
+  @Autowired private UmUserAppService umUserAppService;
 
-    /**
-     * 用户登录接口
-     *
-     * @param umUserTokenDto
-     * @return
-     * @throws Exception
-     */
-    @SaIgnore
-    @PostMapping(value = "/login/umUser")
-    @ResponseBody
-    public CommonResult<UmUserTokenVO> accountLogin(@RequestBody @Validated UmUserTokenDTO umUserTokenDto)
-            throws Exception {
-        return CommonResult.success(umUserAppService.getUmUserToken(umUserTokenDto), "用户登录成功");
-    }
+  /**
+   * 用户登录接口
+   *
+   * @param umUserTokenDto
+   * @return
+   * @throws Exception
+   */
+  @SaIgnore
+  @PostMapping(value = "/login/umUser")
+  @ResponseBody
+  public CommonResult<UmUserTokenVO> accountLogin(
+      @RequestBody @Validated UmUserTokenDTO umUserTokenDto) throws Exception {
+    return CommonResult.success(umUserAppService.getUmUserToken(umUserTokenDto), "用户登录成功");
+  }
 
-    /**
-     * 获取用户信息
-     *
-     * @return {@link CommonResult<GetUmUserInfoVO>}
-     * @author ${author}
-     * @date 2023-07-27
-     */
-    @GetMapping(value = "/login/getUserInfo/um")
-    @ResponseBody
-    public CommonResult<GetUmUserInfoVO> getUserInfo() throws Exception {
-        return CommonResult.success(umUserAppService.getUmUserInfo(), "获取用户信息成功");
-    }
+  /**
+   * 获取用户信息
+   *
+   * @return {@link CommonResult<GetUmUserInfoVO>}
+   * @author ${author}
+   * @date 2023-07-27
+   */
+  @GetMapping(value = "/login/getUserInfo/um")
+  @ResponseBody
+  public CommonResult<GetUmUserInfoVO> getUserInfo() throws Exception {
+    return CommonResult.success(umUserAppService.getUmUserInfo(), "获取用户信息成功");
+  }
 
-    /**
-     * 获取我的个人页面参数
-     *
-     * @return
-     * @throws Exception
-     */
-    @GetMapping(value = "/login/finMyself")
-    @SaIgnore
-    @ResponseBody
-    public CommonResult<MyselfIndexVO> findMySelfIndexVO() throws Exception {
+  /**
+   * 获取我的个人页面参数
+   *
+   * @return
+   * @throws Exception
+   */
+  @GetMapping(value = "/login/finMyself")
+  @SaIgnore
+  @ResponseBody
+  public CommonResult<MyselfIndexVO> findMySelfIndexVO() throws Exception {
 
-        return CommonResult.success(umUserAppService.findMySelfIndexVO(), "我的详情查询成功");
-    }
+    return CommonResult.success(umUserAppService.findMySelfIndexVO(), "我的详情查询成功");
+  }
 
-    /**
-     * 用户商品收藏
-     * @return
-     * @throws Exception
-     */
-    @GetMapping(value = "/collect/commodity")
-    @SaIgnore
-    @ResponseBody
-    public CommonResult<Map<String,List<ProjectCollectReVO>>> collectCommodity() throws Exception {
+  /**
+   * 用户商品收藏
+   *
+   * @return
+   * @throws Exception
+   */
+  @GetMapping(value = "/collect/commodity")
+  @SaIgnore
+  @ResponseBody
+  public CommonResult<Map<String, List<ProjectCollectReVO>>> collectCommodity() throws Exception {
 
-        return CommonResult.success(umUserAppService.finProjectCollectListVO(), "我的收藏少商品查询成功");
-    }
+    return CommonResult.success(umUserAppService.finProjectCollectListVO(), "我的收藏少商品查询成功");
+  }
 
-    /**
-     * 用户商店收藏
-     * @return
-     * @throws Exception
-     */
-    @GetMapping(value = "/collect/shop")
-    @SaIgnore
-    @ResponseBody
-    public CommonResult<Map<String,List<ProjectCollectReShopVO>>> collectShop() throws Exception {
+  /**
+   * 用户商店收藏
+   *
+   * @return
+   * @throws Exception
+   */
+  @GetMapping(value = "/collect/shop")
+  @SaIgnore
+  @ResponseBody
+  public CommonResult<Map<String, List<ProjectCollectReShopVO>>> collectShop() throws Exception {
 
-        return CommonResult.success(umUserAppService.findProjectCollectListShopVO(), "我的收藏商铺查询成功");
-    }
-
-
+    return CommonResult.success(umUserAppService.findProjectCollectListShopVO(), "我的收藏商铺查询成功");
+  }
 }

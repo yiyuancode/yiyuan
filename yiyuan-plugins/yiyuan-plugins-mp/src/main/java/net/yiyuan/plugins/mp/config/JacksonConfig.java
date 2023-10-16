@@ -15,13 +15,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class JacksonConfig implements SmartInitializingSingleton {
 
-    @Autowired
-    private ObjectMapper objectMapper;
+  @Autowired private ObjectMapper objectMapper;
 
-    @Override
-    public void afterSingletonsInstantiated() {
-        SimpleModule simpleModule = new SimpleModule();
-        simpleModule.addDeserializer(Enum.class, new EnumDeserializer());
-        objectMapper.registerModule(simpleModule);
-    }
+  @Override
+  public void afterSingletonsInstantiated() {
+    SimpleModule simpleModule = new SimpleModule();
+    simpleModule.addDeserializer(Enum.class, new EnumDeserializer());
+    objectMapper.registerModule(simpleModule);
+  }
 }

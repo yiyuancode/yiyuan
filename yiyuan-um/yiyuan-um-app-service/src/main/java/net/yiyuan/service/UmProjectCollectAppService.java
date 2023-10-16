@@ -9,7 +9,4 @@ import net.yiyuan.model.UmProjectCollect;
  * @author 小林同学
  * @date 2023-09-21
  */
-public interface UmProjectCollectAppService extends JoinIService<UmProjectCollect> {
-
-
-}
+public interface UmProjectCollectAppService extends JoinIService<UmProjectCollect> {}

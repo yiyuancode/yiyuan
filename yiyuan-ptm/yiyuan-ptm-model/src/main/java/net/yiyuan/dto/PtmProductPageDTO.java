@@ -35,7 +35,7 @@ public class PtmProductPageDTO implements Serializable {
    * @date 2023-10-10
    */
   @NotNull(message = "分页页数不能为空")
-  private Integer pageNum= 1;
+  private Integer pageNum = 1;
 
   /**
    * 商品id

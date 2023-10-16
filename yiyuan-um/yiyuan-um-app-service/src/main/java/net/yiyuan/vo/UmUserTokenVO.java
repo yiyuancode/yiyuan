@@ -6,6 +6,5 @@ import java.io.Serializable;
 
 @Data
 public class UmUserTokenVO implements Serializable {
-    private String token;
-
+  private String token;
 }

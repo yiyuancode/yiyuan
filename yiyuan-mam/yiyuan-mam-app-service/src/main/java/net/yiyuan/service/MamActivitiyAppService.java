@@ -13,5 +13,5 @@ import java.util.List;
  */
 public interface MamActivitiyAppService extends JoinIService<MamActivitiy> {
 
-    public List<MamActivitiy> getIndexList() throws Exception;
+  public List<MamActivitiy> getIndexList() throws Exception;
 }

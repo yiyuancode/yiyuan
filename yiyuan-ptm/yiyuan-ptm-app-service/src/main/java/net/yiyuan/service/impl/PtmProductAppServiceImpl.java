@@ -18,7 +18,6 @@ import javax.annotation.Resource;
 @Slf4j
 @Service
 public class PtmProductAppServiceImpl extends JoinServiceImpl<PtmProductMapper, PtmProduct>
-        implements PtmProductAppService {
-    @Resource
-    private PtmProductMapper ptmProductMapper;
+    implements PtmProductAppService {
+  @Resource private PtmProductMapper ptmProductMapper;
 }

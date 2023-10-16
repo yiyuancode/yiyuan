@@ -9,5 +9,4 @@ import net.yiyuan.model.MamActivitiy;
  * @author 一源团队-花和尚
  * @date 2023-07-27
  */
-public interface MamActivitiyMapper extends JoinBaseMapper<MamActivitiy> {
-}
+public interface MamActivitiyMapper extends JoinBaseMapper<MamActivitiy> {}

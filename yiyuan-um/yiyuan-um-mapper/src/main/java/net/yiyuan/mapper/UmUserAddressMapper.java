@@ -9,5 +9,4 @@ import net.yiyuan.model.UmUserAddress;
  * @author 小林同学
  * @date 2023-07-27
  */
-public interface UmUserAddressMapper extends JoinBaseMapper<UmUserAddress> {
-}
+public interface UmUserAddressMapper extends JoinBaseMapper<UmUserAddress> {}

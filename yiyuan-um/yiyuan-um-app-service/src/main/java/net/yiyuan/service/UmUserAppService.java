@@ -16,16 +16,13 @@ import java.util.Map;
  */
 public interface UmUserAppService extends JoinIService<UmUser> {
 
-    UmUserTokenVO getUmUserToken(UmUserTokenDTO umUserTokenDto);
+  UmUserTokenVO getUmUserToken(UmUserTokenDTO umUserTokenDto);
 
-    GetUmUserInfoVO getUmUserInfo() throws Exception;
+  GetUmUserInfoVO getUmUserInfo() throws Exception;
 
-    MyselfIndexVO findMySelfIndexVO() throws Exception;
+  MyselfIndexVO findMySelfIndexVO() throws Exception;
 
-    Map<String,List<ProjectCollectReVO>> finProjectCollectListVO() throws Exception;
+  Map<String, List<ProjectCollectReVO>> finProjectCollectListVO() throws Exception;
 
-    Map<String,List<ProjectCollectReShopVO>> findProjectCollectListShopVO() throws Exception;
-
-
-
+  Map<String, List<ProjectCollectReShopVO>> findProjectCollectListShopVO() throws Exception;
 }

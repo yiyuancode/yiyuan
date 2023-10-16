@@ -33,7 +33,7 @@ public class SpmShopTypePageDTO implements Serializable {
    * @date 2023-10-06
    */
   @NotNull(message = "分页页数不能为空")
-  private Integer pageNum= 1;
+  private Integer pageNum = 1;
 
   /**
    * 店铺类型id

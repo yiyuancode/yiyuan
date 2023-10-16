@@ -192,7 +192,6 @@ public class PtmProductAddDTO implements Serializable {
   @NotNull(message = "总后台排序不能为空")
   private Integer tenantSort;
 
-
   /**
    * 是否单独分佣0=否|1=是
    *

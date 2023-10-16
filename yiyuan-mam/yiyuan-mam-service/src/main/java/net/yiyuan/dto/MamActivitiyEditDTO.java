@@ -15,68 +15,56 @@ import java.util.Date;
 @Data
 public class MamActivitiyEditDTO implements Serializable {
 
+  /**
+   * 活动id
+   *
+   * @author 一源团队-花和尚
+   * @date 2023-10-09
+   */
+  @NotBlank(message = "活动id不能为空")
+  private String id;
 
-    /**
-     * 活动id
-     *
-     * @author 一源团队-花和尚
-     * @date 2023-10-09
-     */
-    @NotBlank(message = "活动id不能为空")
-    private String id;
+  /**
+   * 商户id
+   *
+   * @mock 0
+   * @author 一源团队-花和尚
+   * @date 2023-10-09
+   */
+  private String tenantId;
 
+  /**
+   * 活动名称
+   *
+   * @author 一源团队-花和尚
+   * @date 2023-10-09
+   */
+  private String name;
 
-    /**
-     * 商户id
-     *
-     * @mock 0
-     * @author 一源团队-花和尚
-     * @date 2023-10-09
-     */
+  /**
+   * 开始时间
+   *
+   * @mock CURRENT_TIMESTAMP
+   * @author 一源团队-花和尚
+   * @date 2023-10-09
+   */
+  private Date startTime;
 
-    private String tenantId;
+  /**
+   * 结束时间
+   *
+   * @mock CURRENT_TIMESTAMP
+   * @author 一源团队-花和尚
+   * @date 2023-10-09
+   */
+  private Date endTime;
 
-
-    /**
-     * 活动名称
-     *
-     * @author 一源团队-花和尚
-     * @date 2023-10-09
-     */
-    private String name;
-
-
-    /**
-     * 开始时间
-     *
-     * @mock CURRENT_TIMESTAMP
-     * @author 一源团队-花和尚
-     * @date 2023-10-09
-     */
-
-    private Date startTime;
-
-
-    /**
-     * 结束时间
-     *
-     * @mock CURRENT_TIMESTAMP
-     * @author 一源团队-花和尚
-     * @date 2023-10-09
-     */
-
-    private Date endTime;
-
-
-    /**
-     * 是否显示0=否|1=是
-     *
-     * @mock 0
-     * @author 一源团队-花和尚
-     * @date 2023-10-09
-     */
-
-    private Boolean isShow;
-
-
+  /**
+   * 是否显示0=否|1=是
+   *
+   * @mock 0
+   * @author 一源团队-花和尚
+   * @date 2023-10-09
+   */
+  private Boolean isShow;
 }

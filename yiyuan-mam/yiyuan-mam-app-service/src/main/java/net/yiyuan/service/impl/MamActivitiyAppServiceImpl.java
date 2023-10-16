@@ -20,19 +20,18 @@ import java.util.List;
  */
 @Slf4j
 @Service
-public class MamActivitiyAppServiceImpl extends JoinServiceImpl
-        <MamActivitiyMapper, MamActivitiy>
-        implements MamActivitiyAppService {
-    @Resource
-    private MamActivitiyMapper mamActivitiyMapper;
+public class MamActivitiyAppServiceImpl extends JoinServiceImpl<MamActivitiyMapper, MamActivitiy>
+    implements MamActivitiyAppService {
+  @Resource private MamActivitiyMapper mamActivitiyMapper;
 
-    @Override
-    public List<MamActivitiy> getIndexList() throws Exception {
-        JoinLambdaWrapper<MamActivitiy> wrapper = Joins.of(MamActivitiy.class);
-        wrapper.select(MamActivitiy::getId, MamActivitiy::getName);
-        wrapper.eq(MamActivitiy::getIsShow, true);
-        wrapper.orderByDesc(MamActivitiy::getCreateTime);
-        List<MamActivitiy> mamActivitiyList = mamActivitiyMapper.joinSelectList(wrapper, MamActivitiy.class);
-        return mamActivitiyList;
-    }
+  @Override
+  public List<MamActivitiy> getIndexList() throws Exception {
+    JoinLambdaWrapper<MamActivitiy> wrapper = Joins.of(MamActivitiy.class);
+    wrapper.select(MamActivitiy::getId, MamActivitiy::getName);
+    wrapper.eq(MamActivitiy::getIsShow, true);
+    wrapper.orderByDesc(MamActivitiy::getCreateTime);
+    List<MamActivitiy> mamActivitiyList =
+        mamActivitiyMapper.joinSelectList(wrapper, MamActivitiy.class);
+    return mamActivitiyList;
+  }
 }

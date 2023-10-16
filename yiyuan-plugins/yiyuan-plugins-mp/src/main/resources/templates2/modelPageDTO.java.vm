@@ -39,7 +39,7 @@ public class ${className}PageDTO implements Serializable {
      * @date ${date}
      */
     @NotNull(message = "分页页数不能为空")
-    private Integer pageNum= 1;
+    private Integer pageNum = 1;
     #foreach($columnsItem in ${dtoTableColumns})
 
 
