@@ -88,4 +88,6 @@ public interface PtmProductCategoryService extends JoinIService<PtmProductCatego
    * @date 2023-10-09
    */
   boolean add(PtmProductCategoryAddDTO request) throws Exception;
+
+  List<PtmProductCategoryQueryVO> treeList(PtmProductCategoryListDTO request);
 }

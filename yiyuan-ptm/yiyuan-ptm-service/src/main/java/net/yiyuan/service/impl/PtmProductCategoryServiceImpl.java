@@ -6,6 +6,7 @@ import icu.mhb.mybatisplus.plugln.core.JoinLambdaWrapper;
 import lombok.extern.slf4j.Slf4j;
 import net.yiyuan.common.exception.BusinessException;
 import net.yiyuan.common.utils.BeanUtilsPlus;
+import net.yiyuan.common.utils.TreeUtil;
 import net.yiyuan.dto.PtmProductCategoryAddDTO;
 import net.yiyuan.dto.PtmProductCategoryEditDTO;
 import net.yiyuan.dto.PtmProductCategoryListDTO;
@@ -169,5 +170,18 @@ public class PtmProductCategoryServiceImpl
     } else {
       throw new BusinessException("新增异常");
     }
+  }
+
+  @Override
+  public List<PtmProductCategoryQueryVO> treeList(PtmProductCategoryListDTO request) {
+    PtmProductCategory po = new PtmProductCategory();
+    BeanUtilsPlus.copy(request, po);
+    JoinLambdaWrapper<PtmProductCategory> wrapper = new JoinLambdaWrapper<>(po);
+    wrapper.orderByDesc(PtmProductCategory::getSort);
+    wrapper.orderByDesc(PtmProductCategory::getCreateTime);
+    List<PtmProductCategoryQueryVO> voList =
+        ptmProductCategoryMapper.joinSelectList(wrapper, PtmProductCategoryQueryVO.class);
+    List<PtmProductCategoryQueryVO> getTreeVOList = TreeUtil.buildTreeByTwoLayersFor(voList);
+    return getTreeVOList;
   }
 }

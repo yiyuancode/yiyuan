@@ -7,6 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 商品分类查询请求响应参数实体
@@ -114,4 +115,12 @@ public class PtmProductCategoryQueryVO implements Serializable {
    * @date 2023-10-10
    */
   private String updateUser;
+
+  /**
+   * 子集
+   *
+   * @author 一源团队-花和尚
+   * @date 2023-10-10
+   */
+  private List<PtmProductCategoryQueryVO> children;
 }

@@ -60,14 +60,6 @@ public class PtmProductBrandPageDTO implements Serializable {
   private String name;
 
   /**
-   * 品牌图标
-   *
-   * @author 一源团队-花和尚
-   * @date 2023-10-10
-   */
-  private String icon;
-
-  /**
    * 状态0=不显示|1=显示
    *
    * @author 一源团队-花和尚

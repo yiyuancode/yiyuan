@@ -67,14 +67,6 @@ public class PtmProductCategoryPageDTO implements Serializable {
   private String name;
 
   /**
-   * icon
-   *
-   * @author 一源团队-花和尚
-   * @date 2023-10-10
-   */
-  private String icon;
-
-  /**
    * 分类级别#1=一级分类|2=二级分类|3=三级分类
    *
    * @author 一源团队-花和尚

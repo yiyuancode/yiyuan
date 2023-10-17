@@ -157,4 +157,23 @@ public class PtmProductCategoryController {
       return CommonResult.failed("新增商品分类失败");
     }
   }
+
+  /**
+   * 商品分类树结构查询
+   *
+   * @param request 商品分类实体
+   * @return {@link CommonResult<List<PtmProductCategoryQueryVO>>}
+   * @author 一源团队-花和尚
+   * @date 2023-10-09
+   */
+  @Description("商品管理/商品分类管理/查询商品分类")
+  @SaCheckPermission(
+      value = {"ptm:productCategory:query"},
+      orRole = "admin")
+  @GetMapping(value = "/ptm/productCategory/treeList")
+  @ResponseBody
+  public CommonResult<List<PtmProductCategoryQueryVO>> treeList(PtmProductCategoryListDTO request)
+      throws Exception {
+    return CommonResult.success(ptmProductCategoryService.treeList(request), "查询商品分类列表成功");
+  }
 }
