@@ -87,4 +87,28 @@ public class QueryWrapperUtils {
                   apply);
             });
   }
+
+  /**
+   * 根据前端传递的参数构建 QueryWrapper 条件
+   *
+   * @param wrapper 数据库实体类对象
+   * @param sFunctions 实际的数据库实体类类型
+   * @param <T> 抽象的DTO类泛型
+   * @param <E> 实际的数据库实体类泛型
+   * @return QueryWrapper 条件
+   */
+  public static <T, E> void resetLike(
+      JoinLambdaWrapper wrapper, T obj, SFunction<T, Object>... sFunctions) {
+    Arrays.stream(sFunctions)
+        .forEach(
+            sFunction -> {
+              Object apply = sFunction.apply(obj);
+              wrapper.eq(
+                  apply instanceof String
+                      ? StringUtilsPlus.isNotEmpty((String) apply)
+                      : StringUtilsPlus.isNotNUll(apply),
+                  sFunction,
+                  apply);
+            });
+  }
 }

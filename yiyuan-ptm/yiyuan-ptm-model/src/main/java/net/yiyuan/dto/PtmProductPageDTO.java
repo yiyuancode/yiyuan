@@ -59,7 +59,7 @@ public class PtmProductPageDTO implements Serializable {
    * @author 一源团队-花和尚
    * @date 2023-10-10
    */
-  private String tenantCategoryId;
+  private String platCategoryId;
 
   /**
    * 店铺内部分类id(商品分类3级)

@@ -41,5 +41,5 @@ public class PtmProductGetPageListDTO implements Serializable {
    * @date 2023-10-10
    */
   @NotBlank(message = "主类目id(商品分类2级id，逗号拼接)不能为空")
-  private String tenantCategoryId;
+  private String platCategoryId;
 }
