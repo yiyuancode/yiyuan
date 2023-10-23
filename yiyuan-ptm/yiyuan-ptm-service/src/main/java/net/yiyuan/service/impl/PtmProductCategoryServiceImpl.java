@@ -6,6 +6,7 @@ import icu.mhb.mybatisplus.plugln.core.JoinLambdaWrapper;
 import lombok.extern.slf4j.Slf4j;
 import net.yiyuan.common.exception.BusinessException;
 import net.yiyuan.common.utils.BeanUtilsPlus;
+import net.yiyuan.common.utils.StringUtilsPlus;
 import net.yiyuan.common.utils.TreeUtil;
 import net.yiyuan.dto.PtmProductCategoryAddDTO;
 import net.yiyuan.dto.PtmProductCategoryEditDTO;
@@ -69,6 +70,11 @@ public class PtmProductCategoryServiceImpl
     PtmProductCategory po = new PtmProductCategory();
     BeanUtilsPlus.copy(request, po);
     JoinLambdaWrapper<PtmProductCategory> wrapper = new JoinLambdaWrapper<>(po);
+
+    wrapper.like(
+        StringUtilsPlus.isNotEmpty(po.getName()), PtmProductCategory::getName, po.getName());
+    po.setName(null);
+
     wrapper.orderByDesc(PtmProductCategory::getSort);
     wrapper.orderByDesc(PtmProductCategory::getCreateTime);
     Page<PtmProductCategoryQueryVO> voPage =
