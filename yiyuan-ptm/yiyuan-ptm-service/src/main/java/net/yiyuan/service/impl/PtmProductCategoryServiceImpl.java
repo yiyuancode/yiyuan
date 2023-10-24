@@ -6,7 +6,6 @@ import icu.mhb.mybatisplus.plugln.core.JoinLambdaWrapper;
 import lombok.extern.slf4j.Slf4j;
 import net.yiyuan.common.exception.BusinessException;
 import net.yiyuan.common.utils.BeanUtilsPlus;
-import net.yiyuan.common.utils.StringUtilsPlus;
 import net.yiyuan.common.utils.TreeUtil;
 import net.yiyuan.dto.PtmProductCategoryAddDTO;
 import net.yiyuan.dto.PtmProductCategoryEditDTO;
@@ -14,6 +13,7 @@ import net.yiyuan.dto.PtmProductCategoryListDTO;
 import net.yiyuan.dto.PtmProductCategoryPageDTO;
 import net.yiyuan.mapper.PtmProductCategoryMapper;
 import net.yiyuan.model.PtmProductCategory;
+import net.yiyuan.plugins.mp.utils.QueryWrapperUtils;
 import net.yiyuan.service.PtmProductCategoryService;
 import net.yiyuan.vo.PtmProductCategoryQueryVO;
 import org.springframework.stereotype.Service;
@@ -51,6 +51,8 @@ public class PtmProductCategoryServiceImpl
     JoinLambdaWrapper<PtmProductCategory> wrapper = new JoinLambdaWrapper<>(po);
     wrapper.orderByDesc(PtmProductCategory::getSort);
     wrapper.orderByDesc(PtmProductCategory::getCreateTime);
+    // 重置eq为like，支持多个字段
+    QueryWrapperUtils.resetLikeRight(wrapper, po, PtmProductCategory::getName);
     List<PtmProductCategoryQueryVO> voList =
         ptmProductCategoryMapper.joinSelectList(wrapper, PtmProductCategoryQueryVO.class);
 
@@ -71,9 +73,11 @@ public class PtmProductCategoryServiceImpl
     BeanUtilsPlus.copy(request, po);
     JoinLambdaWrapper<PtmProductCategory> wrapper = new JoinLambdaWrapper<>(po);
 
-    wrapper.like(
-        StringUtilsPlus.isNotEmpty(po.getName()), PtmProductCategory::getName, po.getName());
-    po.setName(null);
+    //    wrapper.like(
+    //        StringUtilsPlus.isNotEmpty(po.getName()), PtmProductCategory::getName, po.getName());
+    //    po.setName(null);
+    // 重置eq查询为like查询
+    QueryWrapperUtils.resetLikeRight(wrapper, po, PtmProductCategory::getName);
 
     wrapper.orderByDesc(PtmProductCategory::getSort);
     wrapper.orderByDesc(PtmProductCategory::getCreateTime);

@@ -196,6 +196,22 @@ public class StringUtilsPlus {
         .append(str.substring(1))
         .toString();
   }
+  /**
+   * 字符串首字母大写
+   *
+   * @param str
+   * @return
+   */
+  public static String upCapitalize(String str) {
+    int strLen;
+    if (str == null || (strLen = str.length()) == 0) {
+      return str;
+    }
+    return new StrBuilder(strLen)
+        .append(Character.toUpperCase(str.charAt(0)))
+        .append(str.substring(1))
+        .toString();
+  }
 
   /**
    * 判断是否包含字符串

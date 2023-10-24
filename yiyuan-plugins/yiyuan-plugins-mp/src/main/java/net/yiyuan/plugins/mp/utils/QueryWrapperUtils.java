@@ -3,12 +3,15 @@ package net.yiyuan.plugins.mp.utils;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import icu.mhb.mybatisplus.plugln.core.JoinLambdaWrapper;
+import lombok.extern.slf4j.Slf4j;
 import net.yiyuan.common.utils.StringUtilsPlus;
 import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.Arrays;
 
+@Slf4j
 public class QueryWrapperUtils {
 
   /**
@@ -97,18 +100,50 @@ public class QueryWrapperUtils {
    * @param <E> 实际的数据库实体类泛型
    * @return QueryWrapper 条件
    */
-  public static <T, E> void resetLike(
-      JoinLambdaWrapper wrapper, T obj, SFunction<T, Object>... sFunctions) {
+  public static <T, E> void resetLikeRight(
+      JoinLambdaWrapper wrapper, T obj, SFunction<T, Object>... sFunctions) throws Exception {
     Arrays.stream(sFunctions)
         .forEach(
             sFunction -> {
               Object apply = sFunction.apply(obj);
-              wrapper.eq(
+
+              wrapper.likeRight(
                   apply instanceof String
                       ? StringUtilsPlus.isNotEmpty((String) apply)
                       : StringUtilsPlus.isNotNUll(apply),
                   sFunction,
                   apply);
+              log.info(
+                  "fieldOfClass.boollen{}",
+                  apply instanceof String
+                      ? StringUtilsPlus.isNotEmpty((String) apply)
+                      : StringUtilsPlus.isNotNUll(apply));
+              if (apply instanceof String
+                  ? StringUtilsPlus.isNotEmpty((String) apply)
+                  : StringUtilsPlus.isNotNUll(apply)) {
+                // 获取 set 方法的名称
+                String methodName =
+                    "set" + StringUtilsPlus.upCapitalize(LambdaFunUtils.getFieldName(sFunction));
+                log.info("methodName{}", methodName);
+                // 获取 sFunction 的 Class 对象
+                //              Class<?> sFunctionClass = sFunction.getClass();
+                Class<T> fieldOfClass = LambdaFunUtils.getFieldOfClass(sFunction);
+                log.info("fieldOfClass{}", fieldOfClass);
+                Class<?> aClass = apply.getClass();
+                // 获取 set 方法对象
+                try {
+                  Method setMethod = fieldOfClass.getMethod(methodName, aClass);
+
+                  Object defaultValue = null;
+                  // 反射不能直接传null，要用临时变量分封装
+                  //                  setMethod.invoke(obj, null);
+                  setMethod.invoke(obj, defaultValue);
+                } catch (Exception e) {
+                  e.printStackTrace();
+                }
+                // 调用 set 方法，传递 obj 作为参数
+                //              setMethod.invoke(sFunction, obj);
+              }
             });
   }
 }

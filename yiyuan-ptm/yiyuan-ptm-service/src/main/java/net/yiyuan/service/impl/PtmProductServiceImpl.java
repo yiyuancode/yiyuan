@@ -13,6 +13,7 @@ import net.yiyuan.mapper.PtmProductSkuMapper;
 import net.yiyuan.model.PtmProduct;
 import net.yiyuan.model.PtmProductSku;
 import net.yiyuan.model.SpmShop;
+import net.yiyuan.plugins.mp.utils.QueryWrapperUtils;
 import net.yiyuan.service.PtmProductService;
 import net.yiyuan.service.SysUserService;
 import net.yiyuan.vo.PtmProductQueryVO;
@@ -53,6 +54,8 @@ public class PtmProductServiceImpl extends JoinServiceImpl<PtmProductMapper, Ptm
     JoinLambdaWrapper<PtmProduct> wrapper = new JoinLambdaWrapper<>(po);
     wrapper.orderByDesc(PtmProduct::getSort);
     wrapper.orderByDesc(PtmProduct::getCreateTime);
+    QueryWrapperUtils.resetLikeRight(
+        wrapper, po, PtmProduct::getName, PtmProduct::getKeyword, PtmProduct::getTitle);
     List<PtmProductQueryVO> voList =
         ptmProductMapper.joinSelectList(wrapper, PtmProductQueryVO.class);
 
@@ -74,6 +77,8 @@ public class PtmProductServiceImpl extends JoinServiceImpl<PtmProductMapper, Ptm
     JoinLambdaWrapper<PtmProduct> wrapper = new JoinLambdaWrapper<>(po);
     wrapper.orderByDesc(PtmProduct::getSort);
     wrapper.orderByDesc(PtmProduct::getCreateTime);
+    QueryWrapperUtils.resetLikeRight(
+        wrapper, po, PtmProduct::getName, PtmProduct::getKeyword, PtmProduct::getTitle);
     Page<PtmProductQueryVO> voPage =
         ptmProductMapper.joinSelectPage(
             new Page<>(request.getPageNum(), request.getPageSize()),

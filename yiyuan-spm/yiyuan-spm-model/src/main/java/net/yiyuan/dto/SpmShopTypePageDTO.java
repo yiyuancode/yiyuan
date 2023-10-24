@@ -1,20 +1,39 @@
-package net.yiyuan.vo;
+package net.yiyuan.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 店铺类型查询请求响应参数实体
+ * 店铺类型分页接口请求入参实体
  *
  * @author 一源-花和尚
  * @date 2023-10-24
  */
 @Data
-public class SpmShopTypeQueryVO implements Serializable {
+public class SpmShopTypePageDTO implements Serializable {
+  /**
+   * 分页条数
+   *
+   * @mock 10
+   * @author 一源-花和尚
+   * @date 2023-10-24
+   */
+  @NotNull(message = "分页条数不能为空")
+  private Integer pageSize = 10;
+  /**
+   * 分页页数
+   *
+   * @mock 1
+   * @author 一源-花和尚
+   * @date 2023-10-24
+   */
+  @NotNull(message = "分页页数不能为空")
+  private Integer pageNum = 1;
 
   /**
    * 店铺类型id
@@ -49,14 +68,6 @@ public class SpmShopTypeQueryVO implements Serializable {
   private String typeContract;
 
   /**
-   * 排序
-   *
-   * @author 一源-花和尚
-   * @date 2023-10-24
-   */
-  private Integer sort;
-
-  /**
    * 显示状态0=不显示|1=显示
    *
    * @author 一源-花和尚
@@ -65,24 +76,46 @@ public class SpmShopTypeQueryVO implements Serializable {
   private Boolean isShow;
 
   /**
-   * 创建时间
+   * 创建时间(查询开始时间)
    *
+   * @see Date
    * @author 一源-花和尚
    * @date 2023-10-24
    */
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-  private Date createTime;
+  private Date createTimeStart;
+  /**
+   * 创建时间(查询结束时间)
+   *
+   * @see Date
+   * @author 一源-花和尚
+   * @date 2023-10-24
+   */
+  @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+  private Date createTimeEnd;
 
   /**
-   * 修改时间
+   * 修改时间(查询开始时间)
    *
+   * @see Date
    * @author 一源-花和尚
    * @date 2023-10-24
    */
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-  private Date updateTime;
+  private Date updateTimeStart;
+  /**
+   * 修改时间(查询结束时间)
+   *
+   * @see Date
+   * @author 一源-花和尚
+   * @date 2023-10-24
+   */
+  @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+  private Date updateTimeEnd;
 
   /**
    * 创建人
