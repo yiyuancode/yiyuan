@@ -5,10 +5,7 @@ import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import net.yiyuan.common.model.vo.CommonResult;
-import net.yiyuan.dto.PtmProductAddDTO;
-import net.yiyuan.dto.PtmProductEditDTO;
-import net.yiyuan.dto.PtmProductListDTO;
-import net.yiyuan.dto.PtmProductPageDTO;
+import net.yiyuan.dto.*;
 import net.yiyuan.service.PtmProductService;
 import net.yiyuan.vo.PtmProductQueryVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -150,6 +147,29 @@ public class PtmProductController {
   public CommonResult<String> add(@RequestBody @Validated PtmProductAddDTO request)
       throws Exception {
     if (ptmProductService.add(request)) {
+      return CommonResult.success(null, "新增商品信息成功");
+    } else {
+      return CommonResult.failed("新增商品信息失败");
+    }
+  }
+
+  /**
+   * 商品审核
+   *
+   * @param request 商品审核实体
+   * @return {@link CommonResult<String>}
+   * @author 一源团队-花和尚
+   * @date 2023-10-09
+   */
+  @Description("商品管理/商品信息管理/商品审核")
+  @SaCheckPermission(
+      value = {"ptm:product:audit"},
+      orRole = "admin")
+  @PostMapping(value = "/ptm/product/audit")
+  @ResponseBody
+  public CommonResult<String> audit(@RequestBody @Validated PtmProductAuditDTO request)
+      throws Exception {
+    if (ptmProductService.audit(request)) {
       return CommonResult.success(null, "新增商品信息成功");
     } else {
       return CommonResult.failed("新增商品信息失败");

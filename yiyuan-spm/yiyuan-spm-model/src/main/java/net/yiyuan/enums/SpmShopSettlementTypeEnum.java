@@ -9,7 +9,7 @@ import lombok.Getter;
  * 店铺管理-结算类型枚举类
  *
  * @author 一源-花和尚
- * @date 2023-10-06
+ * @date 2023-10-24
  */
 @Getter // 没有引入lombok依赖包的，可以自己实现get方法
 @JsonFormat(shape = JsonFormat.Shape.OBJECT) // 实现场景2，只需要加上这个注解
@@ -20,7 +20,7 @@ public enum SpmShopSettlementTypeEnum implements IEnum<Integer> {
    *
    * @see SpmShopSettlementTypeEnum
    * @author 一源-花和尚
-   * @date 2023-10-06
+   * @date 2023-10-24
    */
   BANK_CARD(1, "银行卡"),
   /**
@@ -28,7 +28,7 @@ public enum SpmShopSettlementTypeEnum implements IEnum<Integer> {
    *
    * @see SpmShopSettlementTypeEnum
    * @author 一源-花和尚
-   * @date 2023-10-06
+   * @date 2023-10-24
    */
   WECHAT(2, "微信"),
   /**
@@ -36,7 +36,7 @@ public enum SpmShopSettlementTypeEnum implements IEnum<Integer> {
    *
    * @see SpmShopSettlementTypeEnum
    * @author 一源-花和尚
-   * @date 2023-10-06
+   * @date 2023-10-24
    */
   ALIPAY(3, "支付宝");
 

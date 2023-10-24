@@ -2,10 +2,7 @@ package net.yiyuan.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import icu.mhb.mybatisplus.plugln.base.service.JoinIService;
-import net.yiyuan.dto.PtmProductAddDTO;
-import net.yiyuan.dto.PtmProductEditDTO;
-import net.yiyuan.dto.PtmProductListDTO;
-import net.yiyuan.dto.PtmProductPageDTO;
+import net.yiyuan.dto.*;
 import net.yiyuan.model.PtmProduct;
 import net.yiyuan.vo.PtmProductQueryVO;
 import org.springframework.transaction.annotation.Transactional;
@@ -90,4 +87,15 @@ public interface PtmProductService extends JoinIService<PtmProduct> {
    */
   @Transactional
   boolean add(PtmProductAddDTO request) throws Exception;
+
+  /**
+   * 商品审核
+   *
+   * @param request 商品审核实体
+   * @return {@link boolean}
+   * @author 一源团队-花和尚
+   * @date 2023-10-09
+   */
+  @Transactional
+  boolean audit(PtmProductAuditDTO request) throws Exception;
 }

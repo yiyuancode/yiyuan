@@ -3,6 +3,7 @@ package net.yiyuan.service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import icu.mhb.mybatisplus.plugln.base.service.JoinIService;
 import net.yiyuan.dto.*;
+import net.yiyuan.model.SpmShop;
 import net.yiyuan.model.SysUser;
 import net.yiyuan.vo.SysUserGetUserInfoVO;
 import net.yiyuan.vo.SysUserLoginVO;
@@ -115,4 +116,13 @@ public interface SysUserService extends JoinIService<SysUser> {
    * @date 2023-09-18
    */
   void excel(HttpServletResponse response) throws Exception;
+
+  /**
+   * 获取用户店铺信息
+   *
+   * @return {@link boolean}
+   * @author 一源-花和尚
+   * @date 2023-09-18
+   */
+  SpmShop getShopOfUser() throws Exception;
 }

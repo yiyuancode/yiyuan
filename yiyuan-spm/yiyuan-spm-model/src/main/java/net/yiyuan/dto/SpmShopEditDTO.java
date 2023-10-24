@@ -1,36 +1,35 @@
-package net.yiyuan.vo;
+package net.yiyuan.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import net.yiyuan.enums.SpmShopSettlementTypeEnum;
-import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
 
 /**
- * 店铺查询请求响应参数实体
+ * 店铺修改接口请求入参实体
  *
  * @author 一源-花和尚
- * @date 2023-10-06
+ * @date 2023-10-24
  */
 @Data
-public class SpmShopQueryVO implements Serializable {
+public class SpmShopEditDTO implements Serializable {
 
   /**
    * 店铺id
    *
    * @author 一源-花和尚
-   * @date 2023-10-06
+   * @date 2023-10-24
    */
+  @NotBlank(message = "店铺id不能为空")
   private String id;
 
   /**
    * 店铺类型id
    *
    * @author 一源-花和尚
-   * @date 2023-10-06
+   * @date 2023-10-24
    */
   private String spmShopTypeId;
 
@@ -38,7 +37,7 @@ public class SpmShopQueryVO implements Serializable {
    * 地址id
    *
    * @author 一源-花和尚
-   * @date 2023-10-06
+   * @date 2023-10-24
    */
   private String sysAreaId;
 
@@ -46,7 +45,7 @@ public class SpmShopQueryVO implements Serializable {
    * 商户名称
    *
    * @author 一源-花和尚
-   * @date 2023-10-06
+   * @date 2023-10-24
    */
   private String merchantName;
 
@@ -54,7 +53,7 @@ public class SpmShopQueryVO implements Serializable {
    * 商户邮箱
    *
    * @author 一源-花和尚
-   * @date 2023-10-06
+   * @date 2023-10-24
    */
   private String merchantEmail;
 
@@ -62,7 +61,7 @@ public class SpmShopQueryVO implements Serializable {
    * 商户手机号
    *
    * @author 一源-花和尚
-   * @date 2023-10-06
+   * @date 2023-10-24
    */
   private String merchantPhone;
 
@@ -70,7 +69,7 @@ public class SpmShopQueryVO implements Serializable {
    * 商户法人
    *
    * @author 一源-花和尚
-   * @date 2023-10-06
+   * @date 2023-10-24
    */
   private String merchantLegalRepresentative;
 
@@ -78,7 +77,7 @@ public class SpmShopQueryVO implements Serializable {
    * 商户分类
    *
    * @author 一源-花和尚
-   * @date 2023-10-06
+   * @date 2023-10-24
    */
   private String merchantCategory;
 
@@ -86,7 +85,7 @@ public class SpmShopQueryVO implements Serializable {
    * 商户类别
    *
    * @author 一源-花和尚
-   * @date 2023-10-06
+   * @date 2023-10-24
    */
   private String merchantType;
 
@@ -94,7 +93,7 @@ public class SpmShopQueryVO implements Serializable {
    * 商户手续费
    *
    * @author 一源-花和尚
-   * @date 2023-10-06
+   * @date 2023-10-24
    */
   private BigDecimal merchantFee;
 
@@ -102,7 +101,7 @@ public class SpmShopQueryVO implements Serializable {
    * 商户星级
    *
    * @author 一源-花和尚
-   * @date 2023-10-06
+   * @date 2023-10-24
    */
   private Integer merchantRating;
 
@@ -110,7 +109,7 @@ public class SpmShopQueryVO implements Serializable {
    * 资质图片
    *
    * @author 一源-花和尚
-   * @date 2023-10-06
+   * @date 2023-10-24
    */
   private String qualificationImages;
 
@@ -118,7 +117,7 @@ public class SpmShopQueryVO implements Serializable {
    * 店铺名称
    *
    * @author 一源-花和尚
-   * @date 2023-10-06
+   * @date 2023-10-24
    */
   private String shopName;
 
@@ -126,7 +125,7 @@ public class SpmShopQueryVO implements Serializable {
    * 店铺主头像
    *
    * @author 一源-花和尚
-   * @date 2023-10-06
+   * @date 2023-10-24
    */
   private String shopOwnerAvatar;
 
@@ -134,7 +133,7 @@ public class SpmShopQueryVO implements Serializable {
    * 店铺背景图
    *
    * @author 一源-花和尚
-   * @date 2023-10-06
+   * @date 2023-10-24
    */
   private String shopBackgroundImage;
 
@@ -142,7 +141,7 @@ public class SpmShopQueryVO implements Serializable {
    * 推荐店铺背景图
    *
    * @author 一源-花和尚
-   * @date 2023-10-06
+   * @date 2023-10-24
    */
   private String recommendedShopBackgroundImage;
 
@@ -150,7 +149,7 @@ public class SpmShopQueryVO implements Serializable {
    * 店铺封面图
    *
    * @author 一源-花和尚
-   * @date 2023-10-06
+   * @date 2023-10-24
    */
   private String shopCover;
 
@@ -158,7 +157,7 @@ public class SpmShopQueryVO implements Serializable {
    * 店铺logo
    *
    * @author 一源-花和尚
-   * @date 2023-10-06
+   * @date 2023-10-24
    */
   private String shopLogo;
 
@@ -166,7 +165,7 @@ public class SpmShopQueryVO implements Serializable {
    * 店铺简介
    *
    * @author 一源-花和尚
-   * @date 2023-10-06
+   * @date 2023-10-24
    */
   private String shopDescription;
 
@@ -174,7 +173,7 @@ public class SpmShopQueryVO implements Serializable {
    * 店铺类型
    *
    * @author 一源-花和尚
-   * @date 2023-10-06
+   * @date 2023-10-24
    */
   private String shopType;
 
@@ -182,15 +181,16 @@ public class SpmShopQueryVO implements Serializable {
    * 库存告警阈值
    *
    * @author 一源-花和尚
-   * @date 2023-10-06
+   * @date 2023-10-24
    */
   private Integer inventoryAlert;
 
   /**
    * 是否支持自提0=否|1=是
    *
+   * @mock 1
    * @author 一源-花和尚
-   * @date 2023-10-06
+   * @date 2023-10-24
    */
   private Boolean isSupportsSelfPickup;
 
@@ -198,7 +198,7 @@ public class SpmShopQueryVO implements Serializable {
    * 店铺地址
    *
    * @author 一源-花和尚
-   * @date 2023-10-06
+   * @date 2023-10-24
    */
   private String shopAddress;
 
@@ -206,7 +206,7 @@ public class SpmShopQueryVO implements Serializable {
    * 结算类型#1=银行卡|2=微信|3=支付宝
    *
    * @author 一源-花和尚
-   * @date 2023-10-06
+   * @date 2023-10-24
    */
   private SpmShopSettlementTypeEnum settlementType;
 
@@ -214,7 +214,7 @@ public class SpmShopQueryVO implements Serializable {
    * 银行卡结算-收款人
    *
    * @author 一源-花和尚
-   * @date 2023-10-06
+   * @date 2023-10-24
    */
   private String bankPayee;
 
@@ -222,7 +222,7 @@ public class SpmShopQueryVO implements Serializable {
    * 银行卡结算-开户银行
    *
    * @author 一源-花和尚
-   * @date 2023-10-06
+   * @date 2023-10-24
    */
   private String bankNumber;
 
@@ -230,7 +230,7 @@ public class SpmShopQueryVO implements Serializable {
    * 银行卡结算-开户行地址
    *
    * @author 一源-花和尚
-   * @date 2023-10-06
+   * @date 2023-10-24
    */
   private String bankAddress;
 
@@ -238,7 +238,7 @@ public class SpmShopQueryVO implements Serializable {
    * 微信结算-真实姓名
    *
    * @author 一源-花和尚
-   * @date 2023-10-06
+   * @date 2023-10-24
    */
   private String wechatRealName;
 
@@ -246,7 +246,7 @@ public class SpmShopQueryVO implements Serializable {
    * 微信结算-微信号
    *
    * @author 一源-花和尚
-   * @date 2023-10-06
+   * @date 2023-10-24
    */
   private String wechatAccount;
 
@@ -254,7 +254,7 @@ public class SpmShopQueryVO implements Serializable {
    * 微信结算-收款二维码
    *
    * @author 一源-花和尚
-   * @date 2023-10-06
+   * @date 2023-10-24
    */
   private String wechatQrCode;
 
@@ -262,7 +262,7 @@ public class SpmShopQueryVO implements Serializable {
    * 支付宝结算-真实姓名
    *
    * @author 一源-花和尚
-   * @date 2023-10-06
+   * @date 2023-10-24
    */
   private String alipayRealName;
 
@@ -270,7 +270,7 @@ public class SpmShopQueryVO implements Serializable {
    * 支付宝结算-微信号
    *
    * @author 一源-花和尚
-   * @date 2023-10-06
+   * @date 2023-10-24
    */
   private String alipayAccount;
 
@@ -278,59 +278,34 @@ public class SpmShopQueryVO implements Serializable {
    * 支付宝结算-收款二维码
    *
    * @author 一源-花和尚
-   * @date 2023-10-06
+   * @date 2023-10-24
    */
   private String alipayQrCode;
 
   /**
    * 排序
    *
+   * @mock 0
    * @author 一源-花和尚
-   * @date 2023-10-06
+   * @date 2023-10-24
    */
   private Integer sort;
 
   /**
+   * 是否加入审核0=否|1=是
+   *
+   * @mock 1
+   * @author 一源-花和尚
+   * @date 2023-10-24
+   */
+  private Boolean isAudit;
+
+  /**
    * 显示状态0=不显示|1=显示
    *
+   * @mock 1
    * @author 一源-花和尚
-   * @date 2023-10-06
+   * @date 2023-10-24
    */
   private Boolean isShow;
-
-  /**
-   * 创建时间
-   *
-   * @author 一源-花和尚
-   * @date 2023-10-06
-   */
-  @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-  private Date createTime;
-
-  /**
-   * 修改时间
-   *
-   * @author 一源-花和尚
-   * @date 2023-10-06
-   */
-  @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-  private Date updateTime;
-
-  /**
-   * 创建人
-   *
-   * @author 一源-花和尚
-   * @date 2023-10-06
-   */
-  private String createUser;
-
-  /**
-   * 修改人
-   *
-   * @author 一源-花和尚
-   * @date 2023-10-06
-   */
-  private String updateUser;
 }

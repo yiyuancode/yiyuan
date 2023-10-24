@@ -7,7 +7,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -93,8 +92,6 @@ public class PtmProductPageDTO implements Serializable {
    */
   private String tempId;
 
-
-
   /**
    * 商品名称
    *
@@ -120,52 +117,12 @@ public class PtmProductPageDTO implements Serializable {
   private String keyword;
 
   /**
-   * 商品详情(富文本)
-   *
-   * @author 一源团队-花和尚
-   * @date 2023-10-10
-   */
-  private String goodsDesc;
-
-  /**
    * 库存(根据sku所有累计库存自动设置)
    *
    * @author 一源团队-花和尚
    * @date 2023-10-10
    */
   private Integer stock;
-
-  /**
-   * 售卖价格(根据sku最低售卖价格自动设置)
-   *
-   * @author 一源团队-花和尚
-   * @date 2023-10-10
-   */
-  private BigDecimal salePrice;
-
-  /**
-   * 划线价格(根据sku最低划线价格自动设置)
-   *
-   * @author 一源团队-花和尚
-   * @date 2023-10-10
-   */
-  private BigDecimal crossedPrice;
-
-  /**
-   * 成本价(根据sku最低成本价自动设置)
-   *
-   * @author 一源团队-花和尚
-   * @date 2023-10-10
-   */
-  private BigDecimal costPrice;
-
-  /**
-   * 单位名
-   *
-   * @author 一源团队-花和尚
-   * @date 2023-10-10
-   */
-  private String unitName;
 
   /**
    * 实际销量
@@ -176,30 +133,12 @@ public class PtmProductPageDTO implements Serializable {
   private Integer sales;
 
   /**
-   * 虚拟销量(如果为默认值前端展示实际销量,反之展示虚拟销量)
-   *
-   * @author 一源团队-花和尚
-   * @date 2023-10-10
-   */
-  private Integer fictiSales;
-
-  /**
    * 浏览量
    *
    * @author 一源团队-花和尚
    * @date 2023-10-10
    */
   private Integer browse;
-
-
-
-  /**
-   * 总后台排序
-   *
-   * @author 一源团队-花和尚
-   * @date 2023-10-10
-   */
-  private Integer tenantSort;
 
   /**
    * 是否单规格0=单|1=多
@@ -240,14 +179,6 @@ public class PtmProductPageDTO implements Serializable {
    * @date 2023-10-10
    */
   private PtmProductAuditStatusEnum auditStatus;
-
-  /**
-   * 拒绝原因
-   *
-   * @author 一源团队-花和尚
-   * @date 2023-10-10
-   */
-  private String reasonContent;
 
   /**
    * 是否上架0=否|1=是
@@ -298,5 +229,4 @@ public class PtmProductPageDTO implements Serializable {
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
   private Date updateTimeEnd;
-
 }

@@ -17,5 +17,10 @@
             <artifactId>yiyuan-ptm-mapper</artifactId>
             <version>${revision}</version>
         </dependency>
+        <dependency>
+            <groupId>net.yiyuan</groupId>
+            <artifactId>yiyuan-sys-service</artifactId>
+            <version>${revision}</version>
+        </dependency>
     </dependencies>
 </project>

@@ -365,6 +365,7 @@ public class CodeGenerator {
       createMapperByVelocity(dtoContext);
       createMapperXmlByVelocity(dtoContext);
       createMaperPomByVelocity(dtoContext);
+      createModelPomByVelocity(dtoContext);
 
       // 没有主键 表示中间表，不创建控制器等
       if (hasKeyFlag == 1) {
@@ -995,7 +996,7 @@ public class CodeGenerator {
             + "/"
             + "yiyuan-"
             + context.get("pm0")
-            + "-mapper"
+            + "-model"
             + DEFAULT_SRC
             + "/"
             + StringUtilsPlus.convertPackageNameToPath(DEFAULT_PARENT_PACK)

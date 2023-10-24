@@ -45,6 +45,7 @@ public class SysUserServiceImpl extends JoinServiceImpl<SysUserMapper, SysUser>
   private CenterJoinUtils<SysUser, SysUserRole, SysRole, SysUserQueryVO> userRoleJoin;
   private CenterJoinUtils<SysRole, SysRoleMenu, SysMenu, SysRoleQueryVO> roleMenuJoin;
   @Autowired private MapperFacade mapperFacade;
+  @Resource private SpmShopMapper spmShopMapper;
 
   /**
    * 管理端用户列表(全部)
@@ -207,6 +208,13 @@ public class SysUserServiceImpl extends JoinServiceImpl<SysUserMapper, SysUser>
     String loginIdAsString = sysUserResp.getId();
     SysUserLoginVO voBean = new SysUserLoginVO();
     voBean.setToken(StpUtil.getTokenValue());
+    // 如果用户的商户id不为空，则缓存店铺信息
+    if (!"0".equals(sysUserResp.getTenantId())) {
+      SpmShop spmShop = spmShopMapper.selectById(sysUserResp.getTenantId());
+      sysUserRedisService.set(
+          SysUserRedisService.KEY_SYS_USER_SHOP, loginIdAsString, spmShop, null);
+    }
+
     // 构造成list 调用
     userRoleJoin =
         new CenterJoinUtils<>(
@@ -336,6 +344,16 @@ public class SysUserServiceImpl extends JoinServiceImpl<SysUserMapper, SysUser>
     response.setHeader("Content-Disposition", "attachment; filename=" + "用户信息统计File.xlsx");
     ExcelUtils.exportExcel(
         voList, "用户信息统计表Title", "用户表Sheet", SysUserExcelVO.class, "用户信息统计File", response);
+  }
+
+  @Override
+  public SpmShop getShopOfUser() throws Exception {
+    String loginIdAsString = StpUtil.getLoginIdAsString();
+    // 获取用户数据
+    SpmShop spmShop =
+        sysUserRedisService.get(
+            SysUserRedisService.KEY_SYS_USER_SHOP, loginIdAsString, SpmShop.class);
+    return spmShop;
   }
 
   /**

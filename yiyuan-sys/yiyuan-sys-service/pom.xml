@@ -33,5 +33,10 @@
             <artifactId>yiyuan-um-service</artifactId>
             <version>${revision}</version>
         </dependency>
+        <dependency>
+            <groupId>net.yiyuan</groupId>
+            <artifactId>yiyuan-spm-service</artifactId>
+            <version>${revision}</version>
+        </dependency>
     </dependencies>
 </project>

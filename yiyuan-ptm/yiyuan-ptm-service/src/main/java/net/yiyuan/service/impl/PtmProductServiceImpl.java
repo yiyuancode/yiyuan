@@ -6,15 +6,15 @@ import icu.mhb.mybatisplus.plugln.core.JoinLambdaWrapper;
 import lombok.extern.slf4j.Slf4j;
 import net.yiyuan.common.exception.BusinessException;
 import net.yiyuan.common.utils.BeanUtilsPlus;
-import net.yiyuan.dto.PtmProductAddDTO;
-import net.yiyuan.dto.PtmProductEditDTO;
-import net.yiyuan.dto.PtmProductListDTO;
-import net.yiyuan.dto.PtmProductPageDTO;
+import net.yiyuan.common.utils.StringUtilsPlus;
+import net.yiyuan.dto.*;
 import net.yiyuan.mapper.PtmProductMapper;
 import net.yiyuan.mapper.PtmProductSkuMapper;
 import net.yiyuan.model.PtmProduct;
 import net.yiyuan.model.PtmProductSku;
+import net.yiyuan.model.SpmShop;
 import net.yiyuan.service.PtmProductService;
+import net.yiyuan.service.SysUserService;
 import net.yiyuan.vo.PtmProductQueryVO;
 import org.springframework.stereotype.Service;
 
@@ -35,6 +35,7 @@ public class PtmProductServiceImpl extends JoinServiceImpl<PtmProductMapper, Ptm
     implements PtmProductService {
   @Resource private PtmProductMapper ptmProductMapper;
   @Resource private PtmProductSkuMapper ptmProductSkuMapper;
+  @Resource private SysUserService sysUserService;
 
   /**
    * 商品信息列表(全部)
@@ -164,11 +165,10 @@ public class PtmProductServiceImpl extends JoinServiceImpl<PtmProductMapper, Ptm
   public boolean add(PtmProductAddDTO request) throws Exception {
     PtmProduct po = new PtmProduct();
     BeanUtilsPlus.copy(request, po);
+
     // 取出sku的总库存,以及最低各个价格
     List<PtmProductSku> skuList = request.getSkuList();
-
     Integer totalStock = skuList.stream().mapToInt(PtmProductSku::getStock).sum();
-
     BigDecimal minCrossedPrice =
         skuList.stream()
             .map(PtmProductSku::getCrossedPrice)
@@ -192,6 +192,13 @@ public class PtmProductServiceImpl extends JoinServiceImpl<PtmProductMapper, Ptm
     po.setCrossedPrice(minCrossedPrice);
     // 设置总库存
     po.setStock(totalStock);
+
+    // 根据店铺配置标记商品是否需要审核
+    SpmShop shopOfUser = sysUserService.getShopOfUser();
+    if (StringUtilsPlus.isNotNUll(shopOfUser)) {
+      po.setIsAudit(shopOfUser.getIsAudit());
+    }
+
     int i = ptmProductMapper.insert(po);
     // 添加sku
     skuList.forEach(
@@ -203,6 +210,18 @@ public class PtmProductServiceImpl extends JoinServiceImpl<PtmProductMapper, Ptm
       return true;
     } else {
       throw new BusinessException("新增异常");
+    }
+  }
+
+  @Override
+  public boolean audit(PtmProductAuditDTO request) throws Exception {
+    PtmProduct po = new PtmProduct();
+    BeanUtilsPlus.copy(request, po);
+    int i = ptmProductMapper.updateById(po);
+    if (i != 0) {
+      return true;
+    } else {
+      throw new BusinessException("审核异常");
     }
   }
 }
