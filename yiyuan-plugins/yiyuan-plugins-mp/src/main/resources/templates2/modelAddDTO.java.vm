@@ -29,7 +29,6 @@ public class ${className}AddDTO implements Serializable {
             "createTime")}&&!${columnsItem.columnName.equals("updateTime")}&&!${columnsItem.columnName.equals(
             "createUser")}&&!${columnsItem.columnName.equals("updateUser")}&&!${columnsItem.columnName.equals(
             "isDel")}&&!${columnsItem.columnName.equals(
-            "isShow")}&&!${columnsItem.columnName.equals(
             "sort")})
             #if(!${columnsItem.defaultValue.equals("NULL")})
                 /**

@@ -82,16 +82,14 @@ public class SysRole implements Serializable {
    * @author 一源-花和尚
    * @date 2023-09-18
    */
-  @TableField(value = "create_time ", condition = CustomSqlCondition.START_EQUAL, select = false)
-  private Date createTimeStart;
+
   /**
    * 创建时间(查询结束时间)
    *
    * @author 一源-花和尚
    * @date 2023-09-18
    */
-  @TableField(value = "create_time", condition = CustomSqlCondition.END_EQUAL, select = false)
-  private Date createTimeEnd;
+
 
   /**
    * 修改时间
@@ -107,16 +105,14 @@ public class SysRole implements Serializable {
    * @author 一源-花和尚
    * @date 2023-09-18
    */
-  @TableField(value = "update_time ", condition = CustomSqlCondition.START_EQUAL, select = false)
-  private Date updateTimeStart;
+
   /**
    * 修改时间(查询结束时间)
    *
    * @author 一源-花和尚
    * @date 2023-09-18
    */
-  @TableField(value = "update_time", condition = CustomSqlCondition.END_EQUAL, select = false)
-  private Date updateTimeEnd;
+
 
   /**
    * 创建人

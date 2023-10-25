@@ -122,24 +122,47 @@ public class PtmProductPageDTO implements Serializable {
    * @author 一源团队-花和尚
    * @date 2023-10-10
    */
-  private Integer stock;
+  private Integer stockStart;
 
   /**
-   * 实际销量
+   * 库存(根据sku所有累计库存自动设置)
    *
    * @author 一源团队-花和尚
    * @date 2023-10-10
    */
-  private Integer sales;
+  private Integer stockEnd;
 
   /**
-   * 浏览量
+   * 实际销量(开区间)
    *
    * @author 一源团队-花和尚
    * @date 2023-10-10
    */
-  private Integer browse;
+  private Integer salesStart;
 
+  /**
+   * 实际销量(闭区间)
+   *
+   * @author 一源团队-花和尚
+   * @date 2023-10-10
+   */
+  private Integer salesEnd;
+
+  /**
+   * 浏览量(开区间)
+   *
+   * @author 一源团队-花和尚
+   * @date 2023-10-10
+   */
+  private Integer browseStart;
+
+  /**
+   * 浏览量(闭区间)
+   *
+   * @author 一源团队-花和尚
+   * @date 2023-10-10
+   */
+  private Integer browseEnd;
   /**
    * 是否单规格0=单|1=多
    *

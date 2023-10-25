@@ -48,7 +48,9 @@ public class ${className}ListDTO implements Serializable {
             private Date ${columnsItem.columnName}End;
 
         #elseif(!${columnsItem.propertyType.equals("Date")}&&!${columnsItem.columnName.equals(
-            "sort")})
+            "sort")}&&!${columnsItem.columnName.equals(
+            "sort")}&&!${columnsItem.columnName.equals(
+            "createUser")}&&!${columnsItem.columnName.equals("updateUser")})
             /**
              * ${columnsItem.columnComment}
              *

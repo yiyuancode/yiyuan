@@ -368,16 +368,14 @@ public class UmUser implements Serializable {
    * @author 小林同学
    * @date 2023-09-18
    */
-  @TableField(value = "create_time ", condition = CustomSqlCondition.START_EQUAL, select = false)
-  private Date createTimeStart;
+
   /**
    * 添加时间(查询结束时间)
    *
    * @author 小林同学
    * @date 2023-09-18
    */
-  @TableField(value = "create_time", condition = CustomSqlCondition.END_EQUAL, select = false)
-  private Date createTimeEnd;
+
 
   /**
    * 更新时间
@@ -393,16 +391,14 @@ public class UmUser implements Serializable {
    * @author 小林同学
    * @date 2023-09-18
    */
-  @TableField(value = "update_time ", condition = CustomSqlCondition.START_EQUAL, select = false)
-  private Date updateTimeStart;
+
   /**
    * 更新时间(查询结束时间)
    *
    * @author 小林同学
    * @date 2023-09-18
    */
-  @TableField(value = "update_time", condition = CustomSqlCondition.END_EQUAL, select = false)
-  private Date updateTimeEnd;
+
 
   /**
    * 是否注销#0=未注销|1=已注销

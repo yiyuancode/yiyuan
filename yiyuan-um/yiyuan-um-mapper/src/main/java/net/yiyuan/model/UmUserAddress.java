@@ -165,16 +165,14 @@ public class UmUserAddress implements Serializable {
    * @author 小林同学
    * @date 2023-09-19
    */
-  @TableField(value = "create_time ", condition = CustomSqlCondition.START_EQUAL, select = false)
-  private Date createTimeStart;
+
   /**
    * 创建时间(查询结束时间)
    *
    * @author 小林同学
    * @date 2023-09-19
    */
-  @TableField(value = "create_time", condition = CustomSqlCondition.END_EQUAL, select = false)
-  private Date createTimeEnd;
+
 
   /**
    * 更新时间
@@ -190,14 +188,12 @@ public class UmUserAddress implements Serializable {
    * @author 小林同学
    * @date 2023-09-19
    */
-  @TableField(value = "update_time ", condition = CustomSqlCondition.START_EQUAL, select = false)
-  private Date updateTimeStart;
+
   /**
    * 更新时间(查询结束时间)
    *
    * @author 小林同学
    * @date 2023-09-19
    */
-  @TableField(value = "update_time", condition = CustomSqlCondition.END_EQUAL, select = false)
-  private Date updateTimeEnd;
+
 }

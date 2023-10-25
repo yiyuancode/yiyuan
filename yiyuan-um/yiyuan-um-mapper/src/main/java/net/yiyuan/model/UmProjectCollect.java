@@ -65,14 +65,12 @@ public class UmProjectCollect implements Serializable {
    * @author 小林同学
    * @date 2023-09-21
    */
-  @TableField(value = "create_time ", condition = CustomSqlCondition.START_EQUAL, select = false)
-  private Date createTimeStart;
+
   /**
    * 创建时间(查询结束时间)
    *
    * @author 小林同学
    * @date 2023-09-21
    */
-  @TableField(value = "create_time", condition = CustomSqlCondition.END_EQUAL, select = false)
-  private Date createTimeEnd;
+
 }

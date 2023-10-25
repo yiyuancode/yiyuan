@@ -2,7 +2,6 @@ package net.yiyuan.dto;
 
 import lombok.Data;
 import net.yiyuan.enums.PtmProductAuditStatusEnum;
-import net.yiyuan.model.PtmProductSku;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -229,5 +228,5 @@ public class PtmProductAddDTO implements Serializable {
    * @date 2023-10-10
    */
   @NotNull(message = "商品sku集合不能为空")
-  private List<PtmProductSku> skuList;
+  private List<PtmProductSkuAddDTO> skuList;
 }

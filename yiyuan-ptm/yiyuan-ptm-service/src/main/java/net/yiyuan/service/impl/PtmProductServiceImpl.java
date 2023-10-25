@@ -3,6 +3,7 @@ package net.yiyuan.service.impl;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import icu.mhb.mybatisplus.plugln.base.service.impl.JoinServiceImpl;
 import icu.mhb.mybatisplus.plugln.core.JoinLambdaWrapper;
+import icu.mhb.mybatisplus.plugln.extend.Joins;
 import lombok.extern.slf4j.Slf4j;
 import net.yiyuan.common.exception.BusinessException;
 import net.yiyuan.common.utils.BeanUtilsPlus;
@@ -72,13 +73,25 @@ public class PtmProductServiceImpl extends JoinServiceImpl<PtmProductMapper, Ptm
    */
   @Override
   public Page<PtmProductQueryVO> page(PtmProductPageDTO request) throws Exception {
-    PtmProduct po = new PtmProduct();
-    BeanUtilsPlus.copy(request, po);
-    JoinLambdaWrapper<PtmProduct> wrapper = new JoinLambdaWrapper<>(po);
+    JoinLambdaWrapper<PtmProduct> wrapper = Joins.of(PtmProduct.class);
     wrapper.orderByDesc(PtmProduct::getSort);
     wrapper.orderByDesc(PtmProduct::getCreateTime);
     QueryWrapperUtils.resetLikeRight(
-        wrapper, po, PtmProduct::getName, PtmProduct::getKeyword, PtmProduct::getTitle);
+        wrapper,
+        request,
+        PtmProductPageDTO::getName,
+        PtmProductPageDTO::getKeyword,
+        PtmProductPageDTO::getTitle);
+
+    QueryWrapperUtils.resetBetween(
+        wrapper,
+        request,
+        Arrays.asList(PtmProductPageDTO::getCreateTimeStart, PtmProductPageDTO::getCreateTimeEnd),
+        Arrays.asList(PtmProductPageDTO::getStockStart, PtmProductPageDTO::getStockEnd));
+
+    PtmProduct po = new PtmProduct();
+    BeanUtilsPlus.copy(request, po);
+    wrapper.setEntity(po);
     Page<PtmProductQueryVO> voPage =
         ptmProductMapper.joinSelectPage(
             new Page<>(request.getPageNum(), request.getPageSize()),
@@ -172,23 +185,23 @@ public class PtmProductServiceImpl extends JoinServiceImpl<PtmProductMapper, Ptm
     BeanUtilsPlus.copy(request, po);
 
     // 取出sku的总库存,以及最低各个价格
-    List<PtmProductSku> skuList = request.getSkuList();
-    Integer totalStock = skuList.stream().mapToInt(PtmProductSku::getStock).sum();
+    List<PtmProductSkuAddDTO> skuList = request.getSkuList();
+    Integer totalStock = skuList.stream().mapToInt(PtmProductSkuAddDTO::getStock).sum();
     BigDecimal minCrossedPrice =
         skuList.stream()
-            .map(PtmProductSku::getCrossedPrice)
+            .map(PtmProductSkuAddDTO::getCrossedPrice)
             .reduce(BigDecimal::min)
             .orElse(BigDecimal.ZERO);
 
     BigDecimal minCostPrice =
         skuList.stream()
-            .map(PtmProductSku::getCostPrice)
+            .map(PtmProductSkuAddDTO::getCostPrice)
             .reduce(BigDecimal::min)
             .orElse(BigDecimal.ZERO);
 
     BigDecimal minSalePrice =
         skuList.stream()
-            .map(PtmProductSku::getSalePrice)
+            .map(PtmProductSkuAddDTO::getSalePrice)
             .reduce(BigDecimal::min)
             .orElse(BigDecimal.ZERO);
     // 设置商品总体价格
@@ -209,7 +222,9 @@ public class PtmProductServiceImpl extends JoinServiceImpl<PtmProductMapper, Ptm
     skuList.forEach(
         (sku) -> {
           sku.setPtmProductId(po.getId());
-          ptmProductSkuMapper.insert(sku);
+          PtmProductSku insert = new PtmProductSku();
+          BeanUtilsPlus.copy(po, insert);
+          ptmProductSkuMapper.insert(insert);
         });
     if (i != 0) {
       return true;

@@ -105,19 +105,7 @@ public class PtmProductCategoryListDTO implements Serializable {
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
   private Date updateTimeEnd;
 
-  /**
-   * 创建人
-   *
-   * @author 一源团队-花和尚
-   * @date 2023-10-10
-   */
-  private String createUser;
 
-  /**
-   * 修改人
-   *
-   * @author 一源团队-花和尚
-   * @date 2023-10-10
-   */
-  private String updateUser;
+
+
 }

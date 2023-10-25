@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.toolkit.LambdaUtils;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import net.yiyuan.common.utils.StringUtilsPlus;
 
+import java.util.Arrays;
+
 public class LambdaFunUtils {
 
   public static <C, F> String getFieldName(SFunction<C, F> fieldFun) {
@@ -20,5 +22,9 @@ public class LambdaFunUtils {
 
   public static <C, F> Class<C> getFieldOfClass(SFunction<C, F> fieldFun) {
     return (Class<C>) LambdaUtils.extract(fieldFun).getInstantiatedClass();
+  }
+
+  public static <C, F> Class<C> getFieldOfClass(SFunction<C, F>... sFunctions) {
+    return (Class<C>) LambdaUtils.extract(Arrays.asList(sFunctions).get(0)).getInstantiatedClass();
   }
 }

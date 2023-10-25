@@ -9,18 +9,5 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <version>${revision}</version>
-    <artifactId>yiyuan-mam-mapper</artifactId>
-
-    <dependencies>
-        <dependency>
-            <groupId>net.yiyuan</groupId>
-            <artifactId>yiyuan-plugins-mp</artifactId>
-            <version>${revision}</version>
-        </dependency>
-        <dependency>
-            <groupId>net.yiyuan</groupId>
-            <artifactId>yiyuan-mam-model</artifactId>
-            <version>${revision}</version>
-        </dependency>
-    </dependencies>
+    <artifactId>yiyuan-mam-model</artifactId>
 </project>

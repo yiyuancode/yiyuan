@@ -17,6 +17,7 @@
         <module>yiyuan-mam-app-api</module>
         <module>yiyuan-mam-app-service</module>
         <module>yiyuan-mam-mapper</module>
+        <module>yiyuan-mam-model</module>
     </modules>
 
     <dependencies>

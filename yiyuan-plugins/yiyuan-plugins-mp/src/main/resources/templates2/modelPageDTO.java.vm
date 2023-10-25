@@ -66,7 +66,8 @@ public class ${className}PageDTO implements Serializable {
             private Date ${columnsItem.columnName}End;
 
         #elseif(!${columnsItem.propertyType.equals("Date")}&&!${columnsItem.columnName.equals(
-            "sort")})
+            "sort")}&&!${columnsItem.columnName.equals(
+            "createUser")}&&!${columnsItem.columnName.equals("updateUser")})
             /**
              * ${columnsItem.columnComment}
              *
@@ -75,6 +76,9 @@ public class ${className}PageDTO implements Serializable {
              */
             private ${columnsItem.propertyType} ${columnsItem.columnName};
         #end
+
+
+
 
 
 

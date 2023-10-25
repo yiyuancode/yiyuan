@@ -358,20 +358,4 @@ public class SpmShopPageDTO implements Serializable {
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
   private Date updateTimeEnd;
-
-  /**
-   * 创建人
-   *
-   * @author 一源-花和尚
-   * @date 2023-10-24
-   */
-  private String createUser;
-
-  /**
-   * 修改人
-   *
-   * @author 一源-花和尚
-   * @date 2023-10-24
-   */
-  private String updateUser;
 }

@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
-import net.yiyuan.common.constatnt.CustomSqlCondition;
 import net.yiyuan.enums.SpmShopSettlementTypeEnum;
 
 import java.io.Serializable;
@@ -318,22 +317,6 @@ public class SpmShop implements Serializable {
    */
   @TableField(fill = FieldFill.INSERT)
   private Date createTime;
-  /**
-   * 创建时间(查询开始时间)
-   *
-   * @author 一源-花和尚
-   * @date 2023-10-24
-   */
-  @TableField(value = "create_time ", condition = CustomSqlCondition.START_EQUAL, select = false)
-  private Date createTimeStart;
-  /**
-   * 创建时间(查询结束时间)
-   *
-   * @author 一源-花和尚
-   * @date 2023-10-24
-   */
-  @TableField(value = "create_time", condition = CustomSqlCondition.END_EQUAL, select = false)
-  private Date createTimeEnd;
 
   /**
    * 修改时间
@@ -343,22 +326,6 @@ public class SpmShop implements Serializable {
    */
   @TableField(fill = FieldFill.INSERT_UPDATE)
   private Date updateTime;
-  /**
-   * 修改时间(查询开始时间)
-   *
-   * @author 一源-花和尚
-   * @date 2023-10-24
-   */
-  @TableField(value = "update_time ", condition = CustomSqlCondition.START_EQUAL, select = false)
-  private Date updateTimeStart;
-  /**
-   * 修改时间(查询结束时间)
-   *
-   * @author 一源-花和尚
-   * @date 2023-10-24
-   */
-  @TableField(value = "update_time", condition = CustomSqlCondition.END_EQUAL, select = false)
-  private Date updateTimeEnd;
 
   /**
    * 创建人

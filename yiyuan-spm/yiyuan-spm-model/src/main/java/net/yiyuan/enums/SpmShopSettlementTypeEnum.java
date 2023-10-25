@@ -42,6 +42,7 @@ public enum SpmShopSettlementTypeEnum implements IEnum<Integer> {
 
   @EnumValue private final int value;
   private final String desc;
+
   SpmShopSettlementTypeEnum(int value, String desc) {
     this.value = value;
     this.desc = desc;
