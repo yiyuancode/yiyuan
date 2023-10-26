@@ -170,6 +170,7 @@ public class CenterJoinUtils<L, C, R, LV> {
   public CenterJoinUtils<L, C, R, LV> select() {
     try {
       JoinLambdaWrapper<C> cWrapper = Joins.of(this.cClass);
+      //      cWrapper.notDefaultSelectAll();
       if (StringUtilsPlus.isNotEmpty(this.poIdList)) {
         cWrapper.in(this.centerOfLeftForeignKeyField, this.poIdList);
       }

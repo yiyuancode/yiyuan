@@ -6,6 +6,7 @@ import icu.mhb.mybatisplus.plugln.core.JoinLambdaWrapper;
 import lombok.extern.slf4j.Slf4j;
 import net.yiyuan.common.exception.BusinessException;
 import net.yiyuan.common.utils.BeanUtilsPlus;
+import net.yiyuan.common.utils.StringUtilsPlus;
 import net.yiyuan.dto.PtmProductBrandAddDTO;
 import net.yiyuan.dto.PtmProductBrandEditDTO;
 import net.yiyuan.dto.PtmProductBrandListDTO;
@@ -21,6 +22,7 @@ import net.yiyuan.vo.PtmProductBrandQueryVO;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -56,6 +58,25 @@ public class PtmProductBrandServiceImpl
     JoinLambdaWrapper<PtmProductBrand> wrapper = new JoinLambdaWrapper<>(po);
     wrapper.orderByDesc(PtmProductBrand::getSort);
     wrapper.orderByDesc(PtmProductBrand::getCreateTime);
+
+    if (StringUtilsPlus.isNotEmpty(request.getCategoryId())) {
+      // 构造成list 调用
+      ptmProductCategoryBrandJoin =
+          new CenterJoinUtils<>(
+              PtmProductCategory::getId,
+              PtmProductCategoryBrandLink::getPtmProductCategoryId,
+              PtmProductCategoryBrandLink::getPtmProductBrandId,
+              PtmProductBrand::getId,
+              Arrays.asList(request.getCategoryId()));
+      List<String> idList =
+          ptmProductCategoryBrandJoin.getRightAnyFieldList(PtmProductBrand::getId);
+      if (StringUtilsPlus.isEmpty(idList)) {
+        return new ArrayList<>();
+      } else {
+        wrapper.in(StringUtilsPlus.isNotEmpty(idList), PtmProductBrand::getId, idList);
+      }
+    }
+
     List<PtmProductBrandQueryVO> voList =
         ptmProductBrandMapper.joinSelectList(wrapper, PtmProductBrandQueryVO.class);
     return voList;
@@ -76,11 +97,30 @@ public class PtmProductBrandServiceImpl
     JoinLambdaWrapper<PtmProductBrand> wrapper = new JoinLambdaWrapper<>(po);
     wrapper.orderByDesc(PtmProductBrand::getSort);
     wrapper.orderByDesc(PtmProductBrand::getCreateTime);
+
+    if (StringUtilsPlus.isNotEmpty(request.getCategoryId())) {
+      // 构造成list 调用
+      ptmProductCategoryBrandJoin =
+          new CenterJoinUtils<>(
+              PtmProductCategory::getId,
+              PtmProductCategoryBrandLink::getPtmProductCategoryId,
+              PtmProductCategoryBrandLink::getPtmProductBrandId,
+              PtmProductBrand::getId,
+              Arrays.asList(request.getCategoryId()));
+      List<String> idList =
+          ptmProductCategoryBrandJoin.getRightAnyFieldList(PtmProductBrand::getId);
+      if (StringUtilsPlus.isEmpty(idList)) {
+        return new Page<>(request.getPageNum(), request.getPageSize(), 0);
+      } else {
+        wrapper.in(StringUtilsPlus.isNotEmpty(idList), PtmProductBrand::getId, idList);
+      }
+    }
     Page<PtmProductBrandQueryVO> voPage =
         ptmProductBrandMapper.joinSelectPage(
             new Page<>(request.getPageNum(), request.getPageSize()),
             wrapper,
             PtmProductBrandQueryVO.class);
+
     return voPage;
   }
 
