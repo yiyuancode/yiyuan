@@ -157,4 +157,23 @@ public class PtmProductBrandController {
       return CommonResult.failed("新增品牌失败");
     }
   }
+
+  /**
+   * 根据分类id查询全部品牌
+   *
+   * @param categoryId 分类id
+   * @return {@link CommonResult<List<PtmProductBrandQueryVO>>}
+   * @author 一源团队-花和尚
+   * @date 2023-10-09
+   */
+  @Description("商品管理/品牌管理/查询品牌")
+  @SaCheckPermission(
+      value = {"ptm:productBrand:query"},
+      orRole = "admin")
+  @GetMapping(value = "/ptm/productBrand/listOfCategory/{categoryId}")
+  @ResponseBody
+  public CommonResult<List<PtmProductBrandQueryVO>> listOfCategory(
+      @PathVariable("categoryId") @NotBlank String categoryId) throws Exception {
+    return CommonResult.success(ptmProductBrandService.listOfCategory(categoryId), "查询品牌列表成功");
+  }
 }

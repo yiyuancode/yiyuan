@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
-import net.yiyuan.common.constatnt.CustomSqlCondition;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -78,7 +77,6 @@ public class PtmProductAttrKey implements Serializable {
    */
   @TableField(fill = FieldFill.INSERT_UPDATE)
   private Date updateTime;
-
 
   /**
    * 创建人

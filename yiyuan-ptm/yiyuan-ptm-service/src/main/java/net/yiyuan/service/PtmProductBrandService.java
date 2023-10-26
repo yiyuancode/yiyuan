@@ -8,6 +8,7 @@ import net.yiyuan.dto.PtmProductBrandListDTO;
 import net.yiyuan.dto.PtmProductBrandPageDTO;
 import net.yiyuan.model.PtmProductBrand;
 import net.yiyuan.vo.PtmProductBrandQueryVO;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -87,5 +88,16 @@ public interface PtmProductBrandService extends JoinIService<PtmProductBrand> {
    * @author 一源团队-花和尚
    * @date 2023-10-09
    */
+  @Transactional
   boolean add(PtmProductBrandAddDTO request) throws Exception;
+
+  /**
+   * 根据分类id查询全部品牌
+   *
+   * @param categoryId 分类id
+   * @return {@link boolean}
+   * @author 一源团队-花和尚
+   * @date 2023-10-09
+   */
+  List<PtmProductBrandQueryVO> listOfCategory(String categoryId) throws Exception;
 }

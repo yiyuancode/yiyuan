@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
-import net.yiyuan.common.constatnt.CustomSqlCondition;
 import net.yiyuan.enums.PtmProductAuditStatusEnum;
 
 import java.io.Serializable;
@@ -280,8 +279,7 @@ public class PtmProduct implements Serializable {
   @TableField(fill = FieldFill.INSERT)
   private Date createTime;
 
-
-/**
+  /**
    * 修改时间
    *
    * @author 一源团队-花和尚
@@ -289,10 +287,6 @@ public class PtmProduct implements Serializable {
    */
   @TableField(fill = FieldFill.INSERT_UPDATE)
   private Date updateTime;
-
-
-
-
 
   /**
    * 创建人

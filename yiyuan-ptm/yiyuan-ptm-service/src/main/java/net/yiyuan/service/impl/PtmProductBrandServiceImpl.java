@@ -11,7 +11,11 @@ import net.yiyuan.dto.PtmProductBrandEditDTO;
 import net.yiyuan.dto.PtmProductBrandListDTO;
 import net.yiyuan.dto.PtmProductBrandPageDTO;
 import net.yiyuan.mapper.PtmProductBrandMapper;
+import net.yiyuan.mapper.PtmProductCategoryBrandLinkMapper;
 import net.yiyuan.model.PtmProductBrand;
+import net.yiyuan.model.PtmProductCategory;
+import net.yiyuan.model.PtmProductCategoryBrandLink;
+import net.yiyuan.plugins.mp.utils.CenterJoinUtils;
 import net.yiyuan.service.PtmProductBrandService;
 import net.yiyuan.vo.PtmProductBrandQueryVO;
 import org.springframework.stereotype.Service;
@@ -32,7 +36,10 @@ public class PtmProductBrandServiceImpl
     extends JoinServiceImpl<PtmProductBrandMapper, PtmProductBrand>
     implements PtmProductBrandService {
   @Resource private PtmProductBrandMapper ptmProductBrandMapper;
-
+  @Resource private PtmProductCategoryBrandLinkMapper ptmProductCategoryBrandLinkMapper;
+  private CenterJoinUtils<
+          PtmProductCategory, PtmProductCategoryBrandLink, PtmProductBrand, PtmProductBrandQueryVO>
+      ptmProductCategoryBrandJoin;
   /**
    * 品牌列表(全部)
    *
@@ -51,7 +58,6 @@ public class PtmProductBrandServiceImpl
     wrapper.orderByDesc(PtmProductBrand::getCreateTime);
     List<PtmProductBrandQueryVO> voList =
         ptmProductBrandMapper.joinSelectList(wrapper, PtmProductBrandQueryVO.class);
-
     return voList;
   }
 
@@ -164,10 +170,33 @@ public class PtmProductBrandServiceImpl
     PtmProductBrand po = new PtmProductBrand();
     BeanUtilsPlus.copy(request, po);
     int i = ptmProductBrandMapper.insert(po);
+    String[] categoryIds = request.getCategoryIds();
+    for (String categoryId : categoryIds) {
+      PtmProductCategoryBrandLink categoryBrandLinkPo = new PtmProductCategoryBrandLink();
+      categoryBrandLinkPo.setPtmProductBrandId(po.getId());
+      categoryBrandLinkPo.setPtmProductCategoryId(categoryId);
+      ptmProductCategoryBrandLinkMapper.insert(categoryBrandLinkPo);
+    }
     if (i != 0) {
       return true;
     } else {
       throw new BusinessException("新增异常");
     }
+  }
+
+  @Override
+  public List<PtmProductBrandQueryVO> listOfCategory(String categoryId) throws Exception {
+    // 构造成list 调用
+    ptmProductCategoryBrandJoin =
+        new CenterJoinUtils<>(
+            PtmProductCategory::getId,
+            PtmProductCategoryBrandLink::getPtmProductCategoryId,
+            PtmProductCategoryBrandLink::getPtmProductBrandId,
+            PtmProductBrand::getId,
+            Arrays.asList(categoryId));
+
+    List<PtmProductBrandQueryVO> righList =
+        ptmProductCategoryBrandJoin.getRighListForClass(PtmProductBrandQueryVO.class);
+    return righList;
   }
 }

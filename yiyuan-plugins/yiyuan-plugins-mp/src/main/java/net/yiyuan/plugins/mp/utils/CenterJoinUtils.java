@@ -309,4 +309,15 @@ public class CenterJoinUtils<L, C, R, LV> {
     List<R> list = BeanUtilsPlus.copyToList(this.selectMapList, this.rClass);
     return list;
   }
+
+  /**
+   * 获取vo关联的表任意字段值集合
+   *
+   * @author 一源-花和尚
+   * @date 2023-09-18
+   */
+  public <VO> List<VO> getRighListForClass(Class<VO> voClass) throws Exception {
+    List<VO> list = BeanUtilsPlus.copyToList(this.selectMapList, voClass);
+    return list;
+  }
 }

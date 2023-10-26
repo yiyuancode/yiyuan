@@ -174,6 +174,7 @@ public class PtmProductCategoryServiceImpl
   public boolean add(PtmProductCategoryAddDTO request) throws Exception {
     PtmProductCategory po = new PtmProductCategory();
     BeanUtilsPlus.copy(request, po);
+
     int i = ptmProductCategoryMapper.insert(po);
     if (i != 0) {
       return true;
