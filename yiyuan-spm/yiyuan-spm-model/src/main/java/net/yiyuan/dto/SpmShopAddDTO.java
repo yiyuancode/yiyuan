@@ -306,4 +306,22 @@ public class SpmShopAddDTO implements Serializable {
    */
   @NotNull(message = "是否加入审核0=否|1=是不能为空")
   private Boolean isAudit;
+
+  /**
+   * 排序
+   *
+   * @mock 0
+   * @author 一源-花和尚
+   * @date 2023-10-24
+   */
+  private Integer sort;
+
+  /**
+   * 显示状态0=不显示|1=显示
+   *
+   * @mock 1
+   * @author 一源-花和尚
+   * @date 2023-10-24
+   */
+  private Boolean isShow;
 }

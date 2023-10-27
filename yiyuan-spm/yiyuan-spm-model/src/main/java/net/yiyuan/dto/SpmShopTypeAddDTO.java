@@ -40,4 +40,22 @@ public class SpmShopTypeAddDTO implements Serializable {
    */
   @NotBlank(message = "店铺类型合约不能为空")
   private String typeContract;
+
+  /**
+   * 排序
+   *
+   * @mock 0
+   * @author 一源-花和尚
+   * @date 2023-10-24
+   */
+  private Integer sort;
+
+  /**
+   * 显示状态0=不显示|1=显示
+   *
+   * @mock 1
+   * @author 一源-花和尚
+   * @date 2023-10-24
+   */
+  private Boolean isShow;
 }
