@@ -207,7 +207,7 @@ public class PtmProduct implements Serializable {
   private String codePath;
 
   /**
-   * 总后台排序
+   * 商户排序
    *
    * @author 一源团队-花和尚
    * @date 2023-10-10
@@ -263,7 +263,7 @@ public class PtmProduct implements Serializable {
   private String reasonContent;
 
   /**
-   * 排序
+   * 平台排序
    *
    * @author 一源团队-花和尚
    * @date 2023-10-10

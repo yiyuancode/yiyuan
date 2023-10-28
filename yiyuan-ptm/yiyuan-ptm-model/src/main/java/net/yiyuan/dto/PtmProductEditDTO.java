@@ -40,15 +40,15 @@ public class PtmProductEditDTO implements Serializable {
    * @author 一源团队-花和尚
    * @date 2023-10-10
    */
-  private String platCategoryId;
+  private String platCategoryIds;
 
   /**
-   * 店铺内部分类id(商品分类3级)
+   * 店铺内部分类id(商品分类3级,逗号拼接)
    *
    * @author 一源团队-花和尚
    * @date 2023-10-10
    */
-  private String shopCategoryId;
+  private String shopCategoryIds;
 
   /**
    * 品牌id
@@ -211,7 +211,7 @@ public class PtmProductEditDTO implements Serializable {
   private String codePath;
 
   /**
-   * 总后台排序
+   * 商户排序
    *
    * @mock 0
    * @author 一源团队-花和尚
@@ -273,7 +273,7 @@ public class PtmProductEditDTO implements Serializable {
   private String reasonContent;
 
   /**
-   * 排序
+   * 平台排序
    *
    * @mock 0
    * @author 一源团队-花和尚

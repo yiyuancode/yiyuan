@@ -75,6 +75,7 @@ public interface PtmProductService extends JoinIService<PtmProduct> {
    * @author 一源团队-花和尚
    * @date 2023-10-09
    */
+  @Transactional
   boolean edit(PtmProductEditDTO request) throws Exception;
 
   /**

@@ -34,7 +34,7 @@ public class PtmProductAddDTO implements Serializable {
    * @date 2023-10-10
    */
   @NotBlank(message = "主类目id(商品分类2级id，逗号拼接)不能为空")
-  private String platCategoryId;
+  private String platCategoryIds;
 
   /**
    * 店铺内部分类id(商品分类3级)
@@ -42,8 +42,8 @@ public class PtmProductAddDTO implements Serializable {
    * @author 一源团队-花和尚
    * @date 2023-10-10
    */
-  @NotBlank(message = "店铺内部分类id(商品分类3级)不能为空")
-  private String shopCategoryId;
+  @NotBlank(message = "店铺内部分类id(商品分类3级,逗号拼接)不能为空")
+  private String shopCategoryIds;
 
   /**
    * 品牌id
@@ -182,13 +182,13 @@ public class PtmProductAddDTO implements Serializable {
   private String codePath;
 
   /**
-   * 总后台排序
+   * 商户排序
    *
    * @mock 0
    * @author 一源团队-花和尚
    * @date 2023-10-10
    */
-  @NotNull(message = "总后台排序不能为空")
+  @NotNull(message = "商户排序不能为空")
   private Integer tenantSort;
 
   /**

@@ -183,7 +183,6 @@ public class PtmProductServiceImpl extends JoinServiceImpl<PtmProductMapper, Ptm
   public boolean add(PtmProductAddDTO request) throws Exception {
     PtmProduct po = new PtmProduct();
     BeanUtilsPlus.copy(request, po);
-
     // 取出sku的总库存,以及最低各个价格
     List<PtmProductSkuAddDTO> skuList = request.getSkuList();
     Integer totalStock = skuList.stream().mapToInt(PtmProductSkuAddDTO::getStock).sum();
