@@ -1,7 +1,6 @@
 package net.yiyuan.dto;
 
 import lombok.Data;
-import net.yiyuan.enums.PtmProductAuditStatusEnum;
 
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
@@ -194,15 +193,6 @@ public class PtmProductEditDTO implements Serializable {
   private Integer fictiSales;
 
   /**
-   * 浏览量
-   *
-   * @mock 0
-   * @author 一源团队-花和尚
-   * @date 2023-10-10
-   */
-  private Integer browse;
-
-  /**
    * 商品二维码地址(用户小程序海报)
    *
    * @author 一源团队-花和尚
@@ -245,32 +235,6 @@ public class PtmProductEditDTO implements Serializable {
    * @date 2023-10-10
    */
   private Boolean isSub;
-
-  /**
-   * 是否加入审核0=否|1=是
-   *
-   * @mock 1
-   * @author 一源团队-花和尚
-   * @date 2023-10-10
-   */
-  private Boolean isAudit;
-
-  /**
-   * 审核状态#0=无需审核|1=待审核|2=审核成功|3=审核拒绝
-   *
-   * @mock 1
-   * @author 一源团队-花和尚
-   * @date 2023-10-10
-   */
-  private PtmProductAuditStatusEnum auditStatus;
-
-  /**
-   * 拒绝原因
-   *
-   * @author 一源团队-花和尚
-   * @date 2023-10-10
-   */
-  private String reasonContent;
 
   /**
    * 平台排序
