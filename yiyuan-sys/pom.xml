@@ -17,6 +17,7 @@
         <module>yiyuan-sys-app-api</module>
         <module>yiyuan-sys-app-service</module>
         <module>yiyuan-sys-mapper</module>
+        <module>yiyuan-sys-model</module>
     </modules>
 
     <dependencies>

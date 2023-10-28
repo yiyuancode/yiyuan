@@ -154,4 +154,38 @@ public class SysAreaController {
       return CommonResult.failed("新增行政区域失败");
     }
   }
+
+  /**
+   * 根据子id反查上下级得树结构
+   *
+   * @param id 区域id
+   * @author 一源团队-花和尚
+   * @date 2023-09-09
+   */
+  @Description("系统管理/区域管理/查询区域")
+  @SaCheckPermission(
+      value = {"sys:area:query"},
+      orRole = "admin")
+  @GetMapping(value = "/sys/area/getAreaTreeById/{id}")
+  @ResponseBody
+  public CommonResult<List<SysAreaQueryVO>> getCityTreeById(@PathVariable("id") @NotBlank String id)
+      throws Exception {
+    return CommonResult.success(sysAreaService.getAreaTreeById(id), "根据id查询城市区域树结构");
+  }
+  /**
+   * 根据父id查询下一级树结构
+   *
+   * @author 一源团队-花和尚
+   * @date 2023-09-09
+   */
+  @Description("系统管理/区域管理/查询区域")
+  @SaCheckPermission(
+      value = {"sys:area:query"},
+      orRole = "admin")
+  @GetMapping(value = "/sys/area/getAreaTree/{pid}")
+  @ResponseBody
+  public CommonResult<List<SysAreaQueryVO>> getCityTree(@PathVariable("pid") @NotBlank String pid)
+      throws Exception {
+    return CommonResult.success(sysAreaService.getAreaTree(pid), "查询城市区域树结构");
+  }
 }

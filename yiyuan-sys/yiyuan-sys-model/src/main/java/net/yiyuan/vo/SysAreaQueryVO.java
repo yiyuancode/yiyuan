@@ -9,6 +9,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 行政区域查询请求响应参数实体
@@ -110,4 +111,20 @@ public class SysAreaQueryVO implements Serializable {
    * @date 2023-09-18
    */
   private String updateUser;
+
+  /**
+   * 子集
+   *
+   * @author 一源团队-花和尚
+   * @date 2023-09-11
+   */
+  private List<SysAreaQueryVO> children;
+
+  /**
+   * 是否还有叶子节点,默认值false,前端使用还是否能狗点击
+   *
+   * @author 一源团队-花和尚
+   * @date 2023-09-11
+   */
+  private Boolean isLeaf = false;
 }

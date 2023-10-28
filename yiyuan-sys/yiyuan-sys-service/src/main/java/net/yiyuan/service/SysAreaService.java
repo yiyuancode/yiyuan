@@ -88,4 +88,8 @@ public interface SysAreaService extends JoinIService<SysArea> {
    * @date 2023-09-18
    */
   boolean add(SysAreaAddDTO request) throws Exception;
+
+  List<SysAreaQueryVO> getAreaTreeById(String id) throws Exception;
+
+  List<SysAreaQueryVO> getAreaTree(String pid) throws Exception;
 }

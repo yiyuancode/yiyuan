@@ -17,12 +17,7 @@
             <artifactId>yiyuan-sys-mapper</artifactId>
             <version>${revision}</version>
         </dependency>
-        <!--excel导出-->
-        <dependency>
-            <groupId>cn.afterturn</groupId>
-            <artifactId>easypoi-spring-boot-starter</artifactId>
-            <version>4.2.0</version>
-        </dependency>
+
         <!--        <dependency>-->
         <!--            <groupId>net.yiyuan</groupId>-->
         <!--            <artifactId>yiyuan-ptm-service</artifactId>-->

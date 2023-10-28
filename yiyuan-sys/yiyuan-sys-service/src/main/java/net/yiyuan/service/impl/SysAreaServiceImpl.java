@@ -6,10 +6,13 @@ import icu.mhb.mybatisplus.plugln.core.JoinLambdaWrapper;
 import lombok.extern.slf4j.Slf4j;
 import net.yiyuan.common.exception.BusinessException;
 import net.yiyuan.common.utils.BeanUtilsPlus;
+import net.yiyuan.common.utils.StringUtilsPlus;
+import net.yiyuan.common.utils.TreeUtil;
 import net.yiyuan.dto.SysAreaAddDTO;
 import net.yiyuan.dto.SysAreaEditDTO;
 import net.yiyuan.dto.SysAreaListDTO;
 import net.yiyuan.dto.SysAreaPageDTO;
+import net.yiyuan.enums.SysAreaLevelEnum;
 import net.yiyuan.mapper.SysAreaMapper;
 import net.yiyuan.model.SysArea;
 import net.yiyuan.service.SysAreaService;
@@ -158,5 +161,48 @@ public class SysAreaServiceImpl extends JoinServiceImpl<SysAreaMapper, SysArea>
     } else {
       throw new BusinessException("新增异常");
     }
+  }
+
+  @Override
+  public List<SysAreaQueryVO> getAreaTreeById(String id) throws Exception {
+    List<String> ids = StringUtilsPlus.parseCodeToIds(id);
+
+    JoinLambdaWrapper<SysArea> wrapper = new JoinLambdaWrapper<>(SysArea.class);
+    wrapper.in(SysArea::getId, ids);
+    List<SysAreaQueryVO> spmShopCities =
+        sysAreaMapper.joinSelectList(wrapper, SysAreaQueryVO.class);
+
+    spmShopCities.forEach(
+        (item) -> {
+          if (item.getLevel().equals(SysAreaLevelEnum.FIVE_LEVEL_CLASSIFICATION)) {
+            item.setIsLeaf(true);
+          } else {
+            item.setIsLeaf(false);
+          }
+        });
+
+    List<SysAreaQueryVO> sysAreas = TreeUtil.buildTreeByTwoLayersFor(spmShopCities);
+    return sysAreas;
+  }
+
+  @Override
+  public List<SysAreaQueryVO> getAreaTree(String pid) throws Exception {
+    JoinLambdaWrapper<SysArea> wrapper = new JoinLambdaWrapper<>(SysArea.class);
+    if (StringUtilsPlus.isEmpty(pid)) {
+      wrapper.eq(SysArea::getPid, "0");
+    } else {
+      wrapper.eq(SysArea::getPid, pid);
+    }
+    List<SysAreaQueryVO> spmShopCities =
+        sysAreaMapper.joinSelectList(wrapper, SysAreaQueryVO.class);
+
+    List<String> areaIdList = StringUtilsPlus.parseCodeToIds(pid);
+    if (areaIdList.size() == SysAreaLevelEnum.FOURTH_LEVEL_CLASSIFICATION.getValue()) {
+      spmShopCities.forEach(
+          (item) -> {
+            item.setIsLeaf(true);
+          });
+    }
+    return spmShopCities;
   }
 }
