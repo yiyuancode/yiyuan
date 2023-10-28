@@ -19,6 +19,7 @@ import net.yiyuan.model.PtmProductCategoryBrandLink;
 import net.yiyuan.plugins.mp.utils.CenterJoinUtils;
 import net.yiyuan.service.PtmProductBrandService;
 import net.yiyuan.vo.PtmProductBrandQueryVO;
+import net.yiyuan.vo.PtmProductCategoryQueryVO;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -42,6 +43,13 @@ public class PtmProductBrandServiceImpl
   private CenterJoinUtils<
           PtmProductCategory, PtmProductCategoryBrandLink, PtmProductBrand, PtmProductBrandQueryVO>
       ptmProductCategoryBrandJoin;
+
+  private CenterJoinUtils<
+          PtmProductBrand,
+          PtmProductCategoryBrandLink,
+          PtmProductCategory,
+          PtmProductCategoryQueryVO>
+      ptmProductCategoryJoin;
   /**
    * 品牌列表(全部)
    *
@@ -98,7 +106,7 @@ public class PtmProductBrandServiceImpl
     wrapper.orderByDesc(PtmProductBrand::getSort);
     wrapper.orderByDesc(PtmProductBrand::getCreateTime);
 
-    if (StringUtilsPlus.isNotEmpty(request.getCategoryId())) {
+    if (StringUtilsPlus.isNotEmpty(request.getCategoryIds())) {
       // 构造成list 调用
       ptmProductCategoryBrandJoin =
           new CenterJoinUtils<>(
@@ -106,7 +114,7 @@ public class PtmProductBrandServiceImpl
               PtmProductCategoryBrandLink::getPtmProductCategoryId,
               PtmProductCategoryBrandLink::getPtmProductBrandId,
               PtmProductBrand::getId,
-              Arrays.asList(request.getCategoryId()));
+              Arrays.asList(request.getCategoryIds().split(",")));
       List<String> idList =
           ptmProductCategoryBrandJoin.getRightAnyFieldList(PtmProductBrand::getId);
       if (StringUtilsPlus.isEmpty(idList)) {
@@ -120,7 +128,6 @@ public class PtmProductBrandServiceImpl
             new Page<>(request.getPageNum(), request.getPageSize()),
             wrapper,
             PtmProductBrandQueryVO.class);
-
     return voPage;
   }
 
@@ -137,8 +144,19 @@ public class PtmProductBrandServiceImpl
     PtmProductBrand po = new PtmProductBrand();
     po.setId(id);
     JoinLambdaWrapper<PtmProductBrand> wrapper = new JoinLambdaWrapper<>(po);
+    ptmProductCategoryJoin =
+        new CenterJoinUtils<>(
+            PtmProductBrand::getId,
+            PtmProductCategoryBrandLink::getPtmProductCategoryId,
+            PtmProductCategoryBrandLink::getPtmProductBrandId,
+            PtmProductCategory::getId,
+            Arrays.asList(id));
+
+    List<PtmProductCategory> righList = ptmProductCategoryJoin.getRighList();
     PtmProductBrandQueryVO voBean =
         ptmProductBrandMapper.joinSelectOne(wrapper, PtmProductBrandQueryVO.class);
+    voBean.setCategoryList(righList);
+
     return voBean;
   }
 

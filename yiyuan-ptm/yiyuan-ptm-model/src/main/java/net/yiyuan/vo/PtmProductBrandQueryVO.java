@@ -2,10 +2,12 @@ package net.yiyuan.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import net.yiyuan.model.PtmProductCategory;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 品牌查询请求响应参数实体
@@ -63,6 +65,14 @@ public class PtmProductBrandQueryVO implements Serializable {
    * @date 2023-10-10
    */
   private Integer isShow;
+
+  /**
+   * 分类集合
+   *
+   * @author 一源团队-花和尚
+   * @date 2023-10-10
+   */
+  private List<PtmProductCategory> categoryList;
 
   /**
    * 创建时间
