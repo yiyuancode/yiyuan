@@ -3,6 +3,7 @@ package net.yiyuan.dto;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -67,4 +68,14 @@ public class PtmProductBrandEditDTO implements Serializable {
    * @date 2023-10-10
    */
   private Integer isShow;
+
+  /**
+   * 分类id(多个以逗号隔开)
+   *
+   * @mock 0
+   * @author 一源团队-花和尚
+   * @date 2023-10-10
+   */
+  @NotNull(message = "分类id")
+  private String[] categoryIds;
 }

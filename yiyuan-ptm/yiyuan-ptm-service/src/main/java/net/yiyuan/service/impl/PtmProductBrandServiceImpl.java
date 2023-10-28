@@ -208,6 +208,16 @@ public class PtmProductBrandServiceImpl
     PtmProductBrand po = new PtmProductBrand();
     BeanUtilsPlus.copy(request, po);
     int i = ptmProductBrandMapper.updateById(po);
+
+    String[] categoryIds = request.getCategoryIds();
+    ptmProductCategoryBrandLinkMapper.deleteBatchIds(Arrays.asList(categoryIds));
+    for (String categoryId : categoryIds) {
+      PtmProductCategoryBrandLink categoryBrandLinkPo = new PtmProductCategoryBrandLink();
+      categoryBrandLinkPo.setPtmProductBrandId(po.getId());
+      categoryBrandLinkPo.setPtmProductCategoryId(categoryId);
+      ptmProductCategoryBrandLinkMapper.insert(categoryBrandLinkPo);
+    }
+
     if (i != 0) {
       return true;
     } else {
