@@ -176,4 +176,41 @@ public class PtmProductCategoryController {
       throws Exception {
     return CommonResult.success(ptmProductCategoryService.treeList(request), "查询商品分类列表成功");
   }
+
+  /**
+   * 商品分类树结构查询(只查询店铺分类)
+   *
+   * @param request 商品分类实体
+   * @return {@link CommonResult<List<PtmProductCategoryQueryVO>>}
+   * @author 一源团队-花和尚
+   * @date 2023-10-09
+   */
+  @Description("商品管理/商品分类管理/查询商品分类")
+  @SaCheckPermission(
+      value = {"ptm:productCategory:query"},
+      orRole = "admin")
+  @GetMapping(value = "/ptm/productCategory/treeListForShop")
+  @ResponseBody
+  public CommonResult<List<PtmProductCategoryQueryVO>> treeListForShop(
+      PtmProductCategoryListDTO request) throws Exception {
+    return CommonResult.success(ptmProductCategoryService.treeListForShop(request), "查询商品分类列表成功");
+  }
+  /**
+   * 商品分类树结构查询(只查询平台分类)
+   *
+   * @param request 商品分类实体
+   * @return {@link CommonResult<List<PtmProductCategoryQueryVO>>}
+   * @author 一源团队-花和尚
+   * @date 2023-10-09
+   */
+  @Description("商品管理/商品分类管理/查询商品分类")
+  @SaCheckPermission(
+      value = {"ptm:productCategory:query"},
+      orRole = "admin")
+  @GetMapping(value = "/ptm/productCategory/treeListForPlat")
+  @ResponseBody
+  public CommonResult<List<PtmProductCategoryQueryVO>> treeListForPlat(
+      PtmProductCategoryListDTO request) throws Exception {
+    return CommonResult.success(ptmProductCategoryService.treeListForPlat(request), "查询商品分类列表成功");
+  }
 }

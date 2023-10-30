@@ -53,12 +53,12 @@ public class PtmProductCategoryAddDTO implements Serializable {
   private String icon;
 
   /**
-   * 分类级别#1=一级分类|2=二级分类|3=三级分类
+   * 分类级别#1=一级分类|2=二级分类|3=三级分类|4=店铺分类
    *
    * @author 一源团队-花和尚
    * @date 2023-10-10
    */
-  @NotNull(message = "分类级别#1=一级分类|2=二级分类|3=三级分类不能为空")
+  @NotNull(message = "分类级别#1=一级分类|2=二级分类|3=三级分类|4=店铺分类不能为空")
   private PtmProductCategoryLevelEnum level;
 
   /**

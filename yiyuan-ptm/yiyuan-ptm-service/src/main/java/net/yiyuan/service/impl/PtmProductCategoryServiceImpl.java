@@ -3,6 +3,7 @@ package net.yiyuan.service.impl;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import icu.mhb.mybatisplus.plugln.base.service.impl.JoinServiceImpl;
 import icu.mhb.mybatisplus.plugln.core.JoinLambdaWrapper;
+import icu.mhb.mybatisplus.plugln.extend.Joins;
 import lombok.extern.slf4j.Slf4j;
 import net.yiyuan.common.exception.BusinessException;
 import net.yiyuan.common.utils.BeanUtilsPlus;
@@ -11,6 +12,7 @@ import net.yiyuan.dto.PtmProductCategoryAddDTO;
 import net.yiyuan.dto.PtmProductCategoryEditDTO;
 import net.yiyuan.dto.PtmProductCategoryListDTO;
 import net.yiyuan.dto.PtmProductCategoryPageDTO;
+import net.yiyuan.enums.PtmProductCategoryLevelEnum;
 import net.yiyuan.mapper.PtmProductCategoryMapper;
 import net.yiyuan.model.PtmProductCategory;
 import net.yiyuan.plugins.mp.utils.QueryWrapperUtils;
@@ -192,6 +194,46 @@ public class PtmProductCategoryServiceImpl
     wrapper.orderByDesc(PtmProductCategory::getCreateTime);
     List<PtmProductCategoryQueryVO> voList =
         ptmProductCategoryMapper.joinSelectList(wrapper, PtmProductCategoryQueryVO.class);
+    List<PtmProductCategoryQueryVO> getTreeVOList = TreeUtil.buildTreeByTwoLayersFor(voList);
+    return getTreeVOList;
+  }
+
+  @Override
+  public List<PtmProductCategoryQueryVO> treeListForShop(PtmProductCategoryListDTO request)
+      throws Exception {
+    request.setLevel(PtmProductCategoryLevelEnum.THIRD_LEVEL_CLASSIFICATION);
+    JoinLambdaWrapper<PtmProductCategory> wrapper = Joins.of(PtmProductCategory.class);
+    wrapper.orderByDesc(PtmProductCategory::getSort);
+    wrapper.orderByDesc(PtmProductCategory::getCreateTime);
+    QueryWrapperUtils.resetGt(wrapper, request, PtmProductCategoryListDTO::getLevel);
+
+    PtmProductCategory po = new PtmProductCategory();
+    BeanUtilsPlus.copy(request, po);
+    List<PtmProductCategoryQueryVO> voList =
+        ptmProductCategoryMapper.joinSelectList(wrapper, PtmProductCategoryQueryVO.class);
+    voList.forEach(
+        (item) -> {
+          if (PtmProductCategoryLevelEnum.FOUR_LEVEL_CLASSIFICATION.equals(item.getLevel())) {
+            item.setPid("0");
+          }
+        });
+    List<PtmProductCategoryQueryVO> getTreeVOList = TreeUtil.buildTreeByTwoLayersFor(voList);
+    return getTreeVOList;
+  }
+
+  @Override
+  public List<PtmProductCategoryQueryVO> treeListForPlat(PtmProductCategoryListDTO request)
+      throws Exception {
+    request.setLevel(PtmProductCategoryLevelEnum.THIRD_LEVEL_CLASSIFICATION);
+    JoinLambdaWrapper<PtmProductCategory> wrapper = Joins.of(PtmProductCategory.class);
+    wrapper.orderByDesc(PtmProductCategory::getSort);
+    wrapper.orderByDesc(PtmProductCategory::getCreateTime);
+    QueryWrapperUtils.resetLt(wrapper, request, PtmProductCategoryListDTO::getLevel);
+    PtmProductCategory po = new PtmProductCategory();
+    BeanUtilsPlus.copy(request, po);
+    List<PtmProductCategoryQueryVO> voList =
+        ptmProductCategoryMapper.joinSelectList(wrapper, PtmProductCategoryQueryVO.class);
+
     List<PtmProductCategoryQueryVO> getTreeVOList = TreeUtil.buildTreeByTwoLayersFor(voList);
     return getTreeVOList;
   }

@@ -253,7 +253,7 @@ public class PtmProductBrandServiceImpl
   }
 
   @Override
-  public List<PtmProductBrandQueryVO> listOfCategory(String categoryId) throws Exception {
+  public List<PtmProductBrandQueryVO> listOfCategory(String categoryIds) throws Exception {
     // 构造成list 调用
     ptmProductCategoryBrandJoin =
         new CenterJoinUtils<>(
@@ -261,7 +261,7 @@ public class PtmProductBrandServiceImpl
             PtmProductCategoryBrandLink::getPtmProductCategoryId,
             PtmProductCategoryBrandLink::getPtmProductBrandId,
             PtmProductBrand::getId,
-            Arrays.asList(categoryId));
+            Arrays.asList(categoryIds.split(",")));
 
     List<PtmProductBrandQueryVO> righList =
         ptmProductCategoryBrandJoin.getRighListForClass(PtmProductBrandQueryVO.class);

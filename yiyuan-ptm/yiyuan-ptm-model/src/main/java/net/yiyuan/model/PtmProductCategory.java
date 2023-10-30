@@ -60,7 +60,7 @@ public class PtmProductCategory implements Serializable {
   private String icon;
 
   /**
-   * 分类级别#1=一级分类|2=二级分类|3=三级分类
+   * 分类级别#1=一级分类|2=二级分类|3=三级分类|4=重置为
    *
    * @author 一源团队-花和尚
    * @date 2023-10-10

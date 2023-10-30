@@ -170,10 +170,10 @@ public class PtmProductBrandController {
   @SaCheckPermission(
       value = {"ptm:productBrand:query"},
       orRole = "admin")
-  @GetMapping(value = "/ptm/productBrand/listOfCategory/{categoryId}")
+  @GetMapping(value = "/ptm/productBrand/listOfCategory/{categoryIds}")
   @ResponseBody
   public CommonResult<List<PtmProductBrandQueryVO>> listOfCategory(
-      @PathVariable("categoryId") @NotBlank String categoryId) throws Exception {
-    return CommonResult.success(ptmProductBrandService.listOfCategory(categoryId), "查询品牌列表成功");
+      @PathVariable("categoryIds") @NotBlank String categoryIds) throws Exception {
+    return CommonResult.success(ptmProductBrandService.listOfCategory(categoryIds), "查询品牌列表成功");
   }
 }

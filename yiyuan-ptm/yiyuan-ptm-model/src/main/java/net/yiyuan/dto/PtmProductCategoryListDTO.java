@@ -48,7 +48,7 @@ public class PtmProductCategoryListDTO implements Serializable {
   private String name;
 
   /**
-   * 分类级别#1=一级分类|2=二级分类|3=三级分类
+   * 分类级别#1=一级分类|2=二级分类|3=三级分类|4=店铺分类
    *
    * @author 一源团队-花和尚
    * @date 2023-10-10

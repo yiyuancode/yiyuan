@@ -89,5 +89,11 @@ public interface PtmProductCategoryService extends JoinIService<PtmProductCatego
    */
   boolean add(PtmProductCategoryAddDTO request) throws Exception;
 
-  List<PtmProductCategoryQueryVO> treeList(PtmProductCategoryListDTO request);
+  List<PtmProductCategoryQueryVO> treeList(PtmProductCategoryListDTO request) throws Exception;
+
+  List<PtmProductCategoryQueryVO> treeListForShop(PtmProductCategoryListDTO request)
+      throws Exception;
+
+  List<PtmProductCategoryQueryVO> treeListForPlat(PtmProductCategoryListDTO request)
+      throws Exception;
 }
