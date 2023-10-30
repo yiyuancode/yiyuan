@@ -191,6 +191,37 @@ public class CenterJoinUtils<L, C, R, LV> {
     return this;
   }
 
+  /**
+   * 链式调用-4-连表查询结果缓存
+   *
+   * @author 一源-花和尚
+   * @date 2023-09-18
+   */
+  public CenterJoinUtils<L, C, R, LV> selectAs() {
+    try {
+      JoinLambdaWrapper<C> cWrapper = Joins.of(this.cClass);
+      //      cWrapper.notDefaultSelectAll();
+      if (StringUtilsPlus.isNotEmpty(this.poIdList)) {
+        cWrapper.in(this.centerOfLeftForeignKeyField, this.poIdList);
+      }
+      // 关联查询
+      cWrapper
+          .leftJoin(this.lClass, this.leftPrimaryKeyField, this.centerOfLeftForeignKeyField, "L_")
+          .selectAll()
+          .end();
+      cWrapper
+          .innerJoin(
+              this.rClass, this.rightPrimaryKeyField, this.centerOfRightForeignKeyField, "L_")
+          .selectAll()
+          .end();
+      JoinBaseMapper mapper = getMapper(this.cClass);
+      this.selectMapList = mapper.joinSelectList(cWrapper, Map.class);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return this;
+  }
+
   public CenterJoinUtils<L, C, R, LV> selectForId() {
     try {
       JoinLambdaWrapper<C> cWrapper = Joins.of(this.cClass);
