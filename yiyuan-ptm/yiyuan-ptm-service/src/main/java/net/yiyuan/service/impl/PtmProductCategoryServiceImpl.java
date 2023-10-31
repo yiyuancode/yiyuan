@@ -224,7 +224,7 @@ public class PtmProductCategoryServiceImpl
   @Override
   public List<PtmProductCategoryQueryVO> treeListForPlat(PtmProductCategoryListDTO request)
       throws Exception {
-    request.setLevel(PtmProductCategoryLevelEnum.THIRD_LEVEL_CLASSIFICATION);
+    request.setLevel(PtmProductCategoryLevelEnum.FOUR_LEVEL_CLASSIFICATION);
     JoinLambdaWrapper<PtmProductCategory> wrapper = Joins.of(PtmProductCategory.class);
     wrapper.orderByDesc(PtmProductCategory::getSort);
     wrapper.orderByDesc(PtmProductCategory::getCreateTime);
