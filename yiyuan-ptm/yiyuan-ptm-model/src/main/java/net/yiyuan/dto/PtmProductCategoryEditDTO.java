@@ -1,7 +1,6 @@
 package net.yiyuan.dto;
 
 import lombok.Data;
-import net.yiyuan.enums.PtmProductCategoryLevelEnum;
 
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
@@ -28,7 +27,7 @@ public class PtmProductCategoryEditDTO implements Serializable {
    * @author 一源团队-花和尚
    * @date 2023-10-10
    */
-  private String pid;
+  private String pid = "0";
 
   /**
    * 商户id
@@ -54,7 +53,6 @@ public class PtmProductCategoryEditDTO implements Serializable {
    * @date 2023-10-10
    */
   private String icon;
-
 
   /**
    * 排序

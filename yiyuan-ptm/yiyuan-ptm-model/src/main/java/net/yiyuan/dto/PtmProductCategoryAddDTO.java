@@ -1,10 +1,8 @@
 package net.yiyuan.dto;
 
 import lombok.Data;
-import net.yiyuan.enums.PtmProductCategoryLevelEnum;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -23,7 +21,7 @@ public class PtmProductCategoryAddDTO implements Serializable {
    * @date 2023-10-10
    */
   @NotBlank(message = "父级ID不能为空")
-  private String pid;
+  private String pid = "0";
 
   /**
    * 商户id
@@ -51,7 +49,6 @@ public class PtmProductCategoryAddDTO implements Serializable {
    * @date 2023-10-10
    */
   private String icon;
-
 
   /**
    * 排序
