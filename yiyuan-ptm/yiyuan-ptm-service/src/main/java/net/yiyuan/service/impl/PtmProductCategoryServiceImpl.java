@@ -157,11 +157,15 @@ public class PtmProductCategoryServiceImpl
   public boolean edit(PtmProductCategoryEditDTO request) throws Exception {
     PtmProductCategory po = new PtmProductCategory();
     BeanUtilsPlus.copy(request, po);
-    PtmProductCategory parent = ptmProductCategoryMapper.selectById(request.getPid());
-    Integer parentLevel = parent.getLevel().getValue();
-    PtmProductCategoryLevelEnum poLevel =
-        EnumUtils.getEnumByValue(parentLevel + 1, PtmProductCategoryLevelEnum.class);
-    po.setLevel(poLevel);
+    if ("0".equals(request.getPid())) {
+      po.setLevel(PtmProductCategoryLevelEnum.FIRST_LEVEL_CLASSIFICATION);
+    } else {
+      PtmProductCategory parent = ptmProductCategoryMapper.selectById(request.getPid());
+      Integer parentLevel = parent.getLevel().getValue();
+      PtmProductCategoryLevelEnum poLevel =
+          EnumUtils.getEnumByValue(parentLevel + 1, PtmProductCategoryLevelEnum.class);
+      po.setLevel(poLevel);
+    }
     int i = ptmProductCategoryMapper.updateById(po);
     if (i != 0) {
       return true;
@@ -182,11 +186,16 @@ public class PtmProductCategoryServiceImpl
   public boolean add(PtmProductCategoryAddDTO request) throws Exception {
     PtmProductCategory po = new PtmProductCategory();
     BeanUtilsPlus.copy(request, po);
-    PtmProductCategory parent = ptmProductCategoryMapper.selectById(request.getPid());
-    Integer parentLevel = parent.getLevel().getValue();
-    PtmProductCategoryLevelEnum poLevel =
-        EnumUtils.getEnumByValue(parentLevel + 1, PtmProductCategoryLevelEnum.class);
-    po.setLevel(poLevel);
+    if ("0".equals(request.getPid())) {
+      po.setLevel(PtmProductCategoryLevelEnum.FIRST_LEVEL_CLASSIFICATION);
+    } else {
+      PtmProductCategory parent = ptmProductCategoryMapper.selectById(request.getPid());
+      Integer parentLevel = parent.getLevel().getValue();
+      PtmProductCategoryLevelEnum poLevel =
+          EnumUtils.getEnumByValue(parentLevel + 1, PtmProductCategoryLevelEnum.class);
+      po.setLevel(poLevel);
+    }
+
     int i = ptmProductCategoryMapper.insert(po);
     if (i != 0) {
       return true;
