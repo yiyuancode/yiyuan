@@ -7,6 +7,7 @@ import icu.mhb.mybatisplus.plugln.extend.Joins;
 import lombok.extern.slf4j.Slf4j;
 import net.yiyuan.common.exception.BusinessException;
 import net.yiyuan.common.utils.BeanUtilsPlus;
+import net.yiyuan.common.utils.EnumUtils;
 import net.yiyuan.common.utils.TreeUtil;
 import net.yiyuan.dto.PtmProductCategoryAddDTO;
 import net.yiyuan.dto.PtmProductCategoryEditDTO;
@@ -22,9 +23,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 商品分类Service层接口实现
@@ -160,16 +159,9 @@ public class PtmProductCategoryServiceImpl
     BeanUtilsPlus.copy(request, po);
     PtmProductCategory parent = ptmProductCategoryMapper.selectById(request.getPid());
     Integer parentLevel = parent.getLevel().getValue();
-    if (parentLevel >= 5) {
-      throw new BusinessException("修改异常");
-    }
-    PtmProductCategoryLevelEnum[] values = PtmProductCategoryLevelEnum.values();
-    Map<Integer, PtmProductCategoryLevelEnum> levelEnumMap = new HashMap<>();
-    for (PtmProductCategoryLevelEnum enumValue : PtmProductCategoryLevelEnum.values()) {
-      levelEnumMap.put(enumValue.getValue(), enumValue);
-    }
-    po.setLevel(levelEnumMap.get(parentLevel + 1));
-
+    PtmProductCategoryLevelEnum poLevel =
+        EnumUtils.getEnumByValue(parentLevel + 1, PtmProductCategoryLevelEnum.class);
+    po.setLevel(poLevel);
     int i = ptmProductCategoryMapper.updateById(po);
     if (i != 0) {
       return true;
@@ -192,15 +184,9 @@ public class PtmProductCategoryServiceImpl
     BeanUtilsPlus.copy(request, po);
     PtmProductCategory parent = ptmProductCategoryMapper.selectById(request.getPid());
     Integer parentLevel = parent.getLevel().getValue();
-    if (parentLevel >= 5) {
-      throw new BusinessException("新增异常");
-    }
-    PtmProductCategoryLevelEnum[] values = PtmProductCategoryLevelEnum.values();
-    Map<Integer, PtmProductCategoryLevelEnum> levelEnumMap = new HashMap<>();
-    for (PtmProductCategoryLevelEnum enumValue : PtmProductCategoryLevelEnum.values()) {
-      levelEnumMap.put(enumValue.getValue(), enumValue);
-    }
-    po.setLevel(levelEnumMap.get(parentLevel + 1));
+    PtmProductCategoryLevelEnum poLevel =
+        EnumUtils.getEnumByValue(parentLevel + 1, PtmProductCategoryLevelEnum.class);
+    po.setLevel(poLevel);
     int i = ptmProductCategoryMapper.insert(po);
     if (i != 0) {
       return true;
