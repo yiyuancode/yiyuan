@@ -1,6 +1,7 @@
 package net.yiyuan.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import net.yiyuan.enums.PtmProductCategoryLevelEnum;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -15,6 +16,7 @@ import java.util.List;
  * @author 一源团队-花和尚
  * @date 2023-10-10
  */
+//@JsonInclude(value = JsonInclude.Include.ALWAYS)
 @Data
 public class PtmProductCategoryQueryVO implements Serializable {
 
