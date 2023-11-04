@@ -36,7 +36,7 @@ public class CodeGenerator {
   //  public static String DEFAULT_MODULENAME = "";
   public static String AUTHOR = "";
   public static String MYSQL_URL =
-      "jdbc:mysql://106.54.87.159:23306/admin_dev?serverTimezone=Asia/Shanghai&nullCatalogMeansCurrent=true";
+      "jdbc:mysql://116.63.167.31:40007/admin_dev?serverTimezone=Asia/Shanghai&nullCatalogMeansCurrent=true";
   public static String MYSQL_USERNAME = "root";
   public static String MYSQL_PASSWORD = "123456";
 

@@ -12,7 +12,7 @@ import java.math.BigDecimal;
  * 店铺新增接口请求入参实体
  *
  * @author 一源-花和尚
- * @date 2023-10-24
+ * @date 2023-11-03
  */
 @Data
 public class SpmShopAddDTO implements Serializable {
@@ -21,16 +21,24 @@ public class SpmShopAddDTO implements Serializable {
    * 店铺类型id
    *
    * @author 一源-花和尚
-   * @date 2023-10-24
+   * @date 2023-11-03
    */
   @NotBlank(message = "店铺类型id不能为空")
   private String spmShopTypeId;
 
   /**
+   * 店铺主营类目ids(多个用逗号分割,对应商品分类中-平台分类)
+   *
+   * @author 一源-花和尚
+   * @date 2023-11-03
+   */
+  private String mainCategoryIds;
+
+  /**
    * 地址id
    *
    * @author 一源-花和尚
-   * @date 2023-10-24
+   * @date 2023-11-03
    */
   @NotBlank(message = "地址id不能为空")
   private String sysAreaId;
@@ -39,7 +47,7 @@ public class SpmShopAddDTO implements Serializable {
    * 商户名称
    *
    * @author 一源-花和尚
-   * @date 2023-10-24
+   * @date 2023-11-03
    */
   @NotBlank(message = "商户名称不能为空")
   private String merchantName;
@@ -48,7 +56,7 @@ public class SpmShopAddDTO implements Serializable {
    * 商户邮箱
    *
    * @author 一源-花和尚
-   * @date 2023-10-24
+   * @date 2023-11-03
    */
   @NotBlank(message = "商户邮箱不能为空")
   private String merchantEmail;
@@ -57,7 +65,7 @@ public class SpmShopAddDTO implements Serializable {
    * 商户手机号
    *
    * @author 一源-花和尚
-   * @date 2023-10-24
+   * @date 2023-11-03
    */
   @NotBlank(message = "商户手机号不能为空")
   private String merchantPhone;
@@ -66,34 +74,16 @@ public class SpmShopAddDTO implements Serializable {
    * 商户法人
    *
    * @author 一源-花和尚
-   * @date 2023-10-24
+   * @date 2023-11-03
    */
   @NotBlank(message = "商户法人不能为空")
   private String merchantLegalRepresentative;
 
   /**
-   * 商户分类
-   *
-   * @author 一源-花和尚
-   * @date 2023-10-24
-   */
-  @NotBlank(message = "商户分类不能为空")
-  private String merchantCategory;
-
-  /**
-   * 商户类别
-   *
-   * @author 一源-花和尚
-   * @date 2023-10-24
-   */
-  @NotBlank(message = "商户类别不能为空")
-  private String merchantType;
-
-  /**
    * 商户手续费
    *
    * @author 一源-花和尚
-   * @date 2023-10-24
+   * @date 2023-11-03
    */
   @NotNull(message = "商户手续费不能为空")
   private BigDecimal merchantFee;
@@ -102,7 +92,7 @@ public class SpmShopAddDTO implements Serializable {
    * 商户星级
    *
    * @author 一源-花和尚
-   * @date 2023-10-24
+   * @date 2023-11-03
    */
   @NotNull(message = "商户星级不能为空")
   private Integer merchantRating;
@@ -111,7 +101,7 @@ public class SpmShopAddDTO implements Serializable {
    * 资质图片
    *
    * @author 一源-花和尚
-   * @date 2023-10-24
+   * @date 2023-11-03
    */
   @NotBlank(message = "资质图片不能为空")
   private String qualificationImages;
@@ -120,7 +110,7 @@ public class SpmShopAddDTO implements Serializable {
    * 店铺名称
    *
    * @author 一源-花和尚
-   * @date 2023-10-24
+   * @date 2023-11-03
    */
   @NotBlank(message = "店铺名称不能为空")
   private String shopName;
@@ -129,7 +119,7 @@ public class SpmShopAddDTO implements Serializable {
    * 店铺主头像
    *
    * @author 一源-花和尚
-   * @date 2023-10-24
+   * @date 2023-11-03
    */
   @NotBlank(message = "店铺主头像不能为空")
   private String shopOwnerAvatar;
@@ -138,7 +128,7 @@ public class SpmShopAddDTO implements Serializable {
    * 店铺背景图
    *
    * @author 一源-花和尚
-   * @date 2023-10-24
+   * @date 2023-11-03
    */
   @NotBlank(message = "店铺背景图不能为空")
   private String shopBackgroundImage;
@@ -147,7 +137,7 @@ public class SpmShopAddDTO implements Serializable {
    * 推荐店铺背景图
    *
    * @author 一源-花和尚
-   * @date 2023-10-24
+   * @date 2023-11-03
    */
   @NotBlank(message = "推荐店铺背景图不能为空")
   private String recommendedShopBackgroundImage;
@@ -156,7 +146,7 @@ public class SpmShopAddDTO implements Serializable {
    * 店铺封面图
    *
    * @author 一源-花和尚
-   * @date 2023-10-24
+   * @date 2023-11-03
    */
   @NotBlank(message = "店铺封面图不能为空")
   private String shopCover;
@@ -165,7 +155,7 @@ public class SpmShopAddDTO implements Serializable {
    * 店铺logo
    *
    * @author 一源-花和尚
-   * @date 2023-10-24
+   * @date 2023-11-03
    */
   @NotBlank(message = "店铺logo不能为空")
   private String shopLogo;
@@ -174,25 +164,16 @@ public class SpmShopAddDTO implements Serializable {
    * 店铺简介
    *
    * @author 一源-花和尚
-   * @date 2023-10-24
+   * @date 2023-11-03
    */
   @NotBlank(message = "店铺简介不能为空")
   private String shopDescription;
 
   /**
-   * 店铺类型
-   *
-   * @author 一源-花和尚
-   * @date 2023-10-24
-   */
-  @NotBlank(message = "店铺类型不能为空")
-  private String shopType;
-
-  /**
    * 库存告警阈值
    *
    * @author 一源-花和尚
-   * @date 2023-10-24
+   * @date 2023-11-03
    */
   @NotNull(message = "库存告警阈值不能为空")
   private Integer inventoryAlert;
@@ -202,7 +183,7 @@ public class SpmShopAddDTO implements Serializable {
    *
    * @mock 1
    * @author 一源-花和尚
-   * @date 2023-10-24
+   * @date 2023-11-03
    */
   @NotNull(message = "是否支持自提0=否|1=是不能为空")
   private Boolean isSupportsSelfPickup;
@@ -211,7 +192,7 @@ public class SpmShopAddDTO implements Serializable {
    * 店铺地址
    *
    * @author 一源-花和尚
-   * @date 2023-10-24
+   * @date 2023-11-03
    */
   @NotBlank(message = "店铺地址不能为空")
   private String shopAddress;
@@ -220,7 +201,7 @@ public class SpmShopAddDTO implements Serializable {
    * 结算类型#1=银行卡|2=微信|3=支付宝
    *
    * @author 一源-花和尚
-   * @date 2023-10-24
+   * @date 2023-11-03
    */
   @NotNull(message = "结算类型#1=银行卡|2=微信|3=支付宝不能为空")
   private SpmShopSettlementTypeEnum settlementType;
@@ -229,7 +210,7 @@ public class SpmShopAddDTO implements Serializable {
    * 银行卡结算-收款人
    *
    * @author 一源-花和尚
-   * @date 2023-10-24
+   * @date 2023-11-03
    */
   private String bankPayee;
 
@@ -237,7 +218,7 @@ public class SpmShopAddDTO implements Serializable {
    * 银行卡结算-开户银行
    *
    * @author 一源-花和尚
-   * @date 2023-10-24
+   * @date 2023-11-03
    */
   private String bankNumber;
 
@@ -245,7 +226,7 @@ public class SpmShopAddDTO implements Serializable {
    * 银行卡结算-开户行地址
    *
    * @author 一源-花和尚
-   * @date 2023-10-24
+   * @date 2023-11-03
    */
   private String bankAddress;
 
@@ -253,7 +234,7 @@ public class SpmShopAddDTO implements Serializable {
    * 微信结算-真实姓名
    *
    * @author 一源-花和尚
-   * @date 2023-10-24
+   * @date 2023-11-03
    */
   private String wechatRealName;
 
@@ -261,7 +242,7 @@ public class SpmShopAddDTO implements Serializable {
    * 微信结算-微信号
    *
    * @author 一源-花和尚
-   * @date 2023-10-24
+   * @date 2023-11-03
    */
   private String wechatAccount;
 
@@ -269,7 +250,7 @@ public class SpmShopAddDTO implements Serializable {
    * 微信结算-收款二维码
    *
    * @author 一源-花和尚
-   * @date 2023-10-24
+   * @date 2023-11-03
    */
   private String wechatQrCode;
 
@@ -277,7 +258,7 @@ public class SpmShopAddDTO implements Serializable {
    * 支付宝结算-真实姓名
    *
    * @author 一源-花和尚
-   * @date 2023-10-24
+   * @date 2023-11-03
    */
   private String alipayRealName;
 
@@ -285,7 +266,7 @@ public class SpmShopAddDTO implements Serializable {
    * 支付宝结算-微信号
    *
    * @author 一源-花和尚
-   * @date 2023-10-24
+   * @date 2023-11-03
    */
   private String alipayAccount;
 
@@ -293,7 +274,7 @@ public class SpmShopAddDTO implements Serializable {
    * 支付宝结算-收款二维码
    *
    * @author 一源-花和尚
-   * @date 2023-10-24
+   * @date 2023-11-03
    */
   private String alipayQrCode;
 
@@ -302,26 +283,18 @@ public class SpmShopAddDTO implements Serializable {
    *
    * @mock 1
    * @author 一源-花和尚
-   * @date 2023-10-24
+   * @date 2023-11-03
    */
   @NotNull(message = "是否加入审核0=否|1=是不能为空")
   private Boolean isAudit;
-
-  /**
-   * 排序
-   *
-   * @mock 0
-   * @author 一源-花和尚
-   * @date 2023-10-24
-   */
-  private Integer sort;
 
   /**
    * 显示状态0=不显示|1=显示
    *
    * @mock 1
    * @author 一源-花和尚
-   * @date 2023-10-24
+   * @date 2023-11-03
    */
+  @NotNull(message = "显示状态0=不显示|1=显示不能为空")
   private Boolean isShow;
 }

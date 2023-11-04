@@ -14,7 +14,7 @@ import java.util.Date;
  * 店铺实体
  *
  * @author 一源-花和尚
- * @date 2023-10-24
+ * @date 2023-11-03
  */
 @Data
 public class SpmShop implements Serializable {
@@ -24,7 +24,7 @@ public class SpmShop implements Serializable {
    * 店铺id
    *
    * @author 一源-花和尚
-   * @date 2023-10-24
+   * @date 2023-11-03
    */
   @TableId(value = "id", type = IdType.ASSIGN_UUID)
   private String id;
@@ -33,15 +33,23 @@ public class SpmShop implements Serializable {
    * 店铺类型id
    *
    * @author 一源-花和尚
-   * @date 2023-10-24
+   * @date 2023-11-03
    */
   private String spmShopTypeId;
+
+  /**
+   * 店铺主营类目ids(多个用逗号分割,对应商品分类中-平台分类)
+   *
+   * @author 一源-花和尚
+   * @date 2023-11-03
+   */
+  private String mainCategoryIds;
 
   /**
    * 地址id
    *
    * @author 一源-花和尚
-   * @date 2023-10-24
+   * @date 2023-11-03
    */
   private String sysAreaId;
 
@@ -49,7 +57,7 @@ public class SpmShop implements Serializable {
    * 商户名称
    *
    * @author 一源-花和尚
-   * @date 2023-10-24
+   * @date 2023-11-03
    */
   private String merchantName;
 
@@ -57,7 +65,7 @@ public class SpmShop implements Serializable {
    * 商户邮箱
    *
    * @author 一源-花和尚
-   * @date 2023-10-24
+   * @date 2023-11-03
    */
   private String merchantEmail;
 
@@ -65,7 +73,7 @@ public class SpmShop implements Serializable {
    * 商户手机号
    *
    * @author 一源-花和尚
-   * @date 2023-10-24
+   * @date 2023-11-03
    */
   private String merchantPhone;
 
@@ -73,31 +81,15 @@ public class SpmShop implements Serializable {
    * 商户法人
    *
    * @author 一源-花和尚
-   * @date 2023-10-24
+   * @date 2023-11-03
    */
   private String merchantLegalRepresentative;
-
-  /**
-   * 商户分类
-   *
-   * @author 一源-花和尚
-   * @date 2023-10-24
-   */
-  private String merchantCategory;
-
-  /**
-   * 商户类别
-   *
-   * @author 一源-花和尚
-   * @date 2023-10-24
-   */
-  private String merchantType;
 
   /**
    * 商户手续费
    *
    * @author 一源-花和尚
-   * @date 2023-10-24
+   * @date 2023-11-03
    */
   private BigDecimal merchantFee;
 
@@ -105,7 +97,7 @@ public class SpmShop implements Serializable {
    * 商户星级
    *
    * @author 一源-花和尚
-   * @date 2023-10-24
+   * @date 2023-11-03
    */
   private Integer merchantRating;
 
@@ -113,7 +105,7 @@ public class SpmShop implements Serializable {
    * 资质图片
    *
    * @author 一源-花和尚
-   * @date 2023-10-24
+   * @date 2023-11-03
    */
   private String qualificationImages;
 
@@ -121,7 +113,7 @@ public class SpmShop implements Serializable {
    * 店铺名称
    *
    * @author 一源-花和尚
-   * @date 2023-10-24
+   * @date 2023-11-03
    */
   private String shopName;
 
@@ -129,7 +121,7 @@ public class SpmShop implements Serializable {
    * 店铺主头像
    *
    * @author 一源-花和尚
-   * @date 2023-10-24
+   * @date 2023-11-03
    */
   private String shopOwnerAvatar;
 
@@ -137,7 +129,7 @@ public class SpmShop implements Serializable {
    * 店铺背景图
    *
    * @author 一源-花和尚
-   * @date 2023-10-24
+   * @date 2023-11-03
    */
   private String shopBackgroundImage;
 
@@ -145,7 +137,7 @@ public class SpmShop implements Serializable {
    * 推荐店铺背景图
    *
    * @author 一源-花和尚
-   * @date 2023-10-24
+   * @date 2023-11-03
    */
   private String recommendedShopBackgroundImage;
 
@@ -153,7 +145,7 @@ public class SpmShop implements Serializable {
    * 店铺封面图
    *
    * @author 一源-花和尚
-   * @date 2023-10-24
+   * @date 2023-11-03
    */
   private String shopCover;
 
@@ -161,7 +153,7 @@ public class SpmShop implements Serializable {
    * 店铺logo
    *
    * @author 一源-花和尚
-   * @date 2023-10-24
+   * @date 2023-11-03
    */
   private String shopLogo;
 
@@ -169,23 +161,15 @@ public class SpmShop implements Serializable {
    * 店铺简介
    *
    * @author 一源-花和尚
-   * @date 2023-10-24
+   * @date 2023-11-03
    */
   private String shopDescription;
-
-  /**
-   * 店铺类型
-   *
-   * @author 一源-花和尚
-   * @date 2023-10-24
-   */
-  private String shopType;
 
   /**
    * 库存告警阈值
    *
    * @author 一源-花和尚
-   * @date 2023-10-24
+   * @date 2023-11-03
    */
   private Integer inventoryAlert;
 
@@ -193,7 +177,7 @@ public class SpmShop implements Serializable {
    * 是否支持自提0=否|1=是
    *
    * @author 一源-花和尚
-   * @date 2023-10-24
+   * @date 2023-11-03
    */
   private Boolean isSupportsSelfPickup;
 
@@ -201,7 +185,7 @@ public class SpmShop implements Serializable {
    * 店铺地址
    *
    * @author 一源-花和尚
-   * @date 2023-10-24
+   * @date 2023-11-03
    */
   private String shopAddress;
 
@@ -209,7 +193,7 @@ public class SpmShop implements Serializable {
    * 结算类型#1=银行卡|2=微信|3=支付宝
    *
    * @author 一源-花和尚
-   * @date 2023-10-24
+   * @date 2023-11-03
    */
   private SpmShopSettlementTypeEnum settlementType;
 
@@ -217,7 +201,7 @@ public class SpmShop implements Serializable {
    * 银行卡结算-收款人
    *
    * @author 一源-花和尚
-   * @date 2023-10-24
+   * @date 2023-11-03
    */
   private String bankPayee;
 
@@ -225,7 +209,7 @@ public class SpmShop implements Serializable {
    * 银行卡结算-开户银行
    *
    * @author 一源-花和尚
-   * @date 2023-10-24
+   * @date 2023-11-03
    */
   private String bankNumber;
 
@@ -233,7 +217,7 @@ public class SpmShop implements Serializable {
    * 银行卡结算-开户行地址
    *
    * @author 一源-花和尚
-   * @date 2023-10-24
+   * @date 2023-11-03
    */
   private String bankAddress;
 
@@ -241,7 +225,7 @@ public class SpmShop implements Serializable {
    * 微信结算-真实姓名
    *
    * @author 一源-花和尚
-   * @date 2023-10-24
+   * @date 2023-11-03
    */
   private String wechatRealName;
 
@@ -249,7 +233,7 @@ public class SpmShop implements Serializable {
    * 微信结算-微信号
    *
    * @author 一源-花和尚
-   * @date 2023-10-24
+   * @date 2023-11-03
    */
   private String wechatAccount;
 
@@ -257,7 +241,7 @@ public class SpmShop implements Serializable {
    * 微信结算-收款二维码
    *
    * @author 一源-花和尚
-   * @date 2023-10-24
+   * @date 2023-11-03
    */
   private String wechatQrCode;
 
@@ -265,7 +249,7 @@ public class SpmShop implements Serializable {
    * 支付宝结算-真实姓名
    *
    * @author 一源-花和尚
-   * @date 2023-10-24
+   * @date 2023-11-03
    */
   private String alipayRealName;
 
@@ -273,7 +257,7 @@ public class SpmShop implements Serializable {
    * 支付宝结算-微信号
    *
    * @author 一源-花和尚
-   * @date 2023-10-24
+   * @date 2023-11-03
    */
   private String alipayAccount;
 
@@ -281,7 +265,7 @@ public class SpmShop implements Serializable {
    * 支付宝结算-收款二维码
    *
    * @author 一源-花和尚
-   * @date 2023-10-24
+   * @date 2023-11-03
    */
   private String alipayQrCode;
 
@@ -289,7 +273,7 @@ public class SpmShop implements Serializable {
    * 排序
    *
    * @author 一源-花和尚
-   * @date 2023-10-24
+   * @date 2023-11-03
    */
   private Integer sort;
 
@@ -297,7 +281,7 @@ public class SpmShop implements Serializable {
    * 是否加入审核0=否|1=是
    *
    * @author 一源-花和尚
-   * @date 2023-10-24
+   * @date 2023-11-03
    */
   private Boolean isAudit;
 
@@ -305,7 +289,7 @@ public class SpmShop implements Serializable {
    * 显示状态0=不显示|1=显示
    *
    * @author 一源-花和尚
-   * @date 2023-10-24
+   * @date 2023-11-03
    */
   private Boolean isShow;
 
@@ -313,7 +297,7 @@ public class SpmShop implements Serializable {
    * 创建时间
    *
    * @author 一源-花和尚
-   * @date 2023-10-24
+   * @date 2023-11-03
    */
   @TableField(fill = FieldFill.INSERT)
   private Date createTime;
@@ -322,7 +306,7 @@ public class SpmShop implements Serializable {
    * 修改时间
    *
    * @author 一源-花和尚
-   * @date 2023-10-24
+   * @date 2023-11-03
    */
   @TableField(fill = FieldFill.INSERT_UPDATE)
   private Date updateTime;
@@ -331,7 +315,7 @@ public class SpmShop implements Serializable {
    * 创建人
    *
    * @author 一源-花和尚
-   * @date 2023-10-24
+   * @date 2023-11-03
    */
   @TableField(fill = FieldFill.INSERT)
   private String createUser;
@@ -340,7 +324,7 @@ public class SpmShop implements Serializable {
    * 修改人
    *
    * @author 一源-花和尚
-   * @date 2023-10-24
+   * @date 2023-11-03
    */
   @TableField(fill = FieldFill.INSERT_UPDATE)
   private String updateUser;

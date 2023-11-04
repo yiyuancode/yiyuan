@@ -11,7 +11,7 @@
 
     <!-- 为logstash输出的JSON格式的Appender -->
     <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
-        <destination>106.54.87.159:50032</destination>
+        <destination>116.63.167.31:40003</destination>
         <keepAliveDuration>5 minutes</keepAliveDuration>
         <!-- 日志输出编码 -->
         <encoder charset="UTF-8" class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">

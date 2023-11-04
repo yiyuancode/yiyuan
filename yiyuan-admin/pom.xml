@@ -79,6 +79,12 @@
             <artifactId>yiyuan-mam-api</artifactId>
             <version>${revision}</version>
         </dependency>
+
+        <dependency>
+            <groupId>net.yiyuan</groupId>
+            <artifactId>yiyuan-ftm-api</artifactId>
+            <version>${revision}</version>
+        </dependency>
     </dependencies>
 
     <build>
