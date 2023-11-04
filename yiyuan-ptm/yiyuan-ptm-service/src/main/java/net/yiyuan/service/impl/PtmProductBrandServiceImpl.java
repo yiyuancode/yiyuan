@@ -3,6 +3,7 @@ package net.yiyuan.service.impl;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import icu.mhb.mybatisplus.plugln.base.service.impl.JoinServiceImpl;
 import icu.mhb.mybatisplus.plugln.core.JoinLambdaWrapper;
+import icu.mhb.mybatisplus.plugln.extend.Joins;
 import lombok.extern.slf4j.Slf4j;
 import net.yiyuan.common.exception.BusinessException;
 import net.yiyuan.common.utils.BeanUtilsPlus;
@@ -210,7 +211,11 @@ public class PtmProductBrandServiceImpl
     int i = ptmProductBrandMapper.updateById(po);
 
     String[] categoryIds = request.getCategoryIds().split(",");
-    ptmProductCategoryBrandLinkMapper.deleteBatchIds(Arrays.asList(categoryIds));
+    JoinLambdaWrapper<PtmProductCategoryBrandLink> categoryBrandLinkWarpper =
+        Joins.of(PtmProductCategoryBrandLink.class);
+    categoryBrandLinkWarpper.in(
+        PtmProductCategoryBrandLink::getPtmProductCategoryId, Arrays.asList(categoryIds));
+    ptmProductCategoryBrandLinkMapper.delete(categoryBrandLinkWarpper);
     for (String categoryId : categoryIds) {
       PtmProductCategoryBrandLink categoryBrandLinkPo = new PtmProductCategoryBrandLink();
       categoryBrandLinkPo.setPtmProductBrandId(po.getId());
