@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
 echo '----部署java开始----'
-mkdir -p /install/yiyuan-admin-dev
-cp Dockerfile-dev /install/yiyuan-admin-dev/
-cp yiyuan-admin-1.0-SNAPSHOT.jar /install/yiyuan-app-api-dev/
-cd /install/yiyuan-admin-dev
+#mkdir -p /install/yiyuan-admin-dev
+#cp Dockerfile-dev /install/
+#cp yiyuan-admin-1.0-SNAPSHOT.jar /install/yiyuan-app-api-dev/
+cd /install/
 docker stop yiyuan-admin-dev
 docker rm yiyuan-admin-dev
 

@@ -52,6 +52,6 @@ public class PtmProductBrandAddDTO implements Serializable {
    * @author 一源团队-花和尚
    * @date 2023-10-10
    */
-  @NotNull(message = "分类id")
-  private String[] categoryIds;
+  @NotBlank(message = "分类id")
+  private String categoryIds;
 }
