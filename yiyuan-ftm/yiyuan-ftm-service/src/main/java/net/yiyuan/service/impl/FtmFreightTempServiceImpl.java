@@ -3,6 +3,7 @@ package net.yiyuan.service.impl;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import icu.mhb.mybatisplus.plugln.base.service.impl.JoinServiceImpl;
 import icu.mhb.mybatisplus.plugln.core.JoinLambdaWrapper;
+import icu.mhb.mybatisplus.plugln.extend.Joins;
 import lombok.extern.slf4j.Slf4j;
 import net.yiyuan.common.exception.BusinessException;
 import net.yiyuan.common.utils.BeanUtilsPlus;
@@ -92,15 +93,19 @@ public class FtmFreightTempServiceImpl extends JoinServiceImpl<FtmFreightTempMap
     FtmFreightTemp po = new FtmFreightTemp();
     po.setId(id);
     JoinLambdaWrapper<FtmFreightTemp> wrapper = new JoinLambdaWrapper<>(po);
-    wrapper
-        .leftJoin(
-            FtmFreightTempPrice.class,
-            FtmFreightTempPrice::getFtmFreightTempId,
-            FtmFreightTemp::getId)
-        .manyToManySelect(FtmFreightTempQueryVO::getPriceList, FtmFreightTempPriceQueryVO.class)
-        .end();
+    //    wrapper
+    //        .leftJoin(
+    //            FtmFreightTempPrice.class,
+    //            FtmFreightTempPrice::getFtmFreightTempId,
+    //            FtmFreightTemp::getId)
+    //        .end();
     FtmFreightTempQueryVO voBean =
         ftmFreightTempMapper.joinSelectOne(wrapper, FtmFreightTempQueryVO.class);
+    JoinLambdaWrapper<FtmFreightTempPrice> priceWrapper = Joins.of(FtmFreightTempPrice.class);
+    priceWrapper.in(FtmFreightTempPrice::getFtmFreightTempId, voBean.getId());
+    List<FtmFreightTempPriceQueryVO> ftmFreightTempPriceQueryVOS =
+        ftmFreightTempPriceMapper.joinSelectList(priceWrapper, FtmFreightTempPriceQueryVO.class);
+    voBean.setPriceList(ftmFreightTempPriceQueryVOS);
     return voBean;
   }
 
@@ -162,7 +167,11 @@ public class FtmFreightTempServiceImpl extends JoinServiceImpl<FtmFreightTempMap
           (item) -> {
             FtmFreightTempPrice pricePo = new FtmFreightTempPrice();
             BeanUtilsPlus.copy(item, pricePo);
-            ftmFreightTempPriceMapper.updateById(pricePo);
+            if (StringUtilsPlus.isNotEmpty(pricePo.getId())) {
+              ftmFreightTempPriceMapper.updateById(pricePo);
+            } else {
+              ftmFreightTempPriceMapper.insert(pricePo);
+            }
           });
     }
 

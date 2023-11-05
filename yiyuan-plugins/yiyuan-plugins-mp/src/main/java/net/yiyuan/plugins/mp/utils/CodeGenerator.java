@@ -315,6 +315,10 @@ public class CodeGenerator {
           createEnumsByVelocity(context);
 
           dtoColumnMap.put("propertyType", (String) context.get("className"));
+          if (dtoColumnMap.get("propertyType").equals("Boolean")) {
+            dtoColumnMap.put(
+                "columnComment", columnComment.substring(0, columnComment.indexOf("0")));
+          }
         } else {
           dtoColumnMap.put(
               "propertyType", mysqlToJavaTypeMap.get(StringUtilsPlus.toLowerCase(columnType)));

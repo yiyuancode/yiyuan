@@ -12,12 +12,15 @@ const columns = [
         {
             #if(${columnsItem.propertyType.contains("Enum")})
                 title: '${columnsItem.columnComment.split("#")[0]}',
+            #elseif(${columnsItem.propertyType.contains("Boolean")})
+                title: '${columnsItem.columnComment.substring(0, $columnsItem.columnComment.indexOf("0"))}',
             #else
                 title: '${columnsItem.columnComment}',
             #end
             dataIndex: '${columnsItem.columnName}',
             key: '${columnsItem.columnName}',
             width: 160,
+            ellipsis: true,
             #if(${columnsItem.propertyType.equals("String")}&&!${columnsItem.columnType.equals("TEXT")})
                 ##必填项并且默认值是null的
                 #if((${columnsItem.isNullable.equals("1")}||!${columnsItem.defaultValue.equals("NULL")}))
@@ -48,7 +51,28 @@ const columns = [
                     ]
                 },
             #end
+            #if(${columnsItem.propertyType.contains("Boolean")})
+                scopedSlots: {customRender: '${columnsItem.columnName}'},
+                formType: "radioGroup",
+                props: {
+                    options: [
+                        {
+                            label: '否',
+                            value: false,
+                        },
+                        {
+                            label: '是',
+                            value: true,
+                        },
+                    ],
+                    style:
+                        {
+                            width: '100%'
+                        }
+                },
+            #end
             #if(${columnsItem.propertyType.contains("Enum")})
+                scopedSlots: {customRender: '${columnsItem.columnName}'},
                 //值类型
                 valType: "object",
                 ## searchObj: {
