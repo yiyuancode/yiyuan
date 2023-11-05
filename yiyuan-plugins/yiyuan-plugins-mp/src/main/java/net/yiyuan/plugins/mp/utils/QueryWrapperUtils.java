@@ -1,19 +1,33 @@
 package net.yiyuan.plugins.mp.utils;
 
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.annotation.IEnum;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import icu.mhb.mybatisplus.plugln.base.mapper.JoinBaseMapper;
 import icu.mhb.mybatisplus.plugln.core.JoinLambdaWrapper;
+import icu.mhb.mybatisplus.plugln.extend.Joins;
 import lombok.extern.slf4j.Slf4j;
+import net.yiyuan.common.utils.BeanUtilsPlus;
 import net.yiyuan.common.utils.StringUtilsPlus;
+import org.springframework.context.ConfigurableApplicationContext;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.stream.Collectors;
 
 @Slf4j
 public class QueryWrapperUtils {
+  public static ConfigurableApplicationContext context;
 
+  public static JoinBaseMapper getMapper(Class<?> cl) throws Exception {
+    return (JoinBaseMapper)
+        context.getBean(Class.forName("net.yiyuan.mapper." + cl.getSimpleName() + "Mapper"));
+  }
   /**
    * 重置为右eq查询
    *
@@ -34,6 +48,184 @@ public class QueryWrapperUtils {
                   apply);
             });
   }
+
+  /**
+   * 为了page分页结果关联查询--省区发送多条sql的烦恼
+   *
+   * @param page 分页page对象
+   * @param lSetRlistBiConsumer page每条数据的set函数
+   * @param lIdSFunction page种每条数据id字段
+   * @param cIdSFunction page每条数据的id字段在中间表的对应字段
+   * @param cSFunction 中间表对应关联查询的表的字段
+   * @param rSFunction 关联表id字段
+   * @param selectFiledSFunction 需要查询的关联表的字段
+   */
+  public static <L, C, R> void linksForPage(
+      Page<L> page,
+      BiConsumer<L, List<R>> lSetRlistBiConsumer,
+      SFunction<L, Object> lIdSFunction,
+      SFunction<C, Object> cIdSFunction,
+      SFunction<C, Object> cSFunction,
+      SFunction<R, Object> rSFunction,
+      SFunction<R, Object>... selectFiledSFunction)
+      throws Exception {
+    Class<L> lClass = LambdaFunUtils.getFieldOfClass(lIdSFunction);
+    List<String> cIds =
+        page.getRecords().stream()
+            .map(
+                e -> {
+                  try {
+                    Method getIdMethod = lClass.getMethod("getId");
+                    String invoke = (String) getIdMethod.invoke(e);
+                    return invoke;
+                  } catch (Exception e1) {
+                    e1.printStackTrace();
+                    return null;
+                  }
+                })
+            .collect(Collectors.toList());
+    Class<C> cClass = LambdaFunUtils.getFieldOfClass(cSFunction);
+    JoinLambdaWrapper<C> cWrapper = Joins.of(cClass);
+    cWrapper.in(cIdSFunction, cIds);
+    Class<R> rClass = LambdaFunUtils.getFieldOfClass(rSFunction);
+    cWrapper.leftJoin(rClass, rSFunction, cSFunction).select(selectFiledSFunction).end();
+
+    JoinBaseMapper mapper = getMapper(cClass);
+    List<Map> maplist = mapper.joinSelectList(cWrapper, Map.class);
+
+    Map<String, List<Map>> groupedMap =
+        maplist.stream()
+            .collect(
+                Collectors.groupingBy(
+                    link -> (String) link.get(LambdaFunUtils.getFieldName(cIdSFunction))));
+
+    // 转成json字符串把所有字段下划线转成map
+    String groupedMapStr =
+        StringUtilsPlus.convertToCamelCaseAndUncapitalize(JSONObject.toJSONString(groupedMap));
+    Map<String, List<Map>> finalGroupedMap = JSONObject.parseObject(groupedMapStr, Map.class);
+    if (StringUtilsPlus.isNotEmpty(page.getRecords())) {
+      page.getRecords()
+          .forEach(
+              (item) -> {
+                Method getIdMethod = null;
+                try {
+                  getIdMethod = lClass.getMethod("getId");
+                  String idVal = (String) getIdMethod.invoke(item);
+                  if (StringUtilsPlus.isNotEmpty(idVal)) {
+                    lSetRlistBiConsumer.accept(
+                        item, BeanUtilsPlus.copyToList(finalGroupedMap.get(idVal), lClass));
+                  }
+                } catch (Exception e) {
+                  e.printStackTrace();
+                }
+              });
+    }
+  }
+
+  public static <L, C, R> void linksForDeatil(
+      L obj,
+      BiConsumer<L, List<R>> lSetRlistBiConsumer,
+      SFunction<L, Object> lIdSFunction,
+      SFunction<C, Object> cIdSFunction,
+      SFunction<C, Object> cSFunction,
+      SFunction<R, Object> rSFunction,
+      SFunction<R, Object>... selectFiledSFunction)
+      throws Exception {
+    Class<L> lClass = LambdaFunUtils.getFieldOfClass(lIdSFunction);
+    String idVal = (String) lClass.getMethod("getId").invoke(obj);
+    List<String> cIds = Arrays.asList(idVal);
+    Class<C> cClass = LambdaFunUtils.getFieldOfClass(cSFunction);
+    JoinLambdaWrapper<C> cWrapper = Joins.of(cClass);
+    cWrapper.in(cIdSFunction, cIds);
+    Class<R> rClass = LambdaFunUtils.getFieldOfClass(rSFunction);
+    cWrapper.leftJoin(rClass, rSFunction, cSFunction).select(selectFiledSFunction).end();
+    JoinBaseMapper mapper = getMapper(cClass);
+    List<Map> maplist = mapper.joinSelectList(cWrapper, Map.class);
+
+    Map<String, List<Map>> groupedMap =
+        maplist.stream()
+            .collect(
+                Collectors.groupingBy(
+                    link -> (String) link.get(LambdaFunUtils.getFieldName(cIdSFunction))));
+
+    // 转成json字符串把所有字段下划线转成map
+    String groupedMapStr =
+        StringUtilsPlus.convertToCamelCaseAndUncapitalize(JSONObject.toJSONString(groupedMap));
+    Map<String, List<Map>> finalGroupedMap = JSONObject.parseObject(groupedMapStr, Map.class);
+    if (StringUtilsPlus.isNotNUll(obj)) {
+      lSetRlistBiConsumer.accept(obj, BeanUtilsPlus.copyToList(finalGroupedMap.get(idVal), lClass));
+    }
+  }
+
+//  /**
+//   * 为了page分页结果关联查询--省区发送多条sql的烦恼
+//   *
+//   * @param page 分页page对象
+//   * @param lSetRlistBiConsumer page每条数据的set函数
+//   * @param lIdSFunction page种每条数据id字段
+//   * @param cIdSFunction page每条数据的id字段在中间表的对应字段
+//   * @param cSFunction 中间表对应关联查询的表的字段
+//   * @param rSFunction 关联表id字段
+//   * @param selectFiledSFunction 需要查询的关联表的字段
+//   */
+//  public static <L, C, R> List<String> linksIdsForQueryFilter(
+//      SFunction<C, Object> cIdSFunction,
+//      SFunction<C, Object> cSFunction,
+//      SFunction<R, Object> rSFunction,
+//      SFunction<R, Object>... selectFiledSFunction)
+//      throws Exception {
+//    Class<L> lClass = LambdaFunUtils.getFieldOfClass(lIdSFunction);
+//    List<String> cIds =
+//        page.getRecords().stream()
+//            .map(
+//                e -> {
+//                  try {
+//                    Method getIdMethod = lClass.getMethod("getId");
+//                    String invoke = (String) getIdMethod.invoke(e);
+//                    return invoke;
+//                  } catch (Exception e1) {
+//                    e1.printStackTrace();
+//                    return null;
+//                  }
+//                })
+//            .collect(Collectors.toList());
+//    Class<C> cClass = LambdaFunUtils.getFieldOfClass(cSFunction);
+//    JoinLambdaWrapper<C> cWrapper = Joins.of(cClass);
+//    cWrapper.in(cIdSFunction, cIds);
+//    Class<R> rClass = LambdaFunUtils.getFieldOfClass(rSFunction);
+//    cWrapper.leftJoin(rClass, rSFunction, cSFunction).select(selectFiledSFunction).end();
+//
+//    JoinBaseMapper mapper = getMapper(cClass);
+//    List<Map> maplist = mapper.joinSelectList(cWrapper, Map.class);
+//
+//    Map<String, List<Map>> groupedMap =
+//        maplist.stream()
+//            .collect(
+//                Collectors.groupingBy(
+//                    link -> (String) link.get(LambdaFunUtils.getFieldName(cIdSFunction))));
+//
+//    // 转成json字符串把所有字段下划线转成map
+//    String groupedMapStr =
+//        StringUtilsPlus.convertToCamelCaseAndUncapitalize(JSONObject.toJSONString(groupedMap));
+//    Map<String, List<Map>> finalGroupedMap = JSONObject.parseObject(groupedMapStr, Map.class);
+//    if (StringUtilsPlus.isNotEmpty(page.getRecords())) {
+//      page.getRecords()
+//          .forEach(
+//              (item) -> {
+//                Method getIdMethod = null;
+//                try {
+//                  getIdMethod = lClass.getMethod("getId");
+//                  String idVal = (String) getIdMethod.invoke(item);
+//                  if (StringUtilsPlus.isNotEmpty(idVal)) {
+//                    lSetRlistBiConsumer.accept(
+//                        item, BeanUtilsPlus.copyToList(finalGroupedMap.get(idVal), lClass));
+//                  }
+//                } catch (Exception e) {
+//                  e.printStackTrace();
+//                }
+//              });
+//    }
+//  }
 
   /**
    * 重置为右模糊查询

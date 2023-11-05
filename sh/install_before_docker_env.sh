@@ -8,7 +8,7 @@ echo '----查看当前系统内核版本结束----'
 
 
 echo '----更新yum镜像原开始----'
-yum -y update
+yum -y update -y
 echo '----更新yum镜像原结束----'
 
 

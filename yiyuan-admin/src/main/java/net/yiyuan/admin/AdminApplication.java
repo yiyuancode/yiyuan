@@ -3,6 +3,7 @@ package net.yiyuan.admin;
 import com.yomahub.tlog.core.enhance.bytes.AspectLogEnhance;
 import lombok.extern.slf4j.Slf4j;
 import net.yiyuan.plugins.mp.utils.CenterJoinUtils;
+import net.yiyuan.plugins.mp.utils.QueryWrapperUtils;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -26,6 +27,7 @@ public class AdminApplication {
         SpringApplication.run(AdminApplication.class, args);
     // 注入上下文工具类使用
     CenterJoinUtils.context = application;
+    QueryWrapperUtils.context = application;
     // 打印基础信息
     info(application);
   }

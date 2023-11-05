@@ -6,23 +6,14 @@ const modules = gertRouterArray(require.context('./modules', false, /\.js$/))
 
 const ${pm0} = {
     path: '/${pm0}',
-        name
-:
-    '${pm0}',
+        name: '${pm0}',
         ${arrow} '@/components/layout/Layout/index.vue'${arrowRight},
 
-        meta
-:
-    {
+        meta: {
         title: '${moudleNameZh}',
-            permissions
-    :
-        '${pm0}',
-            sort
-    :
-        0
-    }
-,
+            permissions: '${pm0}',
+            sort: 0
+    },
     children: modules
 }
 export default ${pm0};

@@ -2,24 +2,13 @@
 #set($arrowRight=")")
 const ${pm1} = {
     path: '${pm1}',
-        name
-:
-    '${pm1}',
+        name: '${pm1}',
         ${arrow} '@/pages/${pm0}/${pm1}/index.vue'${arrowRight},
-        meta
-:
-    {
+        meta: {
         title: '${tableComment.replaceAll("表", "管理")}',
-            keepAlive
-    :
-        true,
-            permissions
-    :
-        '${pm0}:${pm1}',
-            sort
-    :
-        0
+            keepAlive: true,
+            permissions: '${pm0}:${pm1}',
+            sort: 0
     }
 }
 export default ${pm1};
-

@@ -40,7 +40,7 @@ services:
     links:
       - elasticsearch:es #可以用es这个域名访问elasticsearch服务
     ports:
-      - 50013:4560
-      - 50016:4561
-      - 50014:4562
-      - 50032:4563
+      - 50013:4560 #erro
+      - 50016:4563 #info
+      - 50014:4561
+      - 50032:4562
