@@ -93,12 +93,6 @@ public class FtmFreightTempServiceImpl extends JoinServiceImpl<FtmFreightTempMap
     FtmFreightTemp po = new FtmFreightTemp();
     po.setId(id);
     JoinLambdaWrapper<FtmFreightTemp> wrapper = new JoinLambdaWrapper<>(po);
-    //    wrapper
-    //        .leftJoin(
-    //            FtmFreightTempPrice.class,
-    //            FtmFreightTempPrice::getFtmFreightTempId,
-    //            FtmFreightTemp::getId)
-    //        .end();
     FtmFreightTempQueryVO voBean =
         ftmFreightTempMapper.joinSelectOne(wrapper, FtmFreightTempQueryVO.class);
     JoinLambdaWrapper<FtmFreightTempPrice> priceWrapper = Joins.of(FtmFreightTempPrice.class);

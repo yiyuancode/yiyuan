@@ -166,14 +166,128 @@ public class QueryWrapperUtils {
 //   * @param cIdSFunction page每条数据的id字段在中间表的对应字段
 //   * @param cSFunction 中间表对应关联查询的表的字段
 //   * @param rSFunction 关联表id字段
-//   * @param selectFiledSFunction 需要查询的关联表的字段
 //   */
-//  public static <L, C, R> List<String> linksIdsForQueryFilter(
-//      SFunction<C, Object> cIdSFunction,
-//      SFunction<C, Object> cSFunction,
-//      SFunction<R, Object> rSFunction,
-//      SFunction<R, Object>... selectFiledSFunction)
+//  public static <L, C, R,D> List<String> linksIdsForQueryFilter(
+//      R obj,
+//      SFunction<C, Object> cLidSFunction,
+//      SFunction<C, Object> cRidSFunction,
+//      List<SFunction<D, Object>> eqSFunctions,
+//      List<SFunction<D, Object>> likeSFunctions,
+//      List<List<SFunction<D, Object>>> betweenSFunctions)
 //      throws Exception {
+//    QueryWrapper<?> queryWrapper = new QueryWrapper<>();
+//    //    匹配查询
+//    eqSFunctions.forEach(
+//        sFunction -> {
+//          Object apply = sFunction.apply(obj);
+//          queryWrapper.eq(
+//              apply instanceof String
+//                  ? StringUtilsPlus.isNotEmpty((String) apply)
+//                  : StringUtilsPlus.isNotNUll(apply),
+//              LambdaFunUtils.getFieldName(sFunction),
+//              apply);
+//          if (apply instanceof String
+//              ? StringUtilsPlus.isNotEmpty((String) apply)
+//              : StringUtilsPlus.isNotNUll(apply)) {
+//            // 获取 set 方法的名称
+//            String methodName =
+//                "set" + StringUtilsPlus.upCapitalize(LambdaFunUtils.getFieldName(sFunction));
+//            // 获取 sFunction 的 Class 对象
+//            Class<R> fieldOfClass = LambdaFunUtils.getFieldOfClass(sFunction);
+//            Class<?> aClass = apply.getClass();
+//            // 获取 set 方法对象
+//            try {
+//              Method setMethod = fieldOfClass.getMethod(methodName, aClass);
+//              Object defaultValue = null;
+//              // 反射不能直接传null，要用临时变量分封装
+//              //                  setMethod.invoke(obj, null);
+//              setMethod.invoke(obj, defaultValue);
+//            } catch (Exception e) {
+//              e.printStackTrace();
+//            }
+//            // 调用 set 方法，传递 obj 作为参数
+//            //              setMethod.invoke(sFunction, obj);
+//          }
+//        });
+//    //    模糊查询
+//    likeSFunctions.forEach(
+//        sFunction -> {
+//          Object apply = sFunction.apply(obj);
+//          queryWrapper.like(
+//              apply instanceof String
+//                  ? StringUtilsPlus.isNotEmpty((String) apply)
+//                  : StringUtilsPlus.isNotNUll(apply),
+//              LambdaFunUtils.getFieldName(sFunction),
+//              apply);
+//          if (apply instanceof String
+//              ? StringUtilsPlus.isNotEmpty((String) apply)
+//              : StringUtilsPlus.isNotNUll(apply)) {
+//            // 获取 set 方法的名称
+//            String methodName =
+//                "set" + StringUtilsPlus.upCapitalize(LambdaFunUtils.getFieldName(sFunction));
+//            // 获取 sFunction 的 Class 对象
+//            Class<R> fieldOfClass = LambdaFunUtils.getFieldOfClass(sFunction);
+//            Class<?> aClass = apply.getClass();
+//            // 获取 set 方法对象
+//            try {
+//              Method setMethod = fieldOfClass.getMethod(methodName, aClass);
+//              Object defaultValue = null;
+//              // 反射不能直接传null，要用临时变量分封装
+//              //                  setMethod.invoke(obj, null);
+//              setMethod.invoke(obj, defaultValue);
+//            } catch (Exception e) {
+//              e.printStackTrace();
+//            }
+//            // 调用 set 方法，传递 obj 作为参数
+//            //              setMethod.invoke(sFunction, obj);
+//          }
+//        });
+//    //    区间查询
+//    betweenSFunctions.forEach(
+//        sFunction -> {
+//          SFunction<R, Object> sFunctionStart = sFunction.get(0);
+//          SFunction<R, Object> sFunctionEnd = sFunction.get(1);
+//          Object applyStart = sFunctionStart.apply(obj);
+//          Object applyEnd = sFunctionEnd.apply(obj);
+//          String column = LambdaFunUtils.getFieldName(sFunctionStart).replace("_start", "");
+//          if (applyStart instanceof String
+//              ? StringUtilsPlus.isNotEmpty((String) applyStart)
+//              : StringUtilsPlus.isNotNUll(applyStart) && applyEnd instanceof String
+//                  ? StringUtilsPlus.isNotEmpty((String) applyEnd)
+//                  : StringUtilsPlus.isNotNUll(applyEnd)) {
+//            queryWrapper.between(column, applyStart, applyEnd);
+//
+//            // 获取 set 方法的名称
+//            String methodNameStart =
+//                "set" + StringUtilsPlus.upCapitalize(LambdaFunUtils.getFieldName(sFunctionStart));
+//            String methodNameEnd =
+//                "set" + StringUtilsPlus.upCapitalize(LambdaFunUtils.getFieldName(sFunctionEnd));
+//            // 获取 sFunction 的 Class 对象
+//            Class<R> fieldOfClass = LambdaFunUtils.getFieldOfClass(sFunctionStart);
+//            Class<?> aClass = applyStart.getClass();
+//            // 获取 set 方法对象
+//            try {
+//              Method setMethodStart = fieldOfClass.getMethod(methodNameStart, aClass);
+//              Object defaultValue = null;
+//              // 反射不能直接传null，要用临时变量分封装
+//              //                  setMethod.invoke(obj, null);
+//              setMethodStart.invoke(obj, defaultValue);
+//              Method setMethodEnd = fieldOfClass.getMethod(methodNameEnd, aClass);
+//              setMethodEnd.invoke(obj, defaultValue);
+//            } catch (Exception e) {
+//              e.printStackTrace();
+//            }
+//          }
+//        });
+//
+//    // 先从右边主表筛选然后在匹配中间表 取出符合条件得 左边得ids，在用得出得ids返回给主调用那里做in查询，这样就可以实现从表筛选
+//    Class<R> rClass = LambdaFunUtils.getFieldOfClass(eqSFunctions.get(0));
+//    JoinLambdaWrapper<R> cWrapper = Joins.of(rClass);
+//    Class<C> cClass = LambdaFunUtils.getFieldOfClass(cRidSFunction);
+//    l
+//
+//    cWrapper.changeQueryWrapper(queryWrapper);
+//
 //    Class<L> lClass = LambdaFunUtils.getFieldOfClass(lIdSFunction);
 //    List<String> cIds =
 //        page.getRecords().stream()
