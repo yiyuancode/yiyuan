@@ -1,7 +1,6 @@
 package net.yiyuan.dto;
 
 import lombok.Data;
-import net.yiyuan.enums.PtmProductAuditStatusEnum;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;

@@ -2,82 +2,57 @@ package net.yiyuan.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
-import net.yiyuan.enums.PtmProductCategoryLevelEnum;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 /**
- * 商品分类查询请求响应参数实体
+ * 保障服务查询请求响应参数实体
  *
  * @author 一源团队-花和尚
- * @date 2023-10-10
+ * @date 2023-11-09
  */
-// @JsonInclude(value = JsonInclude.Include.ALWAYS)
 @Data
-public class PtmProductCategoryQueryVO implements Serializable {
+public class PtmProductGuaranteeQueryVO implements Serializable {
 
   /**
-   * @author 一源团队-花和尚
-   * @date 2023-10-10
-   */
-  private String id;
-
-  /**
-   * 父级ID
+   * 保障服务id
    *
    * @author 一源团队-花和尚
-   * @date 2023-10-10
+   * @date 2023-11-09
    */
-  private String pid;
+  private String id;
 
   /**
    * 商户id
    *
    * @author 一源团队-花和尚
-   * @date 2023-10-10
+   * @date 2023-11-09
    */
   private String tenantId;
 
   /**
-   * 名称
+   * 保障服务名称
    *
    * @author 一源团队-花和尚
-   * @date 2023-10-10
+   * @date 2023-11-09
    */
   private String name;
-
-  /**
-   * icon
-   *
-   * @author 一源团队-花和尚
-   * @date 2023-10-10
-   */
-  private String icon;
-
-  /**
-   * 分类级别#1=一级分类|2=二级分类|3=三级分类|4=店铺分类
-   *
-   * @author 一源团队-花和尚
-   * @date 2023-10-10
-   */
-  private PtmProductCategoryLevelEnum level;
 
   /**
    * 排序
    *
    * @author 一源团队-花和尚
-   * @date 2023-10-10
+   * @date 2023-11-09
    */
   private Integer sort;
 
   /**
-   * 显示状态0=不显示|1=显示
+   * 是否显示0=否|1=是
    *
    * @author 一源团队-花和尚
-   * @date 2023-10-10
+   * @date 2023-11-09
    */
   private Boolean isShow;
 
@@ -85,7 +60,7 @@ public class PtmProductCategoryQueryVO implements Serializable {
    * 创建时间
    *
    * @author 一源团队-花和尚
-   * @date 2023-10-10
+   * @date 2023-11-09
    */
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
@@ -95,17 +70,9 @@ public class PtmProductCategoryQueryVO implements Serializable {
    * 修改时间
    *
    * @author 一源团队-花和尚
-   * @date 2023-10-10
+   * @date 2023-11-09
    */
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
   private Date updateTime;
-
-  /**
-   * 子集
-   *
-   * @author 一源团队-花和尚
-   * @date 2023-10-10
-   */
-  private List<PtmProductCategoryQueryVO> children;
 }

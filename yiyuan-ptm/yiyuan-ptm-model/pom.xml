@@ -8,7 +8,7 @@
         <version>${revision}</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-
-    <artifactId>yiyuan-ptm-model</artifactId>
     <version>${revision}</version>
+    <artifactId>yiyuan-ptm-model</artifactId>
+
 </project>
