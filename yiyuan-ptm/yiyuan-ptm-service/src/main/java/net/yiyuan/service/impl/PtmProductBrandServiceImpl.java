@@ -167,7 +167,8 @@ public class PtmProductBrandServiceImpl
         PtmProductCategoryBrandLink::getPtmProductBrandId,
         PtmProductCategoryBrandLink::getPtmProductCategoryId,
         PtmProductCategory::getId,
-        PtmProductCategory::getName);
+        PtmProductCategory::getName,
+        PtmProductCategory::getId);
     return voBean;
   }
 
