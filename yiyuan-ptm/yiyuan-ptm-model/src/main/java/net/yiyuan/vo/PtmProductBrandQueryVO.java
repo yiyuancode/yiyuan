@@ -75,6 +75,14 @@ public class PtmProductBrandQueryVO implements Serializable {
   private List<PtmProductCategory> categoryList;
 
   /**
+   * 分类id(逗号分割)
+   *
+   * @author 一源团队-花和尚
+   * @date 2023-10-10
+   */
+  private String categoryIds;
+
+  /**
    * 创建时间
    *
    * @author 一源团队-花和尚

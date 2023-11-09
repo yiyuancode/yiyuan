@@ -46,7 +46,7 @@ public class PtmProductBrandListDTO implements Serializable {
    * @author 一源团队-花和尚
    * @date 2023-10-10
    */
-  private String categoryId;
+  private String categoryIds;
 
   /**
    * 状态0=不显示|1=显示

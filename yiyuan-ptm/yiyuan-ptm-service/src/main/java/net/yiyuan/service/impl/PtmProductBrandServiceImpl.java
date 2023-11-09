@@ -71,7 +71,7 @@ public class PtmProductBrandServiceImpl
     wrapper.orderByDesc(PtmProductBrand::getSort);
     wrapper.orderByDesc(PtmProductBrand::getCreateTime);
 
-    if (StringUtilsPlus.isNotEmpty(request.getCategoryId())) {
+    if (StringUtilsPlus.isNotEmpty(request.getCategoryIds())) {
       // 构造成list 调用
       ptmProductCategoryBrandJoin =
           new CenterJoinUtils<>(
@@ -79,7 +79,7 @@ public class PtmProductBrandServiceImpl
               PtmProductCategoryBrandLink::getPtmProductCategoryId,
               PtmProductCategoryBrandLink::getPtmProductBrandId,
               PtmProductBrand::getId,
-              Arrays.asList(request.getCategoryId()));
+              Arrays.asList(request.getCategoryIds()));
       List<String> idList =
           ptmProductCategoryBrandJoin.getRightAnyFieldList(PtmProductBrand::getId);
       if (StringUtilsPlus.isEmpty(idList)) {
@@ -87,6 +87,17 @@ public class PtmProductBrandServiceImpl
       } else {
         wrapper.in(StringUtilsPlus.isNotEmpty(idList), PtmProductBrand::getId, idList);
       }
+
+      //      QueryWrapperUtils.linksForDeatil(
+      //              voBean,
+      //              PtmProductBrandQueryVO::setCategoryList,
+      //              PtmProductBrandQueryVO::getId,
+      //              PtmProductCategoryBrandLink::getPtmProductBrandId,
+      //              PtmProductCategoryBrandLink::getPtmProductCategoryId,
+      //              PtmProductCategory::getId,
+      //              PtmProductCategory::getName,
+      //              PtmProductCategory::getId);
+
     }
 
     List<PtmProductBrandQueryVO> voList =
@@ -133,14 +144,15 @@ public class PtmProductBrandServiceImpl
             wrapper,
             PtmProductBrandQueryVO.class);
     // 关联设置数据
-    QueryWrapperUtils.linksForPage(
+    QueryWrapperUtils.linksIdsForPage(
         voPage,
-        PtmProductBrandQueryVO::setCategoryList,
+        PtmProductBrandQueryVO::setCategoryIds,
         PtmProductBrandQueryVO::getId,
         PtmProductCategoryBrandLink::getPtmProductBrandId,
         PtmProductCategoryBrandLink::getPtmProductCategoryId,
         PtmProductCategory::getId,
-        PtmProductCategory::getName);
+        PtmProductCategory::getName,
+        PtmProductCategory::getId);
     return voPage;
   }
 
@@ -160,15 +172,16 @@ public class PtmProductBrandServiceImpl
     PtmProductBrandQueryVO voBean =
         ptmProductBrandMapper.joinSelectOne(wrapper, PtmProductBrandQueryVO.class);
     // 关联查询品牌对应的分类数据
-    QueryWrapperUtils.linksForDeatil(
+    QueryWrapperUtils.linksIdsForDeatil(
         voBean,
-        PtmProductBrandQueryVO::setCategoryList,
+        PtmProductBrandQueryVO::setCategoryIds,
         PtmProductBrandQueryVO::getId,
         PtmProductCategoryBrandLink::getPtmProductBrandId,
         PtmProductCategoryBrandLink::getPtmProductCategoryId,
         PtmProductCategory::getId,
         PtmProductCategory::getName,
         PtmProductCategory::getId);
+
     return voBean;
   }
 

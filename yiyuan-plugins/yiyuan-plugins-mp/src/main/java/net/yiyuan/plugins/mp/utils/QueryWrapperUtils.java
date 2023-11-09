@@ -92,7 +92,12 @@ public class QueryWrapperUtils {
 
     JoinBaseMapper mapper = getMapper(cClass);
     List<Map> maplist = mapper.joinSelectList(cWrapper, Map.class);
-
+    maplist =
+        maplist.stream()
+            .filter(
+                item ->
+                    StringUtilsPlus.isNotNUll(item.get(LambdaFunUtils.getFieldName(rSFunction))))
+            .collect(Collectors.toList());
     Map<String, List<Map>> groupedMap =
         maplist.stream()
             .collect(
@@ -122,6 +127,85 @@ public class QueryWrapperUtils {
     }
   }
 
+  public static <L, C, R> void linksIdsForPage(
+      Page<L> page,
+      BiConsumer<L, String> lSetRlistBiConsumer,
+      SFunction<L, Object> lIdSFunction,
+      SFunction<C, Object> cIdSFunction,
+      SFunction<C, Object> cSFunction,
+      SFunction<R, Object> rSFunction,
+      SFunction<R, Object>... selectFiledSFunction)
+      throws Exception {
+    Class<L> lClass = LambdaFunUtils.getFieldOfClass(lIdSFunction);
+    List<String> cIds =
+        page.getRecords().stream()
+            .map(
+                e -> {
+                  try {
+                    Method getIdMethod = lClass.getMethod("getId");
+                    String invoke = (String) getIdMethod.invoke(e);
+                    return invoke;
+                  } catch (Exception e1) {
+                    e1.printStackTrace();
+                    return null;
+                  }
+                })
+            .collect(Collectors.toList());
+    Class<C> cClass = LambdaFunUtils.getFieldOfClass(cSFunction);
+    JoinLambdaWrapper<C> cWrapper = Joins.of(cClass);
+    cWrapper.in(cIdSFunction, cIds);
+    Class<R> rClass = LambdaFunUtils.getFieldOfClass(rSFunction);
+    cWrapper.leftJoin(rClass, rSFunction, cSFunction).select(selectFiledSFunction).end();
+
+    JoinBaseMapper mapper = getMapper(cClass);
+    List<Map> maplist = mapper.joinSelectList(cWrapper, Map.class);
+
+    maplist =
+        maplist.stream()
+            .filter(
+                item ->
+                    StringUtilsPlus.isNotNUll(item.get(LambdaFunUtils.getFieldName(rSFunction))))
+            .collect(Collectors.toList());
+    Map<String, List<Map>> groupedMap =
+        maplist.stream()
+            .collect(
+                Collectors.groupingBy(
+                    link -> (String) link.get(LambdaFunUtils.getFieldName(cIdSFunction))));
+
+    // 转成json字符串把所有字段下划线转成map
+    String groupedMapStr =
+        StringUtilsPlus.convertToCamelCaseAndUncapitalize(JSONObject.toJSONString(groupedMap));
+    Map<String, List<Map>> finalGroupedMap = JSONObject.parseObject(groupedMapStr, Map.class);
+    if (StringUtilsPlus.isNotEmpty(page.getRecords())) {
+      page.getRecords()
+          .forEach(
+              (item) -> {
+                Method getIdMethod = null;
+                try {
+                  getIdMethod = lClass.getMethod("getId");
+                  String idVal = (String) getIdMethod.invoke(item);
+                  if (StringUtilsPlus.isNotEmpty(idVal)) {
+                    //                    lSetRlistBiConsumer.accept(
+                    //                        item,
+                    // BeanUtilsPlus.copyToList(finalGroupedMap.get(idVal), lClass));
+                    List rClasslist = BeanUtilsPlus.copyToList(finalGroupedMap.get(idVal), rClass);
+                    lSetRlistBiConsumer.accept(
+                        item,
+                        StringUtilsPlus.isNotEmpty(rClasslist)
+                            ? (String)
+                                rClasslist.stream()
+                                    .map(rSFunction)
+                                    .map(String::valueOf)
+                                    .collect(Collectors.joining(","))
+                            : "");
+                  }
+                } catch (Exception e) {
+                  e.printStackTrace();
+                }
+              });
+    }
+  }
+
   public static <L, C, R> void linksForDeatil(
       L obj,
       BiConsumer<L, List<R>> lSetRlistBiConsumer,
@@ -142,6 +226,12 @@ public class QueryWrapperUtils {
     JoinBaseMapper mapper = getMapper(cClass);
     List<Map> maplist = mapper.joinSelectList(cWrapper, Map.class);
 
+    maplist =
+        maplist.stream()
+            .filter(
+                item ->
+                    StringUtilsPlus.isNotNUll(item.get(LambdaFunUtils.getFieldName(rSFunction))))
+            .collect(Collectors.toList());
     Map<String, List<Map>> groupedMap =
         maplist.stream()
             .collect(
@@ -152,8 +242,61 @@ public class QueryWrapperUtils {
     String groupedMapStr =
         StringUtilsPlus.convertToCamelCaseAndUncapitalize(JSONObject.toJSONString(groupedMap));
     Map<String, List<Map>> finalGroupedMap = JSONObject.parseObject(groupedMapStr, Map.class);
+    log.info("finalGroupedMap{}", finalGroupedMap);
     if (StringUtilsPlus.isNotNUll(obj)) {
-      lSetRlistBiConsumer.accept(obj, BeanUtilsPlus.copyToList(finalGroupedMap.get(idVal), lClass));
+      lSetRlistBiConsumer.accept(obj, BeanUtilsPlus.copyToList(finalGroupedMap.get(idVal), rClass));
+    }
+  }
+
+  public static <L, C, R> void linksIdsForDeatil(
+      L obj,
+      BiConsumer<L, String> lSetRlistBiConsumer,
+      SFunction<L, Object> lIdSFunction,
+      SFunction<C, Object> cIdSFunction,
+      SFunction<C, Object> cSFunction,
+      SFunction<R, Object> rSFunction,
+      SFunction<R, Object>... selectFiledSFunction)
+      throws Exception {
+    Class<L> lClass = LambdaFunUtils.getFieldOfClass(lIdSFunction);
+    String idVal = (String) lClass.getMethod("getId").invoke(obj);
+    List<String> cIds = Arrays.asList(idVal);
+    Class<C> cClass = LambdaFunUtils.getFieldOfClass(cSFunction);
+    JoinLambdaWrapper<C> cWrapper = Joins.of(cClass);
+    cWrapper.in(cIdSFunction, cIds);
+    Class<R> rClass = LambdaFunUtils.getFieldOfClass(rSFunction);
+    cWrapper.leftJoin(rClass, rSFunction, cSFunction).select(selectFiledSFunction).end();
+    JoinBaseMapper mapper = getMapper(cClass);
+    List<Map> maplist = mapper.joinSelectList(cWrapper, Map.class);
+
+    maplist =
+        maplist.stream()
+            .filter(
+                item ->
+                    StringUtilsPlus.isNotNUll(item.get(LambdaFunUtils.getFieldName(rSFunction))))
+            .collect(Collectors.toList());
+    log.info("maplist{}", maplist);
+    Map<String, List<Map>> groupedMap =
+        maplist.stream()
+            .collect(
+                Collectors.groupingBy(
+                    link -> (String) link.get(LambdaFunUtils.getFieldName(cIdSFunction))));
+
+    // 转成json字符串把所有字段下划线转成map
+    String groupedMapStr =
+        StringUtilsPlus.convertToCamelCaseAndUncapitalize(JSONObject.toJSONString(groupedMap));
+    Map<String, List<Map>> finalGroupedMap = JSONObject.parseObject(groupedMapStr, Map.class);
+    log.info("finalGroupedMap{}", finalGroupedMap);
+    if (StringUtilsPlus.isNotNUll(obj)) {
+      List rClasslist = BeanUtilsPlus.copyToList(finalGroupedMap.get(idVal), rClass);
+      lSetRlistBiConsumer.accept(
+          obj,
+          StringUtilsPlus.isNotEmpty(rClasslist)
+              ? (String)
+                  BeanUtilsPlus.copyToList(finalGroupedMap.get(idVal), rClass).stream()
+                      .map(rSFunction)
+                      .map(String::valueOf)
+                      .collect(Collectors.joining(","))
+              : "");
     }
   }
 
@@ -167,179 +310,180 @@ public class QueryWrapperUtils {
    * @param cSFunction 中间表对应关联查询的表的字段
    * @param rSFunction 关联表id字段
    */
-//  public static <L, C, R,D> List<String> linksIdsForQueryFilter(
-//      D obj,
-//      SFunction<C, Object> cLidSFunction,
-//      SFunction<C, Object> cRidSFunction,
-//      List<SFunction<D, Object>> eqSFunctions,
-//      List<SFunction<D, Object>> likeSFunctions,
-//      List<List<SFunction<D, Object>>> betweenSFunctions)
-//      throws Exception {
-//    QueryWrapper<?> queryWrapper = new QueryWrapper<>();
-//    //    匹配查询
-//    eqSFunctions.forEach(
-//        sFunction -> {
-//          Object apply = sFunction.apply(obj);
-//          queryWrapper.eq(
-//              apply instanceof String
-//                  ? StringUtilsPlus.isNotEmpty((String) apply)
-//                  : StringUtilsPlus.isNotNUll(apply),
-//              LambdaFunUtils.getFieldName(sFunction),
-//              apply);
-//          if (apply instanceof String
-//              ? StringUtilsPlus.isNotEmpty((String) apply)
-//              : StringUtilsPlus.isNotNUll(apply)) {
-//            // 获取 set 方法的名称
-//            String methodName =
-//                "set" + StringUtilsPlus.upCapitalize(LambdaFunUtils.getFieldName(sFunction));
-//            // 获取 sFunction 的 Class 对象
-//            Class<D> fieldOfClass = LambdaFunUtils.getFieldOfClass(sFunction);
-//            Class<?> aClass = apply.getClass();
-//            // 获取 set 方法对象
-//            try {
-//              Method setMethod = fieldOfClass.getMethod(methodName, aClass);
-//              Object defaultValue = null;
-//              // 反射不能直接传null，要用临时变量分封装
-//              //                  setMethod.invoke(obj, null);
-//              setMethod.invoke(obj, defaultValue);
-//            } catch (Exception e) {
-//              e.printStackTrace();
-//            }
-//            // 调用 set 方法，传递 obj 作为参数
-//            //              setMethod.invoke(sFunction, obj);
-//          }
-//        });
-//    //    模糊查询
-//    likeSFunctions.forEach(
-//        sFunction -> {
-//          Object apply = sFunction.apply(obj);
-//          queryWrapper.like(
-//              apply instanceof String
-//                  ? StringUtilsPlus.isNotEmpty((String) apply)
-//                  : StringUtilsPlus.isNotNUll(apply),
-//              LambdaFunUtils.getFieldName(sFunction),
-//              apply);
-//          if (apply instanceof String
-//              ? StringUtilsPlus.isNotEmpty((String) apply)
-//              : StringUtilsPlus.isNotNUll(apply)) {
-//            // 获取 set 方法的名称
-//            String methodName =
-//                "set" + StringUtilsPlus.upCapitalize(LambdaFunUtils.getFieldName(sFunction));
-//            // 获取 sFunction 的 Class 对象
-//            Class<D> fieldOfClass = LambdaFunUtils.getFieldOfClass(sFunction);
-//            Class<?> aClass = apply.getClass();
-//            // 获取 set 方法对象
-//            try {
-//              Method setMethod = fieldOfClass.getMethod(methodName, aClass);
-//              Object defaultValue = null;
-//              // 反射不能直接传null，要用临时变量分封装
-//              //                  setMethod.invoke(obj, null);
-//              setMethod.invoke(obj, defaultValue);
-//            } catch (Exception e) {
-//              e.printStackTrace();
-//            }
-//            // 调用 set 方法，传递 obj 作为参数
-//            //              setMethod.invoke(sFunction, obj);
-//          }
-//        });
-//    //    区间查询
-//    betweenSFunctions.forEach(
-//        sFunction -> {
-//          SFunction<R, Object> sFunctionStart = sFunction.get(0);
-//          SFunction<R, Object> sFunctionEnd = sFunction.get(1);
-//          Object applyStart = sFunctionStart.apply(obj);
-//          Object applyEnd = sFunctionEnd.apply(obj);
-//          String column = LambdaFunUtils.getFieldName(sFunctionStart).replace("_start", "");
-//          if (applyStart instanceof String
-//              ? StringUtilsPlus.isNotEmpty((String) applyStart)
-//              : StringUtilsPlus.isNotNUll(applyStart) && applyEnd instanceof String
-//                  ? StringUtilsPlus.isNotEmpty((String) applyEnd)
-//                  : StringUtilsPlus.isNotNUll(applyEnd)) {
-//            queryWrapper.between(column, applyStart, applyEnd);
-//
-//            // 获取 set 方法的名称
-//            String methodNameStart =
-//                "set" + StringUtilsPlus.upCapitalize(LambdaFunUtils.getFieldName(sFunctionStart));
-//            String methodNameEnd =
-//                "set" + StringUtilsPlus.upCapitalize(LambdaFunUtils.getFieldName(sFunctionEnd));
-//            // 获取 sFunction 的 Class 对象
-//            Class<R> fieldOfClass = LambdaFunUtils.getFieldOfClass(sFunctionStart);
-//            Class<?> aClass = applyStart.getClass();
-//            // 获取 set 方法对象
-//            try {
-//              Method setMethodStart = fieldOfClass.getMethod(methodNameStart, aClass);
-//              Object defaultValue = null;
-//              // 反射不能直接传null，要用临时变量分封装
-//              //                  setMethod.invoke(obj, null);
-//              setMethodStart.invoke(obj, defaultValue);
-//              Method setMethodEnd = fieldOfClass.getMethod(methodNameEnd, aClass);
-//              setMethodEnd.invoke(obj, defaultValue);
-//            } catch (Exception e) {
-//              e.printStackTrace();
-//            }
-//          }
-//        });
-//
-//    // 先从右边主表筛选然后在匹配中间表 取出符合条件得 左边得ids，在用得出得ids返回给主调用那里做in查询，这样就可以实现从表筛选
-//    Class<R> rClass = LambdaFunUtils.getFieldOfClass(eqSFunctions.get(0));
-//    JoinLambdaWrapper<R> cWrapper = Joins.of(rClass);
-//    Class<C> cClass = LambdaFunUtils.getFieldOfClass(cRidSFunction);
-//    l
-//
-//    cWrapper.changeQueryWrapper(queryWrapper);
-//
-//    Class<L> lClass = LambdaFunUtils.getFieldOfClass(lIdSFunction);
-//    List<String> cIds =
-//        page.getRecords().stream()
-//            .map(
-//                e -> {
-//                  try {
-//                    Method getIdMethod = lClass.getMethod("getId");
-//                    String invoke = (String) getIdMethod.invoke(e);
-//                    return invoke;
-//                  } catch (Exception e1) {
-//                    e1.printStackTrace();
-//                    return null;
-//                  }
-//                })
-//            .collect(Collectors.toList());
-//    Class<C> cClass = LambdaFunUtils.getFieldOfClass(cSFunction);
-//    JoinLambdaWrapper<C> cWrapper = Joins.of(cClass);
-//    cWrapper.in(cIdSFunction, cIds);
-//    Class<R> rClass = LambdaFunUtils.getFieldOfClass(rSFunction);
-//    cWrapper.leftJoin(rClass, rSFunction, cSFunction).select(selectFiledSFunction).end();
-//
-//    JoinBaseMapper mapper = getMapper(cClass);
-//    List<Map> maplist = mapper.joinSelectList(cWrapper, Map.class);
-//
-//    Map<String, List<Map>> groupedMap =
-//        maplist.stream()
-//            .collect(
-//                Collectors.groupingBy(
-//                    link -> (String) link.get(LambdaFunUtils.getFieldName(cIdSFunction))));
-//
-//    // 转成json字符串把所有字段下划线转成map
-//    String groupedMapStr =
-//        StringUtilsPlus.convertToCamelCaseAndUncapitalize(JSONObject.toJSONString(groupedMap));
-//    Map<String, List<Map>> finalGroupedMap = JSONObject.parseObject(groupedMapStr, Map.class);
-//    if (StringUtilsPlus.isNotEmpty(page.getRecords())) {
-//      page.getRecords()
-//          .forEach(
-//              (item) -> {
-//                Method getIdMethod = null;
-//                try {
-//                  getIdMethod = lClass.getMethod("getId");
-//                  String idVal = (String) getIdMethod.invoke(item);
-//                  if (StringUtilsPlus.isNotEmpty(idVal)) {
-//                    lSetRlistBiConsumer.accept(
-//                        item, BeanUtilsPlus.copyToList(finalGroupedMap.get(idVal), lClass));
-//                  }
-//                } catch (Exception e) {
-//                  e.printStackTrace();
-//                }
-//              });
-//    }
-//  }
+  //  public static <L, C, R,D> List<String> linksIdsForQueryFilter(
+  //      D obj,
+  //      SFunction<C, Object> cLidSFunction,
+  //      SFunction<C, Object> cRidSFunction,
+  //      List<SFunction<D, Object>> eqSFunctions,
+  //      List<SFunction<D, Object>> likeSFunctions,
+  //      List<List<SFunction<D, Object>>> betweenSFunctions)
+  //      throws Exception {
+  //    QueryWrapper<?> queryWrapper = new QueryWrapper<>();
+  //    //    匹配查询
+  //    eqSFunctions.forEach(
+  //        sFunction -> {
+  //          Object apply = sFunction.apply(obj);
+  //          queryWrapper.eq(
+  //              apply instanceof String
+  //                  ? StringUtilsPlus.isNotEmpty((String) apply)
+  //                  : StringUtilsPlus.isNotNUll(apply),
+  //              LambdaFunUtils.getFieldName(sFunction),
+  //              apply);
+  //          if (apply instanceof String
+  //              ? StringUtilsPlus.isNotEmpty((String) apply)
+  //              : StringUtilsPlus.isNotNUll(apply)) {
+  //            // 获取 set 方法的名称
+  //            String methodName =
+  //                "set" + StringUtilsPlus.upCapitalize(LambdaFunUtils.getFieldName(sFunction));
+  //            // 获取 sFunction 的 Class 对象
+  //            Class<D> fieldOfClass = LambdaFunUtils.getFieldOfClass(sFunction);
+  //            Class<?> aClass = apply.getClass();
+  //            // 获取 set 方法对象
+  //            try {
+  //              Method setMethod = fieldOfClass.getMethod(methodName, aClass);
+  //              Object defaultValue = null;
+  //              // 反射不能直接传null，要用临时变量分封装
+  //              //                  setMethod.invoke(obj, null);
+  //              setMethod.invoke(obj, defaultValue);
+  //            } catch (Exception e) {
+  //              e.printStackTrace();
+  //            }
+  //            // 调用 set 方法，传递 obj 作为参数
+  //            //              setMethod.invoke(sFunction, obj);
+  //          }
+  //        });
+  //    //    模糊查询
+  //    likeSFunctions.forEach(
+  //        sFunction -> {
+  //          Object apply = sFunction.apply(obj);
+  //          queryWrapper.like(
+  //              apply instanceof String
+  //                  ? StringUtilsPlus.isNotEmpty((String) apply)
+  //                  : StringUtilsPlus.isNotNUll(apply),
+  //              LambdaFunUtils.getFieldName(sFunction),
+  //              apply);
+  //          if (apply instanceof String
+  //              ? StringUtilsPlus.isNotEmpty((String) apply)
+  //              : StringUtilsPlus.isNotNUll(apply)) {
+  //            // 获取 set 方法的名称
+  //            String methodName =
+  //                "set" + StringUtilsPlus.upCapitalize(LambdaFunUtils.getFieldName(sFunction));
+  //            // 获取 sFunction 的 Class 对象
+  //            Class<D> fieldOfClass = LambdaFunUtils.getFieldOfClass(sFunction);
+  //            Class<?> aClass = apply.getClass();
+  //            // 获取 set 方法对象
+  //            try {
+  //              Method setMethod = fieldOfClass.getMethod(methodName, aClass);
+  //              Object defaultValue = null;
+  //              // 反射不能直接传null，要用临时变量分封装
+  //              //                  setMethod.invoke(obj, null);
+  //              setMethod.invoke(obj, defaultValue);
+  //            } catch (Exception e) {
+  //              e.printStackTrace();
+  //            }
+  //            // 调用 set 方法，传递 obj 作为参数
+  //            //              setMethod.invoke(sFunction, obj);
+  //          }
+  //        });
+  //    //    区间查询
+  //    betweenSFunctions.forEach(
+  //        sFunction -> {
+  //          SFunction<R, Object> sFunctionStart = sFunction.get(0);
+  //          SFunction<R, Object> sFunctionEnd = sFunction.get(1);
+  //          Object applyStart = sFunctionStart.apply(obj);
+  //          Object applyEnd = sFunctionEnd.apply(obj);
+  //          String column = LambdaFunUtils.getFieldName(sFunctionStart).replace("_start", "");
+  //          if (applyStart instanceof String
+  //              ? StringUtilsPlus.isNotEmpty((String) applyStart)
+  //              : StringUtilsPlus.isNotNUll(applyStart) && applyEnd instanceof String
+  //                  ? StringUtilsPlus.isNotEmpty((String) applyEnd)
+  //                  : StringUtilsPlus.isNotNUll(applyEnd)) {
+  //            queryWrapper.between(column, applyStart, applyEnd);
+  //
+  //            // 获取 set 方法的名称
+  //            String methodNameStart =
+  //                "set" +
+  // StringUtilsPlus.upCapitalize(LambdaFunUtils.getFieldName(sFunctionStart));
+  //            String methodNameEnd =
+  //                "set" + StringUtilsPlus.upCapitalize(LambdaFunUtils.getFieldName(sFunctionEnd));
+  //            // 获取 sFunction 的 Class 对象
+  //            Class<R> fieldOfClass = LambdaFunUtils.getFieldOfClass(sFunctionStart);
+  //            Class<?> aClass = applyStart.getClass();
+  //            // 获取 set 方法对象
+  //            try {
+  //              Method setMethodStart = fieldOfClass.getMethod(methodNameStart, aClass);
+  //              Object defaultValue = null;
+  //              // 反射不能直接传null，要用临时变量分封装
+  //              //                  setMethod.invoke(obj, null);
+  //              setMethodStart.invoke(obj, defaultValue);
+  //              Method setMethodEnd = fieldOfClass.getMethod(methodNameEnd, aClass);
+  //              setMethodEnd.invoke(obj, defaultValue);
+  //            } catch (Exception e) {
+  //              e.printStackTrace();
+  //            }
+  //          }
+  //        });
+  //
+  //    // 先从右边主表筛选然后在匹配中间表 取出符合条件得 左边得ids，在用得出得ids返回给主调用那里做in查询，这样就可以实现从表筛选
+  //    Class<R> rClass = LambdaFunUtils.getFieldOfClass(eqSFunctions.get(0));
+  //    JoinLambdaWrapper<R> cWrapper = Joins.of(rClass);
+  //    Class<C> cClass = LambdaFunUtils.getFieldOfClass(cRidSFunction);
+  //    l
+  //
+  //    cWrapper.changeQueryWrapper(queryWrapper);
+  //
+  //    Class<L> lClass = LambdaFunUtils.getFieldOfClass(lIdSFunction);
+  //    List<String> cIds =
+  //        page.getRecords().stream()
+  //            .map(
+  //                e -> {
+  //                  try {
+  //                    Method getIdMethod = lClass.getMethod("getId");
+  //                    String invoke = (String) getIdMethod.invoke(e);
+  //                    return invoke;
+  //                  } catch (Exception e1) {
+  //                    e1.printStackTrace();
+  //                    return null;
+  //                  }
+  //                })
+  //            .collect(Collectors.toList());
+  //    Class<C> cClass = LambdaFunUtils.getFieldOfClass(cSFunction);
+  //    JoinLambdaWrapper<C> cWrapper = Joins.of(cClass);
+  //    cWrapper.in(cIdSFunction, cIds);
+  //    Class<R> rClass = LambdaFunUtils.getFieldOfClass(rSFunction);
+  //    cWrapper.leftJoin(rClass, rSFunction, cSFunction).select(selectFiledSFunction).end();
+  //
+  //    JoinBaseMapper mapper = getMapper(cClass);
+  //    List<Map> maplist = mapper.joinSelectList(cWrapper, Map.class);
+  //
+  //    Map<String, List<Map>> groupedMap =
+  //        maplist.stream()
+  //            .collect(
+  //                Collectors.groupingBy(
+  //                    link -> (String) link.get(LambdaFunUtils.getFieldName(cIdSFunction))));
+  //
+  //    // 转成json字符串把所有字段下划线转成map
+  //    String groupedMapStr =
+  //        StringUtilsPlus.convertToCamelCaseAndUncapitalize(JSONObject.toJSONString(groupedMap));
+  //    Map<String, List<Map>> finalGroupedMap = JSONObject.parseObject(groupedMapStr, Map.class);
+  //    if (StringUtilsPlus.isNotEmpty(page.getRecords())) {
+  //      page.getRecords()
+  //          .forEach(
+  //              (item) -> {
+  //                Method getIdMethod = null;
+  //                try {
+  //                  getIdMethod = lClass.getMethod("getId");
+  //                  String idVal = (String) getIdMethod.invoke(item);
+  //                  if (StringUtilsPlus.isNotEmpty(idVal)) {
+  //                    lSetRlistBiConsumer.accept(
+  //                        item, BeanUtilsPlus.copyToList(finalGroupedMap.get(idVal), lClass));
+  //                  }
+  //                } catch (Exception e) {
+  //                  e.printStackTrace();
+  //                }
+  //              });
+  //    }
+  //  }
 
   /**
    * 重置为右模糊查询
