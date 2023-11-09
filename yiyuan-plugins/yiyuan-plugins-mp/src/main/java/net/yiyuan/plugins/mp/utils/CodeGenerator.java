@@ -363,6 +363,7 @@ public class CodeGenerator {
       createJsConfigByVelocity(dtoContext);
       createJsApiByVelocity(dtoContext);
       createJsVueByVelocity(dtoContext);
+      createJsEditVueByVelocity(dtoContext);
 
       createModelByVelocity(dtoContext);
 
@@ -622,6 +623,55 @@ public class CodeGenerator {
     writer.close();
   }
 
+  /**
+   * 根据用户输入的表获取每张表所有字段信息
+   *
+   * @param
+   * @author ${author}
+   * @date 2023-07-11
+   */
+  public static void createJsEditVueByVelocity(VelocityContext context) throws Exception {
+    VelocityEngine velocityEngine = new VelocityEngine();
+    Properties prop = new Properties();
+    prop.put(
+        "file.resource.loader.class",
+        "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
+    velocityEngine.init(prop);
+    log.info(
+        "dtoTableColumns:{}", ((List<Map<String, String>>) context.get("dtoTableColumns")).size());
+    // String srcModelPath = DEFAULT_OUT_PUT_DIR + "/src/js" + "/";
+
+    String srcModelPath =
+        DEFAULT_OUT_PUT_DIR
+            + "/newCode/yiyuan-vue"
+            + DEFAULT_JS_SRC
+            + "/pages/"
+            + context.get("pm0")
+            + "/"
+            + context.get("pm1")
+            //            + "/"
+            //            + DEFAULT_MODULENAME
+            + "/";
+
+    File voFolder = new File(srcModelPath);
+    if (!voFolder.exists()) {
+      // 如果文件夹不存在则创建它
+      voFolder.mkdirs();
+    }
+
+    String filePath = srcModelPath + "edit.vue";
+    File file = new File(filePath);
+    if (!file.exists()) {
+      // 如果文件不存在则创建它
+      file.createNewFile();
+    }
+
+    Template template = velocityEngine.getTemplate("templates2/edit.vue.vm", "UTF-8");
+    FileWriter writer = new FileWriter(filePath);
+    template.merge(context, writer);
+    writer.flush();
+    writer.close();
+  }
   /**
    * 根据用户输入的表获取每张表所有字段信息
    *

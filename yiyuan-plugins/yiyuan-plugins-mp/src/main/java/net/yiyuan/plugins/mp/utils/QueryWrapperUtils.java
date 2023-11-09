@@ -157,18 +157,18 @@ public class QueryWrapperUtils {
     }
   }
 
-//  /**
-//   * 为了page分页结果关联查询--省区发送多条sql的烦恼
-//   *
-//   * @param page 分页page对象
-//   * @param lSetRlistBiConsumer page每条数据的set函数
-//   * @param lIdSFunction page种每条数据id字段
-//   * @param cIdSFunction page每条数据的id字段在中间表的对应字段
-//   * @param cSFunction 中间表对应关联查询的表的字段
-//   * @param rSFunction 关联表id字段
-//   */
+  /**
+   * 为了page分页结果关联查询--省区发送多条sql的烦恼
+   *
+   * @param page 分页page对象
+   * @param lSetRlistBiConsumer page每条数据的set函数
+   * @param lIdSFunction page种每条数据id字段
+   * @param cIdSFunction page每条数据的id字段在中间表的对应字段
+   * @param cSFunction 中间表对应关联查询的表的字段
+   * @param rSFunction 关联表id字段
+   */
 //  public static <L, C, R,D> List<String> linksIdsForQueryFilter(
-//      R obj,
+//      D obj,
 //      SFunction<C, Object> cLidSFunction,
 //      SFunction<C, Object> cRidSFunction,
 //      List<SFunction<D, Object>> eqSFunctions,
@@ -193,7 +193,7 @@ public class QueryWrapperUtils {
 //            String methodName =
 //                "set" + StringUtilsPlus.upCapitalize(LambdaFunUtils.getFieldName(sFunction));
 //            // 获取 sFunction 的 Class 对象
-//            Class<R> fieldOfClass = LambdaFunUtils.getFieldOfClass(sFunction);
+//            Class<D> fieldOfClass = LambdaFunUtils.getFieldOfClass(sFunction);
 //            Class<?> aClass = apply.getClass();
 //            // 获取 set 方法对象
 //            try {
@@ -226,7 +226,7 @@ public class QueryWrapperUtils {
 //            String methodName =
 //                "set" + StringUtilsPlus.upCapitalize(LambdaFunUtils.getFieldName(sFunction));
 //            // 获取 sFunction 的 Class 对象
-//            Class<R> fieldOfClass = LambdaFunUtils.getFieldOfClass(sFunction);
+//            Class<D> fieldOfClass = LambdaFunUtils.getFieldOfClass(sFunction);
 //            Class<?> aClass = apply.getClass();
 //            // 获取 set 方法对象
 //            try {

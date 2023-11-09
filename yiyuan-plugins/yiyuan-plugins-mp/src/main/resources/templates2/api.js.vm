@@ -1,6 +1,21 @@
 import {request} from '@/utils/request';
 
 /**
+ * 获取所有的${tableComment.replaceAll("表", "")}信息(全部)
+ *
+ * @param {*} data ${tableComment.replaceAll("表", "")}信息
+ * @return
+ * @author  ${author}
+ * @date ${date}
+ */
+export function get${pm1_2}List(data) {
+    return request({
+        url: "/${pm0}/${pm1}/list",
+        params: data
+    });
+
+}
+/**
  * 获取所有的${tableComment.replaceAll("表", "")}信息(分页)
  *
  * @param {*} data ${tableComment.replaceAll("表", "")}信息

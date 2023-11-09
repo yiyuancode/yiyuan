@@ -1,40 +1,184 @@
 <template>
-    <ManagePage
-            :columns="columns"
-            :data="data"
-            :pagination="pagination"
-            :renderObj="renderObj"
-            @onSave="saveHandle"
-            @onSubmit="submitHandle"
-            @onDelete="deleteHandle"
-            @onSearch="searchHandle"
-            @onReset="resetHandle"
-            @onChange="tableChangeHandle"
-    >
+    <div>
+        <y-search
+                :columns="table.columns"
+                :loading="table.loading"
+                :scopedSlots="[#foreach($columnsItem in ${dtoTableColumns})#if(${columnsItem.columnName.equals(
+                    "tenantId")})'${columnsItem.columnName}'#end#end]"
+                @search="search"
+        >
+            #foreach($columnsItem in ${dtoTableColumns})
+                #if(${columnsItem.columnName.equals("tenantId")})
+                    <a-form-model-item slot="${columnsItem.columnName}" slot-scope="{ form }" label="商户"
+                                       prop="${columnsItem.columnName}">
+                        <y-shop-select v-model="form.${columnsItem.columnName}" :key="form.${columnsItem.columnName}"/>
+                    </a-form-model-item>
+                #end
+            #end
+        </y-search>
+        <y-table
+                :columns="table.columns"
+                :loading="table.loading"
+                :pagination="table.pagination"
+                :records="table.records"
+                :row-selection="table.rowSelection"
+                @change="tableChange"
+                rowKey="id"
+        >
+            <div class="y-flex" slot="operations">
+                <a-button type="primary" icon="plus" @click="onAdd"> 新建</a-button>
+                <a-divider type="vertical"/>
+                <a-popconfirm
+                        title="是否要批量删除这些信息?"
+                        ok-text="确认"
+                        cancel-text="取消"
+                        @confirm="onBatchDelete"
+                >
+                    <a-button icon="delete" :disabled="uBatchDisabled" type="danger">
+                        批量删除
+                    </a-button>
+                </a-popconfirm>
+                <a-divider type="vertical"/>
+            </div>
 
-    </ManagePage>
+            #foreach($columnsItem in ${dtoTableColumns})
+                #if(${columnsItem.columnName.equals("tenantId")})
+                    <div class="y-flex" slot="tenantId" slot-scope="{ text, record }">
+                        <y-shop-select isSpan v-model="record.tenantId"/>
+                    </div>
+                #end
+
+                #if(${columnsItem.propertyType.contains("Enum")}||${columnsItem.propertyType.contains("Boolean")})
+                    <div class="y-flex" slot="${columnsItem.columnName}" slot-scope="{ text, record }">
+                        {{enumsMap['${columnsItem.columnName}'+text]}}
+                    </div>
+                #end
+
+            #end
+
+            <div class="y-flex" slot="action" slot-scope="{ text, record }">
+                <a-button icon="edit" @click="onEdit(record)"></a-button>
+                <a-divider type="vertical"/>
+                <a-popconfirm
+                        :title="'确定删除此条数据吗?'"
+                        ok-text="确定"
+                        cancel-text="取消"
+                        @confirm="() => onDelete(record)"
+                >
+                    <a-button icon="delete" type="danger"></a-button>
+                </a-popconfirm>
+            </div>
+        </y-table>
+
+        <edit :columns="table.columns" :editId="editId" :key="editId" :editConfigProps="editConfigProps"
+              @ok="getData">
+        </edit>
+    </div>
 </template>
-
 <script>
-    import ManagePage from '@/components/manage/ManagePage.vue';
-    import manage from '@/mixins/manage';
-    import {columns, moduleConfig, permissionObj} from './pageConfig';
+    import {columns, enumsMap} from './pageConfig.js';
+    import edit from './edit.vue';
+    import {
+        ${delete}${pm1_2} as deletePost,
+        get${pm1_2}PageList as pageGet
+    } from '@/api/ftm/freightTemp.js';
 
     export default {
-        name: "${pm1}",
-        components: {
-            ManagePage
-        },
-        mixins: [manage({permissionObj})],
+        components: {edit},
         data() {
             return {
-                columns,
-                ...moduleConfig
+                enumsMap,
+                table: {
+                    columns,
+                    records: [],
+                    loading: false,
+                    pagination: {
+                        pageNum: 1,
+                        pageSize: 10,
+                        total: 0,
+                        pageSizeOptions: ['10', '20', '30', '40'],
+                        showSizeChanger: true,
+                        showTotal: (total) => `共 ${total} 条` // 显示总条数和当前数据范围
+                    },
+                    rowSelection: {
+                        selectedRowKeys: [],
+                        onChange: this.tableSelectedRowKeys
+                    }
+                },
+                editConfigProps: {
+                    visible: false,
+                    title: '${tableComment.replaceAll("表", "管理")}',
+                    columns
+                },
+                editId: null
             };
         },
+        computed: {
+            uBatchDisabled() {
+                return this.table.rowSelection.selectedRowKeys.length == 0;
+            }
+        },
+        created() {
+            this.getData();
+        },
+        methods: {
+            search(form) {
+                this.searchForm = form;
+                this.getData();
+            },
+            tableSelectedRowKeys(selectedRowKeys) {
+                this.table.rowSelection.selectedRowKeys = selectedRowKeys;
+            },
+            tableChange(pagination) {
+                this.table.pagination = pagination;
+                this.getData();
+            },
+            async getData() {
+                this.table.loading = true;
+                let {pageNum, pageSize} = this.table.pagination;
+                let {records, total, current} = await pageGet({
+                    pageNum: pageNum,
+                    pageSize: pageSize,
+                    ...this.searchForm
+                });
+                this.table.records = records;
+                this.table.pagination.total = total;
+                this.table.pagination.current = current;
+                this.table.loading = false;
+            },
+            async onRowChange(record) {
+                await this.getData();
+            },
+            onAdd() {
+                this.editId = null;
+                this.editConfigProps.visible = true;
+            },
+            async onDelete(record) {
+                let ids = record.id;
+                await deletePost(ids)
+                await this.beforeDelete(ids);
+                await this.getData();
+            },
+            async onBatchDelete() {
+                let ids = this.table.rowSelection.selectedRowKeys.join(",");
+                this.table.rowSelection.selectedRowKeys = []
+                await deletePost(ids)
+                await this.beforeDelete(ids);
+                await this.getData();
+            },
+            async beforeDelete(ids) {
+                this.table.records = this.table.records.filter((item) => {
+                    return ids.indexOf(item.id) == -1
+                })
+                if (this.table.records.length == 0 && this.table.pagination.pageNum > 1) {
+                    this.table.pagination.pageNum = this.table.pagination.pageNum - 1;
+                }
+            },
 
-        methods: {}
+            onEdit(record) {
+                this.editId = record.id;
+                this.editConfigProps.visible = true;
+            }
+        }
     };
 </script>
-
-<style lang="less" scoped></style>
