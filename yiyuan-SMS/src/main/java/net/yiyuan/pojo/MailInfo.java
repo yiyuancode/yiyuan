@@ -2,6 +2,7 @@ package net.yiyuan.pojo;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.experimental.Tolerate;
 
 @Data
 @Builder
@@ -14,4 +15,7 @@ public class MailInfo {
   private String email;
   /** 过期时间 */
   private Long time;
+
+  @Tolerate
+  public MailInfo() {}
 }

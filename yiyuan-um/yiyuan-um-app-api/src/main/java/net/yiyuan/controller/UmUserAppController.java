@@ -5,6 +5,7 @@ import cn.dev33.satoken.annotation.SaIgnore;
 import lombok.extern.slf4j.Slf4j;
 import net.yiyuan.common.model.vo.CommonResult;
 import net.yiyuan.dto.UmUserTokenDTO;
+import net.yiyuan.pojo.MailInfo;
 import net.yiyuan.service.UmUserAppService;
 import net.yiyuan.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,8 +53,8 @@ public class UmUserAppController {
   @SaIgnore
   @PostMapping(value = "/login/umUser/sendVerifyCode")
   @ResponseBody
-  public CommonResult<Boolean> sendVerifyCode(String email) throws Exception {
-    return CommonResult.success(umUserAppService.sendVerifyCode(email), "获取验证码接口");
+  public CommonResult<Boolean> sendVerifyCode(@RequestBody MailInfo info) throws Exception {
+    return CommonResult.success(umUserAppService.sendVerifyCode(info), "获取验证码接口");
   }
 
   /**

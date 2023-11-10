@@ -12,6 +12,7 @@ import net.yiyuan.enums.UmUserSexEnum;
 import net.yiyuan.enums.UmUserStatusEnum;
 import net.yiyuan.mapper.*;
 import net.yiyuan.model.*;
+import net.yiyuan.pojo.MailInfo;
 import net.yiyuan.redis.SmsRedisService;
 import net.yiyuan.service.UmUserAppService;
 import net.yiyuan.vo.*;
@@ -277,8 +278,8 @@ public class UmUserAppServiceImpl extends JoinServiceImpl<UmUserMapper, UmUser>
   }
 
   @Override
-  public boolean sendVerifyCode(String email) throws Exception {
-    emailSmsService.sendVerifyCode(email);
+  public boolean sendVerifyCode(MailInfo info) throws Exception {
+    emailSmsService.sendVerifyCode(info);
     return true;
   }
 

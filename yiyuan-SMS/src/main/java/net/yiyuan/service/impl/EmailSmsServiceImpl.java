@@ -118,7 +118,7 @@ public class EmailSmsServiceImpl implements SmsAndEmailService {
    * @param info 邮箱验证码ID
    */
   public String sendVerifyCode(MailInfo info) throws Exception {
-    String code = this.getMailSendCode(info.getNumber(), info.getHasAlphabet());
+    String code = this.getMailSendCode(6, true);
     this.sendMail(new SendMail(code, info.getEmail()));
     String mailId = UUID.randomUUID().toString();
     // 验证码存入缓存
