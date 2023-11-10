@@ -3,6 +3,7 @@ package net.yiyuan.service;
 import icu.mhb.mybatisplus.plugln.base.service.JoinIService;
 import net.yiyuan.dto.UmUserTokenDTO;
 import net.yiyuan.model.UmUser;
+import net.yiyuan.pojo.MailInfo;
 import net.yiyuan.vo.*;
 
 import java.util.List;
@@ -25,4 +26,6 @@ public interface UmUserAppService extends JoinIService<UmUser> {
   Map<String, List<ProjectCollectReVO>> finProjectCollectListVO() throws Exception;
 
   Map<String, List<ProjectCollectReShopVO>> findProjectCollectListShopVO() throws Exception;
+
+  boolean sendVerifyCode(MailInfo info) throws Exception;
 }

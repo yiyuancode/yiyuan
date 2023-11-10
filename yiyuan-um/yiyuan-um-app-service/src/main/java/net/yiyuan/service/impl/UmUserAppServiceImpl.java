@@ -12,6 +12,7 @@ import net.yiyuan.enums.UmUserSexEnum;
 import net.yiyuan.enums.UmUserStatusEnum;
 import net.yiyuan.mapper.*;
 import net.yiyuan.model.*;
+import net.yiyuan.pojo.MailInfo;
 import net.yiyuan.redis.SmsRedisService;
 import net.yiyuan.service.UmUserAppService;
 import net.yiyuan.vo.*;
@@ -39,6 +40,7 @@ public class UmUserAppServiceImpl extends JoinServiceImpl<UmUserMapper, UmUser>
 
   @Resource private PtmProductMapper ptmProductMapper;
   @Resource private UmProjectCollectMapper umProjectCollectMapper;
+  @Resource private EmailSmsServiceImpl emailSmsService;
 
   /**
    * 用户登录
@@ -273,6 +275,12 @@ public class UmUserAppServiceImpl extends JoinServiceImpl<UmUserMapper, UmUser>
     }
 
     return map;
+  }
+
+  @Override
+  public boolean sendVerifyCode(MailInfo info) throws Exception {
+    emailSmsService.sendVerifyCode(info);
+    return true;
   }
 
   /**
