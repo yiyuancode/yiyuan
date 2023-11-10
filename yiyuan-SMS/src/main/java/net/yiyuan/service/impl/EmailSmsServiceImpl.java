@@ -133,6 +133,27 @@ public class EmailSmsServiceImpl implements SmsAndEmailService {
     return code;
   }
 
+  /**
+   * 发送邮箱验证码
+   *
+   * @param email 邮箱验证码ID
+   */
+  public String sendVerifyCode(String email) throws Exception {
+    String code = this.getMailSendCode(6, true);
+    this.sendMail(new SendMail(code, email));
+    String mailId = UUID.randomUUID().toString();
+    // 验证码存入缓存
+    // 用redis处理缓存
+    // 生成一个随机数。
+    smsRedisService.del(email);
+    smsRedisService.set(
+        SmsRedisService.REDIS_KEY_EMAIL_PERMISSION,
+        email,
+        code,
+        SmsRedisService.REDIS_EXPIRE_ADMIN_USER_PERMISSION);
+    return code;
+  }
+
   public String getMailSendCode(int number, boolean hasAlphabet) {
     int i = 1234567890;
     String numbers = String.valueOf(i);

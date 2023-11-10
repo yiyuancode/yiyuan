@@ -27,5 +27,5 @@ public interface UmUserAppService extends JoinIService<UmUser> {
 
   Map<String, List<ProjectCollectReShopVO>> findProjectCollectListShopVO() throws Exception;
 
-  boolean sendVerifyCode(MailInfo info) throws Exception;
+  boolean sendVerifyCode(String email) throws Exception;
 }
