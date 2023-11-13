@@ -47,7 +47,16 @@ public enum PtmProductCategoryLevelEnum implements IEnum<Integer> {
    * @date 2023-10-09
    * @see PtmProductCategoryLevelEnum
    */
-  FOUR_LEVEL_CLASSIFICATION(4, "店铺分类");
+  FOUR_LEVEL_CLASSIFICATION(4, "店铺分类"),
+
+  /**
+   * 分类级别#1=一级分类|2=二级分类|3=三级分类|4=店铺分类
+   *
+   * @author 一源团队-花和尚
+   * @date 2023-10-09
+   * @see PtmProductCategoryLevelEnum
+   */
+  FIVE_LEVEL_CLASSIFICATION(5, "店铺分类");
 
   @JsonValue @EnumValue private final int value;
   private final String desc;
