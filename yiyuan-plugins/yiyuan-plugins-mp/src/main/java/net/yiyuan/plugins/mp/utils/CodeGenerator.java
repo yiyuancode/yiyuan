@@ -40,10 +40,10 @@ public class CodeGenerator {
   public static String MYSQL_USERNAME = "root";
   public static String MYSQL_PASSWORD = "123456";
 
-  public static String SSH_URL = "43.154.183.115";
-  public static int SSH_PORT = 60035;
+  public static String SSH_URL = "47.108.232.31";
+  public static int SSH_PORT = 22;
   public static String SSH_USERNAME = "root";
-  public static String SSH_PASSWORD = "ABC123#123CBd";
+  public static String SSH_PASSWORD = "huang123?";
   public static String SSH_COMMAND_FY = "fy ";
 
   /** 读取控制台内容 */
