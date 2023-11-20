@@ -1,5 +1,6 @@
 package net.yiyuan.controller;
 
+import cn.dev33.satoken.annotation.SaIgnore;
 import lombok.extern.slf4j.Slf4j;
 import net.yiyuan.common.model.vo.CommonResult;
 import net.yiyuan.service.SysAreaAppService;
@@ -34,6 +35,7 @@ public class SysAreaAppController {
    */
   @GetMapping(value = "/sys/area/Query/{pid}")
   @ResponseBody
+  @SaIgnore
   public CommonResult<List<SysAreaQueryVO>> getUmUserInfo(@PathVariable("pid")  String pid) throws Exception {
     return CommonResult.success(sysAreaAppService.getAreaTree(pid), "获取用户信息成功");
   }
