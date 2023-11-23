@@ -1,0 +1,137 @@
+    1  cd /install/
+    2  chmod 777 *.sh
+    3  sh install_docker-ali-new.sh 
+    4  docker ps -a
+    5  docker pull centos:7
+    6  cd /install/ng
+    7  chmod 777 *.sh
+    8  ls -ap
+    9  docker build -t ngrok-docker .
+   10  docker run -itd --name ngrok-docker -p 80:80 -p 443:443 -p 4443:4443 -v $PWD/ssl:/ssl --env-file=.env ngrok-docker
+   11  docker logs -f ngrok-docker
+   12  docker cp ngrok-docker:/ngrok/bin/windows_amd64/ngrok.exe .
+   13  docker stop ngrok-docker
+   14  docker rm ngrok-docker
+   15  docker ps -a
+   16  docker build -t ngrok-docker-ng .
+   17  docker image
+   18  docker run -itd --name ngrok-docker-ng -p 80:80 -p 443:443 -p 4443:4443 -v $PWD/ssl:/ssl --env-file=.env ngrok-docker-ng
+   19  docker logs -f ngrok-docker-ng
+   20  docker cp ngrok-docker-ng:/ngrok/bin/windows_amd64/ngrok.exe .
+   21  docker stop ngrok-docker-ng
+   22  docker rm ngrok-docker-ng
+   23  docker build -t ngrok-docker-nk .
+   24  docker run -itd --name ngrok-docker-nk -p 80:80 -p 443:443 -p 4443:4443 -v $PWD/ssl:/ssl --env-file=.env ngrok-docker-nk
+   25  docker logs -f ngrok-docker-nk
+   26  cd ssl/
+   27  export NGROK_DOMAIN="nk.yicode.net"
+   28  openssl genrsa -out rootCA.key 2048
+   29  openssl req -x509 -new -nodes -key rootCA.key -subj "/CN=$NGROK_DOMAIN" -days 5000 -out rootCA.pem
+   30  openssl genrsa -out server.key 2048
+   31  openssl req -new -key server.key -subj "/CN=$NGROK_DOMAIN" -out server.csr
+   32  openssl x509 -req -in server.csr -CA rootCA.pem -CAkey rootCA.key -CAcreateserial -out server.crt -days 5000
+   33  docker stop ngrok-docker-nk
+   34  docker rm ngrok-docker-nk
+   35  docker rmi ngrok-docker-nk
+   36  docker images
+   37  cd ..
+   38  docker build -t ngrok-docker-nk .
+   39  cd ssl/
+   40  export NGROK_DOMAIN="*.nk.yicode.net"
+   41  openssl genrsa -out rootCA.key 2048
+   42  openssl req -x509 -new -nodes -key rootCA.key -subj "/CN=$NGROK_DOMAIN" -days 5000 -out rootCA.pem
+   43  openssl genrsa -out server.key 2048
+   44  openssl req -new -key server.key -subj "/CN=$NGROK_DOMAIN" -out server.csr
+   45  openssl x509 -req -in server.csr -CA rootCA.pem -CAkey rootCA.key -CAcreateserial -out server.crt -days 5000
+   46  cd ../
+   47  docker build -t ngrok-docker-nk .
+   48  history 
+   49  docker ps -a
+   50  cd /install/ng/
+   51  docker build -t ngrok-docker-nk .
+   52  docker ps -a
+   53  docker images
+   54  docker build -t ngrok-docker-nk .
+   55  docker run -itd --name ngrok-docker-nk -p 80:80 -p 443:443 -p 4443:4443 -v $PWD/ssl:/ssl --env-file=.env ngrok-docker-nk
+   56  docker ps -a
+   57  docker cp ngrok-docker-nk:/ngrok/bin/windows_amd64/ngrok.exe .
+   58  docker ps -a
+   59  docker logs -f ngrok-docker-nk
+   60  docker stop ngrok-docker-nk
+   61  docker rm ngrok-docker-nk
+   62  docker rmi ngrok-docker-nk
+   63  docker images
+   64  docker rmi ngrok-docker-ng
+   65  docker rmi ngrok-docker
+   66  docker images
+   67  docker build -t ngrok-docker-cs .
+   68  docker run -itd --name ngrok-docker-cs -p 80:80 -p 443:443 -p 4443:4443 -v $PWD/ssl:/ssl --env-file=.env ngrok-docker-cs
+   69  docker cp ngrok-docker-cs:/ngrok/bin/windows_amd64/ngrok.exe .
+   70  docker stop ngrok-docker-cs
+   71  docker restart ngrok-docker-cs
+   72  docker cp ngrok-docker:/ngrok/bin/ngrok .
+   73  docker cp ngrok-docker-cs:/ngrok/bin/ngrok .
+   74  docker stop ngrok-docker-cs
+   75  docker rm ngrok-docker-cs
+   76  docker run -itd --name ngrok-docker-cs -p 80:80 -p 443:443 -p 4443:4443 -v $PWD/ssl:/ssl --env-file=.env ngrok-docker-cs
+   77  docker ps -a
+   78  docker cp ngrok-docker-cs:/ngrok/bin/ngrok .
+   79  docker build -t ngrok-docker-ssh .
+   80  docker stop ngrok-docker-cs
+   81  docker rm ngrok-docker-cs
+   82  docker run -itd --name ngrok-docker-ssh -p 80:80 -p 443:443 -p 4443:4443 -v $PWD/ssl:/ssl --env-file=.env ngrok-docker-ssh
+   83  docker ps -a
+   84  docker cp ngrok-docker-ssh:/ngrok/bin/ngrok .
+   85  docker stop ngrok-docker-ssh
+   86  docker rm ngrok-docker-ssh
+   87  docker run -itd --name ngrok-docker-ssh -p 80:80 -p 443:443 -p 4443:4443 -p 1122:1122 -p 1121:1121  -v $PWD/ssl:/ssl --env-file=.env ngrok-docker-ssh
+   88  docker ps -a
+   89  docker images
+   90  history 
+   91  cd /install/
+   92  ls -ap
+   93  cd ng/
+   94  ls -ap
+   95  docker cp ngrok-docker-ssh:/ngrok/bin/windows_amd64/ngrok.exe .
+   96  docker cp ngrok-docker:/ngrok/bin/ngrok .
+   97  docker cp ngrok-docker-ssh:/ngrok/bin/ngrok .
+   98  docker ps -a
+   99  docker stop ngrok-docker-ssh
+  100  docker rm ngrok-docker-ssh
+  101  docker run -itd --name ngrok-docker-ssh -p 80:80 -p 443:443 -p 4443:4443 -p 1100-1199:1100-1199/tcp  -v $PWD/ssl:/ssl --env-file=.env ngrok-docker-ssh
+  102  cd /install/ng/
+  103  docker run -itd --name ngrok-docker-ssh -p 80:80 -p 443:443 -p 4443:4443 -p 1100-1199:1100-1199/tcp  -v $PWD/ssl:/ssl --env-file=.env ngrok-docker-ssh
+  104  docker ps -a
+  105  ls
+  106  docker ps
+  107  docker ps -a
+  108  1panel
+  109  cd /opt
+  110  ls
+  111  1pctl
+  112  curl -sSL https://resource.fit2cloud.com/1panel/package/quick_start.sh -o quick_start.sh && sh quick_start.sh
+  113  set +o history;
+  114  docker ps -a
+  115  docker restart ngrok-docker-ssh
+  116  history 
+  117  docker ps -a
+  118  docker stop ngrok-docker-ssh
+  119  docker rm ngrok-docker-ssh
+  120  docker run -itd --name ngrok-docker-ssh -p 80:80 -p 443:443 -p 4443:4443    -p 1100-1199:1100-1199/tcp  -v $PWD/ssl:/ssl --env-file=.env ngrok-docker-ssh
+  121  cd /install/ng/
+  122  docker run -itd --name ngrok-docker-ssh -p 80:80 -p 443:443 -p 4443:4443    -p 1100-1199:1100-1199/tcp  -v $PWD/ssl:/ssl --env-file=.env ngrok-docker-ssh
+  123  docker ps -a
+  124  docker ps
+  125  set +o history;
+  126  docker docker update --restart=always ngrok-docker-ssh
+  127  docker update --restart=always ngrok-docker-ssh
+  128  docker ps -a
+  129  docker -v
+  130  docker-compose -v
+  131  top
+  132  ps -ef |grep java
+  133  top
+  134  set +o history;
+  135  ps -ef | grep ngrok
+  136  cd /install/ng/
+  137  history >> history-zzg.txt

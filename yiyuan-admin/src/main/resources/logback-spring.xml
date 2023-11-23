@@ -34,7 +34,7 @@
 
     <!-- 为logstash输出的JSON格式的Appender -->
     <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
-        <destination>47.108.161.17:50013</destination>
+        <destination>ssh.yicode.net:1121</destination>
         <keepAliveDuration>5 minutes</keepAliveDuration>
         <!-- 日志输出编码 -->
         <encoder charset="UTF-8" class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">

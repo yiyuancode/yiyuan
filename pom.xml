@@ -2,48 +2,7 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <!--1：使用maven3.5以后提供的内置revision,changelist占位统一管理多模块的版本号,父子工程全局统一使用-->
-    <!--2：顶级父工程增加springboot的顶级工程-->
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <!--顶层父version不能使用changelist占位符，其他子模块可以使用，凄然模块可以用changelist代替-->
-        <version>2.7.5</version>
-    </parent>
 
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>net.yiyuan</groupId>
-    <artifactId>yiyuan</artifactId>
-    <version>${revision}</version>
-    <!--3：顶级父工程增加packaging并设置为pom，不能jar或者war-->
-    <packaging>pom</packaging>
-    <modules>
-
-        <module>yiyuan-common</module>
-        <module>yiyuan-plugins</module>
-        <!--        <module>yiyuan-core</module>-->
-        <module>yiyuan-admin</module>
-        <module>yiyuan-app</module>
-        <!--        <module>yiyuan-tenant</module>-->
-
-        <!--        <module>yiyuan-service</module>-->
-        <!--        <module>yiyuan-model</module>-->
-        <!--        <module>yiyuan-mapper</module>-->
-        <!--        <module>yiyuan-controller</module>-->
-
-        <module>yiyuan-job</module>
-        <module>yiyuan-tenant</module>
-        <module>yiyuan-file</module>
-        <module>yiyuan-sys</module>
-        <module>yiyuan-SMS</module>
-        <module>yiyuan-spm</module>
-        <module>yiyuan-um</module>
-        <module>yiyuan-ptm</module>
-        <module>yiyuan-mam</module>
-        <module>yiyuan-ftm</module>
-        <!--        <module>yiyuan-file</module>-->
-
-    </modules>
     <!--5:新增项目所有插件依赖版本号-->
     <properties>
         <!--使用revision作为自己项目的版本号占位符-->
@@ -97,6 +56,51 @@
         <lombok.version>1.18.24</lombok.version>
         <hutool.version>5.8.16</hutool.version>
     </properties>
+
+
+    <!--1：使用maven3.5以后提供的内置revision,changelist占位统一管理多模块的版本号,父子工程全局统一使用-->
+    <!--2：顶级父工程增加springboot的顶级工程-->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <!--顶层父version不能使用changelist占位符，其他子模块可以使用，凄然模块可以用changelist代替-->
+        <version>2.7.5</version>
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>net.yiyuan</groupId>
+    <artifactId>yiyuan</artifactId>
+    <version>${revision}</version>
+    <!--3：顶级父工程增加packaging并设置为pom，不能jar或者war-->
+    <packaging>pom</packaging>
+    <modules>
+
+        <module>yiyuan-common</module>
+        <module>yiyuan-plugins</module>
+        <!--        <module>yiyuan-core</module>-->
+        <module>yiyuan-admin</module>
+        <module>yiyuan-app</module>
+        <!--        <module>yiyuan-tenant</module>-->
+
+        <!--        <module>yiyuan-service</module>-->
+        <!--        <module>yiyuan-model</module>-->
+        <!--        <module>yiyuan-mapper</module>-->
+        <!--        <module>yiyuan-controller</module>-->
+
+        <module>yiyuan-job</module>
+        <module>yiyuan-tenant</module>
+        <module>yiyuan-file</module>
+        <module>yiyuan-sys</module>
+        <module>yiyuan-SMS</module>
+        <module>yiyuan-spm</module>
+        <module>yiyuan-um</module>
+        <module>yiyuan-ptm</module>
+        <module>yiyuan-mam</module>
+        <module>yiyuan-ftm</module>
+        <!--        <module>yiyuan-file</module>-->
+
+    </modules>
+
 
     <!--6：新增dependencyManagement只是生命这些项目所有依赖声明，方便阅读，实际使用需要再子模块中再次声明出来-->
     <dependencyManagement>
