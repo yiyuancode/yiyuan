@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 
 @Slf4j
 public class CenterJoinUtils<L, C, R, LV> {
+  public static ConfigurableApplicationContext context;
   private List<LV> voList;
   private SFunction<L, Object> leftPrimaryKeyField;
   private SFunction<C, Object> centerOfLeftForeignKeyField;
@@ -25,22 +26,13 @@ public class CenterJoinUtils<L, C, R, LV> {
   private SFunction<R, Object> rightPrimaryKeyField;
   private SFunction<LV, Object> lvIdField;
   private BiConsumer<LV, List<R>> leftVoOfRightSetField;
-
   private Class<L> lClass;
   private Class<C> cClass;
   private Class<R> rClass;
   private Class<LV> lvClass;
   private List<String> poIdList;
-
   private List<Map> selectMapList;
   private Map<Object, List<Map>> groupedMap;
-
-  public static ConfigurableApplicationContext context;
-
-  public JoinBaseMapper getMapper(Class<?> cl) throws Exception {
-    return (JoinBaseMapper)
-        context.getBean(Class.forName("net.yiyuan.mapper." + cl.getSimpleName() + "Mapper"));
-  }
 
   public CenterJoinUtils() {}
 
@@ -105,6 +97,11 @@ public class CenterJoinUtils<L, C, R, LV> {
    */
   public static <L, C, R, LV> CenterJoinUtils<L, C, R, LV> of() {
     return new CenterJoinUtils<>();
+  }
+
+  public JoinBaseMapper getMapper(Class<?> cl) throws Exception {
+    return (JoinBaseMapper)
+        context.getBean(Class.forName("net.yiyuan.mapper." + cl.getSimpleName() + "Mapper"));
   }
 
   /**
@@ -173,6 +170,7 @@ public class CenterJoinUtils<L, C, R, LV> {
   public CenterJoinUtils<L, C, R, LV> select() {
     try {
       JoinLambdaWrapper<C> cWrapper = Joins.of(this.cClass);
+      //      cWrapper.notDefaultSelectAll();
       if (StringUtilsPlus.isNotEmpty(this.poIdList)) {
         cWrapper.in(this.centerOfLeftForeignKeyField, this.poIdList);
       }
@@ -183,6 +181,37 @@ public class CenterJoinUtils<L, C, R, LV> {
       //          .end();
       cWrapper
           .innerJoin(this.rClass, this.rightPrimaryKeyField, this.centerOfRightForeignKeyField)
+          .selectAll()
+          .end();
+      JoinBaseMapper mapper = getMapper(this.cClass);
+      this.selectMapList = mapper.joinSelectList(cWrapper, Map.class);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return this;
+  }
+
+  /**
+   * 链式调用-4-连表查询结果缓存
+   *
+   * @author 一源-花和尚
+   * @date 2023-09-18
+   */
+  public CenterJoinUtils<L, C, R, LV> selectAs() {
+    try {
+      JoinLambdaWrapper<C> cWrapper = Joins.of(this.cClass);
+      //      cWrapper.notDefaultSelectAll();
+      if (StringUtilsPlus.isNotEmpty(this.poIdList)) {
+        cWrapper.in(this.centerOfLeftForeignKeyField, this.poIdList);
+      }
+      // 关联查询
+      cWrapper
+          .leftJoin(this.lClass, this.leftPrimaryKeyField, this.centerOfLeftForeignKeyField, "L_")
+          .selectAll()
+          .end();
+      cWrapper
+          .innerJoin(
+              this.rClass, this.rightPrimaryKeyField, this.centerOfRightForeignKeyField, "L_")
           .selectAll()
           .end();
       JoinBaseMapper mapper = getMapper(this.cClass);
@@ -310,6 +339,17 @@ public class CenterJoinUtils<L, C, R, LV> {
    */
   public List<R> getRighList() throws Exception {
     List<R> list = BeanUtilsPlus.copyToList(this.selectMapList, this.rClass);
+    return list;
+  }
+
+  /**
+   * 获取vo关联的表任意字段值集合
+   *
+   * @author 一源-花和尚
+   * @date 2023-09-18
+   */
+  public <VO> List<VO> getRighListForClass(Class<VO> voClass) throws Exception {
+    List<VO> list = BeanUtilsPlus.copyToList(this.selectMapList, voClass);
     return list;
   }
 }

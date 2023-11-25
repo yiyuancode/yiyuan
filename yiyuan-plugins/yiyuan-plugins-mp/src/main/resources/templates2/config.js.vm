@@ -4,31 +4,44 @@
  * @author  ${author}
  * @date ${date}
  */
-import * as ${pm1} from "@/api/sys/${pm1}";
+import * as ${pm1} from "@/api/${pm0}/${pm1}";
 ## import _ from "lodash";
+import {getEnumsMap} from "@/utils/enumsUtils.js";
 
 const columns = [
     #foreach($columnsItem in ${dtoTableColumns})
         {
             #if(${columnsItem.propertyType.contains("Enum")})
                 title: '${columnsItem.columnComment.split("#")[0]}',
+            #elseif(${columnsItem.propertyType.contains("Boolean")})
+                title: '${columnsItem.columnComment.substring(0, $columnsItem.columnComment.indexOf("0"))}',
             #else
                 title: '${columnsItem.columnComment}',
             #end
             dataIndex: '${columnsItem.columnName}',
             key: '${columnsItem.columnName}',
             width: 160,
-            #if(${columnsItem.propertyType.equals("String")})
+            ellipsis: true,
+
+
+            #if(${columnsItem.propertyType.equals("String")}&&!${columnsItem.columnType.equals("TEXT")})
                 ##必填项并且默认值是null的
                 #if((${columnsItem.isNullable.equals("1")}||!${columnsItem.defaultValue.equals("NULL")}))
                     rules: [{required: true, message: '请输入${columnsItem.columnComment}', trigger: 'blur'},],
                 #end
             #end
+            #if(${columnsItem.propertyType.equals("String")}&&${columnsItem.columnType.equals("TEXT")})
+                ##必填项并且默认值是null的
+                #if((${columnsItem.isNullable.equals("1")}||!${columnsItem.defaultValue.equals("NULL")}))
+                    rules: [{required: true, message: '请输入${columnsItem.columnComment}', trigger: 'blur'},],
+                #end
+                formType: "text",
+            #end
             #if(${columnsItem.propertyType.equals("Date")})
                 ##必填项并且默认值是null的
-                searchObj: {
-                    formType: "rangePicker"
-                },
+                ## searchObj: {
+                ##     formType: "rangePicker"
+                ## },
                 props: {
                     showTime: true,
                     style: {width: '100%'}
@@ -41,22 +54,43 @@ const columns = [
                     ]
                 },
             #end
+            #if(${columnsItem.propertyType.contains("Boolean")})
+                scopedSlots: {customRender: '${columnsItem.columnName}'},
+                formType: "radioGroup",
+                props: {
+                    options: [
+                        {
+                            label: '否',
+                            value: false,
+                        },
+                        {
+                            label: '是',
+                            value: true,
+                        },
+                    ],
+                    style:
+                        {
+                            width: '100%'
+                        }
+                },
+            #end
             #if(${columnsItem.propertyType.contains("Enum")})
+                scopedSlots: {customRender: '${columnsItem.columnName}'},
                 //值类型
                 valType: "object",
-                searchObj: {
-                    formType: "select",
-                    options: [
-                        #foreach($columnsItem2 in ${columnsItem.eumsCodeList})
-                            {
-
-                                label: '${columnsItem2.label}',
-                                value:${columnsItem2.value},
-
-                            },
-                        #end
-                    ]
-                },
+                ## searchObj: {
+                ##     formType: "select",
+                ##     options: [
+                ##         #foreach($columnsItem2 in ${columnsItem.eumsCodeList})
+                ##             {
+                ##
+                ##                 label: '${columnsItem2.label}',
+                ##                 value:${columnsItem2.value},
+                ##
+                ##             },
+                ##         #end
+                ##     ]
+                ## },
                 formType: "radioGroup",
                 props: {
                     options: [
@@ -83,18 +117,24 @@ const columns = [
                 #end
                 formSort: 1,
             #end
+            #if(${columnsItem.columnName.equals("tenantId")})
+                scopedSlots: {customRender: '${columnsItem.columnName}'},
+            #end
             #if(${columnsItem.keyFlag.equals("true")}||${columnsItem.columnName.equals(
                 "createTime")}||${columnsItem.columnName.equals("updateTime")}||${columnsItem.columnName.equals(
                 "createUser")}||${columnsItem.columnName.equals("updateUser")})
                 noEdit: true,
                 noAdd: true,
+
                 #if(${columnsItem.columnName.equals(
                     "createUser")}||${columnsItem.columnName.equals("updateUser")}||${columnsItem.columnName.equals(
-                    "updateTime")})
+                    "updateTime")}||${columnsItem.keyFlag.equals("true")})
                     noSearch: true,
                     #if(${columnsItem.columnName.equals(
-                        "createUser")}||${columnsItem.columnName.equals("updateUser")})
+                        "createUser")}||${columnsItem.columnName.equals("updateUser")}||${columnsItem.keyFlag.equals(
+                        "true")})
                         noShow: true,
+                        noTable: true,
                     #end
                 #end
             #end
@@ -102,7 +142,19 @@ const columns = [
         },
 
     #end
+    {
+        title: '操作',
+        dataIndex: 'action',
+        key: 'action',
+        width: 110,
+        ellipsis: true,
+        noEdit: true,
+        noAdd: true,
+        noSearch: true,
+        fixed: "right",
+        scopedSlots: {customRender: "action"}
 
+    },
 ]
 
 
@@ -124,9 +176,11 @@ const permissionObj = {
     editBtn: '${pm0}:${pm1}:edit',
     deleteBtn: '${pm0}:${pm1}:delete'
 };
-
+//转化map
+const enumsMap = getEnumsMap(columns);
 export {
     columns,
     moduleConfig,
-    permissionObj
+    permissionObj,
+    enumsMap
 };

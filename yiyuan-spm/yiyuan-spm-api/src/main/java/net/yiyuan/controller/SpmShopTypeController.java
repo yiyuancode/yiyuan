@@ -23,8 +23,8 @@ import java.util.List;
  * 店铺类型管理
  *
  * @author 一源-花和尚
- * @date 2023-09-18
- * @folder 店铺管理/店铺类型管理
+ * @date 2023-10-06
+ * @folder 商户管理/店铺类型管理
  */
 @SaCheckLogin
 @Slf4j
@@ -38,9 +38,9 @@ public class SpmShopTypeController {
    * @param request 店铺类型实体
    * @return {@link CommonResult<List<SpmShopTypeQueryVO>>}
    * @author 一源-花和尚
-   * @date 2023-09-18
+   * @date 2023-10-06
    */
-  @Description("店铺管理/店铺类型管理/查询店铺类型")
+  @Description("商户管理/店铺类型管理/查询店铺类型")
   @SaCheckPermission(
       value = {"spm:shopType:query"},
       orRole = "admin")
@@ -56,9 +56,9 @@ public class SpmShopTypeController {
    * @param request 店铺类型实体
    * @return {@link CommonResult<Page<SpmShopTypeQueryVO>>}
    * @author 一源-花和尚
-   * @date 2023-09-18
+   * @date 2023-10-06
    */
-  @Description("店铺管理/店铺类型管理/查询店铺类型")
+  @Description("商户管理/店铺类型管理/查询店铺类型")
   @SaCheckPermission(
       value = {"spm:shopType:query"},
       orRole = "admin")
@@ -74,9 +74,9 @@ public class SpmShopTypeController {
    * @param id 店铺类型id
    * @return {@link CommonResult<SpmShopTypeQueryVO>}
    * @author 一源-花和尚
-   * @date 2023-09-18
+   * @date 2023-10-06
    */
-  @Description("店铺管理/店铺类型管理/查询店铺类型")
+  @Description("商户管理/店铺类型管理/查询店铺类型")
   @SaCheckPermission(
       value = {"spm:shopType:query"},
       orRole = "admin")
@@ -93,9 +93,9 @@ public class SpmShopTypeController {
    * @param ids 店铺类型id(多个逗号分割)
    * @return {@link CommonResult<String>}
    * @author 一源-花和尚
-   * @date 2023-09-18
+   * @date 2023-10-06
    */
-  @Description("店铺管理/店铺类型管理/删除店铺类型")
+  @Description("商户管理/店铺类型管理/删除店铺类型")
   @SaCheckPermission(
       value = {"spm:shopType:delete"},
       orRole = "admin")
@@ -116,9 +116,9 @@ public class SpmShopTypeController {
    * @param request 店铺类型实体
    * @return {@link CommonResult<String>}
    * @author 一源-花和尚
-   * @date 2023-09-18
+   * @date 2023-10-06
    */
-  @Description("店铺管理/店铺类型管理/编辑店铺类型")
+  @Description("商户管理/店铺类型管理/编辑店铺类型")
   @SaCheckPermission(
       value = {"spm:shopType:edit"},
       orRole = "admin")
@@ -139,9 +139,9 @@ public class SpmShopTypeController {
    * @param request 店铺类型实体
    * @return {@link CommonResult<String>}
    * @author 一源-花和尚
-   * @date 2023-09-18
+   * @date 2023-10-06
    */
-  @Description("店铺管理/店铺类型管理/新增店铺类型")
+  @Description("商户管理/店铺类型管理/新增店铺类型")
   @SaCheckPermission(
       value = {"spm:shopType:add"},
       orRole = "admin")

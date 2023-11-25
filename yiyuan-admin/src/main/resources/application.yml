@@ -1,6 +1,12 @@
 server:
   port: 8085
+  tomcat:
+    max-swallow-size: -1
 spring:
   profiles:
     #dev、test、prod  部署用-Dspring.profiles.active=prod 切换，本地用dev
     active: dev
+  servlet:
+    multipart:
+      max-file-size: -1
+      max-request-size: -1

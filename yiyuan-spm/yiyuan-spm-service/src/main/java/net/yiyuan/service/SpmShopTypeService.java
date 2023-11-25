@@ -15,7 +15,7 @@ import java.util.List;
  * 店铺类型Service层接口
  *
  * @author 一源-花和尚
- * @date 2023-09-22
+ * @date 2023-10-06
  */
 public interface SpmShopTypeService extends JoinIService<SpmShopType> {
 
@@ -25,7 +25,7 @@ public interface SpmShopTypeService extends JoinIService<SpmShopType> {
    * @param request 店铺类型实体
    * @return {@link List< SpmShopTypeQueryVO >}
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
   List<SpmShopTypeQueryVO> list(SpmShopTypeListDTO request) throws Exception;
 
@@ -35,7 +35,7 @@ public interface SpmShopTypeService extends JoinIService<SpmShopType> {
    * @param request 店铺类型实体
    * @return {@link Page< SpmShopTypeQueryVO >}
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
   Page<SpmShopTypeQueryVO> page(SpmShopTypePageDTO request) throws Exception;
 
@@ -45,7 +45,7 @@ public interface SpmShopTypeService extends JoinIService<SpmShopType> {
    * @param id 店铺类型id
    * @return {@link SpmShopTypeQueryVO}
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
   SpmShopTypeQueryVO details(String id) throws Exception;
 
@@ -55,7 +55,7 @@ public interface SpmShopTypeService extends JoinIService<SpmShopType> {
    * @param request 店铺类型实体
    * @return {@link SpmShopType}
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
   SpmShopTypeQueryVO details(SpmShopType request) throws Exception;
 
@@ -65,7 +65,7 @@ public interface SpmShopTypeService extends JoinIService<SpmShopType> {
    * @param ids 店铺类型id(多个逗号分割)
    * @return {@link boolean}
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
   boolean delete(String ids) throws Exception;
 
@@ -75,7 +75,7 @@ public interface SpmShopTypeService extends JoinIService<SpmShopType> {
    * @param request 店铺类型实体
    * @return {@link boolean}
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
   boolean edit(SpmShopTypeEditDTO request) throws Exception;
 
@@ -85,7 +85,7 @@ public interface SpmShopTypeService extends JoinIService<SpmShopType> {
    * @param request 店铺类型实体
    * @return {@link boolean}
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
   boolean add(SpmShopTypeAddDTO request) throws Exception;
 }

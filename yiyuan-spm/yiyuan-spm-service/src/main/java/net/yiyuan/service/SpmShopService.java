@@ -15,7 +15,7 @@ import java.util.List;
  * 店铺Service层接口
  *
  * @author 一源-花和尚
- * @date 2023-09-22
+ * @date 2023-10-06
  */
 public interface SpmShopService extends JoinIService<SpmShop> {
 
@@ -25,7 +25,7 @@ public interface SpmShopService extends JoinIService<SpmShop> {
    * @param request 店铺实体
    * @return {@link List< SpmShopQueryVO >}
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
   List<SpmShopQueryVO> list(SpmShopListDTO request) throws Exception;
 
@@ -35,7 +35,7 @@ public interface SpmShopService extends JoinIService<SpmShop> {
    * @param request 店铺实体
    * @return {@link Page< SpmShopQueryVO >}
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
   Page<SpmShopQueryVO> page(SpmShopPageDTO request) throws Exception;
 
@@ -45,7 +45,7 @@ public interface SpmShopService extends JoinIService<SpmShop> {
    * @param id 店铺id
    * @return {@link SpmShopQueryVO}
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
   SpmShopQueryVO details(String id) throws Exception;
 
@@ -55,7 +55,7 @@ public interface SpmShopService extends JoinIService<SpmShop> {
    * @param request 店铺实体
    * @return {@link SpmShop}
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
   SpmShopQueryVO details(SpmShop request) throws Exception;
 
@@ -65,7 +65,7 @@ public interface SpmShopService extends JoinIService<SpmShop> {
    * @param ids 店铺id(多个逗号分割)
    * @return {@link boolean}
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
   boolean delete(String ids) throws Exception;
 
@@ -75,7 +75,7 @@ public interface SpmShopService extends JoinIService<SpmShop> {
    * @param request 店铺实体
    * @return {@link boolean}
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
   boolean edit(SpmShopEditDTO request) throws Exception;
 
@@ -85,17 +85,7 @@ public interface SpmShopService extends JoinIService<SpmShop> {
    * @param request 店铺实体
    * @return {@link boolean}
    * @author 一源-花和尚
-   * @date 2023-09-22
+   * @date 2023-10-06
    */
   boolean add(SpmShopAddDTO request) throws Exception;
-
-  /**
-   * 申请店铺
-   *
-   * @param request 店铺实体
-   * @return {@link boolean}
-   * @author 一源-花和尚
-   * @date 2023-09-22
-   */
-  boolean apply(SpmShopAddDTO request) throws Exception;
 }

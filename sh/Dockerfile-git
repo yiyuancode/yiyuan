@@ -1,0 +1,36 @@
+# 使用基础镜像
+FROM openjdk:11
+
+# 安装 Maven 依赖
+RUN apt-get update && \
+    apt-get install -y maven=3.6.3-1 && \
+    rm -rf /var/lib/apt/lists/*
+
+# 安装 Git 依赖
+RUN apt-get update && \
+    apt-get install -y git=1:1.9.1-1+deb8u1 && \
+    rm -rf /var/lib/apt/lists/*
+
+# 设置工作目录
+WORKDIR /
+
+# 克隆源码
+RUN git clone https://46918480665288096:dafei123qqcom@https://codeup.aliyun.com/yiyuan/yiyuancode/yiyuan.git
+# RUN cd
+WORKDIR /yiyuan
+RUN git checkout dev1.0.0
+
+# 构建项目
+RUN mvn -B clean package -Dmaven.test.skip=true -Dautoconfig.skip
+
+# 定义容器启动命令
+#CMD ["java", "-jar", "target/my-app.jar"]
+
+# 定义容器启动命令
+#CMD ["java", "-jar", "target/yiyuan-admin-1.0-SNAPSHOT.jar"]
+
+#RUN ls -ap
+
+#WORKDIR /yiyuan/yiyuan-admin/target
+# 将 jar 文件拷贝到宿主机
+#COPY yiyuan-admin-1.0-SNAPSHOT.jar /install/

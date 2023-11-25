@@ -14,7 +14,7 @@
     <dependencies>
         <dependency>
             <groupId>net.yiyuan</groupId>
-            <artifactId>yiyuan-plugins-mp</artifactId>
+            <artifactId>yiyuan-sys-model</artifactId>
             <version>${revision}</version>
         </dependency>
     </dependencies>

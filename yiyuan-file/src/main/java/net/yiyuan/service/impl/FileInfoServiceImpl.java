@@ -207,7 +207,7 @@ public class FileInfoServiceImpl extends JoinServiceImpl<FileInfoMapper, FileInf
     //    String suffix = FilenameUtils.getExtension(name);
 
     String suffix = FilenameUtils.getExtension(name);
-    String key = UUID.randomUUID().toString()+"."+suffix;
+    String key = UUID.randomUUID().toString() + "." + suffix;
     // 获取激活当前的文件操作器
     FileOperatorInter operatorInter = fileOperatorContext.active();
     FileOperatorTypeEnum typeEnum =

@@ -46,27 +46,8 @@ private static final long serialVersionUID=1L;
             #elseif(${columnsItem.columnName.equals("createTime")})
             @TableField(fill = FieldFill.INSERT)
             #end
-
         private ${columnsItem.propertyType} ${columnsItem.columnName};
-        /**
-         * ${columnsItem.columnComment}(查询开始时间)
-         *
-         * @author ${author}
-         * @date ${date}
-         */
-        @TableField(value = "${columnsItem.column} ", condition = CustomSqlCondition.START_EQUAL, select = false)
-        private ${columnsItem.propertyType} ${columnsItem.columnName}Start;
-        /**
-         * ${columnsItem.columnComment}(查询结束时间)
-         *
-         * @author ${author}
-         * @date ${date}
-         */
-        @TableField(value = "${columnsItem.column}", condition = CustomSqlCondition.END_EQUAL, select = false)
-        private ${columnsItem.propertyType} ${columnsItem.columnName}End;
         #else
-
-
         /**
          * ${columnsItem.columnComment}
          *

@@ -17,6 +17,7 @@
         <module>yiyuan-ptm-app-api</module>
         <module>yiyuan-ptm-app-service</module>
         <module>yiyuan-ptm-mapper</module>
+        <module>yiyuan-ptm-model</module>
     </modules>
 
     <dependencies>

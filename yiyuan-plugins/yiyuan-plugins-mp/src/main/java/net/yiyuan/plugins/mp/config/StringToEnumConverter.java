@@ -20,14 +20,18 @@ public class StringToEnumConverter<T extends IEnum> implements Converter<String,
 
   public StringToEnumConverter(Class<T> enumType) {
     T[] enums = enumType.getEnumConstants();
+    System.out.println("enums" + enums);
     for (T e : enums) {
+      System.out.println("enums" + e.getValue());
       enumMap.put(e.getValue().toString(), e);
     }
   }
 
   @Override
   public T convert(String source) {
+
     T t = enumMap.get(source);
+    System.out.println("enums" + t);
     if (Objects.isNull(t)) {
       throw new BusinessException(ResultCode.PARAMETER_TO_ENUM_ERROR);
     }

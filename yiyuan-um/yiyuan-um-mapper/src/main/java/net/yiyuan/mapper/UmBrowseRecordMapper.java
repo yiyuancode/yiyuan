@@ -9,5 +9,4 @@ import net.yiyuan.model.UmBrowseRecord;
  * @author 小林同学
  * @date 2023-07-27
  */
-public interface UmBrowseRecordMapper extends JoinBaseMapper<UmBrowseRecord> {
-}
+public interface UmBrowseRecordMapper extends JoinBaseMapper<UmBrowseRecord> {}

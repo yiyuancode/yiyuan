@@ -28,6 +28,33 @@ import java.util.stream.Collectors;
 @RestControllerAdvice
 public class GlobalException {
 
+  private static String extractDataTooLongFieldName(String errorMessage) {
+    // 解析错误消息，提取字段名
+    int startIndex = errorMessage.indexOf("column '") + 8;
+    int endIndex = errorMessage.indexOf("'", startIndex);
+    return "字段 '" + errorMessage.substring(startIndex, endIndex) + "超过列指定长度.";
+  }
+
+  private static String extractDuplicateValueFromErrorMessage(String errorMessage) {
+    String regex = "Duplicate entry '(.+)' for key";
+    Pattern pattern = Pattern.compile(regex);
+    Matcher matcher = pattern.matcher(errorMessage);
+    if (matcher.find()) {
+      return matcher.group(1);
+    }
+    return null;
+  }
+
+  private static String extractFieldNameFromErrorMessage(String errorMessage) {
+    String regex = "for key '(.+)'";
+    Pattern pattern = Pattern.compile(regex);
+    Matcher matcher = pattern.matcher(errorMessage);
+    if (matcher.find()) {
+      return matcher.group(1);
+    }
+    return null;
+  }
+
   /**
    * 处理有效异常
    *
@@ -226,6 +253,14 @@ public class GlobalException {
   public CommonResult handleDataIntegrityViolationException(DataIntegrityViolationException e) {
     e.printStackTrace();
     String errorMessage = e.getMessage();
+    if (errorMessage.contains("Data too long")) {
+      return CommonResult.failed(extractDataTooLongFieldName(errorMessage));
+    }
+    // ### Cause: java.sql.SQLException: Field 'pid' doesn't have a default value
+    if (errorMessage.contains("have a default value")) {
+      return CommonResult.failed("字段缺失默认值");
+    }
+
     String fieldName = extractFieldNameFromErrorMessage(errorMessage);
     // 可以在此处添加自定义的处理逻辑，如记录日志、返回自定义的错误信息等
     return CommonResult.failed(
@@ -235,25 +270,6 @@ public class GlobalException {
             + "]重复");
   }
 
-  private static String extractDuplicateValueFromErrorMessage(String errorMessage) {
-    String regex = "Duplicate entry '(.+)' for key";
-    Pattern pattern = Pattern.compile(regex);
-    Matcher matcher = pattern.matcher(errorMessage);
-    if (matcher.find()) {
-      return matcher.group(1);
-    }
-    return null;
-  }
-
-  private static String extractFieldNameFromErrorMessage(String errorMessage) {
-    String regex = "for key '(.+)'";
-    Pattern pattern = Pattern.compile(regex);
-    Matcher matcher = pattern.matcher(errorMessage);
-    if (matcher.find()) {
-      return matcher.group(1);
-    }
-    return null;
-  }
   /**
    * 拦截：其它所有异常
    *

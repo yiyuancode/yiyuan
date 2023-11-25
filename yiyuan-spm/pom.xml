@@ -17,6 +17,7 @@
         <module>yiyuan-spm-app-api</module>
         <module>yiyuan-spm-app-service</module>
         <module>yiyuan-spm-mapper</module>
+        <module>yiyuan-spm-model</module>
     </modules>
 
     <dependencies>

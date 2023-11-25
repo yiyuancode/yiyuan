@@ -9,5 +9,4 @@ import net.yiyuan.model.UmUserMerchantCollect;
  * @author 小林同学
  * @date 2023-07-27
  */
-public interface UmUserMerchantCollectMapper extends JoinBaseMapper<UmUserMerchantCollect> {
-}
+public interface UmUserMerchantCollectMapper extends JoinBaseMapper<UmUserMerchantCollect> {}

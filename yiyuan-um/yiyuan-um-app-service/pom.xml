@@ -27,5 +27,10 @@
             <artifactId>yiyuan-SMS</artifactId>
             <version>${revision}</version>
         </dependency>
+        <dependency>
+            <groupId>net.yiyuan</groupId>
+            <artifactId>yiyuan-spm-mapper</artifactId>
+            <version>${revision}</version>
+        </dependency>
     </dependencies>
 </project>

@@ -8,32 +8,20 @@ import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-/**
- * 短信验证码
- */
+/** 短信验证码 */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class SmsCode {
-  /**
-   * 验证码ID
-   */
+  /** 验证码ID */
   private String codeId;
-  /**
-   * 验证码
-   */
+  /** 验证码 */
   private String code;
-  /**
-   * 手机号
-   */
+  /** 手机号 */
   private String phone;
-  /**
-   * 创建时间
-   */
+  /** 创建时间 */
   private LocalDateTime createTime;
-  /**
-   * 过期时间
-   */
+  /** 过期时间 */
   private long expirationTime;
 
   /**
@@ -59,12 +47,11 @@ public class SmsCode {
     SecureRandom random = new SecureRandom();
     StringBuilder returnValue = new StringBuilder();
     int randomInt = 0;
-    for(int i=0; i<6; i++ ){
+    for (int i = 0; i < 6; i++) {
       randomInt = random.nextInt(10);
       returnValue.append(randomInt);
     }
 
     return returnValue.toString();
   }
-
 }

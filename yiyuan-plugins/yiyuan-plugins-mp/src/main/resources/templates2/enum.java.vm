@@ -2,6 +2,7 @@ package ${parentPack}.enums;
 
 
 import com.baomidou.mybatisplus.annotation.EnumValue;
+import com.fasterxml.jackson.annotation.JsonValue;
 import com.baomidou.mybatisplus.annotation.IEnum;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
@@ -14,7 +15,7 @@ import lombok.Getter;
  *
  */
 @Getter  // 没有引入lombok依赖包的，可以自己实现get方法
-@JsonFormat(shape = JsonFormat.Shape.OBJECT)  // 实现场景2，只需要加上这个注解
+//@JsonFormat(shape = JsonFormat.Shape.OBJECT)  // 实现场景2，只需要加上这个注解
 public enum ${className} implements IEnum<Integer> {
 
     #foreach($columnsItem in ${tableColumns})
@@ -25,7 +26,7 @@ public enum ${className} implements IEnum<Integer> {
              * @author  ${author}
              * @date ${date}
              */
-        ${columnsItem.filed}( ${columnsItem.code},"${columnsItem.desc}" )#if(!$foreach.last),#end#if($foreach.last);#end
+        ${columnsItem.filed}( ${columnsItem.code},"${columnsItem.desc}")#if(!$foreach.last),#end#if($foreach.last);#end
 
     #end
 

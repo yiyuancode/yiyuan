@@ -1,6 +1,21 @@
 import {request} from '@/utils/request';
 
 /**
+ * 获取所有的${tableComment.replaceAll("表", "")}信息(全部)
+ *
+ * @param {*} data ${tableComment.replaceAll("表", "")}信息
+ * @return
+ * @author  ${author}
+ * @date ${date}
+ */
+export function get${pm1_2}List(data) {
+    return request({
+        url: "/${pm0}/${pm1}/list",
+        params: data
+    });
+
+}
+/**
  * 获取所有的${tableComment.replaceAll("表", "")}信息(分页)
  *
  * @param {*} data ${tableComment.replaceAll("表", "")}信息
@@ -9,12 +24,11 @@ import {request} from '@/utils/request';
  * @date ${date}
  */
 export function get${pm1_2}PageList(data) {
-    return
-    request({
+    return request({
         url: "/${pm0}/${pm1}/page",
         params: data
     });
-    
+
 }
 
 
@@ -27,8 +41,7 @@ export function get${pm1_2}PageList(data) {
  * @date ${date}
  */
 export function get${pm1_2}Detail(id) {
-    return
-    request({
+    return request({
         url: `/${pm0}/${pm1}/details/${id}`,
     });
 
@@ -44,8 +57,7 @@ export function get${pm1_2}Detail(id) {
  */
 
 export function add${pm1_2}(data) {
-    return
-    request({
+    return request({
         url: "/${pm0}/${pm1}/add",
         method: "post",
         data
@@ -63,8 +75,7 @@ export function add${pm1_2}(data) {
  * @date ${date}
  */
 export function edit${pm1_2}(data, id) {
-    return
-    request({
+    return request({
         url: "/${pm0}/${pm1}/edit",
         method: "post",
         data: {
@@ -86,8 +97,7 @@ export function edit${pm1_2}(data, id) {
  * @date ${date}
  */
 export function ${delete}${pm1_2}(ids) {
-    return
-    request({
+    return request({
         url: "/${pm0}/${pm1}/delete",
         method: "post",
         params: {

@@ -18,69 +18,59 @@ import java.util.Date;
  */
 @Data
 public class UmBrowseRecord implements Serializable {
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
+  /**
+   * @author 小林同学
+   * @date 2023-09-19
+   */
+  @TableId(value = "id", type = IdType.ASSIGN_UUID)
+  private String id;
 
-    /**
-     * @author 小林同学
-     * @date 2023-09-19
-     */
-    @TableId(value = "id", type = IdType.ASSIGN_UUID)
-    private String id;
+  /**
+   * 用户id
+   *
+   * @author 小林同学
+   * @date 2023-09-19
+   */
+  private String uid;
 
+  /**
+   * 商品id
+   *
+   * @author 小林同学
+   * @date 2023-09-19
+   */
+  private String productId;
 
-    /**
-     * 用户id
-     *
-     * @author 小林同学
-     * @date 2023-09-19
-     */
-    private String uid;
+  /**
+   * 日期：年-月-日
+   *
+   * @author 小林同学
+   * @date 2023-09-19
+   */
+  private String date;
 
+  /**
+   * 创建时间
+   *
+   * @author 小林同学
+   * @date 2023-09-19
+   */
+  @TableField(fill = FieldFill.INSERT)
+  private Date createTime;
+  /**
+   * 创建时间(查询开始时间)
+   *
+   * @author 小林同学
+   * @date 2023-09-19
+   */
 
-    /**
-     * 商品id
-     *
-     * @author 小林同学
-     * @date 2023-09-19
-     */
-    private String productId;
-
-
-    /**
-     * 日期：年-月-日
-     *
-     * @author 小林同学
-     * @date 2023-09-19
-     */
-    private String date;
-
-
-    /**
-     * 创建时间
-     *
-     * @author 小林同学
-     * @date 2023-09-19
-     */
-    @TableField(fill = FieldFill.INSERT)
-
-    private Date createTime;
-    /**
-     * 创建时间(查询开始时间)
-     *
-     * @author 小林同学
-     * @date 2023-09-19
-     */
-    @TableField(value = "create_time ", condition = CustomSqlCondition.START_EQUAL, select = false)
-    private Date createTimeStart;
-    /**
-     * 创建时间(查询结束时间)
-     *
-     * @author 小林同学
-     * @date 2023-09-19
-     */
-    @TableField(value = "create_time", condition = CustomSqlCondition.END_EQUAL, select = false)
-    private Date createTimeEnd;
-
+  /**
+   * 创建时间(查询结束时间)
+   *
+   * @author 小林同学
+   * @date 2023-09-19
+   */
 
 }

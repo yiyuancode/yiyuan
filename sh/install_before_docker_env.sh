@@ -8,7 +8,7 @@ echo '----查看当前系统内核版本结束----'
 
 
 echo '----更新yum镜像原开始----'
-yum -y update
+yum -y update -y
 echo '----更新yum镜像原结束----'
 
 
@@ -18,12 +18,12 @@ rpm -Uvh http://www.elrepo.org/elrepo-release-7.0-3.el7.elrepo.noarch.rpm
 echo '----启用 ELRepo 仓库结束----'
 
 echo '----查看可用的系统内核包开始----'
-yum --disablerepo="*" --enablerepo="elrepo-kernel" list available
+yum --disablerepo="*" --enablerepo="elrepo-kernel" list available -y
 echo '----查看可用的系统内核包结束----'
 
 
 echo '----安装最新版本内核开始----'
-yum --enablerepo=elrepo-kernel install kernel-ml
+yum --enablerepo=elrepo-kernel install kernel-ml -y
 echo '----安装最新版本内核结束----'
 
 echo '----查看系统上的所有可用内核开始----'

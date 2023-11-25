@@ -23,4 +23,7 @@ public class SysUserRedisService extends RedisServiceImpl {
 
   public static String KEY_SYS_USER_ROLE_CODE = "sys:user:role:code";
   public static Long EXPIRE_SYS_USER_ROLE_CODE = 0L;
+
+  public static String KEY_SYS_USER_SHOP = "sys:user:shop";
+  public static Long EXPIRE_SYS_USER_SHOP = 0L;
 }

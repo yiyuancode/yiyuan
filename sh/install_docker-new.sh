@@ -17,12 +17,11 @@ echo '----更改docker 国内镜像原版本开始----'
 #mkdir docker
 mkdir -p /etc/docker
 chmod -R 777 /etc/docker
-sudo vi /etc/docker/daemon.json
-#{
-#
-#"registry-mirrors": ["http://hub-mirror.c.163.com"]
-#
-#}
+touch /etc/docker/daemon.json
+echo '{
+  "registry-mirrors": ["http://hub-mirror.c.163.com"]
+}' > /etc/docker/daemon.json
+
 systemctl restart docker.service
 echo '----更改docker 国内镜像原版本结束----'
 
@@ -37,6 +36,6 @@ echo '----设置docker 开机启动结束----'
 
 
 
-echo '----安装docker准备结束----'
+
 
 

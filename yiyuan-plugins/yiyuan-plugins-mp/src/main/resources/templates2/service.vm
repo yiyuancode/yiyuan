@@ -17,8 +17,7 @@ import java.util.List;
 * @author  ${author}
 * @date ${date}
 */
-public interface ${className}Service extends JoinIService
-<${className}> {
+public interface ${className}Service extends JoinIService<${className}> {
 
 /**
 * $!{tableComment.replaceAll("表", "")}列表(全部)

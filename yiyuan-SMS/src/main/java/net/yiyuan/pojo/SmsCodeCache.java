@@ -1,30 +1,19 @@
 package net.yiyuan.pojo;
 
-
-
-
-
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-/**
- * 短信验证码缓存
- */
+/** 短信验证码缓存 */
 @Slf4j
 public final class SmsCodeCache {
-  /**
-   * 单例
-   */
+  /** 单例 */
   private static SmsCodeCache smsCodeCache = new SmsCodeCache();
-  /**
-   * 所有有效的权限集合
-   */
+  /** 所有有效的权限集合 */
   private static Map<String, SmsCode> codeMap = new ConcurrentHashMap<>(16);
 
-  private SmsCodeCache() {
-  }
+  private SmsCodeCache() {}
 
   /**
    * 获取实例
@@ -67,9 +56,7 @@ public final class SmsCodeCache {
     return code;
   }
 
-  /**
-   * 清理过期验证码
-   */
+  /** 清理过期验证码 */
   public void clean() {
     if (codeMap.isEmpty()) {
       return;
@@ -86,9 +73,7 @@ public final class SmsCodeCache {
     }
   }
 
-  /**
-   * 清理过期验证码及旧验证码
-   */
+  /** 清理过期验证码及旧验证码 */
   public void cleanExpireAndOld(String phone) {
     if (codeMap.isEmpty()) {
       return;

@@ -2,6 +2,7 @@ package net.yiyuan.enums;
 
 import com.baomidou.mybatisplus.annotation.EnumValue;
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 
 /**
@@ -30,7 +31,7 @@ public enum FileInfoStateEnum {
    */
   STORE_SUCCESSFUL(2, "储存成功");
 
-  @EnumValue private final int code;
+  @JsonValue @EnumValue private final int code;
   @JsonValue private final String desc;
 
   FileInfoStateEnum(int code, String desc) {

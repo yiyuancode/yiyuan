@@ -8,6 +8,7 @@ import net.yiyuan.service.PtmProductAppService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+
 /**
  * 商品移动端Service层接口实现
  *

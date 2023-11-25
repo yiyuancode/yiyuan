@@ -2,6 +2,7 @@ package net.yiyuan.enums;
 
 import com.baomidou.mybatisplus.annotation.EnumValue;
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import net.yiyuan.exception.CustomUnifiedException;
@@ -49,7 +50,7 @@ public enum FileInfoTypeEnum {
    */
   HUAWEI(4, "华为云存储");
 
-  @EnumValue private final int code;
+  @JsonValue @EnumValue private final int code;
   @JsonValue private final String desc;
 
   /**

@@ -1,0 +1,20 @@
+#set($arrow="component:() => import(")
+#set($arrowRight=")")
+import {gertRouterArray} from "@/utils/autoRouterUtil.js";
+
+const modules = gertRouterArray(require.context('./modules', false, /\.js$/))
+
+const ${pm0} = {
+    path: '/${pm0}',
+        name: '${pm0}',
+        ${arrow} '@/components/layout/Layout/index.vue'${arrowRight},
+
+        meta: {
+        title: '${moudleNameZh}',
+            permissions: '${pm0}',
+            sort: 0
+    },
+    children: modules
+}
+export default ${pm0};
+

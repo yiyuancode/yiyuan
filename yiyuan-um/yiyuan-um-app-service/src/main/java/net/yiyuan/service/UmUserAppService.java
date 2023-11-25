@@ -3,9 +3,11 @@ package net.yiyuan.service;
 import icu.mhb.mybatisplus.plugln.base.service.JoinIService;
 import net.yiyuan.dto.UmUserTokenDTO;
 import net.yiyuan.model.UmUser;
-import net.yiyuan.vo.GetUmUserInfoVO;
-import net.yiyuan.vo.MyselfIndexVO;
-import net.yiyuan.vo.UmUserTokenVO;
+import net.yiyuan.pojo.MailInfo;
+import net.yiyuan.vo.*;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * 用户移动端Service层接口
@@ -15,9 +17,15 @@ import net.yiyuan.vo.UmUserTokenVO;
  */
 public interface UmUserAppService extends JoinIService<UmUser> {
 
-    UmUserTokenVO getUmUserToken(UmUserTokenDTO umUserTokenDto);
+  UmUserTokenVO getUmUserToken(UmUserTokenDTO umUserTokenDto);
 
-    GetUmUserInfoVO getUmUserInfo() throws Exception;
+  GetUmUserInfoVO getUmUserInfo() throws Exception;
 
-    MyselfIndexVO findMySelfIndexVO() throws Exception;
+  MyselfIndexVO findMySelfIndexVO() throws Exception;
+
+  Map<String, List<ProjectCollectReVO>> finProjectCollectListVO() throws Exception;
+
+  Map<String, List<ProjectCollectReShopVO>> findProjectCollectListShopVO() throws Exception;
+
+  boolean sendVerifyCode(MailInfo info) throws Exception;
 }

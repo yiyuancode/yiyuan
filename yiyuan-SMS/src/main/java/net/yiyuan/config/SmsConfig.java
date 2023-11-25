@@ -8,12 +8,13 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class SmsConfig {
 
-    @Value("${sms.config.aliyun.templateCode}")
-    private String templateCode;
-    @Value("${sms.config.aliyun.signName}")
-    protected String signName;
-    @Value("${sms.config.aliyun.appKey:#{null}}")
-    private String appKey;
-    @Value("${sms.config.aliyun.appSecret:#{null}}")
-    private String appSecure;
+  @Value("${sms.config.aliyun.signName}")
+  protected String signName;
+  @Value("${sms.config.aliyun.templateCode}")
+  private String templateCode;
+  @Value("${sms.config.aliyun.appKey:#{null}}")
+  private String appKey;
+
+  @Value("${sms.config.aliyun.appSecret:#{null}}")
+  private String appSecure;
 }
