@@ -302,7 +302,7 @@ public class UmUserAppServiceImpl extends JoinServiceImpl<UmUserMapper, UmUser>
     //                    Byte b = 1;
     //                    umUser.setLevel(b);
     //                    umUser.setSignNum(0);
-    //                    umUser.setTransactionCount(0);
+//                        umUser.setTransactionCount(0);
     umUser.setRegisterType(umUserTokenDto.getRegistryType());
     umUser.setLastLoginTime(new Date());
     umUser.setStatus(UmUserStatusEnum.NORMAL);

@@ -44,7 +44,7 @@ public class PtmProduct implements Serializable {
    * @author 一源团队-花和尚
    * @date 2023-10-10
    */
-  private String platCategoryId;
+  private String platCategoryIds;
 
   /**
    * 店铺内部分类id(商品分类3级)
@@ -52,7 +52,7 @@ public class PtmProduct implements Serializable {
    * @author 一源团队-花和尚
    * @date 2023-10-10
    */
-  private String shopCategoryId;
+  private String shopCategoryIds;
 
   /**
    * 品牌id

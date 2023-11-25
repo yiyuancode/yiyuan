@@ -256,6 +256,11 @@ public class GlobalException {
     if (errorMessage.contains("Data too long")) {
       return CommonResult.failed(extractDataTooLongFieldName(errorMessage));
     }
+    // ### Cause: java.sql.SQLException: Field 'pid' doesn't have a default value
+    if (errorMessage.contains("have a default value")) {
+      return CommonResult.failed("字段缺失默认值");
+    }
+
     String fieldName = extractFieldNameFromErrorMessage(errorMessage);
     // 可以在此处添加自定义的处理逻辑，如记录日志、返回自定义的错误信息等
     return CommonResult.failed(
