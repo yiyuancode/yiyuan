@@ -3,8 +3,10 @@ package net.yiyuan.dto;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * 商品信息修改接口请求入参实体
@@ -253,4 +255,13 @@ public class PtmProductEditDTO implements Serializable {
    * @date 2023-10-10
    */
   private Boolean isShow;
+
+
+  /**
+   * 商品sku集合
+   *
+   * @author 一源团队-花和尚
+   * @date 2023-10-10
+   */
+  private List<PtmProductSkuEditDTO> skuList;
 }
