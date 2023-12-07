@@ -2,12 +2,14 @@ package net.yiyuan.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import net.yiyuan.dto.PtmProductSkuAddDTO;
 import net.yiyuan.enums.PtmProductAuditStatusEnum;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 商品信息查询请求响应参数实体
@@ -273,6 +275,14 @@ public class PtmProductQueryVO implements Serializable {
    * @date 2023-10-10
    */
   private Boolean isShow;
+
+  /**
+   * 商品sku集合
+   *
+   * @author 一源团队-花和尚
+   * @date 2023-10-10
+   */
+  private List<PtmProductSkuQueryVO> skuList;
 
   /**
    * 创建时间

@@ -42,6 +42,11 @@
             <artifactId>yiyuan-sys-app-api</artifactId>
             <version>${revision}</version>
         </dependency>
+        <dependency>
+            <groupId>net.yiyuan</groupId>
+            <artifactId>yiyuan-miniapp</artifactId>
+            <version>${revision}</version>
+        </dependency>
     </dependencies>
 
     <build>
