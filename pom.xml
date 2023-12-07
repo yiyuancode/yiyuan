@@ -55,6 +55,7 @@
         <easypoi-spring-boot-starter.version>4.2.0</easypoi-spring-boot-starter.version>
         <lombok.version>1.18.24</lombok.version>
         <hutool.version>5.8.16</hutool.version>
+        <java.version>11</java.version>
     </properties>
 
 
@@ -107,11 +108,11 @@
     <dependencyManagement>
         <dependencies>
             <!--excel导出-->
-            <dependency>
-                <groupId>cn.afterturn</groupId>
-                <artifactId>easypoi-spring-boot-starter</artifactId>
-                <version>4.2.0</version>
-            </dependency>
+<!--            <dependency>-->
+<!--                <groupId>cn.afterturn</groupId>-->
+<!--                <artifactId>easypoi-spring-boot-starter</artifactId>-->
+<!--                <version>4.2.0</version>-->
+<!--            </dependency>-->
 
             <!-- 统一依赖管理 -->
             <dependency>
@@ -397,6 +398,11 @@
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
+                    <forceJavacCompilerUse>true</forceJavacCompilerUse>
+                    <fork>true</fork>
+                    <compilerArgs>
+                        <arg>-parameters</arg>
+                    </compilerArgs>
                 </configuration>
             </plugin>
             <plugin>
