@@ -208,12 +208,6 @@ public class PtmProductServiceImpl extends JoinServiceImpl<PtmProductMapper, Ptm
       // 设置总库存
       po.setStock(totalStock);
 
-      PtmProductSku query = new PtmProductSku();
-      JoinLambdaWrapper<PtmProductSku> skuWp = Joins.of(PtmProductSku.class);
-      skuWp.in(PtmProductSku::getPtmProductId, po.getId());
-      List<PtmProductSkuQueryVO> skuVoList =
-          ptmProductSkuMapper.joinSelectList(skuWp, PtmProductSkuQueryVO.class);
-
       // 添加sku
       skuList.forEach(
           (sku) -> {
@@ -228,17 +222,25 @@ public class PtmProductServiceImpl extends JoinServiceImpl<PtmProductMapper, Ptm
               ptmProductSkuMapper.updateById(insert);
             }
           });
-      List<String> delSkuIdList =
-          skuVoList.stream()
-              .filter(
-                  obj ->
-                      skuList.stream()
-                          .noneMatch(
-                              filterObj ->
-                                  filterObj.getId()
-                                      == obj.getId())) // 使用filter操作过滤不在filterList中的id字段
-              .map(PtmProductSkuQueryVO::getId) // 使用map操作提取id字段
+
+      List<String> skuIdList =
+          skuList.stream()
+              .map(PtmProductSkuEditDTO::getId) // 使用map操作提取id字段
+              .filter(id -> StringUtilsPlus.isNotEmpty(id)) // 使用filter操作过滤为空的id
               .collect(Collectors.toList()); // 收集id字段到新的List
+
+      JoinLambdaWrapper<PtmProductSku> skuWp = Joins.of(PtmProductSku.class);
+      skuWp.notIn(PtmProductSku::getId, skuIdList);
+      skuWp.eq(PtmProductSku::getPtmProductId, po.getId());
+      List<PtmProductSkuQueryVO> skuVoList =
+          ptmProductSkuMapper.joinSelectList(skuWp, PtmProductSkuQueryVO.class);
+
+      List<String> delSkuIdList =
+              skuVoList.stream()
+                      .map(PtmProductSkuQueryVO::getId) // 使用map操作提取id字段
+                      .filter(id -> StringUtilsPlus.isNotEmpty(id)) // 使用filter操作过滤为空的id
+                      .collect(Collectors.toList()); // 收集id字段到新的List
+
       if (StringUtilsPlus.isNotEmpty(delSkuIdList)) {
         ptmProductSkuMapper.deleteBatchIds(delSkuIdList);
       }
