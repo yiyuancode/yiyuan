@@ -230,7 +230,7 @@ public class PtmProductServiceImpl extends JoinServiceImpl<PtmProductMapper, Ptm
               .collect(Collectors.toList()); // 收集id字段到新的List
 
       JoinLambdaWrapper<PtmProductSku> skuWp = Joins.of(PtmProductSku.class);
-      skuWp.notIn(PtmProductSku::getId, skuIdList);
+      skuWp.notIn(StringUtilsPlus.isNotEmpty(skuIdList),PtmProductSku::getId, skuIdList);
       skuWp.eq(PtmProductSku::getPtmProductId, po.getId());
       List<PtmProductSkuQueryVO> skuVoList =
           ptmProductSkuMapper.joinSelectList(skuWp, PtmProductSkuQueryVO.class);
