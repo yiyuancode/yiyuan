@@ -8,7 +8,7 @@ file:
       accessKey: admin
       secretKey: 123/456/789
     local:
-      rootPath: E:\code\20231001-20231101
+      rootPath: D:/files/yiyuan
     huawei:
       endabled: false
       endpoint:

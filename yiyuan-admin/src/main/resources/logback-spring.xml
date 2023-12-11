@@ -37,7 +37,7 @@
 
 <!--        <destination>ssh.yicode.net:1121</destination>-->
 
-        <destination>elk.yy.yicode.net:20080</destination>
+        <destination>elk.yy.yicode.net:50013</destination>
         <keepAliveDuration>5 minutes</keepAliveDuration>
         <!-- 日志输出编码 -->
         <encoder charset="UTF-8" class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
