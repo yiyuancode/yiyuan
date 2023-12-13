@@ -66,7 +66,7 @@
         </dependency>
         <dependency>
             <groupId>net.yiyuan</groupId>
-            <artifactId>yiyuan-um-app-api</artifactId>
+            <artifactId>yiyuan-um-api</artifactId>
             <version>${revision}</version>
         </dependency>
         <dependency>
