@@ -208,6 +208,8 @@ public class PtmProductServiceImpl extends JoinServiceImpl<PtmProductMapper, Ptm
       // 设置总库存
       po.setStock(totalStock);
 
+
+
       // 添加sku
       skuList.forEach(
           (sku) -> {
@@ -216,6 +218,7 @@ public class PtmProductServiceImpl extends JoinServiceImpl<PtmProductMapper, Ptm
               PtmProductSku insert = new PtmProductSku();
               BeanUtilsPlus.copy(sku, insert);
               ptmProductSkuMapper.insert(insert);
+              sku.setId(insert.getId());
             } else {
               PtmProductSku insert = new PtmProductSku();
               BeanUtilsPlus.copy(sku, insert);
