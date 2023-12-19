@@ -1,12 +1,12 @@
 package net.yiyuan.dto;
 
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 import lombok.*;
 
 import java.io.Serializable;
 import java.util.Date;
+
 
 /**
  * 积分列表接口请求入参实体
@@ -44,16 +44,16 @@ public class UmIntegralListDTO implements Serializable {
 
 
     /**
-     * 类型
+     * 类型:1、签到积分
      *
      * @author spring
      * @date 2023-12-19
      */
-    private String type;
+    private Integer type;
 
 
     /**
-     * (查询开始时间)
+     * 创建时间(查询开始时间)
      *
      * @author spring
      * @date 2023-12-19
@@ -63,7 +63,7 @@ public class UmIntegralListDTO implements Serializable {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTimeStart;
     /**
-     * (查询结束时间)
+     * 创建时间(查询结束时间)
      *
      * @author spring
      * @date 2023-12-19

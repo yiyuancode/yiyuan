@@ -1,9 +1,10 @@
 package net.yiyuan.dto;
 
-
 import lombok.*;
+
 import java.io.Serializable;
 import javax.validation.constraints.NotBlank;
+
 
 /**
  * 积分修改接口请求入参实体
@@ -42,12 +43,12 @@ public class UmIntegralEditDTO implements Serializable {
 
 
     /**
-     * 类型
+     * 类型:1、签到积分
      *
      * @author spring
      * @date 2023-12-19
      */
-    private String type;
+    private Integer type;
 
 
 }

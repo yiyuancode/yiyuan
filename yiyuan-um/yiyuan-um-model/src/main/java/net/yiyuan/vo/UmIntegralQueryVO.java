@@ -7,6 +7,7 @@ import lombok.*;
 import java.io.Serializable;
 import java.util.Date;
 
+
 /**
  * 积分查询请求响应参数实体
  *
@@ -43,15 +44,17 @@ public class UmIntegralQueryVO implements Serializable {
 
 
     /**
-     * 类型
+     * 类型:1、签到积分
      *
      * @author spring
      * @date 2023-12-19
      */
-    private String type;
+    private Integer type;
 
 
     /**
+     * 创建时间
+     *
      * @author spring
      * @date 2023-12-19
      */

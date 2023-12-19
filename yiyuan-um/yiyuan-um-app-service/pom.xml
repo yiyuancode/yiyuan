@@ -19,19 +19,19 @@
         </dependency>
         <dependency>
             <groupId>net.yiyuan</groupId>
+            <artifactId>yiyuan-um-service</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.yiyuan</groupId>
             <artifactId>yiyuan-SMS</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>net.yiyuan</groupId>
-            <artifactId>yiyuan-ptm-mapper</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>net.yiyuan</groupId>
-            <artifactId>yiyuan-um-service</artifactId>
+            <artifactId>yiyuan-ptm-model</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>

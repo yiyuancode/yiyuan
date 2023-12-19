@@ -4,6 +4,7 @@ import lombok.*;
 
 import java.io.Serializable;
 
+
 /**
  * 积分新增接口请求入参实体
  *
@@ -37,14 +38,14 @@ public class UmIntegralAddDTO implements Serializable {
 
 
     /**
-     * 类型
+     * 类型:1、签到积分
      *
      * @author spring
      * @date 2023-12-19
      */
 
 
-    private String type;
+    private Integer type;
 
 
 }

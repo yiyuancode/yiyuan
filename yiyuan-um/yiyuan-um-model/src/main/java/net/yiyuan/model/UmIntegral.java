@@ -47,15 +47,17 @@ public class UmIntegral implements Serializable {
 
 
     /**
-     * 类型
+     * 类型:1、签到积分
      *
      * @author spring
      * @date 2023-12-19
      */
-    private String type;
+    private Integer type;
 
 
     /**
+     * 创建时间
+     *
      * @author spring
      * @date 2023-12-19
      */

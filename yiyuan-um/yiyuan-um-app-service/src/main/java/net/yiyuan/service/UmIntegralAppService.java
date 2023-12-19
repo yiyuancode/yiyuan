@@ -19,5 +19,8 @@ import java.util.List;
  */
 public interface UmIntegralAppService extends JoinIService<UmIntegral> {
 
+    boolean add(UmIntegral request) throws Exception;
+
+    Page<UmIntegral> page(UmIntegralPageDTO request) throws Exception;
 
 }
