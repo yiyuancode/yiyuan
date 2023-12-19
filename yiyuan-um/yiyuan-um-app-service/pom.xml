@@ -17,20 +17,5 @@
             <artifactId>yiyuan-um-mapper</artifactId>
             <version>${revision}</version>
         </dependency>
-        <dependency>
-            <groupId>net.yiyuan</groupId>
-            <artifactId>yiyuan-um-service</artifactId>
-            <version>${revision}</version>
-        </dependency>
-        <dependency>
-            <groupId>net.yiyuan</groupId>
-            <artifactId>yiyuan-SMS</artifactId>
-            <version>${revision}</version>
-        </dependency>
-        <dependency>
-            <groupId>net.yiyuan</groupId>
-            <artifactId>yiyuan-spm-mapper</artifactId>
-            <version>${revision}</version>
-        </dependency>
     </dependencies>
 </project>
