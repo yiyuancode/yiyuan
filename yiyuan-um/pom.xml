@@ -17,6 +17,7 @@
         <module>yiyuan-um-app-api</module>
         <module>yiyuan-um-app-service</module>
         <module>yiyuan-um-mapper</module>
+        <module>yiyuan-um-model</module>
     </modules>
 
     <dependencies>
@@ -28,16 +29,6 @@
         <dependency>
             <groupId>net.yiyuan</groupId>
             <artifactId>yiyuan-plugins-satoken</artifactId>
-            <version>${revision}</version>
-        </dependency>
-        <dependency>
-            <groupId>net.yiyuan</groupId>
-            <artifactId>yiyuan-ptm-mapper</artifactId>
-            <version>${revision}</version>
-        </dependency>
-        <dependency>
-            <groupId>net.yiyuan</groupId>
-            <artifactId>yiyuan-common</artifactId>
             <version>${revision}</version>
         </dependency>
     </dependencies>
