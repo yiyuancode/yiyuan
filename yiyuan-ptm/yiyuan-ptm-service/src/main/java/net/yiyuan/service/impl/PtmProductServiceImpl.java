@@ -213,17 +213,16 @@ public class PtmProductServiceImpl extends JoinServiceImpl<PtmProductMapper, Ptm
       // 添加sku
       skuList.forEach(
           (sku) -> {
+            PtmProductSku insertAndUpBo = new PtmProductSku();
             if (StringUtilsPlus.isEmpty(sku.getId())) {
               sku.setPtmProductId(po.getId());
-              PtmProductSku insert = new PtmProductSku();
-              BeanUtilsPlus.copy(sku, insert);
-              ptmProductSkuMapper.insert(insert);
-              sku.setId(insert.getId());
+              BeanUtilsPlus.copy(sku, insertAndUpBo);
+              ptmProductSkuMapper.insert(insertAndUpBo);
             } else {
-              PtmProductSku insert = new PtmProductSku();
-              BeanUtilsPlus.copy(sku, insert);
-              ptmProductSkuMapper.updateById(insert);
+              BeanUtilsPlus.copy(sku, insertAndUpBo);
+              ptmProductSkuMapper.updateById(insertAndUpBo);
             }
+            sku.setId(insertAndUpBo.getId());
           });
 
       List<String> skuIdList =
