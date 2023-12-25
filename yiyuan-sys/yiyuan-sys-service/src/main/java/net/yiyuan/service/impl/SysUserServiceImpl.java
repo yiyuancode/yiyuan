@@ -1,5 +1,6 @@
 package net.yiyuan.service.impl;
 
+import cn.dev33.satoken.secure.SaSecureUtil;
 import cn.dev33.satoken.stp.StpUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import icu.mhb.mybatisplus.plugln.base.service.impl.JoinServiceImpl;
@@ -91,6 +92,8 @@ public class SysUserServiceImpl extends JoinServiceImpl<SysUserMapper, SysUser>
                 sysUserMapper.joinSelectPage(
                         new Page<>(request.getPageNum(), request.getPageSize()), wrapper, SysUserQueryVO.class);
 
+
+
         //    CenterJoinUtils<SysUserQueryVO, SysUser, SysUserRole, SysRole, SysRoleQueryVO>
         // centerJoinUtils =
         //        new CenterJoinUtils<>(
@@ -168,6 +171,7 @@ public class SysUserServiceImpl extends JoinServiceImpl<SysUserMapper, SysUser>
     public boolean edit(SysUserEditDTO request) throws Exception {
         SysUser po = new SysUser();
         BeanUtilsPlus.copy(request, po);
+        po.setPassword(SaSecureUtil.md5(po.getPassword()));
         int i = sysUserMapper.updateById(po);
         if (i != 0) {
             return true;
@@ -188,6 +192,8 @@ public class SysUserServiceImpl extends JoinServiceImpl<SysUserMapper, SysUser>
     public boolean add(SysUserAddDTO request) throws Exception {
         SysUser po = new SysUser();
         BeanUtilsPlus.copy(request, po);
+        po.setPassword(SaSecureUtil.md5(po.getPassword())) ;
+
         int i = sysUserMapper.insert(po);
         if (i != 0) {
             return true;
@@ -198,17 +204,19 @@ public class SysUserServiceImpl extends JoinServiceImpl<SysUserMapper, SysUser>
 
     @Override
     public SysUserLoginVO adminAccoutLogin(SysUserLoginDTO request) throws Exception {
+        JoinLambdaWrapper<SysUser> sysUserwrapper = new JoinLambdaWrapper<>(SysUser.class);
+
         SysUser po = new SysUser();
         BeanUtilsPlus.copy(request, po);
         // 查询用户名是否存在
-        JoinLambdaWrapper<SysUser> sysUserwrapper = new JoinLambdaWrapper<>(SysUser.class);
+//        JoinLambdaWrapper<SysUser> sysUserwrapper = new JoinLambdaWrapper<>(SysUser.class);
         sysUserwrapper.eq(SysUser::getUsername, request.getUsername());
         sysUserwrapper.eq(SysUser::getPlatform, request.getPlatform());
         SysUserQueryVO sysUserResp = sysUserMapper.joinSelectOne(sysUserwrapper, SysUserQueryVO.class);
         if (StringUtilsPlus.isNull(sysUserResp)) {
             throw new BusinessException(ResultCode.USER_NOT_FIND);
         }
-        if (!sysUserResp.getPassword().equals(po.getPassword())) {
+        if (!sysUserResp.getPassword().equals( SaSecureUtil.md5(po.getPassword()))) {
             throw new BusinessException(ResultCode.USER_PASS_ERROR);
         }
         // 使用用户id完成satoken登录,并返回token
