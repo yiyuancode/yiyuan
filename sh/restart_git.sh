@@ -13,7 +13,7 @@ echo '----部署java开始----'
 #安装git
 #sudo yum install git
 
-#git clone https://46918480665288096:dafei123qqcom@https://codeup.aliyun.com/yiyuan/yiyuancode/yiyuan.git
+
 #cd /install/yiyuan
 #git checkout dev1.0.0
 #mvn -B clean package -Dmaven.test.skip=true -Dautoconfig.skip
@@ -32,7 +32,7 @@ docker build  -t git-maven-dev:latest -f Dockerfile-git  .
 docker run -it git-maven-dev -v /install:/install
 docker run -it --name git-maven-dev --privileged=true -v /install:/install git-maven-dev:latest
 #cd /install/
-#git clone https://46918480665288096:dafei123qqcom@https://codeup.aliyun.com/yiyuan/yiyuancode/yiyuan.git
+
 #cd /install/yiyuan
 #git checkout dev1.0.0
 #mvn -B clean package -Dmaven.test.skip=true -Dautoconfig.skip
