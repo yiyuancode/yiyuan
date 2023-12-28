@@ -4,7 +4,7 @@
 
 spring:
   datasource:
-    url: jdbc:mysql://116.63.167.31:40007/admin_dev?serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://116.63.167.31:40007/admin_demo?serverTimezone=Asia/Shanghai
     username: root
     password: 123456
     #password: Av*duP#992CBd##wdL&K
@@ -61,7 +61,7 @@ spring:
   # redis配置
   redis:
     # Redis数据库索引（默认为0）
-    database: 1
+    database: 2
     # Redis服务器地址
     host: 116.63.167.31
     # Redis服务器连接端口
@@ -89,7 +89,7 @@ file:
       activeTypeName: MinIo
     minio:
       enabled: true
-      endpoint: http://116.63.167.31:1140
+      endpoint: http://116.63.167.31:40009
       accessKey: admin
       secretKey: 123/456/789
     local:

@@ -15,7 +15,7 @@ RUN apt-get update && \
 WORKDIR /
 
 # 克隆源码
-RUN git clone https://46918480665288096:dafei123qqcom@https://codeup.aliyun.com/yiyuan/yiyuancode/yiyuan.git
+
 # RUN cd
 WORKDIR /yiyuan
 RUN git checkout dev1.0.0
