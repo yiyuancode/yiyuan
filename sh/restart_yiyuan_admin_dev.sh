@@ -14,7 +14,7 @@ echo '----部署java开始----'
 #sudo yum install git
 
 cd /install/
-#git clone https://46918480665288096:dafei123qqcom@https://codeup.aliyun.com/yiyuan/yiyuancode/yiyuan.git
+
 #cd /install/yiyuan
 #git checkout dev1.0.0
 #mvn -B clean package -Dmaven.test.skip=true -Dautoconfig.skip

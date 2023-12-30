@@ -1,13 +1,177 @@
+#spring:
+#  config:
+#    import: classpath:test/application-db.yml,classpath:test/application-mp.yml,classpath:test/application-redis.yml,classpath:test/application-satoken.yml,classpath:test/application-jobs.yml,classpath:test/application-file.yml,classpath:dev/application-sms.yml
+
 spring:
+  datasource:
+    url: jdbc:mysql://116.63.167.31:40007/admin_dev?serverTimezone=Asia/Shanghai
+    username: root
+    password: yY@&790*789$
+    #password: Av*duP#992CBd##wdL&K
+    #连接池的配置信息
+    initialSize: 10
+    minIdle: 10
+    maxActive: 100
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxPoolPreparedStatementPerConnectionSize: 20
+    type: com.alibaba.druid.pool.DruidDataSource
+    # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+    filters: stat,wall,log4j
+    # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+    driver-class-name: com.alibaba.druid.proxy.DruidDriver
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+    default-property-inclusion: NON_NULL
+  #定时任务配置
+  quartz:
+    properties:
+      org:
+        quartz:
+          scheduler:
+            instanceName: DemoScheduler
+            instanceId: AUTO
+          jobStore:
+            class: org.springframework.scheduling.quartz.LocalDataSourceJobStore
+            driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate #跟数据库初始化脚本中配置保持一致
+            #qrtz_  小写 可以让数据库小写  1：先将qrtz相关表在数据库按照小写来创建  2：设置数据库配置文件带小写lower_case_table_names=1不敏感 参考：https://blog.csdn.net/ctl2309452959/article/details/128081388
+            tablePrefix: qrtz_
+            #true开启集群模式  false 关闭安集群模式
+            isClustered: true
+            clusterCheckinInterval: 5000
+            #建议在Quartz集群中将org.quartz.jobStore.useProperties属性设置为true，将调度程序的配置信息以字符串的方式存储到数据库中，以提高兼容性和可读性。即使在设置为false的情况下，Quartz集群仍然可以正常工作，只是可能会带来一些潜在的问题。
+            useProperties: true
+          threadPool:
+            class: org.quartz.simpl.SimpleThreadPool
+            threadCount: 20
+            threadPriority: 5
+            threadsInheritContextClassLoaderOfInitializingThread: true
+    job-store-type: jdbc
+    overwrite-existing-jobs: true
+    #和scheduler.start()同样
+    auto-startup: true
+  # redis配置
+  redis:
+    # Redis数据库索引（默认为0）
+    database: 1
+    # Redis服务器地址
+    host: 116.63.167.31
+    # Redis服务器连接端口
+    port: 40008
+    # Redis服务器连接密码（默认为空）
+    #password: Av*duP#992CBd##wdL&K
+    # 连接超时时间
+    timeout: 1000s
+    lettuce:
+      pool:
+        # 连接池最大连接数
+        max-active: 200
+        # 连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-wait: -1ms
+        # 连接池中的最大空闲连接
+        max-idle: 10
+        # 连接池中的最小空闲连接
+        min-idle: 0
+
+############## 文件上传管理 配置  ##############
+
+file:
+  server:
+    common:
+      activeTypeName: MinIo
+    minio:
+      enabled: true
+      endpoint: http://116.63.167.31:1140
+      accessKey: admin
+      secretKey: 123/456/789
+    local:
+      rootPath: D:/files/yiyuan
+    huawei:
+      endabled: false
+      endpoint:
+      accessKey:
+      secretKey:
+    fastdfs:
+      enabled: false
+
+############## mybatis-plus 配置  ##############
+mybatis-plus:
+  mapper-locations: classpath:/mapper/**/*.xml
+  global-config:
+    db-config:
+      id-type: auto
+      #避免前端传null或者空字符串进行查询条件的拼接
+      select-strategy: not_empty
+      #避免插入和新增空字符串和null
+      update-strategy: not_empty
+      insert-strategy: not_empty
+  configuration:
+    auto-mapping-behavior: partial
+    map-underscore-to-camel-case: true
+    #log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    log-impl: net.yiyuan.plugins.mp.config.SqlLogImpl
+    default-enum-type-handler: com.baomidou.mybatisplus.core.handlers.MybatisEnumTypeHandler
+
+
+############## Sa-Token 配置 (文档: https://sa-token.cc) ##############
+sa-token:
+  # token名称 (同时也是cookie名称)一定要小写 就用默认的 不是默认的有问题
+  token-name: admintoken
+  # token有效期，单位s 默认30天, -1代表永不过期
+  timeout: -1
+  # token临时有效期 (指定时间内无操作就视为token过期) 单位: 秒
+  activity-timeout: -1
+  # 是否允许同一账号并发登录 (为true时允许一起登录, 为false时新登录挤掉旧登录)
+  is-concurrent: true
+  # 在多人登录同一账号时，是否共用一个token (为true时所有登录共用一个token, 为false时每次登录新建一个token)
+  is-share: true
+  # token风格
+  token-style: uuid
+  # 是否输出操作日志
+  is-log: true
+  #禁用cookile
+  is-read-cookie: false
+  #读取header里面的
+  is-read-header: true
+  # jwt秘钥
+  jwt-secret-key: abc123djededease
+  # 配置当前项目的网络访问地址
+  curr-domain: http://localhost:8085
+#短信邮箱配置
+sms:
   config:
-    import: classpath:dev/application-db.yml,classpath:dev/application-mp.yml,classpath:dev/application-redis.yml,classpath:dev/application-satoken.yml,classpath:dev/application-jobs.yml,classpath:dev/application-file.yml,classpath:dev/application-sms.yml
-#elk配置
+    aliyun:
+      ### 阿里云的apiKey
+      appKey: LTAI5t8A1zJF5HwSUThj62CS
+      ### 阿里云apiSecret
+      appSecret: AO7U4CZmsyYHe3OD6vXj9I3VP2Op9X
+      ### 签名
+      signName: 小林程序猿
+      ### 模板code
+      templateCode: SMS_463196083
+email:
+  config:
+    define:
+      emailAccount: yiyuancode@sina.com
+      emailPassword: 10c8122fb73521c9
+      emailSmtphost: smtp.sina.com
+      ###选用手机号还是邮箱验证码验证 email 或者phone
+      active: email
+
+#elk日志配置
 logstash:
   host: 127.0.0.1
 logging:
   level:
     root: info
-
-# tlog日志配置不配默认为false
 tlog:
   enable-invoke-time-print: true
+
