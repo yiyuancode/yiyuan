@@ -2,7 +2,7 @@ spring:
   datasource:
     url: jdbc:mysql://127.0.0.1:23306/admin_prod?serverTimezone=Asia/Shanghai
     username: root
-    password: yY@&790*789$
+    password: 111111
   jackson:
     time-zone: GMT+8
     date-format: yyyy-MM-dd HH:mm:ss

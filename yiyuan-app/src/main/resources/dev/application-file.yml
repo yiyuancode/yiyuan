@@ -6,7 +6,7 @@ file:
       enabled: true
       endpoint: http://127.0.0.1:50008
       accessKey: admin
-      secretKey: 123/456/789
+      secretKey: 111111
     local:
       rootPath: D:\code\20231001-20231101
     huawei:

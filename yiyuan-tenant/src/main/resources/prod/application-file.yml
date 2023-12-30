@@ -6,7 +6,7 @@ file:
       enabled: true
       endpoint: http://127.0.0.1:40036
       accessKey: admin
-      secretKey: 123/456/789
+      secretKey: 111111
     local:
       rootPath: D:/files/yiyuan
     huawei:
